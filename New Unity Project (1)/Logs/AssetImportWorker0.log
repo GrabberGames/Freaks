@@ -1,0 +1,547 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.0f1 (c7b5465681fb) revision 13088070'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19042.928; Version 2009; 64bit' Language: 'ko' Physical Memory: 15790 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.0f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/jis60/Desktop/2021/프릭스/New Unity Project (1)
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+62722
+Successfully changed project path to: C:/Users/jis60/Desktop/2021/프릭스/New Unity Project (1)
+C:/Users/jis60/Desktop/2021/프릭스/New Unity Project (1)
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 33.13 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.0f1 (c7b5465681fb)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/jis60/Desktop/2021/프릭스/New Unity Project (1)/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 Laptop GPU (ID=0x2520)
+    Vendor:   
+    VRAM:     6023 MB
+    Driver:   27.21.14.6156
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56144
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.004117 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 35.50 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.199 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.001627 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.35 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.836 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 0.36 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1116 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 59.9 MB.
+System memory in use after: 59.9 MB.
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1561.
+Total: 1.884900 ms (FindLiveObjects: 0.358900 ms CreateObjectMapping: 0.060200 ms MarkObjects: 1.374900 ms  DeleteObjects: 0.089100 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/PolygonCity/Scenes/workshop.fbx
+  artifactKey: Guid(6e7b7ed02b0b06a42a6110ab59220243) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Scenes/workshop.fbx using Guid(6e7b7ed02b0b06a42a6110ab59220243) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c410bbd430d446cc24e033e12c175e9') in 0.758516 seconds
+  Import took 0.762548 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 339.723815 seconds.
+  path: Assets/PolygonCity/Scenes/Scenes.zip
+  artifactKey: Guid(1ac386cf307359444bba0e8f006c7410) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Scenes/Scenes.zip using Guid(1ac386cf307359444bba0e8f006c7410) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f5f1bb37a329441f5f10bdbb3bb274c') in 0.016002 seconds
+  Import took 0.023976 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 15139.790924 seconds.
+  path: Assets/PolygonCity/Scenes/Map 1.unity
+  artifactKey: Guid(e22affa6ff68aa84a8c7e3df9f0b4322) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Scenes/Map 1.unity using Guid(e22affa6ff68aa84a8c7e3df9f0b4322) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '859631410058099a6b33e0055fbe7dfa') in 0.005958 seconds
+  Import took 0.017627 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 33.878821 seconds.
+  path: Assets/PolygonCity/Scenes/Map.unity
+  artifactKey: Guid(e22affa6ff68aa84a8c7e3df9f0b4322) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Scenes/Map.unity using Guid(e22affa6ff68aa84a8c7e3df9f0b4322) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5007d2e4c87585679468eea42c67c86') in 0.004569 seconds
+  Import took 0.014550 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 352.886626 seconds.
+  path: Assets/PolygonCity/Scenes/map.zip
+  artifactKey: Guid(29fa64acc440e2e4b9621a4a3db5ee61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Scenes/map.zip using Guid(29fa64acc440e2e4b9621a4a3db5ee61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1fd9299c9bb754ec86743abcc3edeb5') in 0.007588 seconds
+  Import took 0.019342 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 46410.416528 seconds.
+  path: Assets/Subway Environment/Assets/flowerpot/Materials/Bark1.mat
+  artifactKey: Guid(63489ea1bec489e4a8cf4901da4b3fed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/flowerpot/Materials/Bark1.mat using Guid(63489ea1bec489e4a8cf4901da4b3fed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bbf8eb9f6c3d43026b1b68ecb5d9c1db') in 0.375741 seconds
+  Import took 0.413085 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000701 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Lamp_dDo_d.mat
+  artifactKey: Guid(f665162f582fcee468b2f33e88ae640f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Lamp_dDo_d.mat using Guid(f665162f582fcee468b2f33e88ae640f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '402566e29b33974cc8cbb507b6ad237c') in 0.290547 seconds
+  Import took 0.298041 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000491 seconds.
+  path: Assets/Subway Environment/Assets/bar/Materials/lambert2.mat
+  artifactKey: Guid(f3a6bca57ec7b1941a2a1c446bc10e15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/bar/Materials/lambert2.mat using Guid(f3a6bca57ec7b1941a2a1c446bc10e15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '48a5ce27b36ee3647e4d7978c42cde61') in 0.534301 seconds
+  Import took 0.545976 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000764 seconds.
+  path: Assets/Subway Environment/Assets/checkin/Materials/checker.mat
+  artifactKey: Guid(64eab6719fa36c94e8c01aafe15791f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/checkin/Materials/checker.mat using Guid(64eab6719fa36c94e8c01aafe15791f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2306ce2d526414f738cf6a5776318ea') in 0.436479 seconds
+  Import took 0.441082 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000672 seconds.
+  path: Assets/Subway Environment/Assets/toilet/Materials/lambert2.mat
+  artifactKey: Guid(6dec35839e2a4fa4c9585f8626a23546) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/toilet/Materials/lambert2.mat using Guid(6dec35839e2a4fa4c9585f8626a23546) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '518e5af33f22f7d59c97df5e9196e9ab') in 0.023775 seconds
+  Import took 0.027464 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000643 seconds.
+  path: Assets/Subway Environment/Assets/TrainRail/Materials/LPMat.mat
+  artifactKey: Guid(74f8e2d18cc529248aef54a295e634d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/TrainRail/Materials/LPMat.mat using Guid(74f8e2d18cc529248aef54a295e634d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f51be1bc50cbbd1791787ea9036500f') in 0.152256 seconds
+  Import took 0.162453 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000427 seconds.
+  path: Assets/Subway Environment/Assets/StoreCloset/Materials/Closet_diff.mat
+  artifactKey: Guid(7cb1549199ec26b40a634eb8c1b37f09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/StoreCloset/Materials/Closet_diff.mat using Guid(7cb1549199ec26b40a634eb8c1b37f09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '431a8393d95d66f3e9addfd341774bc6') in 0.231383 seconds
+  Import took 0.236352 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000473 seconds.
+  path: Assets/Subway Environment/Assets/Base/Materials/lambert1.mat
+  artifactKey: Guid(cae68385362e9e4498c9d061f184df5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Materials/lambert1.mat using Guid(cae68385362e9e4498c9d061f184df5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'acc8092a56803d9ef73c8066c8e6d517') in 0.351844 seconds
+  Import took 0.357120 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000509 seconds.
+  path: Assets/Subway Environment/Assets/Base/Materials/Cealing.mat
+  artifactKey: Guid(38b5fc44ec0f98f4b844472cde6c9407) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Materials/Cealing.mat using Guid(38b5fc44ec0f98f4b844472cde6c9407) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f29e56a69539dea1bc4e7a512ae68a40') in 0.020229 seconds
+  Import took 0.025010 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000719 seconds.
+  path: Assets/Subway Environment/Assets/Tcabin/Materials/checker.mat
+  artifactKey: Guid(1a191fe139dcfba42b707839265bac38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Tcabin/Materials/checker.mat using Guid(1a191fe139dcfba42b707839265bac38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12d58682e2ed09136e28c7889372c767') in 0.022534 seconds
+  Import took 0.028821 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000802 seconds.
+  path: Assets/Subway Environment/Assets/Base/Materials/Black.mat
+  artifactKey: Guid(18512a3f0a880a242826950b3cd9d22e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Materials/Black.mat using Guid(18512a3f0a880a242826950b3cd9d22e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfbe578b848bc5020cb5b8f6dcaa7486') in 0.021362 seconds
+  Import took 0.027408 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000467 seconds.
+  path: Assets/Subway Environment/Assets/TrainRail/Materials/RailDiff.mat
+  artifactKey: Guid(b0ef0590431f7a741b3e77769ff44d8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/TrainRail/Materials/RailDiff.mat using Guid(b0ef0590431f7a741b3e77769ff44d8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a9c962f5b97bde228690cea826a93ed') in 0.019908 seconds
+  Import took 0.024064 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000456 seconds.
+  path: Assets/Subway Environment/Assets/PaperStand/Materials/lambert2.mat
+  artifactKey: Guid(02597c01fbdc87e4e9224521106c8d69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/PaperStand/Materials/lambert2.mat using Guid(02597c01fbdc87e4e9224521106c8d69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34afb3074e0a6e33b6942a320643d170') in 0.255356 seconds
+  Import took 0.260387 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000501 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Grip_dDo_d.mat
+  artifactKey: Guid(f090ce38c4610b04c9e58bd2c6dd0cda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Grip_dDo_d.mat using Guid(f090ce38c4610b04c9e58bd2c6dd0cda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe7eb96674c7973f7f8837837af0929b') in 0.033464 seconds
+  Import took 0.038365 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000476 seconds.
+  path: Assets/Subway Environment/Assets/sings/Materials/lambert1.mat
+  artifactKey: Guid(af2bd40ffbb07c7458724158d8bc023e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/sings/Materials/lambert1.mat using Guid(af2bd40ffbb07c7458724158d8bc023e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '548aaf36d6f5e64cb6fe9090906d1a32') in 0.033790 seconds
+  Import took 0.039529 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000780 seconds.
+  path: Assets/Subway Environment/Assets/bar/Materials/Checker.mat
+  artifactKey: Guid(874543ce3a95d5d44bffa5ef911fe084) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/bar/Materials/Checker.mat using Guid(874543ce3a95d5d44bffa5ef911fe084) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '694b799436a70ab844aaf70330c66881') in 0.035898 seconds
+  Import took 0.041176 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000592 seconds.
+  path: Assets/Subway Environment/Assets/Base/Materials/ConcreteFloor.mat
+  artifactKey: Guid(77907c0b4834b7149adfbc5657d1fe1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Materials/ConcreteFloor.mat using Guid(77907c0b4834b7149adfbc5657d1fe1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aff0f3b1c36e620fe9ed32251554c52c') in 0.524303 seconds
+  Import took 0.530925 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000519 seconds.
+  path: Assets/Subway Environment/Assets/Lamp/Materials/checker.mat
+  artifactKey: Guid(f8659db92ef7c7244abcf30495324616) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Lamp/Materials/checker.mat using Guid(f8659db92ef7c7244abcf30495324616) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e1c94b0842c801e4b420038e824ca80') in 0.023675 seconds
+  Import took 0.029058 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000418 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Door1_dDo_d.mat
+  artifactKey: Guid(7bbc327343a68b848816f97a8403c802) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Door1_dDo_d.mat using Guid(7bbc327343a68b848816f97a8403c802) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41216d86da403f7bbe90d1dba8691471') in 0.027957 seconds
+  Import took 0.031296 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000450 seconds.
+  path: Assets/Subway Environment/Assets/seats/Materials/checker.mat
+  artifactKey: Guid(21c3296df8b2eb248aaa198dfd544bd1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/seats/Materials/checker.mat using Guid(21c3296df8b2eb248aaa198dfd544bd1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e852cbf1fbde029fce8d58128fe5d54') in 0.039916 seconds
+  Import took 0.045634 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000516 seconds.
+  path: Assets/Subway Environment/Assets/Base/Materials/Floor2.mat
+  artifactKey: Guid(69df548328eb91d46a2b1a8bff300bef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Materials/Floor2.mat using Guid(69df548328eb91d46a2b1a8bff300bef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eca7316ac76d77a2c96d2f4381db1c69') in 0.035475 seconds
+  Import took 0.040165 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000468 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Seats_dDo_d.mat
+  artifactKey: Guid(d742939f0ee5a1c4abca41e199117742) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Seats_dDo_d.mat using Guid(d742939f0ee5a1c4abca41e199117742) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f80ed3c3c09e1541e0db099d1bf8108') in 0.033644 seconds
+  Import took 0.038892 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000345 seconds.
+  path: Assets/Subway Environment/Assets/bar/Materials/lambert1.mat
+  artifactKey: Guid(e7a4f4dc886ca0447a70e56bbc89eba5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/bar/Materials/lambert1.mat using Guid(e7a4f4dc886ca0447a70e56bbc89eba5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e67f34ddfea600e12594afc0357d22f6') in 0.015660 seconds
+  Import took 0.019547 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000344 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Pooster1_dDo_d.mat
+  artifactKey: Guid(37b9c6d34dde3084e9831c3b07ae076d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Pooster1_dDo_d.mat using Guid(37b9c6d34dde3084e9831c3b07ae076d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce7c48286f0c3179e092f9df997e973c') in 0.032937 seconds
+  Import took 0.037482 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000430 seconds.
+  path: Assets/Subway Environment/Assets/Wire/Materials/lambert1.mat
+  artifactKey: Guid(14a973ec9db0b134d9d72cac36c7d931) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Wire/Materials/lambert1.mat using Guid(14a973ec9db0b134d9d72cac36c7d931) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '403478698c03faf74d1acbe7867820cc') in 0.029056 seconds
+  Import took 0.032555 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000396 seconds.
+  path: Assets/Subway Environment/Assets/flowerpot/Leaves.mat
+  artifactKey: Guid(fc0d1ee785c0981409bec91cb25969ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/flowerpot/Leaves.mat using Guid(fc0d1ee785c0981409bec91cb25969ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19f3f6da8d7deac2eeb51aed6fe88f1e') in 0.325593 seconds
+  Import took 0.330115 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000491 seconds.
+  path: Assets/Subway Environment/Assets/CeilingLight/CealingLamp.FBX
+  artifactKey: Guid(64d50b1c6b0f27946aba208f1bff6ca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/CeilingLight/CealingLamp.FBX using Guid(64d50b1c6b0f27946aba208f1bff6ca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e2eb13944e8509dda7ae5cb872a22c35') in 0.070430 seconds
+  Import took 0.075310 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000449 seconds.
+  path: Assets/Subway Environment/Assets/sings/Materials/lambert2.mat
+  artifactKey: Guid(ccb8f39b775214b44ab162701515503b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/sings/Materials/lambert2.mat using Guid(ccb8f39b775214b44ab162701515503b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8277fa7b6094309b4bfa2f079ae6f619') in 0.034506 seconds
+  Import took 0.039293 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000514 seconds.
+  path: Assets/Subway Environment/Assets/toilet/Materials/lambert1.mat
+  artifactKey: Guid(f5d9b21cc5a871e4698b8acb1470cf5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/toilet/Materials/lambert1.mat using Guid(f5d9b21cc5a871e4698b8acb1470cf5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '034879b3a4ae32cdb4b57a92c6b96b13') in 0.018999 seconds
+  Import took 0.024789 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000485 seconds.
+  path: Assets/Subway Environment/Assets/TrainRail/Materials/NormalMat.mat
+  artifactKey: Guid(91c4e753460ca14468ca21b8fe2bc8f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/TrainRail/Materials/NormalMat.mat using Guid(91c4e753460ca14468ca21b8fe2bc8f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2872494011073d58923f0c47f2cdf74') in 0.197501 seconds
+  Import took 0.202006 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000490 seconds.
+  path: Assets/Subway Environment/Assets/flowerpot/Materials/Leaves.mat
+  artifactKey: Guid(ed83ca07def902a4eb6f3369621fc2af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/flowerpot/Materials/Leaves.mat using Guid(ed83ca07def902a4eb6f3369621fc2af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3cff0d1a938b3791b41c1ea1ff640bb2') in 0.013529 seconds
+  Import took 0.017248 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000319 seconds.
+  path: Assets/Subway Environment/Assets/Base/Textures/metal/Metal.mat
+  artifactKey: Guid(2ce9f22c1fadfd541977a004b966b929) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Textures/metal/Metal.mat using Guid(2ce9f22c1fadfd541977a004b966b929) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79ae786cca24afc9194e3ed560ad88a7') in 0.197751 seconds
+  Import took 0.209387 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000577 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Pooster2_dDo_d.mat
+  artifactKey: Guid(9ace70bc87e670c48bf48b758887b1fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Pooster2_dDo_d.mat using Guid(9ace70bc87e670c48bf48b758887b1fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60c09e71344699148c50c033733ce400') in 0.032750 seconds
+  Import took 0.035686 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000422 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Pole1_dDo_d.mat
+  artifactKey: Guid(16c133cf181e3c640a7a01d9f6a5c9e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Pole1_dDo_d.mat using Guid(16c133cf181e3c640a7a01d9f6a5c9e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '144243b29979be794bdf4e0b8d20f5b0') in 0.027234 seconds
+  Import took 0.031206 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000461 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/MiddleDoor_diff.mat
+  artifactKey: Guid(83e35cf797e154f49bac43af8239df6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/MiddleDoor_diff.mat using Guid(83e35cf797e154f49bac43af8239df6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8909aafc728f1a67cddfacd050f1343') in 0.039663 seconds
+  Import took 0.043223 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000437 seconds.
+  path: Assets/Subway Environment/Assets/flowerpot/Materials/lambert1.mat
+  artifactKey: Guid(e2b63ebbbded4484f938e1aaf5f63968) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/flowerpot/Materials/lambert1.mat using Guid(e2b63ebbbded4484f938e1aaf5f63968) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '05805a3b12a6c1f69d19483d7bbb27e5') in 0.363256 seconds
+  Import took 0.367383 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000513 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Break_dDo_d.mat
+  artifactKey: Guid(7cf5193b6f592c74b9792fd6ed665251) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Break_dDo_d.mat using Guid(7cf5193b6f592c74b9792fd6ed665251) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34828793bdb8e0810635339a4a6ffe32') in 0.030872 seconds
+  Import took 0.034134 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000487 seconds.
+  path: Assets/Subway Environment/Assets/CeilingLight/Light.mat
+  artifactKey: Guid(154b3597189c8c3439e49442b52070e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/CeilingLight/Light.mat using Guid(154b3597189c8c3439e49442b52070e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e8918c6464209b7f5228a5f3107864a') in 0.017971 seconds
+  Import took 0.021757 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000488 seconds.
+  path: Assets/Subway Environment/Assets/BigDoors/Materials/Checker.mat
+  artifactKey: Guid(2b12acb770f7ae94b9e2394a3e375e96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/BigDoors/Materials/Checker.mat using Guid(2b12acb770f7ae94b9e2394a3e375e96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a21f5f642f28cc5ad958e7873ee40a7') in 0.030887 seconds
+  Import took 0.035440 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000505 seconds.
+  path: Assets/Subway Environment/Assets/StoreCloset/Materials/magazine1.mat
+  artifactKey: Guid(b51436462c486504cbd7c122cfd32cca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/StoreCloset/Materials/magazine1.mat using Guid(b51436462c486504cbd7c122cfd32cca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4003e7597c4af4a0b350ba9850dcf0d') in 0.023946 seconds
+  Import took 0.028984 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000491 seconds.
+  path: Assets/Subway Environment/Assets/Base/Materials/ConcreteWall.mat
+  artifactKey: Guid(994e75bcc4058984e88de7e45a934f3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Materials/ConcreteWall.mat using Guid(994e75bcc4058984e88de7e45a934f3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a46fe607d0a0a3160e2302dbc9e92a24') in 0.029769 seconds
+  Import took 0.034347 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000456 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/MiddlePole_dDo_d.mat
+  artifactKey: Guid(c5b8d8b93c4c67f44ba1b8e10e856712) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/MiddlePole_dDo_d.mat using Guid(c5b8d8b93c4c67f44ba1b8e10e856712) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff31abe53fd22b24da881de67a1b611f') in 0.029617 seconds
+  Import took 0.033181 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000443 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Pole2_dDo_d.mat
+  artifactKey: Guid(3510a03762af8624d8e38e9b2ee62109) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Pole2_dDo_d.mat using Guid(3510a03762af8624d8e38e9b2ee62109) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1014f58c1217d7eea587aaabcb2ba18d') in 0.031837 seconds
+  Import took 0.036268 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000507 seconds.
+  path: Assets/Subway Environment/Assets/TrainRail/Materials/Material__79.mat
+  artifactKey: Guid(5ca5c6b262b940348b77c15c69341e3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/TrainRail/Materials/Material__79.mat using Guid(5ca5c6b262b940348b77c15c69341e3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd6f55c63206781c0dcf0cf7fb67d2d90') in 0.020457 seconds
+  Import took 0.024500 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000468 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/Door2_dDo_d.mat
+  artifactKey: Guid(ec9f579ef4f649c4286d6d69ce8ac6e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/Door2_dDo_d.mat using Guid(ec9f579ef4f649c4286d6d69ce8ac6e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3aaf1c2b00d1a54e1480aa0ecdc19b8b') in 0.032583 seconds
+  Import took 0.037016 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000448 seconds.
+  path: Assets/Subway Environment/Assets/flowerpot/Materials/lambert2.mat
+  artifactKey: Guid(9529ae687192d2549b0c44955385d6f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/flowerpot/Materials/lambert2.mat using Guid(9529ae687192d2549b0c44955385d6f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd495b3f6863e74490467e9c67639b3e9') in 0.019372 seconds
+  Import took 0.023674 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000479 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/DoorOpening_dDo_d.mat
+  artifactKey: Guid(9cf8a3b021f5d714a87e67edbc191a30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/DoorOpening_dDo_d.mat using Guid(9cf8a3b021f5d714a87e67edbc191a30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e9d92c949f32823da4a2611496c4d412') in 0.037656 seconds
+  Import took 0.042639 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000449 seconds.
+  path: Assets/Subway Environment/Assets/Base/Materials/MetalRoof1.mat
+  artifactKey: Guid(e8ecd5d643a5d104083c380bd76f513e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Base/Materials/MetalRoof1.mat using Guid(e8ecd5d643a5d104083c380bd76f513e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e213205f415299efbd93214a11481bf8') in 0.030086 seconds
+  Import took 0.035355 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000441 seconds.
+  path: Assets/Subway Environment/Assets/Metro/Materials/DoorOpening_dDo_d.mat
+  artifactKey: Guid(9cf8a3b021f5d714a87e67edbc191a30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Metro/Materials/DoorOpening_dDo_d.mat using Guid(9cf8a3b021f5d714a87e67edbc191a30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e9d92c949f32823da4a2611496c4d412') in 0.027449 seconds
+  Import took 0.031657 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000483 seconds.
+  path: Assets/Subway Environment/Assets/Camera/Materials/lambert2.mat
+  artifactKey: Guid(402d755a1b296f24ba90517d694a80e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Camera/Materials/lambert2.mat using Guid(402d755a1b296f24ba90517d694a80e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '763eae7879710d1e191e645dba508f2d') in 0.024790 seconds
+  Import took 0.027646 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.013059 seconds.
+  path: Assets/Subway Environment/Assets/Camera/Materials/lambert2.mat
+  artifactKey: Guid(402d755a1b296f24ba90517d694a80e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Subway Environment/Assets/Camera/Materials/lambert2.mat using Guid(402d755a1b296f24ba90517d694a80e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '763eae7879710d1e191e645dba508f2d') in 0.021766 seconds
+  Import took 0.025386 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 201.528455 seconds.
+  path: Assets/PolygonCity/Materials/Billboard_Mat.mat
+  artifactKey: Guid(53cf5c0ff424ff9458c56526516b63ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Materials/Billboard_Mat.mat using Guid(53cf5c0ff424ff9458c56526516b63ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71f79d6dfdefb5ce2257018d6e3f1586') in 0.041773 seconds
+  Import took 0.047332 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000461 seconds.
+  path: Assets/PolygonCity/Materials/PolygonCity_Glass_Mat.mat
+  artifactKey: Guid(c29d9dff2056b1543bbb70ec32427a62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Materials/PolygonCity_Glass_Mat.mat using Guid(c29d9dff2056b1543bbb70ec32427a62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e2022d859fb11fd7db1f45a62acc7310') in 0.072258 seconds
+  Import took 0.075955 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000420 seconds.
+  path: Assets/PolygonCity/Materials/PolygonCity_Mat_Road_01.mat
+  artifactKey: Guid(9415d5fbf987e4d47b3c90bea3a0d824) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonCity/Materials/PolygonCity_Mat_Road_01.mat using Guid(9415d5fbf987e4d47b3c90bea3a0d824) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb516a9320d2a4cee8770f7b9e36008e') in 0.034462 seconds
+  Import took 0.037995 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
