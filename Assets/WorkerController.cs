@@ -7,6 +7,7 @@ public class WorkerController : MonoBehaviour
 {
     private NavMeshAgent workerAgent;
     public GameObject worker;
+    public Transform alter;
     private RaycastHit hit;     // hit checker
     private string hitColliderName;
     int money;
@@ -14,6 +15,7 @@ public class WorkerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    
         workerAgent = GetComponent<NavMeshAgent>();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
@@ -38,9 +40,11 @@ public class WorkerController : MonoBehaviour
             worker.SetActive(true);     // ==> uncloak
             // Instantiate(worker,new Vector3(123,456,789), Qkuaternion rotation)
             // ==> regenerate
+            workerAgent.destination = alter.position;
         }
     }
 
+    // (-309, 5.5, 115)
     public void ObjectMove(NavMeshAgent agent)
     {
         if (Input.GetMouseButtonDown(0))    // Get Hero's name
