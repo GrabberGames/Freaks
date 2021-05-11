@@ -8,6 +8,7 @@ public class WorkerController : MonoBehaviour
     private NavMeshAgent workerAgent;
     public GameObject worker;
     public Transform alter;
+    public Transform workshop;
     private RaycastHit hit;     // hit checker
     private string hitColliderName;
     int money;
@@ -26,25 +27,38 @@ public class WorkerController : MonoBehaviour
         ObjectMove(workerAgent);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision col)
     {
         Debug.Log("Collision Detected!");
-        if(hit.transform.gameObject.name == "Workshop")
+        if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Workshop") 
         {
             // ----- workshop enter -----
             worker.SetActive(false);    // ==> cloaking
             // Destroy(worker);         // ==> destroy
-            Debug.Log("destroyed!");
+            Debug.Log("Workshop hit! destroyed!");
 
             // ----- workshop leave -----
             worker.SetActive(true);     // ==> uncloak
             // Instantiate(worker,new Vector3(123,456,789), Qkuaternion rotation)
             // ==> regenerate
             workerAgent.destination = alter.position;
+            string bject = col.gameObject.name;
+            if (col.gameObject.name == "Alter")
+            {
+                Debug.Log("Alter hit!");
+                workerAgent.destination = workshop.position;
+            }
+
+            if (col.gameObject.name == "Workshop")
+            {
+                Debug.Log("Workshop hit!");
+                workerAgent.destination = alter.position;
+            }
         }
     }
-
+  
     // (-309, 5.5, 115)
+
     public void ObjectMove(NavMeshAgent agent)
     {
         if (Input.GetMouseButtonDown(0))    // Get Hero's name
