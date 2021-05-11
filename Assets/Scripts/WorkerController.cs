@@ -35,27 +35,40 @@ public class WorkerController : MonoBehaviourPunCallbacks, IPunObservable
         ObjectMove(workerAgent);
     }
 
+    IEnumerator SetRendererActiveTrue()
+    {
+        yield return new WaitForSeconds(1f);
+
+        worker.GetComponent<Renderer>().enabled = true;
+        workerAgent.destination = alter.position;
+    }
+
     private void OnCollisionEnter(Collision col)
     {
         Debug.Log("Collision Detected!");
-        if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Workshop") 
+        if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Workshop")
         {
             // ----- workshop enter -----
-            worker.SetActive(false);    // ==> cloaking
+            // worker.SetActive(false);    // ==> cloaking
+            worker.GetComponent<Renderer>().enabled = false;
+            //worker.SetActive(false);    // ==> cloaking
             // Destroy(worker);         // ==> destroy
             Debug.Log("Workshop hit! destroyed!");
+            StartCoroutine("SetRendererActiveTrue");
 
             // ----- workshop leave -----
-            worker.SetActive(true);     // ==> uncloak
+            // worker.SetActive(true);     // ==> uncloak
+            //worker.SetActive(true);     // ==> uncloak
             // Instantiate(worker,new Vector3(123,456,789), Qkuaternion rotation)
             // ==> regenerate
-            workerAgent.destination = alter.position;
+            // workerAgent.destination = alter.position;
         }
 
         if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Alter")
         {
             workerAgent.destination = workshop.position;
         }
+
 
     }
   
