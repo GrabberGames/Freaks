@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class WorkerController : MonoBehaviour
+public class WorkerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     private NavMeshAgent workerAgent;
     public GameObject worker;
@@ -11,7 +12,9 @@ public class WorkerController : MonoBehaviour
     public Transform workshop;
     private RaycastHit hit;     // hit checker
     private string hitColliderName;
-    int money;
+    
+    [SerializeField]
+    private int money = 500;
     GameController gameController;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,11 @@ public class WorkerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if(Input.GetKeyDown(KeyCode.A))
+        //{
+        //    money -= 100;
+        //}
+
         ObjectMove(workerAgent);
     }
 
@@ -84,4 +92,18 @@ public class WorkerController : MonoBehaviour
             }
         }
     }
+
+    #region IPunObservable implementation
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(money);
+        }
+        else
+        {
+            this.money = (int)stream.ReceiveNext();
+        }
+    }
+    #endregion
 }
