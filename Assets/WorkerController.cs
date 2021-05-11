@@ -50,19 +50,13 @@ public class WorkerController : MonoBehaviourPunCallbacks, IPunObservable
             // Instantiate(worker,new Vector3(123,456,789), Qkuaternion rotation)
             // ==> regenerate
             workerAgent.destination = alter.position;
-            string bject = col.gameObject.name;
-            if (col.gameObject.name == "Alter")
-            {
-                Debug.Log("Alter hit!");
-                workerAgent.destination = workshop.position;
-            }
-
-            if (col.gameObject.name == "Workshop")
-            {
-                Debug.Log("Workshop hit!");
-                workerAgent.destination = alter.position;
-            }
         }
+
+        if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Alter")
+        {
+            workerAgent.destination = workshop.position;
+        }
+
     }
   
     // (-309, 5.5, 115)
