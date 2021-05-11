@@ -37,8 +37,10 @@ public class WorkerController : MonoBehaviourPunCallbacks, IPunObservable
 
     IEnumerator SetRendererActiveTrue()
     {
+        // ----- delay 1 sec -----
         yield return new WaitForSeconds(1f);
 
+        // ----- workshop leave -----
         worker.GetComponent<Renderer>().enabled = true;
         workerAgent.destination = alter.position;
     }
@@ -49,27 +51,18 @@ public class WorkerController : MonoBehaviourPunCallbacks, IPunObservable
         if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Workshop")
         {
             // ----- workshop enter -----
-            // worker.SetActive(false);    // ==> cloaking
             worker.GetComponent<Renderer>().enabled = false;
-            //worker.SetActive(false);    // ==> cloaking
-            // Destroy(worker);         // ==> destroy
             Debug.Log("Workshop hit! destroyed!");
+
             StartCoroutine("SetRendererActiveTrue");
 
-            // ----- workshop leave -----
-            // worker.SetActive(true);     // ==> uncloak
-            //worker.SetActive(true);     // ==> uncloak
-            // Instantiate(worker,new Vector3(123,456,789), Qkuaternion rotation)
-            // ==> regenerate
-            // workerAgent.destination = alter.position;
         }
 
+        // ----- workshop regression -----
         if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Alter")
         {
             workerAgent.destination = workshop.position;
         }
-
-
     }
   
     // (-309, 5.5, 115)
