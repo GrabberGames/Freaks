@@ -717,7 +717,7 @@
         "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
         "m_Guid": ""
     },
-    "m_DefaultType": 0
+    "m_DefaultType": 3
 }
 
 {
@@ -1017,8 +1017,8 @@
     "m_Color": {
         "color": {
             "r": 0.0,
-            "g": 0.0784313753247261,
-            "b": 0.250980406999588,
+            "g": 0.03921568766236305,
+            "b": 0.125490203499794,
             "a": 0.3764705955982208
         },
         "mode": 1
@@ -1815,10 +1815,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -281.5999755859375,
-            "y": -108.79998779296875,
-            "width": 207.99998474121095,
-            "height": 434.4000244140625
+            "x": -277.9999084472656,
+            "y": -108.99996948242188,
+            "width": 208.0,
+            "height": 437.0
         }
     },
     "m_Slots": [
@@ -1854,7 +1854,7 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     },
-    "m_TextureType": 0,
+    "m_TextureType": 1,
     "m_NormalMapSpace": 1
 }
 
@@ -1932,9 +1932,9 @@
     },
     "m_Color": {
         "color": {
-            "r": 0.09255723655223847,
-            "g": 0.5751771330833435,
-            "b": 0.6313725709915161,
+            "r": 0.1917257010936737,
+            "g": 1.1569654941558838,
+            "b": 1.2627451419830323,
             "a": 0.7098039388656616
         },
         "mode": 1
@@ -2195,7 +2195,7 @@
     ],
     "synonyms": [],
     "m_Precision": 0,
-    "m_PreviewExpanded": true,
+    "m_PreviewExpanded": false,
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
