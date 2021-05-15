@@ -3,15 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bullet
+  - Freaks_B
+  - Freaks_R
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Alter
   - Water
   - UI
-  - 
+  - Freaks
   - 
   - 
   - 

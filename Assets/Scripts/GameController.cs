@@ -10,16 +10,51 @@ public class GameController : MonoBehaviour
 
     public int money = 50;
 
+    // Team Separation
+    public List<GameObject> blueAlters = new List<GameObject>();
+    public List<GameObject> redAlters = new List<GameObject>();
+
+    // UI
+    public GameObject gameOver;
+
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        //pc = GetComponent<NavMeshAgent>();
+        //gameOver = GameObject.Find("GameOver");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+
+    }
+
+
+    public void ObjectMove(NavMeshAgent agent)
+    {
+        if (Input.GetMouseButtonDown(0))    // Get Hero's name
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                Debug.Log(hit.transform.gameObject.name);
+                hitColliderName = hit.transform.gameObject.name;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))    // Right Mouse Click && Hero Clicked
+        {
+            Debug.Log(hitColliderName);
+            agent = GameObject.Find(hitColliderName).GetComponent<NavMeshAgent>();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    // Ray Set; Mouse Pointer Position
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                agent.SetDestination(hit.point); // Hero Move
+            }
+        }
     }
 
 }
