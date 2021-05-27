@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Plant
-  m_Shader: {fileID: -6465566751694194690, guid: 258628384b13cfc45b11a6d0dc47dd6d,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 258628384b13cfc45b11a6d0dc47dd6d, type: 3}
   m_ShaderKeywords: ENUM_25859456_DESABLE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -76,6 +75,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_1203FFE7: 0
     - Vector1_1904F0DA: 0.07
@@ -125,10 +136,11 @@ Material:
     - _time: 0.3
     - _time1: 0.3
     m_Colors:
-    - Color_83AE0B30: {r: 0.4713259, g: 0.6698113, b: 0.41389284, a: 0}
+    - Color_83AE0B30: {r: 0.38823533, g: 0.5137255, b: 0.28627452, a: 0}
     - Color_D1AD6A17: {r: 1, g: 1, b: 1, a: 0}
     - Vector2_DA8EBF00: {r: 1, g: 1, b: 0, a: 0}
     - Vector2_F8D695CF: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.20122859, g: 0.5943396, b: 0.15979885, a: 1}
     - _Color1: {r: 0.38431373, g: 0.98039216, b: 0.16078432, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []

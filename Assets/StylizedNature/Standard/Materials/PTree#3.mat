@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PTree#3
-  m_Shader: {fileID: -6465566751694194690, guid: e8b2d186a39993e41b4bd4b3c21b7e3d,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: e8b2d186a39993e41b4bd4b3c21b7e3d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -68,16 +67,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_1EC72534: 0.74
     - Vector1_3A60E20F: 0.71
     - Vector1_42E25D6F: 0.5
-    - Vector1_42FA04A1: 0.5
-    - Vector1_4B428442: 1.5
+    - Vector1_42FA04A1: 0.26
+    - Vector1_4B428442: 0.83
     - Vector1_998FDCEF: 1.79
     - Vector1_9D92ACE3: 0.05
     - Vector1_BFD8FED2: 0.16
-    - Vector1_F7EECDC0: 0.5
+    - Vector1_F7EECDC0: 0.27
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -111,8 +122,9 @@ Material:
     - __dirty: 1
     - _time: 0.1
     m_Colors:
-    - Color_F6E82D54: {r: 0.5254902, g: 0.7058824, b: 0.59066135, a: 0}
+    - Color_F6E82D54: {r: 0.38823533, g: 0.5137255, b: 0.28235295, a: 0}
     - Vector3_18D5AB93: {r: 0, g: 0, b: 0, a: 0}
     - Vector3_C5A0693C: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0, g: 0.3764706, b: 0.23921569, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
