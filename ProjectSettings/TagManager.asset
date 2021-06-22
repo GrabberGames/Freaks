@@ -7,6 +7,9 @@ TagManager:
   - Bullet
   - Freaks_B
   - Freaks_R
+  - N
+  - S
+  - E
   layers:
   - Default
   - TransparentFX

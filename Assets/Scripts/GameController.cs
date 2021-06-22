@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+
+
+
+
 public class GameController : MonoBehaviour
 {
     private RaycastHit hit;
@@ -23,11 +28,6 @@ public class GameController : MonoBehaviour
     {
         //pc = GetComponent<NavMeshAgent>();
         //gameOver = GameObject.Find("GameOver");
-    }
-
-    private void Update()
-    {
-
     }
 
 
