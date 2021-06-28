@@ -19,17 +19,25 @@ public class MinionSpawner : MonoBehaviour
     public GameObject[] SpawnPoint;
 
     public int spawnRate;
-    public int waveTimer;
+    public int waveTimer;   // min
     public int cm_num;
     public int lm_num;
 
+    private int waveTimer_Backup;
     private Wave wave = Wave.w0;
     private int wave_num = 0;
     private int randomSpawn;
 
+    public int _min;
+    public int _sec;
+
 
     private void Start()
     {
+        waveTimer_Backup = waveTimer;
+        _min = (waveTimer / 60);
+        _sec = 0;
+
         randomSpawn = Random.Range(0, SpawnPoint.Length);   // random spawn point pick
         Debug.Log("random: " + randomSpawn);
         Debug.Log("len: " + SpawnPoint.Length);
@@ -40,15 +48,26 @@ public class MinionSpawner : MonoBehaviour
     {
         while (true)
         {
-            if (waveTimer >= 0)
+            if (_min >= 0)
             {
-                timerText.text = "TIMER: " + waveTimer;
-                waveTimer--;
+                timerText.text = string.Format("{0:D1}:{1:D2}", _min, _sec);
+
+                if (_sec == 0)
+                {
+                    if (_min == 0 && _sec == 0)
+                    {
+                        _min = 0;
+                        _sec = 0;
+                        break;
+                    }
+                    else
+                    {
+                        _min -= 1;
+                        _sec = 59;
+                    }
+                }
+                _sec--;
                 yield return new WaitForSeconds(1);
-            }
-            else
-            {
-                break;
             }
         }
     }
@@ -56,12 +75,13 @@ public class MinionSpawner : MonoBehaviour
 
     IEnumerator MinionSpawn()
     {
-        while(true)
+        while (true)
         {
 
             yield return StartCoroutine(Timer());   // after times up
-
-            //yield return new WaitForSeconds(waveTimer);
+            //timer Reset;
+            _min = (waveTimer / 60);
+            _sec = 0;
 
             if (wave == Wave.w0 && wave_num < System.Enum.GetValues(typeof(Wave)).Length - 1)   // Wave.w0 == break time || 1 <= wave_num <= 10; Wave.Length == 11
             {
