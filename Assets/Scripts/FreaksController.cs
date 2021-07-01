@@ -11,8 +11,12 @@ public class FreaksController : MonoBehaviour
 {
     private NavMeshAgent agent;
     private GameController gameController;
+    private GameObject enemyUnit;
+    private GameObject destination;
+    private string enemyFreaksTag;
 
-    public Team myTeam = Team.Blue;
+    public bool isEnemyFound;
+    public Team myTeam;
 
     // Start is called before the first frame update
     void Start()
@@ -22,14 +26,20 @@ public class FreaksController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        GameObject destination = SearchCloseEnemyAlter();
-        if (destination != null)
+        destination = SearchCloseEnemyAlter();
+        if (destination != null && !isEnemyFound)
         {
             agent.SetDestination(destination.transform.position);
         }
+        else if (isEnemyFound)
+        {
+            agent.SetDestination(enemyUnit.transform.position);
+        }
+
     }
+
 
     // Find nearest enemy Alter
     GameObject SearchCloseEnemyAlter()
@@ -44,10 +54,16 @@ public class FreaksController : MonoBehaviour
             enemyAlters = gameController.blueAlters;
         }
 
-        if (enemyAlters.Count == 0) return null;
+        if (enemyAlters.Count == 0)
+        {
+            return null;
+        }
+
         GameObject closeAlter = enemyAlters[0];
         NavMeshPath path = agent.path;
+
         agent.CalculatePath(closeAlter.transform.position, path);
+        
         float min = GetPathLength(path);
 
         foreach (GameObject i in enemyAlters)
@@ -68,11 +84,15 @@ public class FreaksController : MonoBehaviour
 
     public static float GetPathLength(NavMeshPath path)
     {
-        if (path.corners.Length == 0) return 0;
+        if (path.corners.Length == 0)
+        {
+            return 0;
+        }
 
         Vector3 previousCorner = path.corners[0];
         float length = 0.0F;
         int i = 1;
+
         while (i < path.corners.Length)
         {
             Vector3 currentCorner = path.corners[i];
@@ -86,20 +106,36 @@ public class FreaksController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        string enemyFreeks;
+        // Find nearest Enemy Freaks //
+        
+
         if (myTeam == Team.Blue)
         {
-            enemyFreeks = "Freeks_R";
+            enemyFreaksTag = "Freaks_R";
         }
         else
         {
-            enemyFreeks = "Freeks_B";
+            enemyFreaksTag = "Freaks_B";
         }
 
-        if (other.gameObject.name == enemyFreeks)
+        if (other.gameObject.CompareTag(enemyFreaksTag))
         {
-            Destroy(this.gameObject);
-            Destroy(other);
+            isEnemyFound = true;
+            enemyUnit = other.gameObject;   
+            //Debug.Log("Found: " + other.gameObject.name);     // Debug()
         }
+        //--//
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag(enemyFreaksTag))
+        {
+            isEnemyFound = false;
+            Debug.Log("Lost: " + other.gameObject.name);
+        }
+
+
     }
 }
