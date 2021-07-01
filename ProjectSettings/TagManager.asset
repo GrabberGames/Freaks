@@ -10,6 +10,7 @@ TagManager:
   - N
   - S
   - E
+  - Collide
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Water
   - UI
   - Freaks
-  - 
-  - 
+  - TempCast
+  - Walkable
   - 
   - 
   - 
