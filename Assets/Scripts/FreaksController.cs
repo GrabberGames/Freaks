@@ -9,6 +9,7 @@ public enum Team
 }
 public class FreaksController : MonoBehaviour
 {
+
     private NavMeshAgent agent;
     private GameController gameController;
     private GameObject enemyUnit;
@@ -33,11 +34,11 @@ public class FreaksController : MonoBehaviour
         {
             agent.SetDestination(destination.transform.position);
         }
-        else if (isEnemyFound)
+        
+        if (isEnemyFound)
         {
             agent.SetDestination(enemyUnit.transform.position);
         }
-
     }
 
 
@@ -104,11 +105,10 @@ public class FreaksController : MonoBehaviour
         return length;
     }
 
+    
     void OnTriggerEnter(Collider other)
     {
         // Find nearest Enemy Freaks //
-        
-
         if (myTeam == Team.Blue)
         {
             enemyFreaksTag = "Freaks_R";
@@ -133,9 +133,7 @@ public class FreaksController : MonoBehaviour
         if (other.gameObject.CompareTag(enemyFreaksTag))
         {
             isEnemyFound = false;
-            Debug.Log("Lost: " + other.gameObject.name);
+            //Debug.Log("Lost: " + other.gameObject.name);     // Debug()
         }
-
-
     }
 }
