@@ -5,12 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
-  - Freaks_B
-  - Freaks_R
   - N
   - S
   - E
   - Collide
+  - Red
+  - Blue
   layers:
   - Default
   - TransparentFX

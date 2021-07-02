@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -1379169891645997084}
   m_Layer: 6
   m_Name: Minion
-  m_TagString: Freaks_R
+  m_TagString: Red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -12,9 +12,9 @@ public class FreaksController : MonoBehaviour
 
     private NavMeshAgent agent;
     private GameController gameController;
-    private GameObject enemyUnit;
     private GameObject destination;
-    private string enemyFreaksTag;
+    private GameObject enemy;
+
 
     public bool isEnemyFound;
     public Team myTeam;
@@ -24,20 +24,22 @@ public class FreaksController : MonoBehaviour
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         agent = GetComponent<NavMeshAgent>();
+        enemy = GameObject.Find("Brute Warrior");
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        destination = SearchCloseEnemyAlter();
-        if (destination != null && !isEnemyFound)
+        if (!isEnemyFound)
         {
-            agent.SetDestination(destination.transform.position);
+            Debug.Log("N");
+            agent.SetDestination(SearchCloseEnemyAlter().transform.position);
         }
         
         if (isEnemyFound)
         {
-            agent.SetDestination(enemyUnit.transform.position);
+            Debug.Log("Y");
+            agent.SetDestination(enemy.transform.position);
         }
     }
 
@@ -55,10 +57,12 @@ public class FreaksController : MonoBehaviour
             enemyAlters = gameController.blueAlters;
         }
 
+        /*
         if (enemyAlters.Count == 0)
         {
             return null;
         }
+        */
 
         GameObject closeAlter = enemyAlters[0];
         NavMeshPath path = agent.path;
@@ -109,19 +113,9 @@ public class FreaksController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Find nearest Enemy Freaks //
-        if (myTeam == Team.Blue)
-        {
-            enemyFreaksTag = "Freaks_R";
-        }
-        else
-        {
-            enemyFreaksTag = "Freaks_B";
-        }
-
-        if (other.gameObject.CompareTag(enemyFreaksTag))
+        if (other.gameObject.CompareTag("Player"))
         {
             isEnemyFound = true;
-            enemyUnit = other.gameObject;   
             //Debug.Log("Found: " + other.gameObject.name);     // Debug()
         }
         //--//
@@ -130,7 +124,7 @@ public class FreaksController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag(enemyFreaksTag))
+        if (other.gameObject.CompareTag("Player"))
         {
             isEnemyFound = false;
             //Debug.Log("Lost: " + other.gameObject.name);     // Debug()
