@@ -32,13 +32,13 @@ public class FreaksController : MonoBehaviour
     {
         if (!isEnemyFound)
         {
-            Debug.Log("N");
+            Debug.Log("N", gameObject);
             agent.SetDestination(SearchCloseEnemyAlter().transform.position);
         }
         
         if (isEnemyFound)
         {
-            Debug.Log("Y");
+            Debug.Log("Y", gameObject);
             agent.SetDestination(enemy.transform.position);
         }
     }
@@ -130,4 +130,5 @@ public class FreaksController : MonoBehaviour
             //Debug.Log("Lost: " + other.gameObject.name);     // Debug()
         }
     }
+    
 }
