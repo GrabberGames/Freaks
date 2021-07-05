@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 459389702971468714}
   - component: {fileID: -8532837973335641818}
   - component: {fileID: 9058720004211826746}
-  - component: {fileID: -5878042955249502043}
   m_Layer: 6
   m_Name: Minion_2
   m_TagString: Red
@@ -152,16 +151,3 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
---- !u!135 &-5878042955249502043
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6786269160480896655}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 7.5
-  m_Center: {x: 0, y: 0, z: 0}

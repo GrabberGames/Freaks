@@ -9,15 +9,15 @@ public enum Team
 }
 public class FreaksController : MonoBehaviour
 {
-
     private NavMeshAgent agent;
     private GameController gameController;
     //private GameObject destination;
     private GameObject enemy;
 
-    
+
     public bool isEnemyFound;
     public Team myTeam;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,22 +27,31 @@ public class FreaksController : MonoBehaviour
         enemy = GameObject.Find("Brute Warrior");
     }
 
+
     // Update is called once per frame
     void Update()
     {
         float dist = Vector3.Distance(enemy.transform.position, gameObject.transform.position); // Distance between of enemy and Freaks
 
-
-        Debug.Log("dist: " + dist);
-
+        if (dist <= 7.5f)
+        {
+            isEnemyFound = true;
+            agent.SetDestination(enemy.transform.position);
+        }
+        else
+        {
+            isEnemyFound = false;
+            agent.SetDestination(SearchCloseEnemyAlter().transform.position);
+        }
     }
-    
 
 
 
-
-
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, 7.5f);
+    }
 
 
     // Find nearest enemy Alter
@@ -88,6 +97,7 @@ public class FreaksController : MonoBehaviour
         return closeAlter;
     }
 
+
     public static float GetPathLength(NavMeshPath path)
     {
         if (path.corners.Length == 0)
@@ -109,8 +119,5 @@ public class FreaksController : MonoBehaviour
 
         return length;
     }
-
-    
-    
     
 }
