@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Photon.Pun;
 
-public class WorkerController : MonoBehaviourPunCallbacks, IPunObservable
+public class WorkerController : MonoBehaviour 
 {
     private NavMeshAgent workerAgent;
     public GameObject worker;
@@ -93,17 +92,4 @@ public class WorkerController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    #region IPunObservable implementation
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if(stream.IsWriting)
-        {
-            stream.SendNext(money);
-        }
-        else
-        {
-            this.money = (int)stream.ReceiveNext();
-        }
-    }
-    #endregion
 }
