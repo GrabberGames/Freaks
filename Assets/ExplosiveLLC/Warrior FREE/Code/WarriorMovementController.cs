@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.AI;
 namespace WarriorAnimsFREE
 {
 	public class WarriorMovementController:SuperStateMachine
@@ -22,12 +22,25 @@ namespace WarriorAnimsFREE
 
 		[HideInInspector] public Vector3 lookDirection { get; private set; }
 
+		//////////Add Data///////////
+		private Camera mainCamera;
+		private Vector3 targetPos;
+		private bool isRun = false;
+		private Rigidbody rigid;
+		private NavMeshAgent agent;
+		//////////Add Data///////////
+
+
 		private void Start()
 		{
 			warriorController = GetComponent<WarriorController>();
 			
 			// Set currentState to idle on startup.
 			currentState = WarriorState.Idle;
+
+			rigid = GetComponent<Rigidbody>();
+			mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+			agent = GetComponent<NavMeshAgent>();
 
 			this.Hp = 400;
 			this.Mp = 100;
@@ -36,7 +49,47 @@ namespace WarriorAnimsFREE
 			this.Range = 10;
 			this.Ammor = 10;
 		}
+		private void Update()
+		{
+			if (Input.GetMouseButtonUp(0))
+			{
+				Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
 
+				if (Physics.Raycast(ray, out hit, 10000f))
+				{
+					targetPos = hit.point;
+					agent.SetDestination(targetPos);
+				}
+			}
+			if (Run(targetPos))
+			{
+				isRun = true;
+				Turn(targetPos);
+			}
+			else
+			{
+				isRun = false;
+			}
+		}
+		private bool Run(Vector3 targetPos)
+		{
+
+			float dis = Vector3.Distance(transform.position, targetPos);
+			if (dis >= 0.3f)
+			{
+				print("==");
+				return true;
+			}
+			return false;
+		}
+		private void Turn(Vector3 targetPos)
+		{
+			Vector3 dir = targetPos - transform.position;
+			Vector3 dirXZ = new Vector3(dir.x, 0f, dir.z);
+			Quaternion targetRot = Quaternion.LookRotation(dirXZ);
+			rigid.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, 550.0f * Time.deltaTime);
+		}
 		#region Updates
 
 		/*void Update () {
@@ -55,25 +108,19 @@ namespace WarriorAnimsFREE
 		protected override void LateGlobalSuperUpdate()
 		{
 			// Move the player by our velocity every frame.
-			transform.position += currentVelocity * warriorController.superCharacterController.deltaTime;
+			//transform.position += currentVelocity * warriorController.superCharacterController.deltaTime;
 
 			// If alive and is moving, set animator.
 			if (warriorController.canMove) {
-				if (currentVelocity.magnitude > 0 && warriorController.HasMoveInput()) {
-					warriorController.isMoving = true;
+				if (isRun) {
 					warriorController.SetAnimatorBool("Moving", true);
-					warriorController.SetAnimatorFloat("Velocity", currentVelocity.magnitude);
-				} else {
-					warriorController.isMoving = false;
+					warriorController.SetAnimatorFloat("Velocity", agent.speed);
+				} 
+				else {
 					warriorController.SetAnimatorBool("Moving", false);
 					warriorController.SetAnimatorFloat("Velocity", 0);
 				}
 			}
-
-			RotateTowardsMovementDir();
-
-			// Update animator with local movement values.
-			warriorController.SetAnimatorFloat("Velocity", transform.InverseTransformDirection(currentVelocity).z);
 		}
 
 		#endregion
@@ -155,82 +202,14 @@ namespace WarriorAnimsFREE
 			// Set speed determined by movement type.
 			if (warriorController.HasMoveInput() && warriorController.canMove) {
 				currentVelocity = Vector3.MoveTowards(currentVelocity, warriorController.moveInput 
-					* runSpeed, movementAcceleration 
+					* agent.speed, movementAcceleration 
 					* warriorController.superCharacterController.deltaTime);
 			} else {
 				currentState = WarriorState.Idle;
 			}
 		}
 
-		private void Jump_EnterState()
-		{
-			warriorController.SetAnimatorInt("Jumping", 1);
-			warriorController.SetAnimatorTrigger(AnimatorTrigger.JumpTrigger);
-			warriorController.superCharacterController.DisableClamping();
-			warriorController.superCharacterController.DisableSlopeLimit();
-			currentVelocity += warriorController.superCharacterController.up * CalculateJumpSpeed(jumpHeight, gravity);
-			warriorController.LockJump(true);
-			warriorController.Jump();
-		}
-
-		private void Jump_SuperUpdate()
-		{
-			Vector3 planarMoveDirection = Math3d.ProjectVectorOnPlane(warriorController.superCharacterController.up, currentVelocity);
-			Vector3 verticalMoveDirection = currentVelocity - planarMoveDirection;
-
-			// Falling.
-			if (currentVelocity.y < 0) {
-				currentVelocity = planarMoveDirection;
-				currentState = WarriorState.Fall;
-				return;
-			}
-
-			planarMoveDirection = Vector3.MoveTowards(planarMoveDirection, warriorController.moveInput * inAirSpeed, jumpAcceleration * warriorController.superCharacterController.deltaTime);
-			verticalMoveDirection -= warriorController.superCharacterController.up * gravity * warriorController.superCharacterController.deltaTime;
-			currentVelocity = planarMoveDirection + verticalMoveDirection;
-		}
-
-		private void Fall_EnterState()
-		{
-			warriorController.superCharacterController.DisableClamping();
-			warriorController.superCharacterController.DisableSlopeLimit();
-			warriorController.LockJump(false);
-			warriorController.SetAnimatorInt("Jumping", 2);
-			warriorController.SetAnimatorTrigger(AnimatorTrigger.JumpTrigger);
-		}
-
-		private void Fall_SuperUpdate()
-		{
-			// Landing.
-			if (warriorController.AcquiringGround()) {
-				currentVelocity = Math3d.ProjectVectorOnPlane(warriorController.superCharacterController.up, currentVelocity);
-				currentState = WarriorState.Idle;
-				return;
-			}
-
-			// Normal gravity.
-			currentVelocity -= warriorController.superCharacterController.up * gravity * warriorController.superCharacterController.deltaTime;
-		}
-
-		private void Fall_ExitState()
-		{
-			warriorController.SetAnimatorInt("Jumping", 0);
-			warriorController.SetAnimatorTrigger(AnimatorTrigger.JumpTrigger);
-
-			// Landed.
-			if (warriorController.AcquiringGround()) { warriorController.Land(); }
-		}
-
 		#endregion
 
-		/// <summary>
-		/// Rotate towards the direction the Warrior is moving.
-		/// </summary>
-		private void RotateTowardsMovementDir()
-		{
-			if (warriorController.moveInput != Vector3.zero) {
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(warriorController.moveInput), Time.deltaTime * rotationSpeed);
-			}
-		}
 	}
 }
