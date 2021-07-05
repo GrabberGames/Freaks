@@ -70,6 +70,7 @@ public class WorkerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))    // Get Hero's name
         {
+            print("!!!");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))

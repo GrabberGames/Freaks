@@ -12,10 +12,10 @@ public class FreaksController : MonoBehaviour
 
     private NavMeshAgent agent;
     private GameController gameController;
-    private GameObject destination;
+    //private GameObject destination;
     private GameObject enemy;
 
-
+    
     public bool isEnemyFound;
     public Team myTeam;
 
@@ -30,18 +30,19 @@ public class FreaksController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isEnemyFound)
-        {
-            Debug.Log("N", gameObject);
-            agent.SetDestination(SearchCloseEnemyAlter().transform.position);
-        }
-        
-        if (isEnemyFound)
-        {
-            Debug.Log("Y", gameObject);
-            agent.SetDestination(enemy.transform.position);
-        }
+        float dist = Vector3.Distance(enemy.transform.position, gameObject.transform.position); // Distance between of enemy and Freaks
+
+
+        Debug.Log("dist: " + dist);
+
     }
+    
+
+
+
+
+
+
 
 
     // Find nearest enemy Alter
@@ -110,25 +111,6 @@ public class FreaksController : MonoBehaviour
     }
 
     
-    void OnTriggerEnter(Collider other)
-    {
-        // Find nearest Enemy Freaks //
-        if (other.gameObject.CompareTag("Player"))
-        {
-            isEnemyFound = true;
-            //Debug.Log("Found: " + other.gameObject.name);     // Debug()
-        }
-        //--//
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            isEnemyFound = false;
-            //Debug.Log("Lost: " + other.gameObject.name);     // Debug()
-        }
-    }
+    
     
 }
