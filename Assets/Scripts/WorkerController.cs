@@ -80,7 +80,7 @@ public class WorkerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1))    // Right Mouse Click && Hero Clicked
+        if (Input.GetMouseButtonDown(0))    // Right Mouse Click && Hero Clicked
         {
             agent = GameObject.Find(hitColliderName).GetComponent<NavMeshAgent>();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    // Ray Set; Mouse Pointer Position
