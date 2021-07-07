@@ -68,29 +68,29 @@ public class WorkerController : MonoBehaviour
 
     public void ObjectMove(NavMeshAgent agent)
     {
-        if (Input.GetMouseButtonDown(0))    // Get Hero's name
-        {
-            print("!!!");
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //if (Input.GetMouseButtonDown(0))    // Get Hero's name
+        //{
+        //    print("!!!");
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                Debug.Log(hit.transform.gameObject.name);
-                hitColliderName = hit.transform.gameObject.name;
-            }
-        }
+        //    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        //    {
+        //        Debug.Log(hit.transform.gameObject.name);
+        //        hitColliderName = hit.transform.gameObject.name;
+        //    }
+        //}
 
-        if (Input.GetMouseButtonDown(0))    // Right Mouse Click && Hero Clicked
-        {
-            agent = GameObject.Find(hitColliderName).GetComponent<NavMeshAgent>();
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    // Ray Set; Mouse Pointer Position
+        //if (Input.GetMouseButtonDown(0))    // Right Mouse Click && Hero Clicked
+        //{
+        //    agent = GameObject.Find(hitColliderName).GetComponent<NavMeshAgent>();
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    // Ray Set; Mouse Pointer Position
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                // Debug.Log(hit.transform.gameObject.name);
-                agent.SetDestination(hit.point); // Hero Move
-            }
-        }
+        //    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        //    {
+        //        // Debug.Log(hit.transform.gameObject.name);
+        //        agent.SetDestination(hit.point); // Hero Move
+        //    }
+        //}
     }
 
 }
