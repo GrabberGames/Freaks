@@ -14,6 +14,8 @@ public class BuildingController : MonoBehaviour
     private bool isBuildingListBtnExsit = false;
     private bool isPreviewActivate = false;
 
+    private float buildingHeight;
+
     private GameObject building;
     [SerializeField]
     private GameObject mbtnPrefab;
@@ -42,8 +44,7 @@ public class BuildingController : MonoBehaviour
             {
                 if (hit.transform.gameObject.name == "Alter_B")
                 {
-                    build.gameObject.SetActive(isBtnActivate);
-                    isBtnActivate = !isBtnActivate;
+                    SetBuildBtnActive();
                 }
             }
         }
@@ -120,7 +121,7 @@ public class BuildingController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Vector3 _location = hit.point;
-            _location.y = 7.0f;
+            _location.y = buildingHeight;
             building.transform.position = _location;
         }
     }
@@ -142,14 +143,20 @@ public class BuildingController : MonoBehaviour
             return;
         }
 
-        build.gameObject.SetActive(isBtnActivate);
-        isBtnActivate = !isBtnActivate;
+        SetBuildBtnActive();
 
         building = Instantiate(Buildings[buildingNum]);
+        buildingHeight = building.GetComponent<Renderer>().bounds.size.y / 2.0f;
         building.AddComponent<BuildingPreview>();
         isPreviewActivate = true;
 
         BuildingList.SetActive(false);
+    }
 
+    private void SetBuildBtnActive()
+    {
+
+        build.gameObject.SetActive(isBtnActivate);
+        isBtnActivate = !isBtnActivate;
     }
 }

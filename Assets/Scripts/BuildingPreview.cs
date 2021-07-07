@@ -6,7 +6,6 @@ public class BuildingPreview : MonoBehaviour
 {
     private List<Collider> colliders = new List<Collider>();
 
-    [SerializeField]
     private Material red, green;
     public Material material;
 
@@ -40,7 +39,7 @@ public class BuildingPreview : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Transform parent = other.transform.parent;
-        if(parent != null && parent.name != "Road")
+        if(parent == null || parent.name != "Road")
         {
             colliders.Add(other);
         }
