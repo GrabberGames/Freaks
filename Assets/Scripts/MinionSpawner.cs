@@ -87,13 +87,11 @@ public class MinionSpawner : MonoBehaviour
             {
                 wave_num += 1;
                 wave += wave_num;
-                Debug.Log("wave: " + wave);
 
                 while (cm_num > 0)
                 {
                     Instantiate(Minion[0], SpawnPoint[randomSpawn].transform.position, Quaternion.identity);   // close range minion spawn
                     yield return new WaitForSeconds(spawnRate);     // 1sec wait
-                    Debug.Log(SpawnPoint[randomSpawn].name + " Spawned");
                     cm_num--;
                 }
 
@@ -101,7 +99,6 @@ public class MinionSpawner : MonoBehaviour
                 {
                     Instantiate(Minion[1], SpawnPoint[randomSpawn].transform.position, Quaternion.identity);   // long range minion spawn
                     yield return new WaitForSeconds(spawnRate);     // 1sec wait
-                    Debug.Log(SpawnPoint[randomSpawn].name + " Spawned");
                     lm_num--;
                 }
                 wave = Wave.w0;     // break time activate (2 min)
