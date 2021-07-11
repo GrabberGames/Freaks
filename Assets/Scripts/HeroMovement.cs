@@ -26,6 +26,9 @@ namespace WarriorAnims
         private Vector3 TowardVec;
         private Vector3 destination;
 
+
+        private bool test_isClick = false;
+
         private bool isMove = false;
         private bool isAction = false;
         public float groundFriction = 50f;
@@ -161,8 +164,8 @@ namespace WarriorAnims
             print(characterStat.Hp);
             ChooseCoroutine();
             CharacterMovement();
-            Move();
         }
+
         void ChooseCoroutine()
         {
             if (isAction)
@@ -173,6 +176,7 @@ namespace WarriorAnims
                 print("!");
             }
         }
+
         IEnumerator Die()
         {
             print("*");
@@ -192,29 +196,46 @@ namespace WarriorAnims
             isAction = false;
             yield return null;
         }
+        IEnumerator Moving(bool is_)
+        {
+            animator.SetBool("Moving", is_);
+            yield return null;
+        }
+
         void CharacterMovement()
         {
             if (Input.GetMouseButton(0))
             {
                 characterStat.Hp = 0;
             }
-            if (Input.GetMouseButton(1))
+            else if (Input.GetMouseButton(1) && !test_isClick)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
                     SetDestination(hit.point);
+                test_isClick = true;
             }
-            if (Input.GetMouseButtonDown(1))
+            else if (Input.GetMouseButtonUp(1))
             {
                 agent.velocity = Vector3.zero;
+                test_isClick = false;
             }
+
+
+            if (test_isClick)
+            {
+                Move();
+            }
+
         }
+
         void SetDestination(Vector3 dest)
         {
             agent.SetDestination(dest);
             destination = dest;
             isMove = true;
-            animator.SetBool("Moving", true);
+            //animator.SetBool("Moving", true);
+            StartCoroutine(Moving(true));
         }
         void Move()
         {
@@ -224,11 +245,12 @@ namespace WarriorAnims
                 {
                     isMove = false;
                     animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-                    animator.SetBool("Moving", false);
+                    StartCoroutine(Moving(true));
+                    //animator.SetBool("Moving", false);
                     return;
                 }
                 var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
-                velocity = Vector3.MoveTowards(agent.velocity, dir , agent.speed * Time.deltaTime);
+                velocity = Vector3.MoveTowards(agent.velocity, dir, agent.speed * Time.deltaTime);
                 animator.SetFloat("Velocity Z", velocity.magnitude);
                 transform.forward = new Vector3(dir.x, 0, dir.z);
                 //transform.position += dir.normalized * Time.deltaTime * agent.speed;
