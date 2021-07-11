@@ -39,8 +39,6 @@ public class MinionSpawner : MonoBehaviour
         _sec = 0;
 
         randomSpawn = Random.Range(0, SpawnPoint.Length);   // random spawn point pick
-        Debug.Log("random: " + randomSpawn);
-        Debug.Log("len: " + SpawnPoint.Length);
         StartCoroutine(MinionSpawn());
     }
 

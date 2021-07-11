@@ -11,6 +11,7 @@ TagManager:
   - Collide
   - Red
   - Blue
+  - Building
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Freaks
   - TempCast
   - Walkable
-  - 
+  - Building
   - 
   - 
   - 

@@ -29,7 +29,6 @@ namespace WarriorAnims
         private bool isMove = false;
 
         public float groundFriction = 50f;
-        private float animationSpeed = 1f;
 
 
         private void Awake()
@@ -148,14 +147,26 @@ namespace WarriorAnims
         */
         private void Update()
         {
+            CharacterMovement();
+            Move();
+        }
+        void CharacterMovement()
+        {
             if (Input.GetMouseButton(1))
             {
-                velocity = Vector3.zero;
                 RaycastHit hit;
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
                     SetDestination(hit.point);
             }
-            Move();
+            if (Input.GetMouseButtonDown(1))
+            {
+                agent.velocity = Vector3.zero;
+                /*
+                RaycastHit hit;
+                if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+                    SetDestination(hit.point);
+                */
+            }
         }
         void SetDestination(Vector3 dest)
         {
@@ -176,7 +187,7 @@ namespace WarriorAnims
                     return;
                 }
                 var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
-                velocity = Vector3.MoveTowards(velocity, dir , agent.speed * Time.deltaTime);
+                velocity = Vector3.MoveTowards(agent.velocity, dir , agent.speed * Time.deltaTime);
                 animator.SetFloat("Velocity Z", velocity.magnitude);
                 transform.forward = new Vector3(dir.x, 0, dir.z);
                 //transform.position += dir.normalized * Time.deltaTime * agent.speed;
