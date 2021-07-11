@@ -6,8 +6,21 @@ using System.Collections.Generic;
 /// <summary>
 /// State machine model that recieves SuperUpdate messages from the SuperCharacterController
 /// </summary>
+/// 
+
+
 public class SuperStateMachine : MonoBehaviour {
 
+    protected class CharacterStat
+    {
+        public int Hp;
+        public int Mp;
+        public int MoveSpeed;
+        public int AttackSpeed;
+        public int Armor;
+    }
+
+    public virtual void SetCharacterStat() { }
     protected float timeEnteredState;
 
     public class State

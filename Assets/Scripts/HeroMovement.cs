@@ -27,12 +27,14 @@ namespace WarriorAnims
         private Vector3 destination;
 
         private bool isMove = false;
-
+        private bool isAction = false;
         public float groundFriction = 50f;
 
+        CharacterStat characterStat = new CharacterStat();
 
         private void Awake()
         {
+            SetCharacterStat();
             animator = GetComponentInChildren<Animator>();
             if (animator == null)
             {
@@ -56,6 +58,15 @@ namespace WarriorAnims
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;
         }
+        public override void SetCharacterStat()
+        {
+            characterStat.Hp = 400;
+            characterStat.Mp = 100;
+            characterStat.MoveSpeed = 10;
+            characterStat.AttackSpeed = 1;
+            characterStat.Armor = 10;
+        }
+
         /*
         // Update is called once per frame
         void Update()
@@ -147,11 +158,46 @@ namespace WarriorAnims
         */
         private void Update()
         {
+            print(characterStat.Hp);
+            ChooseCoroutine();
             CharacterMovement();
             Move();
         }
+        void ChooseCoroutine()
+        {
+            if (isAction)
+                return;
+            if(characterStat.Hp <= 0)
+            {
+                StartCoroutine("Die");
+                print("!");
+            }
+        }
+        IEnumerator Die()
+        {
+            print("*");
+            isAction = true;
+            animator.SetBool("Damaged", true);
+            animator.SetTrigger("Trigger");
+            animator.SetInteger("TriggerNumber", 6);
+
+            yield return new WaitForSeconds(2f);
+            StartCoroutine("Revive");
+        }
+        IEnumerator Revive()
+        {
+            animator.SetTrigger("Trigger");
+            animator.SetInteger("TriggerNumber", 0);
+            animator.SetBool("Damaged", false);
+            isAction = false;
+            yield return null;
+        }
         void CharacterMovement()
         {
+            if (Input.GetMouseButton(0))
+            {
+                characterStat.Hp = 0;
+            }
             if (Input.GetMouseButton(1))
             {
                 RaycastHit hit;
@@ -161,11 +207,6 @@ namespace WarriorAnims
             if (Input.GetMouseButtonDown(1))
             {
                 agent.velocity = Vector3.zero;
-                /*
-                RaycastHit hit;
-                if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
-                    SetDestination(hit.point);
-                */
             }
         }
         void SetDestination(Vector3 dest)
