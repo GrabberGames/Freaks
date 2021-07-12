@@ -5,9 +5,6 @@ using UnityEngine.AI;
 
 
 
-
-
-
 public class GameController : MonoBehaviour
 {
     private RaycastHit hit;
@@ -22,13 +19,31 @@ public class GameController : MonoBehaviour
     // UI
     public GameObject gameOver;
 
+    // FX
+    [SerializeField] private ParticleSystem fx_mClick;
+
 
     // Start is called before the first frame update
+    /*
     private void Start()
     {
         //pc = GetComponent<NavMeshAgent>();
         //gameOver = GameObject.Find("GameOver");
     }
+    */
+
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Instantiate(fx_mClick, clickPos, Quaternion.identity);
+        }
+    }
+
+
+
 
 
     public void ObjectMove(NavMeshAgent agent)
