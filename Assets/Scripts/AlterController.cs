@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class AlterController : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject workerFreeksPref;
+
     public int essence = 1000;
     [SerializeField]
     private int workerFreeks = 5;
     private int busyWorkerF = 0;
 
     private List<GameObject> constructingBuilding = new List<GameObject>();
-    private List<GameObject> collectedWorkshop= new List<GameObject>();
+    private List<GameObject> miningFreeks= new List<GameObject>();
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool isAlterClicked = false;
 
     // Update is called once per frame
     void Update()
     {
-        
+        newMiningWorkshopChk();
     }
 
     public bool CanBuild()
@@ -32,7 +30,52 @@ public class AlterController : MonoBehaviour
 
     public void GoBuild(GameObject building)
     {
-        busyWorkerF++;
+        //busyWorkerF++;
+        //GameObject worker = Instantiate(workerFreeksPref);
+        //miningFreeks.Add(worker);
+        //worker.GetComponent<WorkerController>().SetMiningWorkShop(building);
     }
 
+    private void newMiningWorkshopChk()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject hitGameObject = hit.transform.gameObject;
+
+                if (hitGameObject == gameObject)
+                {
+                    isAlterClicked = true;
+                }
+                else
+                {
+                    isAlterClicked = false;
+                }
+
+            }
+        }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject hitGameObject = hit.transform.gameObject;
+
+                if (isAlterClicked && hitGameObject.GetComponent<WorkshopController>() != null)
+                {
+                    busyWorkerF++;
+                    GameObject worker = Instantiate(workerFreeksPref, transform.position, transform.rotation);
+                    miningFreeks.Add(worker);
+                    worker.GetComponent<WorkerController>().miningWorkshop = hitGameObject;
+                    hitGameObject.GetComponent<WorkshopController>().SetMiningWorker(worker);
+                }
+            }
+        }
+    }
 }

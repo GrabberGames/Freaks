@@ -6,55 +6,53 @@ using UnityEngine.AI;
 public class WorkerController : MonoBehaviour 
 {
     private NavMeshAgent workerAgent;
-    public GameObject worker;
-    public Transform alter;
-    public Transform workshop;
     private RaycastHit hit;     // hit checker
     private string hitColliderName;
+
+    public GameObject miningWorkshop;
+    private GameObject alter;
+    private bool isMining = false;
+    private bool hasEssense = false;
+
     
     GameController gameController;
     // Start is called before the first frame update
     void Start()
     {
-        workerAgent = GetComponent<NavMeshAgent>();
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    IEnumerator SetRendererActiveTrue()
-    {
-        // ----- delay 1 sec -----
-        yield return new WaitForSeconds(1f);
-
-        // ----- workshop leave -----
-        worker.GetComponent<Renderer>().enabled = true;
-        workerAgent.destination = alter.position;
-    }
-
-    private void OnCollisionEnter(Collision col)
-    {
-        Debug.Log("Collision Detected!");
-        if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Workshop")
-        {
-            // ----- workshop enter -----
-            worker.GetComponent<Renderer>().enabled = false;
-            Debug.Log("Workshop hit! destroyed!");
-
-            StartCoroutine("SetRendererActiveTrue");
-
-        }
-
-        // ----- workshop regression -----
-        if (hit.transform.gameObject.name == "Workshop" && col.gameObject.name == "Alter")
-        {
-            workerAgent.destination = workshop.position;
-        }
+        workerAgent = gameObject.GetComponent<NavMeshAgent>();
+        alter = GameObject.Find("Alter_B");
+        SetMiningWorkShop();
     }
   
-    // (-309, 5.5, 115)
+    public void SetMiningWorkShop()
+    {
+        if (workerAgent == null) return;
+        workerAgent.SetDestination(miningWorkshop.transform.position);
+        isMining = true;
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(isMining)
+        {
+            string name = collision.transform.name;
+            if (name == "Alter_B")
+            {
+                workerAgent.SetDestination(miningWorkshop.transform.position);
+                if (hasEssense)
+                {
+                    alter.GetComponent<AlterController>().essence += 10;
+                    hasEssense = false;
+                }
+            }
+            else if(collision.gameObject == miningWorkshop)
+            {
+                workerAgent.SetDestination(alter.transform.position);
+                hasEssense = true;
+            }
+        }
+    }
+
 
 
 }

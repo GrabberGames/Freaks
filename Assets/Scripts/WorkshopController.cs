@@ -4,17 +4,41 @@ using UnityEngine;
 
 public class WorkshopController : MonoBehaviour
 {
-    public 
+    public int remiainEssense = 1000;
+    private GameObject worker = null;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float workerActiveDelay = 1.0f;
+
+    private bool isWorkerEnter = false;
+
+    public void SetMiningWorker(GameObject worker)
     {
-        
+        this.worker = worker;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (!isWorkerEnter && collision.transform.gameObject == worker)
+        {
+            isWorkerEnter = true;
+            remiainEssense -= 10;
+            worker.SetActive(false);
+            StartCoroutine(SetActive());
+            StartCoroutine(WorkerEnter());
+        }
+    }
+
+    IEnumerator SetActive()
+    {
+        yield return new WaitForSeconds(workerActiveDelay);
+
+        worker.SetActive(true);
+    }
+
+    IEnumerator WorkerEnter()
+    {
+        yield return new WaitForSeconds(workerActiveDelay + 0.5f);
+        isWorkerEnter = false;
     }
 }

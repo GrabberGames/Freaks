@@ -92,12 +92,6 @@ public class BuildingController : MonoBehaviour
             return;
         }
 
-        if(buildingNum == (int) Building.Workshop)
-        {
-            Debug.Log("¤Ð¤Ð");
-            return;
-        }    
-
         SetBuildBtnActivate();
         SetBuildListBtnActivate();
 
