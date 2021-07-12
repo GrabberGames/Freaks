@@ -22,7 +22,7 @@ public class FreaksController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        //gameController = GameObject.Find("GameController").GetComponent<GameController>();
         agent = GetComponent<NavMeshAgent>();
         enemy = GameObject.Find("Brute Warrior");
     }
@@ -31,18 +31,18 @@ public class FreaksController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dist = Vector3.Distance(enemy.transform.position, gameObject.transform.position); // Distance between of enemy and Freaks
+        //float dist = Vector3.Distance(enemy.transform.position, gameObject.transform.position); // Distance between of enemy and Freaks
 
-        if (dist <= 7.5f)
-        {
-            isEnemyFound = true;
-            agent.SetDestination(enemy.transform.position);
-        }
-        else
-        {
-            isEnemyFound = false;
-            agent.SetDestination(SearchCloseEnemyAlter().transform.position);
-        }
+        //if (dist <= 7.5f)
+        //{
+        //    isEnemyFound = true;
+        //    agent.SetDestination(enemy.transform.position);
+        //}
+        //else
+        //{
+        //    isEnemyFound = false;
+        //    agent.SetDestination(SearchCloseEnemyAlter().transform.position);
+        //}
     }
 
 
@@ -55,47 +55,47 @@ public class FreaksController : MonoBehaviour
 
 
     // Find nearest enemy Alter
-    GameObject SearchCloseEnemyAlter()
-    {
-        List<GameObject> enemyAlters;
-        if (myTeam == Team.Blue)
-        {
-            enemyAlters = gameController.redAlters;
-        }
-        else
-        {
-            enemyAlters = gameController.blueAlters;
-        }
+    //GameObject SearchCloseEnemyAlter()
+    //{
+    //    List<GameObject> enemyAlters;
+    //    if (myTeam == Team.Blue)
+    //    {
+    //        enemyAlters = gameController.redAlters;
+    //    }
+    //    else
+    //    {
+    //        enemyAlters = gameController.blueAlters;
+    //    }
 
-        /*
-        if (enemyAlters.Count == 0)
-        {
-            return null;
-        }
-        */
+    //    /*
+    //    if (enemyAlters.Count == 0)
+    //    {
+    //        return null;
+    //    }
+    //    */
 
-        GameObject closeAlter = enemyAlters[0];
-        NavMeshPath path = agent.path;
+    //    GameObject closeAlter = enemyAlters[0];
+    //    NavMeshPath path = agent.path;
 
-        agent.CalculatePath(closeAlter.transform.position, path);
+    //    agent.CalculatePath(closeAlter.transform.position, path);
         
-        float min = GetPathLength(path);
+    //    float min = GetPathLength(path);
 
-        foreach (GameObject i in enemyAlters)
-        {
-            path = agent.path;
-            agent.CalculatePath(closeAlter.transform.position, path);
-            float tmp = GetPathLength(path);
+    //    foreach (GameObject i in enemyAlters)
+    //    {
+    //        path = agent.path;
+    //        agent.CalculatePath(closeAlter.transform.position, path);
+    //        float tmp = GetPathLength(path);
 
-            if (min > tmp)
-            {
-                min = tmp;
-                closeAlter = i;
-            }
+    //        if (min > tmp)
+    //        {
+    //            min = tmp;
+    //            closeAlter = i;
+    //        }
 
-        }
-        return closeAlter;
-    }
+    //    }
+    //    return closeAlter;
+    //}
 
 
     public static float GetPathLength(NavMeshPath path)
