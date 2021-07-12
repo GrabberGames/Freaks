@@ -17,6 +17,8 @@ namespace WarriorAnims
         [HideInInspector] public bool useRootMotion = false;
         [HideInInspector] public bool waitingOnWeapons = true;
 
+
+
         private Rigidbody rigid;
         private Camera mainCamera;
         private NavMeshAgent agent;
@@ -126,7 +128,10 @@ namespace WarriorAnims
             {
                 RaycastHit hit;
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+                {
                     SetDestination(hit.point);
+                }
+                    
             }
             
             Move();

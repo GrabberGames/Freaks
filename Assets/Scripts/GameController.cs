@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
     public GameObject gameOver;
 
     // FX
-    [SerializeField] private ParticleSystem fx_mClick;
+    [SerializeField] private ParticleSystem fx_Move;
 
 
     // Start is called before the first frame update
@@ -35,10 +35,22 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        // FX Play on Mouse Click pos.
         if (Input.GetMouseButtonDown(1))
         {
-            Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Instantiate(fx_mClick, clickPos, Quaternion.identity);
+            RaycastHit hit;
+            Vector3 mPos;
+
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                mPos = hit.point; mPos.y = 0.3f;
+                fx_Move.transform.position = mPos;
+                fx_Move.Play(true);
+            }
+        }
+        if (fx_Move.isStopped)
+        {
+            fx_Move.Stop();
         }
     }
 
@@ -64,7 +76,7 @@ public class GameController : MonoBehaviour
             Debug.Log(hitColliderName);
             agent = GameObject.Find(hitColliderName).GetComponent<NavMeshAgent>();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    // Ray Set; Mouse Pointer Position
-
+            Debug.Log(ray);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 agent.SetDestination(hit.point); // Hero Move
