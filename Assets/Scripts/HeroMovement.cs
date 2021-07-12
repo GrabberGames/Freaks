@@ -36,6 +36,7 @@ namespace WarriorAnims
 
         private void Awake()
         {
+            targetPos = transform.position;
             SetCharacterStat();
             animator = GetComponentInChildren<Animator>();
             if (animator == null)
@@ -72,7 +73,6 @@ namespace WarriorAnims
         {
             ChooseCoroutine();
             CharacterMovement();
-            //print(isFirst);
         }
 
         void ChooseCoroutine()
@@ -82,13 +82,11 @@ namespace WarriorAnims
             if(characterStat.Hp <= 0)
             {
                 StartCoroutine("Die");
-                //print("!");
             }
         }
 
         IEnumerator Die()
         {
-            //print("*");
             isAction = true;
             animator.SetBool("Damaged", true);
             animator.SetTrigger("Trigger");
@@ -114,23 +112,19 @@ namespace WarriorAnims
 
         void CharacterMovement()
         {
-            if (Input.GetMouseButtonDown(1))
-            {
-                agent.velocity = Vector3.zero; isMove = true; isFirst = true;
-            }
             if (Input.GetMouseButton(0))
             {
                 characterStat.Hp = 0;
             }
-            else if (Input.GetMouseButton(1))
+            if (Input.GetMouseButtonDown(1))
             {
+                agent.velocity = Vector3.zero;
                 RaycastHit hit;
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
-                    SetDestination(hit.point);
+                    targetPos = hit.point;
+                    SetDestination(targetPos);
             }
-            
             Move();
-
         }
 
         void SetDestination(Vector3 dest)
@@ -141,26 +135,20 @@ namespace WarriorAnims
         }
         void Move()
         {
-            if (isMove)
+            var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
+            if (dir != Vector3.zero)
             {
-                var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
-                velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
-                animator.SetFloat("Velocity Z", velocity.magnitude);
-                transform.forward = new Vector3(dir.x, 0, dir.z);
-                //transform.position += dir.normalized * Time.deltaTime * agent.speed;
+                TowardVec = dir;
             }
-            if (agent.velocity.magnitude == 0f)
+            velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
+            animator.SetFloat("Velocity Z", velocity.magnitude);
+            transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
+            //transform.position += dir.normalized * Time.deltaTime * agent.speed;
+
+            if (Vector3.Distance(transform.position, targetPos) <= 0.1f)
             {
-                if (isFirst)
-                {
-                    isFirst = false;
-                    //print("*");
-                    return;
-                }
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
                 animator.SetBool("Moving", false);
-                isMove = false;
-                //print("!");
             }
         }
     }
