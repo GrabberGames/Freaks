@@ -8,19 +8,16 @@ public class BuildingController : MonoBehaviour
     [SerializeField]
     private Button build;
     [SerializeField]
-    private GameObject BuildingList;
+    private GameObject buildList;
 
     private bool isBtnActivate = true;
-    private bool isBuildingListBtnExsit = false;
+    private bool isBtnListActivate = true;
     private bool isPreviewActivate = false;
 
     private float buildingHeight;
 
+    private AlterController alterController;
     private GameObject building;
-    [SerializeField]
-    private GameObject mbtnPrefab;
-    [SerializeField]
-    private Sprite[] buildingbtnImgs;
     [SerializeField]
     private GameObject[] Buildings;
     public Material[] materials;
@@ -31,6 +28,11 @@ public class BuildingController : MonoBehaviour
         Tower,
         Workshop
     };
+
+    private void Start()
+    {
+        alterController = GameObject.Find("Alter_B").GetComponent<AlterController>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -44,7 +46,7 @@ public class BuildingController : MonoBehaviour
             {
                 if (hit.transform.gameObject.name == "Alter_B")
                 {
-                    SetBuildBtnActive();
+                    SetBuildBtnActivate();
                 }
             }
         }
@@ -59,59 +61,6 @@ public class BuildingController : MonoBehaviour
         }
     }
 
-    #region showBuildingListBtn
-    public void ShowBuildingList()
-    {
-        if(!isBuildingListBtnExsit)
-        {
-            makeBuildingListBtn();
-            isBuildingListBtnExsit = true;
-        }
-        else
-        {
-            BuildingList.SetActive(true);
-        }
-
-    }
-
-    private void makeBuildingListBtn()
-    {
-        for (int i = 0; i < buildingbtnImgs.Length; i++)
-        {
-            GameObject btn = Instantiate(mbtnPrefab);
-
-            RectTransform btnpos = btn.GetComponent<RectTransform>();
-            btn.transform.position = gameObject.transform.position;
-
-            Image image = btn.GetComponent<Image>();
-            Sprite btnsprite = buildingbtnImgs[i];
-            image.sprite = btnsprite;
-
-            btnpos.SetParent(BuildingList.transform);
-            btnpos.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, (30 * i), 30);
-
-            switch (i)
-            {
-                case (int)Building.Alter:
-                    btn.GetComponent<Button>().onClick.AddListener(() => BuildingConstruction((int)Building.Alter));
-                    break;
-
-                case (int)Building.Tower:
-                    btn.GetComponent<Button>().onClick.AddListener(() => BuildingConstruction((int)Building.Tower));
-                    break;
-
-                case (int)Building.Workshop:
-                    btn.GetComponent<Button>().onClick.AddListener(() => BuildingConstruction((int)Building.Workshop));
-                    break;
-
-                default:
-                    break;
-            }
-
-        }
-    }
-
-    #endregion
 
     private void viewPreview()
     {
@@ -135,7 +84,7 @@ public class BuildingController : MonoBehaviour
 
     }
 
-    private void BuildingConstruction(int buildingNum)
+    public void ConstructBuilding(int buildingNum)
     {
         if(buildingNum == (int) Building.Alter)
         {
@@ -143,20 +92,31 @@ public class BuildingController : MonoBehaviour
             return;
         }
 
-        SetBuildBtnActive();
+        if(buildingNum == (int) Building.Workshop)
+        {
+            Debug.Log("¤Ð¤Ð");
+            return;
+        }    
+
+        SetBuildBtnActivate();
+        SetBuildListBtnActivate();
 
         building = Instantiate(Buildings[buildingNum]);
         buildingHeight = building.GetComponent<Renderer>().bounds.size.y / 2.0f;
         building.AddComponent<BuildingPreview>();
         isPreviewActivate = true;
-
-        BuildingList.SetActive(false);
     }
 
-    private void SetBuildBtnActive()
+    private void SetBuildBtnActivate()
     {
 
         build.gameObject.SetActive(isBtnActivate);
         isBtnActivate = !isBtnActivate;
+    }
+
+    public void SetBuildListBtnActivate()
+    {
+        buildList.gameObject.SetActive(isBtnListActivate);
+        isBtnListActivate = !isBtnListActivate;
     }
 }

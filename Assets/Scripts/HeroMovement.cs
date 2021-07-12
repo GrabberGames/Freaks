@@ -72,7 +72,7 @@ namespace WarriorAnims
         {
             ChooseCoroutine();
             CharacterMovement();
-            print(isFirst);
+            //print(isFirst);
         }
 
         void ChooseCoroutine()
@@ -82,13 +82,13 @@ namespace WarriorAnims
             if(characterStat.Hp <= 0)
             {
                 StartCoroutine("Die");
-                print("!");
+                //print("!");
             }
         }
 
         IEnumerator Die()
         {
-            print("*");
+            //print("*");
             isAction = true;
             animator.SetBool("Damaged", true);
             animator.SetTrigger("Trigger");
@@ -154,13 +154,13 @@ namespace WarriorAnims
                 if (isFirst)
                 {
                     isFirst = false;
-                    print("*");
+                    //print("*");
                     return;
                 }
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
                 animator.SetBool("Moving", false);
                 isMove = false;
-                print("!");
+                //print("!");
             }
         }
     }
