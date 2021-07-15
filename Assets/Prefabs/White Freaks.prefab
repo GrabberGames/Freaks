@@ -1708,7 +1708,7 @@ GameObject:
   - component: {fileID: 5361857416509140489}
   - component: {fileID: 7645404461759413274}
   - component: {fileID: 6822438563246221304}
-  - component: {fileID: 4481079910335434958}
+  - component: {fileID: 3673351751699149042}
   m_Layer: 0
   m_Name: White Freaks
   m_TagString: Untagged
@@ -1769,7 +1769,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 31
+  m_WalkableMask: 15
   m_ObstacleAvoidanceType: 4
 --- !u!54 &6822438563246221304
 Rigidbody:
@@ -1787,7 +1787,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4481079910335434958
+--- !u!114 &3673351751699149042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

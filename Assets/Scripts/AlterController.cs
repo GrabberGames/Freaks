@@ -33,7 +33,7 @@ public class AlterController : MonoBehaviour
         //busyWorkerF++;
         //GameObject worker = Instantiate(workerFreeksPref);
         //miningFreeks.Add(worker);
-        //worker.GetComponent<WorkerController>().SetMiningWorkShop(building);
+        //worker.GetComponent<WhiteFreeksController>().SetMiningWorkShop(building);
     }
 
     private void newMiningWorkshopChk()
@@ -72,7 +72,7 @@ public class AlterController : MonoBehaviour
                     busyWorkerF++;
                     GameObject worker = Instantiate(workerFreeksPref, transform.position, transform.rotation);
                     miningFreeks.Add(worker);
-                    worker.GetComponent<WorkerController>().miningWorkshop = hitGameObject;
+                    worker.GetComponent<WhiteFreeksController>().miningWorkshop = hitGameObject;
                     hitGameObject.GetComponent<WorkshopController>().SetMiningWorker(worker);
                 }
             }
