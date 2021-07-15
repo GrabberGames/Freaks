@@ -9,7 +9,7 @@ public class ResourseSpot : MonoBehaviour
     private int GetResourcePerOnce = 50;
     private Material navy, blue, sky_blue;
     private Material material;
-
+    private bool isDig = false;
     void Start()
     {
         material = this.gameObject.GetComponent<Renderer>().material;
@@ -21,6 +21,15 @@ public class ResourseSpot : MonoBehaviour
     void Update()
     {
         SetColor();
+        Digging();
+    }
+    void Digging()
+    {
+        if (isDig)
+        {
+            RemainResource -= GetResourcePerOnce;
+            isDig = false;
+        }
     }
     void SetColor()
     {
