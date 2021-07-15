@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3977720308075561446}
   - component: {fileID: 4878884105756608291}
   m_Layer: 0
-  m_Name: Fx_Smoke_01
+  m_Name: Fx_Smoke01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6264840860229376863}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -269.1685, y: 0.19, z: -128.14284}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -178.58542, y: 0.3, z: -36.137756}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

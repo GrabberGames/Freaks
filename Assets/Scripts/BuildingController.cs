@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class BuildingController : MonoBehaviour
 {
-    [SerializeField]
-    private Button build;
-    [SerializeField]
-    private GameObject buildList;
+    [SerializeField] private Button build;
+    [SerializeField] private GameObject buildList;
+    [SerializeField] private GameObject[] Buildings;
+    [SerializeField] private ParticleSystem fx_Smoke01; //build FX
 
     private bool isBtnActivate = true;
     private bool isBtnListActivate = true;
@@ -18,8 +18,7 @@ public class BuildingController : MonoBehaviour
 
     private AlterController alterController;
     private GameObject building;
-    [SerializeField]
-    private GameObject[] Buildings;
+    
     public Material[] materials;
 
     private enum Building
@@ -57,7 +56,26 @@ public class BuildingController : MonoBehaviour
             if (building.GetComponent<BuildingPreview>().isBuildable() && Input.GetMouseButtonDown(0))
             {
                 Build();
+                Debug.Log("Builded");
+
+                // FX Start
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    Vector3 sPos = hit.point; sPos.y = 0.3f;
+                    fx_Smoke01.transform.position = sPos;
+                    fx_Smoke01.Play(true);
+                    Debug.Log("Played");
+                }
             }
+        }
+
+        // FX End
+        if (fx_Smoke01.isStopped)
+        {
+            fx_Smoke01.Stop();
         }
     }
 
@@ -81,7 +99,6 @@ public class BuildingController : MonoBehaviour
         building.GetComponent<Renderer>().material = building.GetComponent<BuildingPreview>().material;
         building.GetComponent<Collider>().isTrigger = false;
         Destroy(building.GetComponent<BuildingPreview>());
-
     }
 
     public void ConstructBuilding(int buildingNum)
