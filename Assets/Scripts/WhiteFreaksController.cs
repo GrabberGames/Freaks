@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WhiteFreeksController : MonoBehaviour 
+public class WhiteFreaksController : MonoBehaviour
 {
-    private NavMeshAgent workerAgent;
-    private RaycastHit hit;     // hit checker
-    private string hitColliderName;
-
     public GameObject miningWorkshop;
+
+    private NavMeshAgent workerAgent;
     private GameObject alter;
+
     private bool isMining = false;
     private bool hasEssense = false;
 
-    
-    GameController gameController;
+
     // Start is called before the first frame update
     void Start()
     {
         workerAgent = gameObject.GetComponent<NavMeshAgent>();
         alter = GameObject.Find("Alter_B");
-        SetMiningWorkShop();
     }
   
     public void SetMiningWorkShop()

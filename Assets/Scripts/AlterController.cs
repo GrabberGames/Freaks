@@ -5,15 +5,15 @@ using UnityEngine;
 public class AlterController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject workerFreeksPref;
+    private GameObject workerFreaksPref;
 
     public int essence = 1000;
     [SerializeField]
-    private int workerFreeks = 5;
+    private int workerFreaks = 5;
     private int busyWorkerF = 0;
 
     private List<GameObject> constructingBuilding = new List<GameObject>();
-    private List<GameObject> miningFreeks= new List<GameObject>();
+    private List<GameObject> miningFreaks= new List<GameObject>();
 
     private bool isAlterClicked = false;
 
@@ -25,15 +25,15 @@ public class AlterController : MonoBehaviour
 
     public bool CanBuild()
     {
-        return workerFreeks - busyWorkerF > 0;
+        return workerFreaks - busyWorkerF > 0;
     }
 
     public void GoBuild(GameObject building)
     {
         //busyWorkerF++;
-        //GameObject worker = Instantiate(workerFreeksPref);
-        //miningFreeks.Add(worker);
-        //worker.GetComponent<WhiteFreeksController>().SetMiningWorkShop(building);
+        //GameObject worker = Instantiate(workerFreaksPref);
+        //miningFreaks.Add(worker);
+        //worker.GetComponent<WhiteFreaksController>().SetMiningWorkShop(building);
     }
 
     private void newMiningWorkshopChk()
@@ -70,9 +70,9 @@ public class AlterController : MonoBehaviour
                 if (isAlterClicked && hitGameObject.GetComponent<WorkshopController>() != null)
                 {
                     busyWorkerF++;
-                    GameObject worker = Instantiate(workerFreeksPref, transform.position, transform.rotation);
-                    miningFreeks.Add(worker);
-                    worker.GetComponent<WhiteFreeksController>().miningWorkshop = hitGameObject;
+                    GameObject worker = Instantiate(workerFreaksPref, transform.position, transform.rotation);
+                    miningFreaks.Add(worker);
+                    worker.GetComponent<WhiteFreaksController>().miningWorkshop = hitGameObject;
                     hitGameObject.GetComponent<WorkshopController>().SetMiningWorker(worker);
                 }
             }
