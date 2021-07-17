@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : MonoBehaviour
+public class EssenceManager : MonoBehaviour
 {
     public Material[] materials;
     // Start is called before the first frame update

@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourseSpot : MonoBehaviour
+public class EssenceSpot : MonoBehaviour
 {
-    public int RemainResource;
+    public int RemainEssence;
     [SerializeField]
-    private int GetResourcePerOnce = 50;
+    private int GetEssencePerOnce = 50;
     private Material navy, blue, sky_blue;
     private Material material;
     private bool isDig = false;
     void Start()
     {
         material = this.gameObject.GetComponent<Renderer>().material;
-        navy = GetComponentInParent<ResourceManager>().materials[0];
-        blue = GetComponentInParent<ResourceManager>().materials[1];
-        sky_blue = GetComponentInParent<ResourceManager>().materials[2];
+        navy = GetComponentInParent<EssenceManager>().materials[0];
+        blue = GetComponentInParent<EssenceManager>().materials[1];
+        sky_blue = GetComponentInParent<EssenceManager>().materials[2];
     }
     // Update is called once per frame
     void Update()
@@ -27,21 +27,21 @@ public class ResourseSpot : MonoBehaviour
     {
         if (isDig)
         {
-            RemainResource -= GetResourcePerOnce;
+            RemainEssence -= GetEssencePerOnce;
             isDig = false;
         }
     }
     void SetColor()
     {
-        if(RemainResource >= 801)
+        if(RemainEssence >= 801)
         {
             gameObject.GetComponent<Renderer>().material = navy;
         }
-        else if(RemainResource >= 401)
+        else if(RemainEssence >= 401)
         {
             gameObject.GetComponent<Renderer>().material = blue;
         }
-        else if(RemainResource >= 1)
+        else if(RemainEssence >= 1)
         {
             gameObject.GetComponent<Renderer>().material = sky_blue;
         }
