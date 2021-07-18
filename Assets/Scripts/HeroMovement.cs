@@ -86,10 +86,14 @@ namespace WarriorAnims
 
         IEnumerator Die()
         {
+            //사망시 현재 위치로 destination을 변경하고
+            //Animator의 변수들을 변경해줍니다.
             SetDestination(transform.position);
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             animator.SetBool("Moving", false);
 
+            //isAction Flag를 true로 변경하고 
+            //Animator의 변수들을 변경해줍니다.
             isAction = true;
             animator.SetBool("Damaged", true);
             animator.SetTrigger("Trigger");
@@ -100,6 +104,9 @@ namespace WarriorAnims
         }
         IEnumerator Revive()
         {
+            //isAction Flag를 False로 변경하고 
+            //Animator의 변수들을 변경해줍니다.
+            //캐릭터의 Hp를 400으로 변경해줍니다.
             animator.SetInteger("TriggerNumber", 7);
             animator.SetTrigger("Trigger");
             animator.SetBool("Damaged", false);
@@ -110,6 +117,7 @@ namespace WarriorAnims
 
         void CharacterMovement()
         {
+            //현재 다른 동작 중이라면 움직임을 제한시킵니다.
             if (isAction)
                 return;
             if (Input.GetMouseButton(0))
