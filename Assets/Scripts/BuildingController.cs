@@ -67,7 +67,6 @@ public class BuildingController : MonoBehaviour
                     Vector3 sPos = hit.point; sPos.y = 0.3f;
                     fx_Smoke01.transform.position = sPos;
                     fx_Smoke01.Play(true);
-                    Debug.Log("Played");
                 }
             }
         }

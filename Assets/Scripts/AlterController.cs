@@ -8,8 +8,7 @@ public class AlterController : MonoBehaviour
     private GameObject workerFreaksPref;
 
     public int essence = 1000;
-    [SerializeField]
-    private int workerFreaks = 5;
+    [SerializeField] private int workerFreaks = 5;
     private int busyWorkerF = 0;
 
     private List<GameObject> constructingBuilding = new List<GameObject>();

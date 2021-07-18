@@ -35,7 +35,13 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        // FX Play on Mouse Click pos.
+        FXmovePlayer();
+    }
+
+
+    // FX Play on Mouse Click pos.
+    private void FXmovePlayer()
+    {
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
@@ -48,14 +54,12 @@ public class GameController : MonoBehaviour
                 fx_Move.Play(true);
             }
         }
+
         if (fx_Move.isStopped)
         {
             fx_Move.Stop();
         }
     }
-
-
-
 
 
     public void ObjectMove(NavMeshAgent agent)
@@ -83,5 +87,4 @@ public class GameController : MonoBehaviour
             }
         }
     }
-
 }
