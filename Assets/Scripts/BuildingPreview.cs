@@ -4,44 +4,48 @@ using UnityEngine;
 
 public class BuildingPreview : MonoBehaviour
 {
+    private enum BuildingNum
+    {
+        Alter,
+        Tower,
+        Workshop
+    }
+
+
     private List<Collider> colliders = new List<Collider>();
 
-    private Material red, green;
-    public Material material;
+    private int me;
+    private Building parentController;
 
     private void Start()
     {
-        red = GameObject.Find("BuildingController").GetComponent<BuildingController>().materials[0];
-        green = GameObject.Find("BuildingController").GetComponent<BuildingController>().materials[1];
-        material = gameObject.GetComponent<Renderer>().material;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        ChangeColor();
+        SetMaterial(colliders.Count == 0);
     }
 
-    private void ChangeColor()
-    {
-        if(colliders.Count > 0)
-        {
-            gameObject.GetComponent<Renderer>().material = red;
-            
-        }
-        else
-        {
-            gameObject.GetComponent<Renderer>().material = green;
-        }
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         Transform parent = other.transform.parent;
-        if(parent == null || parent.name != "Road")
+        if (parent != null && parent.name != "Road")
         {
             colliders.Add(other);
+        }
+
+        switch (me)
+        {
+            case (int)BuildingNum.Alter:
+                break;
+            case (int)BuildingNum.Tower:
+            case (int)BuildingNum.Workshop:
+                if (parent != null && parent.name == "EssenseL")
+                {
+                    colliders.Clear();
+                }
+                break;
         }
     }
 
@@ -50,10 +54,39 @@ public class BuildingPreview : MonoBehaviour
         colliders.Remove(other);
     }
 
-
-    public bool isBuildable()
+    public bool IsBuildable()
     {
         return colliders.Count == 0;
+    }
+
+    public void Init(int n)
+    {
+        me = n;
+        switch (me)
+        {
+            case (int)BuildingNum.Alter:
+                parentController = GetComponentInParent<AlterController>();
+                break;
+
+            case (int)BuildingNum.Tower:
+                break;
+
+            case (int)BuildingNum.Workshop:
+                parentController = GetComponentInParent<WorkshopController>();
+                break;
+        }
+
+        parentController.SetOpacity(true);
+    }
+
+    private void SetMaterial(bool isRed)
+    {
+        parentController.SetMaterial(isRed);
+    }
+
+    public void Destroy()
+    {
+        parentController.SetOpacity(false);
     }
 
 }

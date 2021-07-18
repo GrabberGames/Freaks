@@ -10,6 +10,8 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private GameObject[] Buildings;
     [SerializeField] private ParticleSystem fx_Smoke01; //build FX
 
+    private BuildingPreview buildingPreview;
+
     private bool isBtnActivate = true;
     private bool isBtnListActivate = true;
     private bool isPreviewActivate = false;
@@ -30,7 +32,7 @@ public class BuildingController : MonoBehaviour
 
     private void Start()
     {
-        alterController = GameObject.Find("Alter_B").GetComponent<AlterController>();
+        alterController = GameObject.Find("Alter").GetComponent<AlterController>();
     }
 
     // Update is called once per frame
@@ -43,7 +45,7 @@ public class BuildingController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.name == "Alter_B")
+                if (hit.transform.gameObject.name == "Alter")
                 {
                     SetBuildBtnActivate();
                 }
@@ -53,7 +55,7 @@ public class BuildingController : MonoBehaviour
         if(isPreviewActivate)
         {
             viewPreview();
-            if (building.GetComponent<BuildingPreview>().isBuildable() && Input.GetMouseButtonDown(0))
+            if (building.GetComponent<BuildingPreview>().IsBuildable() && Input.GetMouseButtonDown(0))
             {
                 Build();
                 Debug.Log("Builded");
@@ -87,7 +89,7 @@ public class BuildingController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Vector3 _location = hit.point;
-            _location.y = buildingHeight;
+            _location.y = 0;
             building.transform.position = _location;
         }
     }
@@ -95,8 +97,9 @@ public class BuildingController : MonoBehaviour
     private void Build()
     {
         isPreviewActivate = false;
-        building.GetComponent<Renderer>().material = building.GetComponent<BuildingPreview>().material;
         building.GetComponent<Collider>().isTrigger = false;
+        building.GetComponent<BuildingPreview>().Destroy();
+        alterController.GoMining(building);
         Destroy(building.GetComponent<BuildingPreview>());
     }
 
@@ -112,8 +115,8 @@ public class BuildingController : MonoBehaviour
         SetBuildListBtnActivate();
 
         building = Instantiate(Buildings[buildingNum]);
-        buildingHeight = building.GetComponent<Renderer>().bounds.size.y / 2.0f;
         building.AddComponent<BuildingPreview>();
+        building.GetComponent<BuildingPreview>().Init(buildingNum);
         isPreviewActivate = true;
     }
 

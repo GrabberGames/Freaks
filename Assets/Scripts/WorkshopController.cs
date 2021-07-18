@@ -2,18 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkshopController : MonoBehaviour
+public class WorkshopController : Building
 {
+    private enum MaterialNum
+    {
+        SmallRoof,
+        MeduimRoof,
+        LargeRoof,
+        Leg,
+        Green,
+        Red
+    }
+
+
     public int remainEssense = 1000;
     private GameObject worker = null;
     private Renderer roofRenderer;
 
-    [SerializeField]
-    private Material[] roof;
+    [SerializeField] 
+    private Material[] materials;
 
     private float workerActiveDelay = 2.0f;
 
     private bool isWorkerEnter = false;
+    private bool beConstructed = true;
     private int currentRoofNum;
 
     private void Update()
@@ -28,8 +40,8 @@ public class WorkshopController : MonoBehaviour
 
     private void Start()
     {
-        currentRoofNum = getRoofNum();
-        roofRenderer = transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
+        currentRoofNum = GetRoofNum();
+        roofRenderer = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -41,6 +53,8 @@ public class WorkshopController : MonoBehaviour
             worker.SetActive(false);
             StartCoroutine(SetActive());
             StartCoroutine(WorkerEnter());
+
+            if (beConstructed) ConstructBuilding();
         }
     }
 
@@ -62,21 +76,51 @@ public class WorkshopController : MonoBehaviour
 
     public void ChangeRoof()
     {
-        if (!isRoofChange()) return;
+        if (!IsRoofChange()) return;
 
-        currentRoofNum = getRoofNum();
-        roofRenderer.material = roof[currentRoofNum];
+        currentRoofNum = GetRoofNum();
+        roofRenderer.material = materials[currentRoofNum];
     }
 
-    private bool isRoofChange()
+    private bool IsRoofChange()
     {
-        return currentRoofNum != getRoofNum();
+        return currentRoofNum != GetRoofNum();
     }
 
-    private int getRoofNum()
+    private int GetRoofNum()
     {
         int roofNum = remainEssense / 500;
         if (roofNum > 2) roofNum = 2;
         return roofNum;
     }
+
+    public override void SetOpacity(bool isTransparent)
+    {
+    }
+
+
+    public override void SetMaterial(bool canBuild)
+    {
+        if (canBuild)
+        {
+            Material[] mats = { materials[(int)MaterialNum.Green], materials[(int)MaterialNum.Green], materials[(int)MaterialNum.Green] };
+
+            roofRenderer.materials = mats;
+        }
+        else
+        {
+            Material[] mats = { materials[(int)MaterialNum.Red], materials[(int)MaterialNum.Red], materials[(int)MaterialNum.Red] };
+
+            roofRenderer.materials = mats;
+        }
+    }
+
+    private void ConstructBuilding()
+    {
+        Material[] mats = { materials[(int)MaterialNum.LargeRoof], materials[(int)MaterialNum.Leg], materials[(int)MaterialNum.Leg] };
+
+        roofRenderer.materials = mats;
+        beConstructed = false;
+    }
+
 }
