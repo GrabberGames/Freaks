@@ -26,13 +26,11 @@ namespace WarriorAnims
         private Vector3 targetPos;
         private Vector3 velocity;
         private Vector3 TowardVec;
-        private Vector3 destination;
 
 
         private bool isFirst = false;
         private bool isMove = false;
         private bool isAction = false;
-        public float groundFriction = 50f;
 
         CharacterStat characterStat = new CharacterStat();
 
@@ -56,7 +54,6 @@ namespace WarriorAnims
                 animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
                 animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
             }
-
 
             rigid = GetComponent<Rigidbody>();
             mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -89,6 +86,10 @@ namespace WarriorAnims
 
         IEnumerator Die()
         {
+            SetDestination(transform.position);
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+            animator.SetBool("Moving", false);
+
             isAction = true;
             animator.SetBool("Damaged", true);
             animator.SetTrigger("Trigger");
@@ -106,14 +107,11 @@ namespace WarriorAnims
             isAction = false;
             yield return null;
         }
-        IEnumerator Moving(bool is_)
-        {
-            animator.SetBool("Moving", is_);
-            yield return null;
-        }
 
         void CharacterMovement()
         {
+            if (isAction)
+                return;
             if (Input.GetMouseButton(0))
             {
                 characterStat.Hp = 0;
@@ -134,7 +132,6 @@ namespace WarriorAnims
         void SetDestination(Vector3 dest)
         {
             agent.SetDestination(dest);
-            destination = dest;
             animator.SetBool("Moving", true);
         }
         void Move()
