@@ -36,6 +36,7 @@ namespace WarriorAnims
 
         private void Awake()
         {
+            TowardVec = transform.position;
             targetPos = transform.position;
             SetCharacterStat();
             animator = GetComponentInChildren<Animator>();
@@ -130,8 +131,8 @@ namespace WarriorAnims
                 RaycastHit hit;
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
                 {
-                    targetPos = hit.point;
-                    SetDestination(hit.point);
+                    targetPos = new Vector3(hit.point.x , transform.position.y, hit.point.z);
+                    SetDestination(targetPos);
                 }
             }
             Move();
@@ -151,7 +152,7 @@ namespace WarriorAnims
             }
             velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
             animator.SetFloat("Velocity Z", velocity.magnitude);
-            //transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
+            transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
             
             if(Vector3.Distance(transform.position, targetPos) <= 0.1f)
             {
