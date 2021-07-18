@@ -18,14 +18,19 @@ public class WhiteFreaksController : MonoBehaviour
     void Start()
     {
         workerAgent = gameObject.GetComponent<NavMeshAgent>();
-        alter = GameObject.Find("Alter_B");
+        alter = GameObject.Find("Alter");
     }
   
     public void SetMiningWorkShop()
     {
-        if (workerAgent == null) return;
+        if (workerAgent == null)
+        {
+            workerAgent = gameObject.GetComponent<NavMeshAgent>();
+        }
+
         workerAgent.SetDestination(miningWorkshop.transform.position);
         isMining = true;
+        print("SetMining");
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -33,7 +38,7 @@ public class WhiteFreaksController : MonoBehaviour
         if(isMining)
         {
             string name = collision.transform.name;
-            if (name == "Alter_B")
+            if (name == "Alter")
             {
                 workerAgent.SetDestination(miningWorkshop.transform.position);
                 if (hasEssense)

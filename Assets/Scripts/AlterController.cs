@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlterController : MonoBehaviour
+public class AlterController : Building
 {
     [SerializeField]
     private GameObject workerFreaksPref;
@@ -28,12 +28,14 @@ public class AlterController : MonoBehaviour
         return workerFreaks - busyWorkerF > 0;
     }
 
-    public void GoBuild(GameObject building)
+    public void GoMining(GameObject building)
     {
-        //busyWorkerF++;
-        //GameObject worker = Instantiate(workerFreaksPref);
-        //miningFreaks.Add(worker);
-        //worker.GetComponent<WhiteFreaksController>().SetMiningWorkShop(building);
+        busyWorkerF++;
+        GameObject worker = Instantiate(workerFreaksPref, transform.position, transform.rotation);
+        miningFreaks.Add(worker);
+        worker.GetComponent<WhiteFreaksController>().miningWorkshop = building;
+        worker.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
+        building.GetComponent<WorkshopController>().SetMiningWorker(worker);
     }
 
     private void newMiningWorkshopChk()
@@ -69,13 +71,19 @@ public class AlterController : MonoBehaviour
 
                 if (isAlterClicked && hitGameObject.GetComponent<WorkshopController>() != null)
                 {
-                    busyWorkerF++;
-                    GameObject worker = Instantiate(workerFreaksPref, transform.position, transform.rotation);
-                    miningFreaks.Add(worker);
-                    worker.GetComponent<WhiteFreaksController>().miningWorkshop = hitGameObject;
-                    hitGameObject.GetComponent<WorkshopController>().SetMiningWorker(worker);
+                    GoMining(hitGameObject);
                 }
             }
         }
+    }
+
+    public override void SetMaterial(bool isRed)
+    {
+        return;
+    }
+
+    public override void SetOpacity(bool isTransparent)
+    {
+        return;
     }
 }
