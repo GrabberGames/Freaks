@@ -12,6 +12,8 @@ public class BuildingController : MonoBehaviour
 
     private BuildingPreview buildingPreview;
 
+    private WorkshopController workshopController;
+
     private bool isBtnActivate = true;
     private bool isBtnListActivate = true;
     private bool isPreviewActivate = false;
@@ -57,6 +59,9 @@ public class BuildingController : MonoBehaviour
             viewPreview();
             if (building.GetComponent<BuildingPreview>().IsBuildable() && Input.GetMouseButtonDown(0))
             {
+                workshopController = building.GetComponentInParent<WorkshopController>();
+                workshopController.Init(building.GetComponent<BuildingPreview>().GetBelowObject());
+                building.GetComponent<BuildingPreview>().GetBelowObject().GetComponent<MeshRenderer>().enabled = false;
                 Build();
                 Debug.Log("Builded");
 

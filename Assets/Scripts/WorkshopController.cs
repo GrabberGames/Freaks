@@ -19,6 +19,8 @@ public class WorkshopController : Building
     private GameObject worker = null;
     private Renderer roofRenderer;
 
+    private EssenceSpot essenceSpot;
+    private bool isSetted;
     [SerializeField] 
     private Material[] materials;
 
@@ -30,7 +32,11 @@ public class WorkshopController : Building
 
     private void Update()
     {
-        ChangeRoof();
+        if (isSetted)
+        {
+            roofRenderer.material = essenceSpot.GetNowMaterial();
+            remainEssense = essenceSpot.GetRemainEssence();
+        }
     }
 
     public void SetMiningWorker(GameObject worker)
@@ -49,7 +55,6 @@ public class WorkshopController : Building
         if (!isWorkerEnter && collision.transform.gameObject == worker)
         {
             isWorkerEnter = true;
-            remainEssense -= 10;
             worker.SetActive(false);
             StartCoroutine(SetActive());
             StartCoroutine(WorkerEnter());
@@ -57,13 +62,17 @@ public class WorkshopController : Building
             if (beConstructed) ConstructBuilding();
         }
     }
-
+    public void Init(GameObject mark)
+    {
+        essenceSpot = mark.GetComponent<EssenceSpot>();
+        isSetted = true;
+    }
     #region MiningCoroutine
     IEnumerator SetActive()
     {
         yield return new WaitForSeconds(workerActiveDelay);
-
         worker.SetActive(true);
+        essenceSpot.Digging();
     }
 
     IEnumerator WorkerEnter()

@@ -21,15 +21,22 @@ public class EssenceSpot : MonoBehaviour
     void Update()
     {
         SetColor();
-        Digging();
     }
-    void Digging()
+    public int GetRemainEssence()
     {
-        if (isDig)
-        {
-            RemainEssence -= GetEssencePerOnce;
-            isDig = false;
-        }
+        return RemainEssence;
+    }
+    public Material GetNowMaterial()
+    {
+        return gameObject.GetComponent<Renderer>().material;
+    }
+    public void SetRemainEssence(int variance)
+    {
+        RemainEssence -= variance;
+    }
+    public void Digging()
+    {
+        RemainEssence -= GetEssencePerOnce;
     }
     void SetColor()
     {

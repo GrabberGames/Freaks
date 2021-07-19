@@ -14,16 +14,26 @@ public class BuildingPreview : MonoBehaviour
 
     private List<Collider> colliders = new List<Collider>();
 
+    private GameObject belowObject;
+
     private int me;
     private Building parentController;
 
-    private void Start()
+    private WorkshopController workshopController;
+
+    private void Awake()
     {
+        workshopController = GetComponentInParent<WorkshopController>();
     }
 
     void Update()
     {
         SetMaterial(colliders.Count == 0);
+
+    }
+    public GameObject GetBelowObject()
+    {
+        return belowObject;
     }
 
 
@@ -33,13 +43,12 @@ public class BuildingPreview : MonoBehaviour
         if (parent != null && parent.name != "Road")
         {
             colliders.Add(other);
-            print(parent);
         }
-        if(parent.transform.parent != null && parent.transform.parent.name != "Arrow")
+        if (parent.transform.parent != null && parent.transform.parent.name != "Arrow")
         {
             colliders.Add(other);
-            print(parent.parent);
         }
+        //print(other.gameObject.name);
         switch (me)
         {
             case (int)BuildingNum.Alter:
@@ -52,6 +61,7 @@ public class BuildingPreview : MonoBehaviour
                 }
                 break;
         }
+        belowObject = other.gameObject;
     }
 
     private void OnTriggerExit(Collider other)
