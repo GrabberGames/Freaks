@@ -33,15 +33,20 @@ public class BuildingPreview : MonoBehaviour
         if (parent != null && parent.name != "Road")
         {
             colliders.Add(other);
+            print(parent);
         }
-
+        if(parent.transform.parent != null && parent.transform.parent.name != "Arrow")
+        {
+            colliders.Add(other);
+            print(parent.parent);
+        }
         switch (me)
         {
             case (int)BuildingNum.Alter:
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                if (parent != null && parent.name == "EssenseL")
+                if (parent.parent != null && parent.transform.parent.name == "Arrow")
                 {
                     colliders.Clear();
                 }

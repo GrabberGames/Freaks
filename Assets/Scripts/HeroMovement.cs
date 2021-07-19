@@ -121,10 +121,6 @@ namespace WarriorAnims
             //현재 다른 동작 중이라면 움직임을 제한시킵니다.
             if (isAction)
                 return;
-            if (Input.GetMouseButton(0))
-            {
-                characterStat.Hp = 0;
-            }
             if (Input.GetMouseButtonDown(1))
             {
                 agent.velocity = Vector3.zero;
