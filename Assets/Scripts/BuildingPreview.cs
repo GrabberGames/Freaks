@@ -17,6 +17,9 @@ public class BuildingPreview : MonoBehaviour
     private GameObject belowObject;
 
     private int me;
+
+    private bool areyouSure = false;
+
     private Building parentController;
 
     private WorkshopController workshopController;
@@ -28,8 +31,7 @@ public class BuildingPreview : MonoBehaviour
 
     void Update()
     {
-        SetMaterial(colliders.Count == 0);
-
+        SetMaterial(areyouSure);
     }
     public GameObject GetBelowObject()
     {
@@ -40,38 +42,53 @@ public class BuildingPreview : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Transform parent = other.transform.parent;
-        if (parent != null && parent.name != "Road")
-        {
-            colliders.Add(other);
-        }
-        if (parent.transform.parent != null && parent.transform.parent.name != "Arrow")
-        {
-            colliders.Add(other);
-        }
-        //print(other.gameObject.name);
+        if (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large")
+            belowObject = other.gameObject;
         switch (me)
         {
             case (int)BuildingNum.Alter:
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                if (parent.parent != null && parent.transform.parent.name == "Arrow")
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
                 {
-                    colliders.Clear();
+                    areyouSure = true;
                 }
                 break;
         }
-        belowObject = other.gameObject;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        colliders.Remove(other);
+        Transform parent = other.transform.parent;
+        switch (me)
+        {
+            case (int)BuildingNum.Alter:
+                break;
+            case (int)BuildingNum.Tower:
+            case (int)BuildingNum.Workshop:
+                areyouSure = false;
+                break;
+        }
     }
 
     public bool IsBuildable()
     {
-        return colliders.Count == 0;
+        switch (me)
+        {
+            case (int)BuildingNum.Alter:
+                break;
+            case (int)BuildingNum.Tower:
+            case (int)BuildingNum.Workshop:
+                if (belowObject != null)
+                {
+                    return areyouSure && belowObject.transform.parent.transform.parent.name == "Arrow";
+                }
+                else
+                    return false;
+
+        }
+        return false;
     }
 
     public void Init(int n)

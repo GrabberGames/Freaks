@@ -65,6 +65,7 @@ public class WorkshopController : Building
     public void Init(GameObject mark)
     {
         essenceSpot = mark.GetComponent<EssenceSpot>();
+        this.transform.position = mark.transform.position;
         isSetted = true;
     }
     #region MiningCoroutine
