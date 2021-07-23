@@ -12,7 +12,7 @@ public class AlterController : Building
     private int busyWorkerF = 0;
 
     private List<GameObject> constructingBuilding = new List<GameObject>();
-    private List<GameObject> miningFreaks= new List<GameObject>();
+    private List<GameObject> miningFreaks = new List<GameObject>();
 
     private bool isAlterClicked = false;
 
