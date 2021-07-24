@@ -11,28 +11,27 @@ public class BuildingPreview : MonoBehaviour
         Workshop
     }
 
-
     private List<Collider> colliders = new List<Collider>();
-
     private GameObject belowObject;
-
     private int me;
-
     private bool areyouSure = false;
-
     private Building parentController;
-
     private WorkshopController workshopController;
+
+
 
     private void Awake()
     {
         workshopController = GetComponentInParent<WorkshopController>();
     }
 
+
     void Update()
     {
         SetMaterial(areyouSure);
     }
+
+
     public GameObject GetBelowObject()
     {
         return belowObject;
@@ -58,6 +57,7 @@ public class BuildingPreview : MonoBehaviour
         }
     }
 
+
     private void OnTriggerExit(Collider other)
     {
         Transform parent = other.transform.parent;
@@ -71,6 +71,7 @@ public class BuildingPreview : MonoBehaviour
                 break;
         }
     }
+
 
     public bool IsBuildable()
     {
@@ -90,6 +91,7 @@ public class BuildingPreview : MonoBehaviour
         }
         return false;
     }
+
 
     public void Init(int n)
     {
@@ -111,14 +113,15 @@ public class BuildingPreview : MonoBehaviour
         parentController.SetOpacity(true);
     }
 
+
     private void SetMaterial(bool isRed)
     {
         parentController.SetMaterial(isRed);
     }
 
+
     public void Destroy()
     {
         parentController.SetOpacity(false);
     }
-
 }

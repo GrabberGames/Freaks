@@ -40,6 +40,10 @@ public class SwitchController : MonoBehaviour
 
     private void SwitchControll()
     {
+        //viewPreview(); BuildingController.cs
+
+
+
         if (!isTimerON)
         {
             StartCoroutine("SwitchTimer");
