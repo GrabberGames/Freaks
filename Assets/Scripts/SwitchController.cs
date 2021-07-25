@@ -7,6 +7,9 @@ public class SwitchController : MonoBehaviour
     [SerializeField] private bool isTimerON = false;
     [SerializeField] private bool isSwitchON = false;
     [SerializeField] private int timer = 90;
+    [SerializeField] private GameObject switchClone;
+
+    [SerializeField] private bool isSwitchBtnActivate = false;
 
     public Material[] switchMats;
     private Renderer targetRenderer;
@@ -18,7 +21,7 @@ public class SwitchController : MonoBehaviour
         targetRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
-
+    /*
     IEnumerator SwitchTimer()
     {
         while(true)
@@ -37,13 +40,10 @@ public class SwitchController : MonoBehaviour
             }
         }
     }
+    */
 
     private void SwitchControll()
     {
-        //viewPreview(); BuildingController.cs
-
-
-
         if (!isTimerON)
         {
             StartCoroutine("SwitchTimer");
@@ -51,10 +51,34 @@ public class SwitchController : MonoBehaviour
         }
     }
 
+    public void viewPreview()
+    {
+        //Debug.Log("!@!@!");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 mousePos = hit.point;
+            mousePos.y = 0;
+            switchClone.transform.position = mousePos;
+        }
+    }
+
+
+    public void CreateNewSwitch()
+    {
+        isSwitchBtnActivate = true;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        SwitchControll();
+        if (isSwitchBtnActivate)
+        {
+            //Debug.Log("@@@");
+            viewPreview();
+        }
     }
 }
