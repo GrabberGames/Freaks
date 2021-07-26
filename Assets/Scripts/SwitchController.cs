@@ -13,11 +13,12 @@ public class SwitchController : MonoBehaviour
 
     public Material[] switchMats;
     private Renderer targetRenderer;
-
+    private Vector3 switchCloneStartPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        switchCloneStartPos = new Vector3(343, 8, -100);
         targetRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
@@ -53,7 +54,6 @@ public class SwitchController : MonoBehaviour
 
     public void viewPreview()
     {
-        //Debug.Log("!@!@!");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -77,8 +77,24 @@ public class SwitchController : MonoBehaviour
     {
         if (isSwitchBtnActivate)
         {
-            //Debug.Log("@@@");
             viewPreview();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("!!");
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    Vector3 pos = hit.point;
+                    Instantiate(switchClone, pos, Quaternion.identity);
+                    switchClone.transform.position = switchCloneStartPos;
+                }
+                isSwitchBtnActivate = false;
+            }
         }
+
     }
 }
