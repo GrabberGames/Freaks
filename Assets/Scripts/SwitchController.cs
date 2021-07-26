@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class SwitchController : MonoBehaviour
 {
-    [SerializeField] private bool isTimerON = false;
-    [SerializeField] private bool isSwitchON = false;
-    [SerializeField] private int timer = 90;
+    //[SerializeField] private bool isTimerON = false;
+    //[SerializeField] private bool isSwitchON = false;
+    
     [SerializeField] private GameObject switchClone;
+    public GameObject switchPre;
+    private SwitchTimer SwitchTimer;
 
-    [SerializeField] private bool isSwitchBtnActivate = false;
-
+    public bool isSwitchBtnActivate = false;
     public Material[] switchMats;
     private Renderer targetRenderer;
     private Vector3 switchCloneStartPos;
+    private bool isTimerON;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,7 @@ public class SwitchController : MonoBehaviour
     /*
     IEnumerator SwitchTimer()
     {
-        while(true)
+        while (true)
         {
             if (timer > 0)
             {
@@ -41,16 +43,28 @@ public class SwitchController : MonoBehaviour
             }
         }
     }
-    */
 
     private void SwitchControll()
     {
         if (!isTimerON)
         {
-            StartCoroutine("SwitchTimer");
+            //StartCoroutine("SwitchTimer");
             isTimerON = true;
         }
     }
+
+    */
+
+
+
+
+    // If button Clicked
+    public void CreateNewSwitch()
+    {
+        isSwitchBtnActivate = true;
+    }
+
+
 
     public void viewPreview()
     {
@@ -60,17 +74,10 @@ public class SwitchController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Vector3 mousePos = hit.point;
-            mousePos.y = 0;
+            mousePos.y = 10;
             switchClone.transform.position = mousePos;
         }
     }
-
-
-    public void CreateNewSwitch()
-    {
-        isSwitchBtnActivate = true;
-    }
-
 
     // Update is called once per frame
     void Update()
@@ -86,13 +93,18 @@ public class SwitchController : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit))  // Switch Creating
                 {
                     Vector3 pos = hit.point;
-                    Instantiate(switchClone, pos, Quaternion.identity);
+                    Debug.Log(pos);
+                    pos.y = 10;
+                    Instantiate(switchPre, pos, Quaternion.identity);
                     switchClone.transform.position = switchCloneStartPos;
+                    SwitchTimer = switchPre.GetComponent<SwitchTimer>();
+                    SwitchTimer.isTimerON = true;
+                    isSwitchBtnActivate = false;
                 }
-                isSwitchBtnActivate = false;
+                
             }
         }
 
