@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "FX_Switch_Glow_Mat - \uBCF5\uC0AC\uBCF8"
-  m_Shader: {fileID: -6465566751694194690, guid: 7a1b5179847a2544cae8761fd582440d, type: 3}
+  m_Name: FX_SwitchOff_Glow_Mat
+  m_Shader: {fileID: -6465566751694194690, guid: a8f10877b6c6f6d4e848c9c60378ac40, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
