@@ -15,9 +15,12 @@ public class BuildingPreview : MonoBehaviour
     private GameObject belowObject;
     private int me;
     private bool areyouSure = false;
+    private bool cantbuild;
+    private int distance = 0;
+
     private Building parentController;
     private WorkshopController workshopController;
-
+    Transform parent;
 
 
     private void Awake()
@@ -28,7 +31,19 @@ public class BuildingPreview : MonoBehaviour
 
     void Update()
     {
+        print(parent);
         SetMaterial(areyouSure);
+
+        if (me == 0)   //알터의 경우
+        { 
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                Vector3 Pos = new Vector3(hit.point.x, 0, hit.point.z);
+                distance = (int)(Vector3.Distance(GameObject.Find("Alter").transform.position, hit.point));
+            }
+        }
     }
 
 
@@ -40,15 +55,18 @@ public class BuildingPreview : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Transform parent = other.transform.parent;
-        if (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large")
-            belowObject = other.gameObject;
+        parent = other.transform.parent;
+
         switch (me)
         {
             case (int)BuildingNum.Alter:
+                if (parent.name == "Road")
+                    belowObject = parent.gameObject;
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
+                if (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large")
+                    belowObject = other.gameObject;
                 if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
                 {
                     areyouSure = true;
@@ -60,14 +78,17 @@ public class BuildingPreview : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Transform parent = other.transform.parent;
+        parent = other.transform.parent;
         switch (me)
         {
             case (int)BuildingNum.Alter:
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                areyouSure = false;
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
+                {
+                    areyouSure = false;
+                }
                 break;
         }
     }
@@ -78,7 +99,13 @@ public class BuildingPreview : MonoBehaviour
         switch (me)
         {
             case (int)BuildingNum.Alter:
-                break;
+                if (belowObject != null) { 
+                    return distance <= 69 && belowObject.transform.name == "Road";
+                }       
+                else
+                {
+                    return false;
+                }
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
                 if (belowObject != null)

@@ -9,16 +9,22 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private GameObject buildList;
     [SerializeField] private GameObject[] Buildings;
     [SerializeField] private ParticleSystem fx_Smoke01; //build FX
+    [SerializeField] private GameObject AlterRange;
 
     private BuildingPreview buildingPreview;
 
     private WorkshopController workshopController;
+
+    private WhiteFreaksController[] whiteFreaksController;
 
     private bool isBtnActivate = true;
     private bool isBtnListActivate = true;
     private bool isPreviewActivate = false;
 
     private float buildingHeight;
+
+    private int buildnum;
+    private bool cantbuild;
 
     private AlterController alterController;
     private GameObject building;
@@ -59,15 +65,25 @@ public class BuildingController : MonoBehaviour
             viewPreview();
             if (building.GetComponent<BuildingPreview>().IsBuildable() && Input.GetMouseButtonDown(0))
             {
-                workshopController = building.GetComponentInParent<WorkshopController>();
-                workshopController.Init(building.GetComponent<BuildingPreview>().GetBelowObject());
-                building.GetComponent<BuildingPreview>().GetBelowObject().GetComponent<MeshRenderer>().enabled = false;
-                Build();
-                Debug.Log("Builded");
-
                 // FX Start
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
+                
+                if (buildnum == 0)      // Alter 건설 
+                {
+                    whiteFreaksController = FindObjectsOfType<WhiteFreaksController>();
+                    for(int i = 0; i < whiteFreaksController.Length; i++)
+                        whiteFreaksController[i].ChangeAlterPosition();
+                }
+                else if (buildnum == 2) // WorkShop 건설
+                {
+                    workshopController = building.GetComponentInParent<WorkshopController>();
+                    workshopController.Init(building.GetComponent<BuildingPreview>().GetBelowObject());
+                    building.GetComponent<BuildingPreview>().GetBelowObject().GetComponent<MeshRenderer>().enabled = false;
+                }
+
+                Build();
+                Debug.Log("Builded");
 
                 if (Physics.Raycast(ray, out hit))
                 {
@@ -97,6 +113,10 @@ public class BuildingController : MonoBehaviour
             _location.y = 0;
             building.transform.position = _location;
         }
+        if (buildnum == 0)
+        {
+            AlterRange.SetActive(true);
+        }
     }
 
     private void Build()
@@ -106,16 +126,23 @@ public class BuildingController : MonoBehaviour
         building.GetComponent<BuildingPreview>().Destroy();
         alterController.GoMining(building);
         Destroy(building.GetComponent<BuildingPreview>());
+
+        if(buildnum == 0)
+        {
+            AlterRange.SetActive(false);
+        }
     }
 
     public void ConstructBuilding(int buildingNum)
     {
+        /*
         if(buildingNum == (int) Building.Alter)
         {
             Debug.Log("Building Alter is not supported yet.");
             return;
         }
-
+        */
+        buildnum = buildingNum;
         SetBuildBtnActivate();
         SetBuildListBtnActivate();
 

@@ -54,6 +54,10 @@ public class WhiteFreaksController : MonoBehaviour
             }
         }
     }
+    public void ChangeAlterPosition()
+    {
+        alter = GameObject.Find("Alter");
+    }
 
 
 
