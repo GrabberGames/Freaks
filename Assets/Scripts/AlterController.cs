@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AlterController : Building
 {
     [SerializeField]
-    private GameObject workerFreaksPref;
+    private GameObject whiteFreaksPref;
 
     public int essence = 1000;
-    [SerializeField] private int workerFreaks = 5;
-    private int busyWorkerF = 0;
+    [SerializeField] private int whiteFreaks = 5;
+    private int busyWhiteF = 0;
 
-    private List<GameObject> constructingBuilding = new List<GameObject>();
     private List<GameObject> miningFreaks = new List<GameObject>();
 
     private bool isAlterClicked = false;
@@ -24,17 +24,22 @@ public class AlterController : Building
 
     public bool CanBuild()
     {
-        return workerFreaks - busyWorkerF > 0;
+        return whiteFreaks - busyWhiteF > 0;
     }
 
-    public void GoMining(GameObject building)
+    public void GoBuild(GameObject building)
     {
-        busyWorkerF++;
-        GameObject worker = Instantiate(workerFreaksPref, transform.position, transform.rotation);
-        miningFreaks.Add(worker);
-        worker.GetComponent<WhiteFreaksController>().miningWorkshop = building;
-        worker.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
-        building.GetComponent<WorkshopController>().SetMiningWorker(worker);
+        busyWhiteF++;
+        GameObject whiteFreeks = Instantiate(whiteFreaksPref, transform.position, transform.rotation);
+        miningFreaks.Add(whiteFreeks);
+        whiteFreeks.GetComponent<WhiteFreaksController>().miningWorkshop = building;
+
+        if(building.GetComponent<WorkshopController>())
+        {
+            whiteFreeks.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
+            building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreeks);
+        }
+        
     }
 
     private void newMiningWorkshopChk()
@@ -70,7 +75,7 @@ public class AlterController : Building
 
                 if (isAlterClicked && hitGameObject.GetComponent<WorkshopController>() != null)
                 {
-                    GoMining(hitGameObject);
+                    GoBuild(hitGameObject);
                 }
             }
         }

@@ -7,7 +7,7 @@ public class WhiteFreaksController : MonoBehaviour
 {
     public GameObject miningWorkshop;
 
-    private NavMeshAgent workerAgent;
+    private NavMeshAgent navMeshAgent;
     private GameObject alter;
 
     private bool isMining = false;
@@ -17,18 +17,15 @@ public class WhiteFreaksController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        workerAgent = gameObject.GetComponent<NavMeshAgent>();
+        navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         alter = GameObject.Find("Alter");
     }
   
     public void SetMiningWorkShop()
     {
-        if (workerAgent == null)
-        {
-            workerAgent = gameObject.GetComponent<NavMeshAgent>();
-        }
+        ChkNavMesh();
 
-        workerAgent.SetDestination(miningWorkshop.transform.position);
+        navMeshAgent.SetDestination(miningWorkshop.transform.position);
         isMining = true;
         print("SetMining");
     }
@@ -40,7 +37,7 @@ public class WhiteFreaksController : MonoBehaviour
             string name = collision.transform.name;
             if (name == "Alter")
             {
-                workerAgent.SetDestination(miningWorkshop.transform.position);
+                navMeshAgent.SetDestination(miningWorkshop.transform.position);
                 if (hasEssense)
                 {
                     alter.GetComponent<AlterController>().essence += 10;
@@ -49,8 +46,11 @@ public class WhiteFreaksController : MonoBehaviour
             }
             else if(collision.gameObject == miningWorkshop)
             {
-                workerAgent.SetDestination(alter.transform.position);
-                hasEssense = true;
+                if(gameObject.activeSelf)
+                {
+                    navMeshAgent.SetDestination(alter.transform.position);
+                    hasEssense = true;
+                }                
             }
         }
     }
@@ -59,6 +59,12 @@ public class WhiteFreaksController : MonoBehaviour
         alter = GameObject.Find("Alter");
     }
 
-
+    private void ChkNavMesh()
+    {
+        if (navMeshAgent == null)
+        {
+            navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+        }
+    }
 
 }

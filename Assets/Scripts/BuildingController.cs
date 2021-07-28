@@ -62,7 +62,7 @@ public class BuildingController : MonoBehaviour
 
         if(isPreviewActivate)
         {
-            viewPreview();
+            ViewPreview();
             if (building.GetComponent<BuildingPreview>().IsBuildable() && Input.GetMouseButtonDown(0))
             {
                 // FX Start
@@ -102,7 +102,7 @@ public class BuildingController : MonoBehaviour
     }
 
 
-    private void viewPreview()
+    private void ViewPreview()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -124,7 +124,7 @@ public class BuildingController : MonoBehaviour
         isPreviewActivate = false;
         building.GetComponent<Collider>().isTrigger = false;
         building.GetComponent<BuildingPreview>().Destroy();
-        alterController.GoMining(building);
+        alterController.GoBuild(building);
         Destroy(building.GetComponent<BuildingPreview>());
 
         if(buildnum == 0)
