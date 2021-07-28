@@ -16,7 +16,7 @@ public class WorkshopController : Building
 
 
     public int remainEssense = 1000;
-    private GameObject worker = null;
+    private GameObject whiteFreeks = null;
     private Renderer roofRenderer;
 
     private EssenceSpot essenceSpot;
@@ -24,9 +24,9 @@ public class WorkshopController : Building
     [SerializeField] 
     private Material[] materials;
 
-    private float workerActiveDelay = 2.0f;
+    private float freeksActiveDelay = 2.0f;
 
-    private bool isWorkerEnter = false;
+    private bool isFreeksEnter = false;
     private bool beConstructed = true;
     private int currentRoofNum;
 
@@ -39,9 +39,9 @@ public class WorkshopController : Building
         }
     }
 
-    public void SetMiningWorker(GameObject worker)
+    public void SetMiningFreeks(GameObject whiteFreeks)
     {
-        this.worker = worker;
+        this.whiteFreeks = whiteFreeks;
     }
 
     private void Start()
@@ -52,12 +52,12 @@ public class WorkshopController : Building
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!isWorkerEnter && collision.transform.gameObject == worker)
+        if (!isFreeksEnter && collision.transform.gameObject == whiteFreeks)
         {
-            isWorkerEnter = true;
-            worker.SetActive(false);
+            isFreeksEnter = true;
+            whiteFreeks.SetActive(false);
             StartCoroutine(SetActive());
-            StartCoroutine(WorkerEnter());
+            StartCoroutine(FreeksEnter());
 
             if (beConstructed) ConstructBuilding();
         }
@@ -71,15 +71,15 @@ public class WorkshopController : Building
     #region MiningCoroutine
     IEnumerator SetActive()
     {
-        yield return new WaitForSeconds(workerActiveDelay);
-        worker.SetActive(true);
+        yield return new WaitForSeconds(freeksActiveDelay);
+        whiteFreeks.SetActive(true);
         essenceSpot.Digging();
     }
 
-    IEnumerator WorkerEnter()
+    IEnumerator FreeksEnter()
     {
-        yield return new WaitForSeconds(workerActiveDelay + 0.5f);
-        isWorkerEnter = false;
+        yield return new WaitForSeconds(freeksActiveDelay + 0.5f);
+        isFreeksEnter = false;
     }
     #endregion
 
