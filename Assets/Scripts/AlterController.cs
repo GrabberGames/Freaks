@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AlterController : Building
 {
@@ -11,7 +12,6 @@ public class AlterController : Building
     [SerializeField] private int workerFreaks = 5;
     private int busyWorkerF = 0;
 
-    private List<GameObject> constructingBuilding = new List<GameObject>();
     private List<GameObject> miningFreaks = new List<GameObject>();
 
     private bool isAlterClicked = false;
@@ -27,14 +27,19 @@ public class AlterController : Building
         return workerFreaks - busyWorkerF > 0;
     }
 
-    public void GoMining(GameObject building)
+    public void GoBuild(GameObject building)
     {
         busyWorkerF++;
         GameObject worker = Instantiate(workerFreaksPref, transform.position, transform.rotation);
         miningFreaks.Add(worker);
         worker.GetComponent<WhiteFreaksController>().miningWorkshop = building;
-        worker.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
-        building.GetComponent<WorkshopController>().SetMiningWorker(worker);
+
+        if(building.GetComponent<WorkshopController>())
+        {
+            worker.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
+            building.GetComponent<WorkshopController>().SetMiningWorker(worker);
+        }
+        
     }
 
     private void newMiningWorkshopChk()
@@ -70,7 +75,7 @@ public class AlterController : Building
 
                 if (isAlterClicked && hitGameObject.GetComponent<WorkshopController>() != null)
                 {
-                    GoMining(hitGameObject);
+                    GoBuild(hitGameObject);
                 }
             }
         }

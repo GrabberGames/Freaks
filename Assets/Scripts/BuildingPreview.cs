@@ -60,12 +60,12 @@ public class BuildingPreview : MonoBehaviour
         switch (me)
         {
             case (int)BuildingNum.Alter:
-                if (parent.name == "Road")
+                if (parent !=  null && parent.name == "Road")
                     belowObject = parent.gameObject;
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                if (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large")
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
                     belowObject = other.gameObject;
                 if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
                 {

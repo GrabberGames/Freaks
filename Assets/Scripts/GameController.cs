@@ -10,28 +10,11 @@ public class GameController : MonoBehaviour
     private RaycastHit hit;
     private string hitColliderName;
 
-    public int money = 50;
-
-    // Team Separation
-    public List<GameObject> blueAlters = new List<GameObject>();
-    public List<GameObject> redAlters = new List<GameObject>();
-
     // UI
     public GameObject gameOver;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;
-
-
-    // Start is called before the first frame update
-    /*
-    private void Start()
-    {
-        //pc = GetComponent<NavMeshAgent>();
-        //gameOver = GameObject.Find("GameOver");
-    }
-    */
-
 
     private void Update()
     {

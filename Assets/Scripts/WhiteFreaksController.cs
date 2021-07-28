@@ -23,10 +23,7 @@ public class WhiteFreaksController : MonoBehaviour
   
     public void SetMiningWorkShop()
     {
-        if (workerAgent == null)
-        {
-            workerAgent = gameObject.GetComponent<NavMeshAgent>();
-        }
+        ChkNavMesh();
 
         workerAgent.SetDestination(miningWorkshop.transform.position);
         isMining = true;
@@ -49,8 +46,11 @@ public class WhiteFreaksController : MonoBehaviour
             }
             else if(collision.gameObject == miningWorkshop)
             {
-                workerAgent.SetDestination(alter.transform.position);
-                hasEssense = true;
+                if(gameObject.activeSelf)
+                {
+                    workerAgent.SetDestination(alter.transform.position);
+                    hasEssense = true;
+                }                
             }
         }
     }
@@ -59,6 +59,12 @@ public class WhiteFreaksController : MonoBehaviour
         alter = GameObject.Find("Alter");
     }
 
-
+    private void ChkNavMesh()
+    {
+        if (workerAgent == null)
+        {
+            workerAgent = gameObject.GetComponent<NavMeshAgent>();
+        }
+    }
 
 }
