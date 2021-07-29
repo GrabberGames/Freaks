@@ -31,10 +31,7 @@ public class BuildingPreview : MonoBehaviour
 
     void Update()
     {
-        print(parent);
-        SetMaterial(areyouSure);
-
-        if (me == 0)   //알터의 경우
+        if (me == 0)    //알터의 경우
         { 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -43,6 +40,10 @@ public class BuildingPreview : MonoBehaviour
                 Vector3 Pos = new Vector3(hit.point.x, 0, hit.point.z);
                 distance = (int)(Vector3.Distance(GameObject.Find("Alter").transform.position, hit.point));
             }
+        }
+        if(me == 2)     //워크샵의 경우
+        {
+            SetMaterial(areyouSure);
         }
     }
 
