@@ -21,8 +21,7 @@ public class WorkshopController : Building
 
     private EssenceSpot essenceSpot;
     private bool isSetted;
-    [SerializeField] 
-    private Material[] materials;
+    [SerializeField] private Material[] materials;
 
     private float freeksActiveDelay = 2.0f;
 

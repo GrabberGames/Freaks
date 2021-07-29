@@ -12,8 +12,8 @@ public class SwitchController : MonoBehaviour
     private SwitchTimer SwitchTimer;
 
     public bool isSwitchBtnActivate = false;
-    public Material[] switchMats;
-    private Renderer targetRenderer;
+    public ParticleSystem[] fx_Switch;   // INDEX => ON: 0 || OFF: 1
+    //private Renderer targetRenderer;
     private Vector3 switchCloneStartPos;
     private bool isTimerON;
 
@@ -21,7 +21,7 @@ public class SwitchController : MonoBehaviour
     void Start()
     {
         switchCloneStartPos = new Vector3(343, 8, -100);
-        targetRenderer = gameObject.GetComponent<MeshRenderer>();
+        //targetRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
     /*
@@ -65,7 +65,6 @@ public class SwitchController : MonoBehaviour
     }
 
 
-
     public void viewPreview()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -73,11 +72,55 @@ public class SwitchController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
+            Debug.Log(hit.point);
             Vector3 mousePos = hit.point;
-            mousePos.y = 10;
             switchClone.transform.position = mousePos;
         }
     }
+
+
+    void SwitchControl()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))  // Switch Creating
+        {
+            Vector3 pos = hit.point; pos.y = -0.5f;
+            Instantiate(switchPre, pos, Quaternion.Euler(180f, 0, 0));
+
+            // switch ON FX
+            SwitchFX(pos, "ON");
+
+            switchClone.transform.position = switchCloneStartPos;   // clone position reset
+
+            // switch Timer ON
+            SwitchTimer = switchPre.GetComponent<SwitchTimer>();
+            SwitchTimer.isTimerON = true;
+            isSwitchBtnActivate = false;
+        }
+    }
+
+
+    void SwitchFX(Vector3 pos, string onOff)
+    {
+        Debug.Log("POS: " + pos);
+        // switch ON FX
+        pos.y = 0.5f; pos.x += 0.8f; // FX Pos. calibration
+
+        if (onOff.Equals("ON"))
+        {
+            Instantiate(fx_Switch[0], pos, Quaternion.Euler(-90f, 0, 0));
+            fx_Switch[0].Play(true);
+        }
+        else if (onOff.Equals("OFF"))
+        {
+            Instantiate(fx_Switch[1], pos, Quaternion.Euler(-90f, 0, 0));
+            fx_Switch[1].Play(true);
+        }
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -88,25 +131,12 @@ public class SwitchController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("!!");
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))  // Switch Creating
-                {
-                    Vector3 pos = hit.point;
-                    Debug.Log(pos);
-                    pos.y = 10;
-                    Instantiate(switchPre, pos, Quaternion.identity);
-                    switchClone.transform.position = switchCloneStartPos;
-                    SwitchTimer = switchPre.GetComponent<SwitchTimer>();
-                    SwitchTimer.isTimerON = true;
-                    isSwitchBtnActivate = false;
-                }
-                
+                SwitchControl();
             }
         }
+
+
+
 
     }
 }
