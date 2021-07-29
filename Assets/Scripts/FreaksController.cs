@@ -17,10 +17,11 @@ public class FreaksController : MonoBehaviour
     private GameObject alter;
     private GameObject enemy;
 
+    private Vector3 alterPosition;
 
     public bool isEnemyFound;
     public Team myTeam;
-
+     
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class FreaksController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         enemy = GameObject.Find("Waron");
         alter = GameObject.Find("Alter");
+        alterPosition = alter.transform.position;
     }
 
 
@@ -44,10 +46,13 @@ public class FreaksController : MonoBehaviour
         else
         {
             isEnemyFound = false;
-            agent.SetDestination(alter.transform.position);
+            agent.SetDestination(alterPosition);
         }
     }
-
+    public void ChangeAlterPosition(Vector3 alterPosition)
+    {
+        this.alterPosition = alterPosition;
+    }
 
 
     private void OnDrawGizmos()

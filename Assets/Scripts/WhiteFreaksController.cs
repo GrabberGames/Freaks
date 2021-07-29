@@ -13,12 +13,14 @@ public class WhiteFreaksController : MonoBehaviour
     private bool isMining = false;
     private bool hasEssense = false;
 
+    private Vector3 alterPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         alter = GameObject.Find("Alter");
+        alterPosition = alter.transform.position;
     }
   
     public void SetMiningWorkShop()
@@ -48,15 +50,15 @@ public class WhiteFreaksController : MonoBehaviour
             {
                 if(gameObject.activeSelf)
                 {
-                    navMeshAgent.SetDestination(alter.transform.position);
+                    navMeshAgent.SetDestination(alterPosition);
                     hasEssense = true;
                 }                
             }
         }
     }
-    public void ChangeAlterPosition()
+    public void ChangeAlterPosition(Vector3 alterPosition)
     {
-        alter = GameObject.Find("Alter");
+        this.alterPosition = alterPosition;
     }
 
     private void ChkNavMesh()

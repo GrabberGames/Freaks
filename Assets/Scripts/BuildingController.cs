@@ -16,6 +16,7 @@ public class BuildingController : MonoBehaviour
     private WorkshopController workshopController;
 
     private WhiteFreaksController[] whiteFreaksController;
+    private FreaksController[] freaksControllers;
 
     private bool isBtnActivate = true;
     private bool isBtnListActivate = true;
@@ -25,6 +26,7 @@ public class BuildingController : MonoBehaviour
 
     private int buildnum;
     private bool cantbuild;
+    private Vector3 hittedPoint;
 
     private AlterController alterController;
     private GameObject building;
@@ -68,12 +70,13 @@ public class BuildingController : MonoBehaviour
                 // FX Start
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                
+
+                Physics.Raycast(ray, out hit);
+                hittedPoint = hit.point;
                 if (buildnum == 0)      // Alter 건설 
                 {
-                    whiteFreaksController = FindObjectsOfType<WhiteFreaksController>();
-                    for(int i = 0; i < whiteFreaksController.Length; i++)
-                        whiteFreaksController[i].ChangeAlterPosition();
+                    Destroy(GameObject.Find("Alter"));
+                    AlterRange.SetActive(false);
                 }
                 else if (buildnum == 2) // WorkShop 건설
                 {
@@ -129,7 +132,13 @@ public class BuildingController : MonoBehaviour
 
         if(buildnum == 0)
         {
-            AlterRange.SetActive(false);
+            whiteFreaksController = FindObjectsOfType<WhiteFreaksController>();
+            for (int i = 0; i < whiteFreaksController.Length; i++)
+                whiteFreaksController[i].ChangeAlterPosition(hittedPoint);
+
+            freaksControllers = FindObjectsOfType<FreaksController>();
+            for (int i = 0; i < freaksControllers.Length; i++)
+                freaksControllers[i].ChangeAlterPosition(hittedPoint);
         }
     }
 
