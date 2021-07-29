@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float ZoomSpeed= 10.0f;
+    public float ZoomSpeed = 10.0f;
     public float Distance = 10.0f;
 
     private Camera mainCamera;
@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         mainCamera = GetComponent<Camera>();
+
     }
 
     // Update is called once per frame
