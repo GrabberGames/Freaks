@@ -7,6 +7,15 @@ namespace WarriorAnims
 {
     public class HeroMovement : SuperStateMachine
     {
+        private enum AnimationState
+        {
+            L,
+            Q,
+            W,
+            E,
+            R,
+            D
+        }
         [HideInInspector] public SuperCharacterController superCharacterController;
         [HideInInspector] public WarriorMovementController warriorMovementController;
         [HideInInspector] public WarriorInputController warriorInputController;
@@ -27,10 +36,8 @@ namespace WarriorAnims
         private Vector3 velocity;
         private Vector3 TowardVec;
 
-
-        private bool isFirst = false;
-        private bool isMove = false;
         private bool isAction = false;
+        private int nowAnimationState = 0;
 
         CharacterStat characterStat = new CharacterStat();
 
@@ -73,18 +80,160 @@ namespace WarriorAnims
         {
             ChooseCoroutine();
             CharacterMovement();
+            CallAnimationStop();
         }
 
         void ChooseCoroutine()
         {
             if (isAction)
                 return;
-            if(characterStat.Hp <= 0)
+            if (characterStat.Hp <= 0)
             {
                 StartCoroutine("Die");
             }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                nowAnimationState = (int)AnimationState.Q;
+                StartCoroutine(ThrowingRock());
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                nowAnimationState = (int)AnimationState.W;
+                StartCoroutine(LeafOfPride());
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                nowAnimationState = (int)AnimationState.E;
+                StartCoroutine(BoldRush());
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                nowAnimationState = (int)AnimationState.R;
+                StartCoroutine(ShockOfLand());
+            }
         }
+        void CallAnimationStop()
+        {
+            switch (nowAnimationState)
+            {
+                case 1:
+                    ThrowingRock_Stop();
+                    break;
+                case 2:
+                    LeafOfPride_Stop();
+                    break;
+                case 3:
+                    BoldRush_Stop();
+                    break;
+                case 4:
+                    ShockOfLand_Stop();
+                    break;
+                default:
+                    break;
 
+            }
+        }
+        ///////////////////////
+        ///
+        ///////////////////////
+        #region Q_Skill
+        IEnumerator ThrowingRock()
+        {
+            isAction = true;
+            animator.SetBool("Attacking", true);
+            animator.SetBool("Moving", false);
+            animator.SetInteger("Action", 1);
+            animator.SetInteger("TriggerNumber", 12);
+            animator.SetTrigger("Trigger");
+            yield return null;
+        }
+        void ThrowingRock_Stop()
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RangeAttack1")) //Q스킬 모션이 끝나면
+            {
+                animator.SetBool("Moving", true);
+                animator.SetBool("Attacking", false);
+                isAction = false;
+            }
+        }
+        #endregion Q_Skill
+        ///////////////////////
+        ///
+        ///////////////////////
+        #region W_Skill
+        IEnumerator LeafOfPride()
+        {
+            isAction = true;
+            animator.SetBool("Moving", false);
+            animator.SetBool("Dash", true);
+            animator.SetInteger("Action", 1);
+            animator.SetTrigger("Trigger");
+            animator.SetInteger("TriggerNumber", 3);
+            yield return null;
+        }
+        void LeafOfPride_Stop()
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward")) //Q스킬 모션이 끝나면
+            {
+                animator.SetBool("Dash", false);
+                animator.SetBool("Moving", true);
+                isAction = false;
+            }
+        }
+        #endregion W_Skill
+
+        ///////////////////////
+        ///
+        ///////////////////////
+        #region E_Skill
+        IEnumerator BoldRush()
+        {
+            isAction = true;
+            animator.SetBool("Moving", false);
+            animator.SetBool("Attacking", true);
+            animator.SetInteger("Action", 1);
+            animator.SetTrigger("Trigger");
+            animator.SetInteger("TriggerNumber", 11);
+            yield return null;
+        }
+        void BoldRush_Stop()
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("MoveAttack1")) //Q스킬 모션이 끝나면
+            {
+                animator.SetBool("Attacking", false);
+                animator.SetBool("Moving", true);
+                isAction = false;
+            }
+        }
+        #endregion E_Skill
+
+        ///////////////////////
+        ///
+        ///////////////////////
+        #region R_Skill
+        IEnumerator ShockOfLand()
+        {
+            isAction = true;
+            animator.SetBool("Moving", false);
+            animator.SetBool("Attacking", true);
+            animator.SetInteger("Action", 1);
+            animator.SetTrigger("Trigger");
+            animator.SetInteger("TriggerNumber", 10);
+            yield return null;
+        }
+        void ShockOfLand_Stop()
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1")) //Q스킬 모션이 끝나면
+            {
+                animator.SetBool("Attacking", false);
+                animator.SetBool("Moving", true);
+                isAction = false;
+            }
+        }
+        #endregion R_Skill
+        ///////////////////////
+        ///
+        ///////////////////////
         IEnumerator Die()
         {
             //사망시 현재 위치로 destination을 변경하고
