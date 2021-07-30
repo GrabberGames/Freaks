@@ -6,14 +6,13 @@ using UnityEngine.AI;
 public class WhiteFreaksController : MonoBehaviour
 {
     public GameObject miningWorkshop;
+    public NavMeshAgent navMeshAgent;
 
-    private NavMeshAgent navMeshAgent;
     private GameObject alter;
-
     private bool isMining = false;
     private bool hasEssense = false;
-
     private Vector3 alterPosition;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +30,16 @@ public class WhiteFreaksController : MonoBehaviour
         isMining = true;
         print("SetMining");
     }
+
+    public void SetSwitch(Vector3 pos)
+    {
+        ChkNavMesh();
+
+        navMeshAgent.SetDestination(pos);
+    }
+
+
+
 
     public void OnCollisionEnter(Collision collision)
     {

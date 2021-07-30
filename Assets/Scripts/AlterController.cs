@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class AlterController : Building
 {
-    [SerializeField]
-    private GameObject whiteFreaksPref;
+    public GameObject whiteFreaksPref;
 
     public int essence = 1000;
-    [SerializeField] private int whiteFreaks = 5;
+    [SerializeField] 
+    private int whiteFreaks = 5;
     private int busyWhiteF = 0;
 
     private List<GameObject> miningFreaks = new List<GameObject>();
@@ -30,14 +30,14 @@ public class AlterController : Building
     public void GoBuild(GameObject building)
     {
         busyWhiteF++;
-        GameObject whiteFreeks = Instantiate(whiteFreaksPref, transform.position, transform.rotation);
-        miningFreaks.Add(whiteFreeks);
-        whiteFreeks.GetComponent<WhiteFreaksController>().miningWorkshop = building;
+        GameObject whiteFreaks = Instantiate(whiteFreaksPref, transform.position, transform.rotation);
+        miningFreaks.Add(whiteFreaks);
+        whiteFreaks.GetComponent<WhiteFreaksController>().miningWorkshop = building;
 
         if(building.GetComponent<WorkshopController>())
         {
-            whiteFreeks.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
-            building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreeks);
+            whiteFreaks.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
+            building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreaks);
         }
         
     }

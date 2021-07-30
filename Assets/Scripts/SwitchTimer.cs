@@ -6,8 +6,8 @@ public class SwitchTimer : MonoBehaviour
 {
     [SerializeField] private int timer = 90;
 
-
     public bool isTimerON = false;
+
 
     private void Update()
     {
@@ -17,9 +17,6 @@ public class SwitchTimer : MonoBehaviour
             isTimerON = false;
         }
     }
-
-
-
 
 
     public IEnumerator Timer()
@@ -40,7 +37,4 @@ public class SwitchTimer : MonoBehaviour
             }
         }
     }
-
-
-
 }

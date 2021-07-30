@@ -65,6 +65,7 @@ public class BuildingController : MonoBehaviour
         if(isPreviewActivate)
         {
             ViewPreview();
+
             if (building.GetComponent<BuildingPreview>().IsBuildable() && Input.GetMouseButtonDown(0))
             {
                 // FX Start
@@ -73,6 +74,7 @@ public class BuildingController : MonoBehaviour
 
                 Physics.Raycast(ray, out hit);
                 hittedPoint = hit.point;
+
                 if (buildnum == 0)      // Alter °Ç¼³ 
                 {
                     Destroy(GameObject.Find("Alter"));
@@ -88,7 +90,7 @@ public class BuildingController : MonoBehaviour
                 Build();
                 Debug.Log("Builded");
 
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit))  // smoke FX 
                 {
                     Vector3 sPos = hit.point; sPos.y = 0.3f;
                     fx_Smoke01.transform.position = sPos;
@@ -125,8 +127,10 @@ public class BuildingController : MonoBehaviour
     private void Build()
     {
         isPreviewActivate = false;
+        
         building.GetComponent<Collider>().isTrigger = false;
         building.GetComponent<BuildingPreview>().Destroy();
+
         alterController.GoBuild(building);
         Destroy(building.GetComponent<BuildingPreview>());
 
@@ -144,13 +148,7 @@ public class BuildingController : MonoBehaviour
 
     public void ConstructBuilding(int buildingNum)
     {
-        /*
-        if(buildingNum == (int) Building.Alter)
-        {
-            Debug.Log("Building Alter is not supported yet.");
-            return;
-        }
-        */
+
         buildnum = buildingNum;
         SetBuildBtnActivate();
         SetBuildListBtnActivate();
@@ -163,7 +161,6 @@ public class BuildingController : MonoBehaviour
 
     private void SetBuildBtnActivate()
     {
-
         build.gameObject.SetActive(isBtnActivate);
         isBtnActivate = !isBtnActivate;
     }

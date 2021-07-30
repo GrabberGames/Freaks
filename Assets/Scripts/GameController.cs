@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     // FX
     [SerializeField] private ParticleSystem fx_Move;
 
+
     private void Update()
     {
         FXmovePlayer();
