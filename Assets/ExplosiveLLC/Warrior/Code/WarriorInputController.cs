@@ -23,8 +23,8 @@ namespace WarriorAnims
 		public Vector3 moveInput { get { return CameraRelativeInput(inputHorizontal, inputVertical); } }
 		public Vector2 aimInput { get { return CameraRelativeInput(inputAimHorizontal, inputAimVertical); } }
 
-		private float inputPauseTimeout = 0;
-		private bool inputPaused = false;
+		//private float inputPauseTimeout = 0;
+		//private bool inputPaused = false;
 
 		private void Update()
 		{
