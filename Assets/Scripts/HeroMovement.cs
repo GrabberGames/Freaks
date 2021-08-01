@@ -144,6 +144,7 @@ namespace WarriorAnims
         #region Q_Skill
         IEnumerator ThrowingRock()
         {
+            SetDestination(transform.position);
             isAction = true;
             animator.SetBool("Moving", false);
             animator.SetBool("Attack", true);
@@ -158,7 +159,8 @@ namespace WarriorAnims
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
                 animator.SetBool("Attack", false);
-                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
+                agent.isStopped = false;
+                isAction = false;
             }
         }
         #endregion Q_Skill
@@ -168,6 +170,7 @@ namespace WarriorAnims
         #region W_Skill
         IEnumerator LeafOfPride()
         {
+            SetDestination(transform.position);
             isAction = true;
             animator.SetBool("Moving", false);
             animator.SetBool("Dash", true);
@@ -187,7 +190,8 @@ namespace WarriorAnims
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
                 animator.SetBool("Dash", false);
-                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
+                agent.isStopped = false;
+                isAction = false; 
             }
         }
         #endregion W_Skill
@@ -198,6 +202,7 @@ namespace WarriorAnims
         #region E_Skill
         IEnumerator BoldRush()
         {
+            SetDestination(transform.position);
             isAction = true;
             animator.SetBool("Moving", false);
             animator.SetBool("Attack", true);
@@ -212,7 +217,8 @@ namespace WarriorAnims
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
                 animator.SetBool("Attack", false);
-                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
+                agent.isStopped = false;
+                isAction = false;
             }
         }
         #endregion E_Skill
@@ -233,12 +239,15 @@ namespace WarriorAnims
         }
         void ShockOfLand_Stop()
         {
-            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1")) //Q스킬 모션이 끝나면
+            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1")) //R스킬 모션이 끝나면
 
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
                 animator.SetBool("Attack", false);
-                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
+                agent.isStopped = false;
+                isAction = false;
+                SetDestination(targetPos);
+                Move();
             }
         }
         #endregion R_Skill

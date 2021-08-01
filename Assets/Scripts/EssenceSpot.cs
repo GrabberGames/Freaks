@@ -9,7 +9,7 @@ public class EssenceSpot : MonoBehaviour
     private int GetEssencePerOnce = 50;
     private Material navy, blue, sky_blue;
     private Material material;
-    private bool isDig = false;
+    //private bool isDig = false;
     void Start()
     {
         material = this.gameObject.GetComponent<Renderer>().material;
