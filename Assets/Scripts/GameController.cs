@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 
 
@@ -10,8 +11,8 @@ public class GameController : MonoBehaviour
     private RaycastHit hit;
     private string hitColliderName;
 
-    // UI
-    public GameObject gameOver;
+    int n = 0;
+    int h = 0;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;

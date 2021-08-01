@@ -32,7 +32,7 @@ public class ChatController : MonoBehaviour {
 
         var timeNow = System.DateTime.Now;
 
-        TMP_ChatOutput.text += "[<#FFFF80>" + timeNow.Hour.ToString("d2") + ":" + timeNow.Minute.ToString("d2") + ":" + timeNow.Second.ToString("d2") + "</color>] " + newText + "\n";
+        TMP_ChatOutput.text += "[<#FFFF80>" + timeNow.Hour.ToString("d2") + ":" + timeNow.Minute.ToString("d2") + ":" + timeNow.Second.ToString("d2") + "</color>] " + newText + "isCoroutineOn";
 
         TMP_ChatInput.ActivateInputField();
 
