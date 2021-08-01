@@ -78,8 +78,8 @@ namespace WarriorAnims
         }
         private void Update()
         {
-            ChooseCoroutine();
             CharacterMovement();
+            ChooseCoroutine();
             CallAnimationStop();
         }
 
@@ -93,21 +93,25 @@ namespace WarriorAnims
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
+                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.Q;
                 StartCoroutine(ThrowingRock());
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
+                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.W;
                 StartCoroutine(LeafOfPride());
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
+                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.E;
                 StartCoroutine(BoldRush());
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
+                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.R;
                 StartCoroutine(ShockOfLand());
             }
@@ -141,8 +145,8 @@ namespace WarriorAnims
         IEnumerator ThrowingRock()
         {
             isAction = true;
-            animator.SetBool("Attacking", true);
             animator.SetBool("Moving", false);
+            animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetInteger("TriggerNumber", 12);
             animator.SetTrigger("Trigger");
@@ -150,11 +154,11 @@ namespace WarriorAnims
         }
         void ThrowingRock_Stop()
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RangeAttack1")) //Q스킬 모션이 끝나면
+            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RangeAttack1")) //Q스킬 모션이 끝나면
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
-                animator.SetBool("Moving", true);
-                animator.SetBool("Attacking", false);
-                isAction = false;
+                animator.SetBool("Attack", false);
+                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
             }
         }
         #endregion Q_Skill
@@ -174,11 +178,16 @@ namespace WarriorAnims
         }
         void LeafOfPride_Stop()
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward")) //Q스킬 모션이 끝나면
+            /*if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward")) //Q스킬 모션이 끝나면
             {
                 animator.SetBool("Dash", false);
                 animator.SetBool("Moving", true);
                 isAction = false;
+            }*/
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
+            {
+                animator.SetBool("Dash", false);
+                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
             }
         }
         #endregion W_Skill
@@ -191,7 +200,7 @@ namespace WarriorAnims
         {
             isAction = true;
             animator.SetBool("Moving", false);
-            animator.SetBool("Attacking", true);
+            animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 11);
@@ -199,11 +208,11 @@ namespace WarriorAnims
         }
         void BoldRush_Stop()
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("MoveAttack1")) //Q스킬 모션이 끝나면
+            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("MoveAttack1")) //Q스킬 모션이 끝나면
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
-                animator.SetBool("Attacking", false);
-                animator.SetBool("Moving", true);
-                isAction = false;
+                animator.SetBool("Attack", false);
+                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
             }
         }
         #endregion E_Skill
@@ -216,7 +225,7 @@ namespace WarriorAnims
         {
             isAction = true;
             animator.SetBool("Moving", false);
-            animator.SetBool("Attacking", true);
+            animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 10);
@@ -224,11 +233,12 @@ namespace WarriorAnims
         }
         void ShockOfLand_Stop()
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1")) //Q스킬 모션이 끝나면
+            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1")) //Q스킬 모션이 끝나면
+
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
-                animator.SetBool("Attacking", false);
-                animator.SetBool("Moving", true);
-                isAction = false;
+                animator.SetBool("Attack", false);
+                isAction = false; agent.isStopped = false; animator.SetBool("Moving", true);
             }
         }
         #endregion R_Skill
