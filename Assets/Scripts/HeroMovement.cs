@@ -26,8 +26,6 @@ namespace WarriorAnims
         [HideInInspector] public bool useRootMotion = false;
         [HideInInspector] public bool waitingOnWeapons = true;
 
-
-
         private Rigidbody rigid;
         private Camera mainCamera;
         private NavMeshAgent agent;
@@ -35,6 +33,7 @@ namespace WarriorAnims
         private Vector3 targetPos;
         private Vector3 velocity;
         private Vector3 TowardVec;
+        private Vector3 UseSkillTowardVector;
 
         private bool isAction = false;
         private int nowAnimationState = 0;
@@ -81,6 +80,9 @@ namespace WarriorAnims
             CharacterMovement();
             ChooseCoroutine();
             CallAnimationStop();
+            ActionManage();
+            print(transform.forward);
+            print(isAction);
         }
 
         void ChooseCoroutine()
@@ -93,25 +95,21 @@ namespace WarriorAnims
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.Q;
                 StartCoroutine(ThrowingRock());
             }
-            if (Input.GetKeyDown(KeyCode.W))
+            else if (Input.GetKeyDown(KeyCode.W))
             {
-                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.W;
                 StartCoroutine(LeafOfPride());
             }
-            if (Input.GetKeyDown(KeyCode.E))
+            else if(Input.GetKeyDown(KeyCode.E))
             {
-                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.E;
                 StartCoroutine(BoldRush());
             }
-            if (Input.GetKeyDown(KeyCode.R))
+            else if(Input.GetKeyDown(KeyCode.R))
             {
-                agent.isStopped = true;
                 nowAnimationState = (int)AnimationState.R;
                 StartCoroutine(ShockOfLand());
             }
@@ -137,14 +135,23 @@ namespace WarriorAnims
 
             }
         }
-        /////
-        ///////////////////////
-        ///
+        void ActionManage()
+        {
+            if (isAction)
+            {
+                switch (nowAnimationState)
+                {
+                    case 2:
+                        rigid.MovePosition(transform.position + UseSkillTowardVector * 20 * Time.deltaTime);
+                        break;
+                }
+            }
+        }
         ///////////////////////
         #region Q_Skill
         IEnumerator ThrowingRock()
         {
-            SetDestination(transform.position);
+            agent.ResetPath();
             isAction = true;
             animator.SetBool("Moving", false);
             animator.SetBool("Attack", true);
@@ -161,6 +168,7 @@ namespace WarriorAnims
                 animator.SetBool("Attack", false);
                 agent.isStopped = false;
                 isAction = false;
+                nowAnimationState = (int)AnimationState.L;
             }
         }
         #endregion Q_Skill
@@ -170,28 +178,26 @@ namespace WarriorAnims
         #region W_Skill
         IEnumerator LeafOfPride()
         {
-            SetDestination(transform.position);
-            isAction = true;
-            animator.SetBool("Moving", false);
-            animator.SetBool("Dash", true);
-            animator.SetInteger("Action", 1);
-            animator.SetTrigger("Trigger");
-            animator.SetInteger("TriggerNumber", 3);
+            if (!isAction)
+            {
+                agent.ResetPath();
+                UseSkillTowardVector = transform.forward.normalized;
+                isAction = true;
+                animator.SetBool("Moving", false);
+                animator.SetBool("Dash", true);
+                animator.SetInteger("Action", 1);
+                animator.SetTrigger("Trigger");
+                animator.SetInteger("TriggerNumber", 3);
+            }
             yield return null;
         }
         void LeafOfPride_Stop()
         {
-            /*if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward")) //Q스킬 모션이 끝나면
-            {
-                animator.SetBool("Dash", false);
-                animator.SetBool("Moving", true);
-                isAction = false;
-            }*/
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
                 animator.SetBool("Dash", false);
-                agent.isStopped = false;
-                isAction = false; 
+                isAction = false;
+                nowAnimationState = (int)AnimationState.L;
             }
         }
         #endregion W_Skill
@@ -202,7 +208,7 @@ namespace WarriorAnims
         #region E_Skill
         IEnumerator BoldRush()
         {
-            SetDestination(transform.position);
+            agent.ResetPath();
             isAction = true;
             animator.SetBool("Moving", false);
             animator.SetBool("Attack", true);
@@ -219,6 +225,7 @@ namespace WarriorAnims
                 animator.SetBool("Attack", false);
                 agent.isStopped = false;
                 isAction = false;
+                nowAnimationState = (int)AnimationState.L;
             }
         }
         #endregion E_Skill
@@ -248,6 +255,7 @@ namespace WarriorAnims
                 isAction = false;
                 SetDestination(targetPos);
                 Move();
+                nowAnimationState = (int)AnimationState.L;
             }
         }
         #endregion R_Skill
