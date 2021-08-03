@@ -14,7 +14,7 @@ public enum Wave
 
 public class SpawnController: MonoBehaviour
 {
-    public TextMeshProUGUI timerText;
+    //public TextMeshProUGUI timerText;
     public GameObject[] Minion;     // Minion: close range || Minion_2: long range
     public GameObject[] SpawnPoint;
 
@@ -35,10 +35,10 @@ public class SpawnController: MonoBehaviour
         _min = (waveTimer / 60);
         _sec = 0;
         randomSpawn = Random.Range(0, SpawnPoint.Length);   // random spawn position set   
-        StartCoroutine(MinionSpawn());
+        //StartCoroutine(MinionSpawn());
     }
 
-
+    /*
     IEnumerator SpawnTimer() // Enemy Spawn Timer
     {
         while (true)
@@ -66,13 +66,14 @@ public class SpawnController: MonoBehaviour
             }
         }
     }
+    */
 
 
     IEnumerator MinionSpawn()
     {
         while (true)
         {
-            yield return StartCoroutine(SpawnTimer());
+            //yield return StartCoroutine(SpawnTimer());
             //timer Reset
             _min = (waveTimer / 60);
             _sec = 0;

@@ -6,22 +6,57 @@ using TMPro;
 
 
 
+
 public class GameController : MonoBehaviour
 {
+    public TextMeshProUGUI timerText;
+
     private RaycastHit hit;
     private string hitColliderName;
 
-    int n = 0;
-    int h = 0;
+
+    int min = 0;
+    int sec = 0;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;
+
+    private void Start()
+    {
+        StartCoroutine(PlayTimer());
+    }
+
 
 
     private void Update()
     {
         FXmovePlayer();
     }
+
+
+    IEnumerator PlayTimer()
+    {
+        while(true)
+        {
+            timerText.text = string.Format("{0:D1}:{1:D2}", min, sec);
+            
+            sec++;
+            
+            if (sec > 59)
+            {
+                sec = 0;
+                min++;
+            }
+            
+            yield return new WaitForSeconds(1);
+        } 
+    }
+
+
+
+
+
+
 
 
     // FX Play on Mouse Click pos.
