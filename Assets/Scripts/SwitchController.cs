@@ -19,6 +19,7 @@ public class SwitchController : MonoBehaviour
     private AlterController alterController;
     private SwitchTimer SwitchTimer;
     private Vector3 switchCloneStartPos;
+    Vector3 pos;
     private bool isTimerON;
 
 
@@ -61,10 +62,10 @@ public class SwitchController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))  
         {
             // Switch Creating position Set.
-            Vector3 pos = hit.point; pos.y = -0.5f;
+            pos = hit.point; pos.y = -0.5f;
                        
             // switch prefab Spawn
-            Instantiate(switchPre, pos, Quaternion.Euler(180f, 0, 0));
+            GameObject switchObject = Instantiate(switchPre, pos, Quaternion.Euler(180f, 0, 0));
 
             // switch ON FX
             SwitchFX(pos, "ON");
@@ -81,19 +82,15 @@ public class SwitchController : MonoBehaviour
             // switchFreaks Spawn 
             if (alterController.CanBuild())
             {
-                GameObject switchFreaks = Instantiate(alterController.whiteFreaksPref, alter.transform.position, alter.transform.rotation);
-                WhiteFreaksController switchFreaksController = switchFreaks.GetComponent<WhiteFreaksController>();
-
-                pos.y = 0f;
-                switchFreaksController.SetSwitch(pos);
+                alterController.GoBuild(switchObject);
             }
-
-
-
-
-
-
         }
+    }
+
+    public Vector3 Getpos()
+    {
+        pos.y = 0f;
+        return pos;
     }
 
 
@@ -129,9 +126,5 @@ public class SwitchController : MonoBehaviour
                 SwitchControl();
             }
         }
-
-
-
-
     }
 }
