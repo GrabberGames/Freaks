@@ -20,8 +20,7 @@ public class WhiteFreaksController : MonoBehaviour
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         alter = GameObject.Find("Alter");
         alterPosition = alter.transform.position;
-    }
-  
+    }  
     public void SetMiningWorkShop()
     {
         ChkNavMesh();
@@ -37,8 +36,6 @@ public class WhiteFreaksController : MonoBehaviour
 
         navMeshAgent.SetDestination(pos);
     }
-
-
 
 
     public void OnCollisionEnter(Collision collision)

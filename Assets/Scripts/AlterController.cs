@@ -31,12 +31,18 @@ public class AlterController : Building
     {
         busyWhiteF++;
         GameObject whiteFreaks = Instantiate(whiteFreaksPref, transform.position, transform.rotation);
+        WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();
         miningFreaks.Add(whiteFreaks);
-        whiteFreaks.GetComponent<WhiteFreaksController>().miningWorkshop = building;
 
-        if(building.GetComponent<WorkshopController>())
+        if(building.GetComponent<SwitchTimer>())
         {
-            whiteFreaks.GetComponent<WhiteFreaksController>().SetMiningWorkShop();
+            Vector3 pos = GameObject.Find("SwitchController").GetComponent<SwitchController>().Getpos();
+            whiteFreaksController.SetSwitch(pos);
+        }
+        else if(building.GetComponent<WorkshopController>())
+        {
+            whiteFreaksController.miningWorkshop = building;
+            whiteFreaksController.SetMiningWorkShop();
             building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreaks);
         }
         
