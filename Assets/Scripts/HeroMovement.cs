@@ -80,9 +80,7 @@ namespace WarriorAnims
             CharacterMovement();
             ChooseCoroutine();
             CallAnimationStop();
-            ActionManage();
-            print(transform.forward);
-            print(isAction);
+            //ActionManage();
         }
 
         void ChooseCoroutine()
@@ -183,7 +181,7 @@ namespace WarriorAnims
                 agent.ResetPath();
                 UseSkillTowardVector = transform.forward.normalized;
                 isAction = true;
-                animator.SetBool("Moving", false);
+                animator.SetBool("Moving", false); SetAnimatorRootMotion(true);
                 animator.SetBool("Dash", true);
                 animator.SetInteger("Action", 1);
                 animator.SetTrigger("Trigger");
@@ -198,6 +196,7 @@ namespace WarriorAnims
                 animator.SetBool("Dash", false);
                 isAction = false;
                 nowAnimationState = (int)AnimationState.L;
+                SetAnimatorRootMotion(false);
             }
         }
         #endregion W_Skill
@@ -210,7 +209,7 @@ namespace WarriorAnims
         {
             agent.ResetPath();
             isAction = true;
-            animator.SetBool("Moving", false);
+            animator.SetBool("Moving", false); SetAnimatorRootMotion(true);
             animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
@@ -226,6 +225,7 @@ namespace WarriorAnims
                 agent.isStopped = false;
                 isAction = false;
                 nowAnimationState = (int)AnimationState.L;
+                SetAnimatorRootMotion(false);
             }
         }
         #endregion E_Skill
@@ -292,7 +292,10 @@ namespace WarriorAnims
             isAction = false;
             yield return null;
         }
-
+        public void SetAnimatorRootMotion(bool b)
+        {
+            useRootMotion = b;
+        }
         void CharacterMovement()
         {
             //현재 다른 동작 중이라면 움직임을 제한시킵니다.
