@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
             transform.Translate(0, 2.0f, 0);
         } 
 
-        if(Input.mousePosition.y < 0){
+        if(Input.mousePosition.y < 10){
             transform.Translate(0, -2.0f, 0);
         } 
 

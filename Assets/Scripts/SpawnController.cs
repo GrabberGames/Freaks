@@ -26,14 +26,14 @@ public class SpawnController: MonoBehaviour
     private int wave_num = 0;
     private int randomSpawn;
     private int _min;
-    private int _sec;
+    // private int _sec; // Comment out unused variables
     private Wave wave = Wave.w0;
 
 
     private void Start()
     {
         _min = (waveTimer / 60);
-        _sec = 0;
+        // _sec = 0; // Comment out unused variables
         randomSpawn = Random.Range(0, SpawnPoint.Length);   // random spawn position set   
         //StartCoroutine(MinionSpawn());
     }
@@ -76,7 +76,7 @@ public class SpawnController: MonoBehaviour
             //yield return StartCoroutine(SpawnTimer());
             //timer Reset
             _min = (waveTimer / 60);
-            _sec = 0;
+            // _sec = 0; // Comment out unused variables
 
             if (wave == Wave.w0 && wave_num < System.Enum.GetValues(typeof(Wave)).Length - 1)   // Wave.w0 == break time || 1 <= wave_num <= 10; Wave.Length == 11
             {
