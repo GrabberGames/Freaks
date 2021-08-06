@@ -14,17 +14,10 @@ public class IntroButtonController : MonoBehaviour
     [SerializeField] private Button quit;
 
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject.name != null)
+        if (Input.GetMouseButtonDown(0))
         {
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
@@ -41,7 +34,7 @@ public class IntroButtonController : MonoBehaviour
                     break;
                 case "Quit":
                     Debug.Log("Quit");
-                    //SceneManager.LoadScene("Quit");
+                    Application.Quit();
                     break;
 
             }

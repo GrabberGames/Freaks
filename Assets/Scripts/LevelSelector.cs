@@ -10,8 +10,7 @@ public class LevelSelector : MonoBehaviour
     [SerializeField] private Button tutorial;
     [SerializeField] private Button single;
     [SerializeField] private Button multi;
-
-
+    [SerializeField] private Button backToMain;
 
 
 
@@ -30,6 +29,9 @@ public class LevelSelector : MonoBehaviour
                     break;
                 case "Multi(LAN)":
                     //SceneManager.LoadScene("Multi");
+                    break;
+                case "BackToMain":
+                    SceneManager.LoadScene("Intro");
                     break;
             }
         }
