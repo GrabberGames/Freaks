@@ -17,11 +17,6 @@ public class CameraController : MonoBehaviour
     private Quaternion initialRotation;
 
   
-    void LateUpdate()
-    { 
-
-    }
-    
     void Awake() {
        initialPosition = transform.position;
        initialRotation = transform.rotation ;
@@ -62,25 +57,25 @@ public class CameraController : MonoBehaviour
         
         if(Input.mousePosition.y > Screen.height){
             transform.Translate(0, 0, 4.0f);
-            transform.position= new Vector3(transform.position.x, initialPosition.y , transform.position.z);
+            transform.position = new Vector3(transform.position.x, initialPosition.y , transform.position.z);
         } 
 
         if(Input.mousePosition.y < 10){
             transform.Translate(0, 0, -4.0f);
-            transform.position= new Vector3(transform.position.x, initialPosition.y , transform.position.z);
+            transform.position = new Vector3(transform.position.x, initialPosition.y , transform.position.z);
         } 
 
         if (Input.GetKey("space"))
         {
             transform.LookAt(player);
-            transform.rotation= Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
+            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
             transform.position = new Vector3(player.position.x, transform.position.y, player.position.z);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
             transform.LookAt(alter);
-            transform.rotation= Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
+            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
             transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z);
         }
 
