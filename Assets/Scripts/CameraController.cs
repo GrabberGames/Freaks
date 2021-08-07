@@ -8,13 +8,15 @@ public class CameraController : MonoBehaviour
     public float zoomSpeed = 10.0f;
     public float currentZoom;
 
-    public Transform player; // Player object
+    private Transform player; // Player object
 
-    public Transform alter; // Alter object
+    private Transform alter; // Alter object
 
     // private Vector3 lookOffset;    // The position of camera which view target
     private Vector3 initialPosition;
     private Quaternion initialRotation;
+
+    
 
   
     void LateUpdate()
@@ -40,7 +42,8 @@ public class CameraController : MonoBehaviour
     {
         Zoom();
         Move();
- 
+        alter = GameObject.Find("Alter").transform;
+        player = GameObject.Find("Waron").transform;
     }
     void Zoom()
     {
