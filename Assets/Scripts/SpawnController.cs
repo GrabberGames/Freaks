@@ -35,10 +35,10 @@ public class SpawnController: MonoBehaviour
         _min = (waveTimer / 60);
         // _sec = 0; // Comment out unused variables
         randomSpawn = Random.Range(0, SpawnPoint.Length);   // random spawn position set   
-        //StartCoroutine(MinionSpawn());
+        // StartCoroutine(MinionSpawn());  DO NOT USE IT!!!!!
     }
 
-    /*
+    /* DO NOT USE IT!!!!!
     IEnumerator SpawnTimer() // Enemy Spawn Timer
     {
         while (true)
@@ -73,7 +73,7 @@ public class SpawnController: MonoBehaviour
     {
         while (true)
         {
-            //yield return StartCoroutine(SpawnTimer());
+            //yield return StartCoroutine(SpawnTimer());    DO NOT USE IT !!!!!
             //timer Reset
             _min = (waveTimer / 60);
             // _sec = 0; // Comment out unused variables
