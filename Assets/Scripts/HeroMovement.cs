@@ -7,6 +7,7 @@ namespace WarriorAnims
 {
     public class HeroMovement : SuperStateMachine
     {
+        public Warrior warrior;
         private enum AnimationState
         {
             L,
@@ -61,7 +62,8 @@ namespace WarriorAnims
                 animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
                 animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
             }
-
+            warriorTiming = gameObject.AddComponent<WarriorTiming>();
+            warriorTiming.heroMovement = this;
             rigid = GetComponent<Rigidbody>();
             mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
             agent = GetComponent<NavMeshAgent>();
@@ -175,24 +177,32 @@ namespace WarriorAnims
         ///////////////////////
         #region W_Skill
         IEnumerator LeafOfPride()
-        {
-            if (!isAction)
-            {
-                agent.ResetPath();
-                UseSkillTowardVector = transform.forward.normalized;
+        { 
+            agent.ResetPath();
                 isAction = true;
-                animator.SetBool("Moving", false); SetAnimatorRootMotion(true);
+                //Lock(true, true, true, 0, warriorTiming.TimingLock(warrior, "dash"));
+                animator.SetBool("Moving", false); 
+                SetAnimatorRootMotion(true);
                 animator.SetBool("Dash", true);
                 animator.SetInteger("Action", 1);
                 animator.SetTrigger("Trigger");
                 animator.SetInteger("TriggerNumber", 3);
-            }
             yield return null;
+        }
+        IEnumerator W_Stop(float time)
+        {
+            yield return new WaitForSeconds(time);
+            rigid.velocity = Vector3.zero;
+            animator.SetBool("Dash", false);
+            isAction = false;
+            nowAnimationState = (int)AnimationState.L;
+            SetAnimatorRootMotion(false);
         }
         void LeafOfPride_Stop()
         {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
             {
+                rigid.velocity = Vector3.zero;
                 animator.SetBool("Dash", false);
                 isAction = false;
                 nowAnimationState = (int)AnimationState.L;
@@ -292,6 +302,49 @@ namespace WarriorAnims
             isAction = false;
             yield return null;
         }
+
+        public void Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+        {
+            StopCoroutine("_Lock");
+            StartCoroutine(_Lock(lockMovement, lockAction, timed, delayTime, lockTime));
+        }
+        public IEnumerator _Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+        {
+            if (delayTime > 0) yield return new WaitForSeconds(delayTime);
+            if (lockMovement) { LockMove(true); }
+            if (lockAction) { LockAction(true); }
+            if(timed)
+            {
+                if(lockTime >0)
+                {
+                    yield return new WaitForSeconds(lockTime);
+                    UnLock(lockMovement, lockAction);
+                }
+            }
+
+        }
+        public void LockMove(bool b)
+        {
+            if(b)
+            {
+                animator.SetBool("Moving", false);
+                SetAnimatorRootMotion(true);
+            }
+            else
+            {
+                SetAnimatorRootMotion(false);
+            }
+        }
+        public void LockAction(bool b)
+        {
+            //isAction = b;
+        }
+        public void UnLock(bool movement, bool actions)
+        {
+            if (movement) LockMove(false);
+            //if (actions) isAction = false;
+        }
+
         public void SetAnimatorRootMotion(bool b)
         {
             useRootMotion = b;

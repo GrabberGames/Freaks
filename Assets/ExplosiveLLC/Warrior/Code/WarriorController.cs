@@ -87,7 +87,7 @@ namespace WarriorAnims
 
 			// Add Timing Controllers.
 			warriorTiming = gameObject.AddComponent<WarriorTiming>();
-			warriorTiming.warriorController = this;
+			//warriorTiming.warriorController = this;
 
 			// Add IKHands.
 			ikHands = GetComponentInChildren<IKHands>();

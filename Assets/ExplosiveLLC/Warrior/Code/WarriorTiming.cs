@@ -8,7 +8,7 @@ namespace WarriorAnims
 {
 	public class WarriorTiming:MonoBehaviour
     {
-		[HideInInspector] public WarriorController warriorController;
+		[HideInInspector] public HeroMovement heroMovement;
 
 		/// <summary>
 		/// Lock timing for all the Warrior attacks and actions.
