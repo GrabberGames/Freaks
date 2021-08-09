@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Flower#1
-  m_Shader: {fileID: -6465566751694194690, guid: 258628384b13cfc45b11a6d0dc47dd6d, type: 3}
+  m_Shader: {fileID: 4800000, guid: 694c58b6f02901f4290b9c022ba932b9, type: 3}
   m_ShaderKeywords: ENUM_25859456_DESABLE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 0.8, y: 0.8}
         m_Offset: {x: 0.1, y: 0.2}
     - _FlowerTint:
-        m_Texture: {fileID: 2800000, guid: be9db16195c00114fa9cfcb1e3c94951, type: 3}
+        m_Texture: {fileID: 2800000, guid: d61e4bd11a6bf244cba629c8a80c7beb, type: 3}
         m_Scale: {x: 0.8, y: 0.8}
         m_Offset: {x: 0.1, y: 0.2}
     - _MainTex:
@@ -76,18 +76,6 @@ Material:
         m_Scale: {x: 0.8, y: 0.8}
         m_Offset: {x: 0.1, y: 0.2}
     - _texcoord:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -135,5 +123,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlowerColor: {r: 1, g: 1, b: 1, a: 0}
-    - _PlantColor: {r: 0.4, g: 0.77254903, b: 0.18431373, a: 0}
-  m_BuildTextureStacks: []
+    - _PlantColor: {r: 0.51075566, g: 0.764151, b: 0.36405307, a: 0}

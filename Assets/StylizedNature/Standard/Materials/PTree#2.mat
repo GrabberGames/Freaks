@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PTree#2
-  m_Shader: {fileID: -6465566751694194690, guid: e8b2d186a39993e41b4bd4b3c21b7e3d,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: bf8dbb8539498084fb24171d3694d5fb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -86,7 +85,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Intensity: 0.15
-    - _LeavesScale: 1.61
+    - _LeavesScale: 1.47
     - _Metallic: 0
     - _Mode: 0
     - _NoiseScale: 1.47
@@ -113,5 +112,5 @@ Material:
     m_Colors:
     - Color_F6E82D54: {r: 0.5254902, g: 0.7058824, b: 0.5921569, a: 0}
     - Vector3_18D5AB93: {r: 0.5, g: 0.5, b: 0.5, a: 0}
-    - _Color: {r: 0, g: 0.3764706, b: 0.23921569, a: 1}
+    - _Color: {r: 0.14901961, g: 0.45490196, b: 0.2509804, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
