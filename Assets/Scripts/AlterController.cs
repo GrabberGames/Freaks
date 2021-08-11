@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class AlterController : Building
 {
     public GameObject whiteFreaksPref;
-    public GameObject buttens;
+    
 
     public int essence = 1000;
     [SerializeField] 
