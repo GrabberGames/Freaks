@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class BuildingController : MonoBehaviour
 {
@@ -18,8 +19,8 @@ public class BuildingController : MonoBehaviour
     private WhiteFreaksController[] whiteFreaksController;
     private FreaksController[] freaksControllers;
 
-    private bool isBtnActivate = true;
-    private bool isBtnListActivate = true;
+    //private bool isBtnActivate = true;
+    //private bool isBtnListActivate = true;
     private bool isPreviewActivate = false;
 
     private float buildingHeight;
@@ -32,6 +33,8 @@ public class BuildingController : MonoBehaviour
     private GameObject building;
     
     public Material[] materials;
+    public GameObject buttens;
+
 
     private enum Building
     {
@@ -48,6 +51,7 @@ public class BuildingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -57,11 +61,33 @@ public class BuildingController : MonoBehaviour
             {
                 if (hit.transform.gameObject.name == "Alter")
                 {
-                    SetBuildBtnActivate();
+                    buttens.SetActive(true);
                 }
             }
+
+            switch (EventSystem.current.currentSelectedGameObject.name)
+            {
+                case "Box1":
+                case "Box2":
+                case "Box3":
+                    ViewPreview();
+                    break;
+            }
+
+            
+
         }
 
+       
+
+
+
+
+
+
+
+
+        
         if(isPreviewActivate)
         {
             ViewPreview();
@@ -98,6 +124,7 @@ public class BuildingController : MonoBehaviour
                 }
             }
         }
+        
 
         // FX End
         if (fx_Smoke01.isStopped)
@@ -148,10 +175,10 @@ public class BuildingController : MonoBehaviour
 
     public void ConstructBuilding(int buildingNum)
     {
-
+        Debug.Log("!!");
         buildnum = buildingNum;
-        SetBuildBtnActivate();
-        SetBuildListBtnActivate();
+        //SetBuildBtnActivate();
+        //SetBuildListBtnActivate();
 
         building = Instantiate(Buildings[buildingNum]);
         building.AddComponent<BuildingPreview>();
@@ -159,6 +186,8 @@ public class BuildingController : MonoBehaviour
         isPreviewActivate = true;
     }
 
+
+    /*
     private void SetBuildBtnActivate()
     {
         build.gameObject.SetActive(isBtnActivate);
@@ -170,4 +199,5 @@ public class BuildingController : MonoBehaviour
         buildList.gameObject.SetActive(isBtnListActivate);
         isBtnListActivate = !isBtnListActivate;
     }
+    */
 }

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class AlterController : Building
 {
     public GameObject whiteFreaksPref;
+    public GameObject buttens;
 
     public int essence = 1000;
     [SerializeField] 
@@ -59,20 +60,15 @@ public class AlterController : Building
             if (Physics.Raycast(ray, out hit))
             {
                 GameObject hitGameObject = hit.transform.gameObject;
+
                 if (hitGameObject == gameObject)
                 {
                     isAlterClicked = true;
-                    // TODO //
-                    // Button (UI) Activate
-                    
                 }
                 else
                 {
                     isAlterClicked = false;
-                    // TODO //
-                    // Button (UI) Un-Activate
                 }
-
             }
         }
 
