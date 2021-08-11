@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class BuildingPreview : MonoBehaviour
 {
-    private enum BuildingNum
+    public enum BuildingNum
     {
         Alter,
         Tower,
-        Workshop
+        Workshop,
+        Switch
     }
 
     private List<Collider> colliders = new List<Collider>();
     private GameObject belowObject;
-    private int me;
+    [SerializeField] private int me;
     private bool areyouSure = false;
     private bool cantbuild;
     private int distance = 0;
@@ -31,6 +32,7 @@ public class BuildingPreview : MonoBehaviour
 
     void Update()
     {
+
         if (me == 0)    //알터의 경우
         { 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -73,6 +75,13 @@ public class BuildingPreview : MonoBehaviour
                     areyouSure = true;
                 }
                 break;
+
+            case (int)BuildingNum.Switch:
+                if(parent != null && (parent.name == "Bridge_Top" || parent.name == "Bridge_Bottom" || parent.name == "Bridge_Right"))
+                {
+                    areyouSure = true;
+                }
+                break;
         }
     }
 
@@ -87,6 +96,12 @@ public class BuildingPreview : MonoBehaviour
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
                 if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
+                {
+                    areyouSure = false;
+                }
+                break;
+            case (int)BuildingNum.Switch:
+                if (parent != null && (parent.name == "Bridge_Top" || parent.name == "Bridge_Bottom" || parent.name == "Bridge_Right"))
                 {
                     areyouSure = false;
                 }
@@ -116,6 +131,9 @@ public class BuildingPreview : MonoBehaviour
                 else
                     return false;
 
+            case (int)BuildingNum.Switch:
+                return areyouSure;
+
         }
         return false;
     }
@@ -136,6 +154,9 @@ public class BuildingPreview : MonoBehaviour
             case (int)BuildingNum.Workshop:
                 parentController = GetComponentInParent<WorkshopController>();
                 break;
+
+            case (int)BuildingNum.Switch:
+                return;
         }
 
         parentController.SetOpacity(true);
