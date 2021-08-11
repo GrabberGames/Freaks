@@ -9,7 +9,7 @@ public class SwitchController : MonoBehaviour
     //private Renderer targetRenderer;
 
     
-    [SerializeField] private GameObject switchClone;
+    private GameObject switchObject;
 
     public GameObject switchPre;
     public ParticleSystem[] fx_Switch;   // INDEX => ON: 0 || OFF: 1
@@ -17,10 +17,10 @@ public class SwitchController : MonoBehaviour
 
     private GameObject alter;
     private AlterController alterController;
-    private SwitchTimer SwitchTimer;
-    private Vector3 switchCloneStartPos;
+    private BuildingPreview buildingPreview;
     Vector3 pos;
     private bool isTimerON;
+
 
 
     // Start is called before the first frame update
@@ -28,7 +28,6 @@ public class SwitchController : MonoBehaviour
     {
         alter = GameObject.Find("Alter");
         alterController = alter.GetComponent<AlterController>();
-        switchCloneStartPos = new Vector3(343, 8, -100);
         //targetRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
@@ -37,6 +36,12 @@ public class SwitchController : MonoBehaviour
     public void CreateNewSwitch()
     {
         isSwitchBtnActivate = true;
+
+        // switch Instantiate
+        switchObject = Instantiate(switchPre, pos, Quaternion.Euler(180f, 0, 0));
+        switchObject.AddComponent<BuildingPreview>();
+        buildingPreview = switchObject.GetComponent<BuildingPreview>();
+        buildingPreview.Init((int)BuildingPreview.BuildingNum.Switch);
     }
 
 
@@ -47,9 +52,9 @@ public class SwitchController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            //Debug.Log(hit.point);
             Vector3 mousePos = hit.point;
-            switchClone.transform.position = mousePos;
+            mousePos.y = -0.5f;
+            switchObject.transform.position = mousePos;
         }
     }
 
@@ -61,23 +66,20 @@ public class SwitchController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))  
         {
+            // BuildingPreview delete
+            Destroy(switchObject.GetComponent<BuildingPreview>());
+
+            // SwitchTimer enable
+            switchObject.GetComponent<SwitchTimer>().enabled = true;
+
             // Switch Creating position Set.
             pos = hit.point; pos.y = -0.5f;
-                       
-            // switch prefab Spawn
-            GameObject switchObject = Instantiate(switchPre, pos, Quaternion.Euler(180f, 0, 0));
 
             // switch ON FX
             SwitchFX(pos, "ON");
 
-            // clone position reset
-            switchClone.transform.position = switchCloneStartPos;  
-
             // switch Timer ON
-            SwitchTimer = switchPre.GetComponent<SwitchTimer>();
-            SwitchTimer.isTimerON = true;
             isSwitchBtnActivate = false;
-
 
             // switchFreaks Spawn 
             if (alterController.CanBuild())
@@ -121,7 +123,7 @@ public class SwitchController : MonoBehaviour
         {
             viewPreview();
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && buildingPreview.IsBuildable())
             {
                 SwitchControl();
             }
