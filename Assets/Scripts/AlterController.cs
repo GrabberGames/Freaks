@@ -14,7 +14,8 @@ public class AlterController : Building
 
     private List<GameObject> miningFreaks = new List<GameObject>();
 
-    private bool isAlterClicked = false;
+    
+   [SerializeField] private bool isAlterClicked = false;
 
     // Update is called once per frame
     void Update()
@@ -58,14 +59,18 @@ public class AlterController : Building
             if (Physics.Raycast(ray, out hit))
             {
                 GameObject hitGameObject = hit.transform.gameObject;
-
                 if (hitGameObject == gameObject)
                 {
                     isAlterClicked = true;
+                    // TODO //
+                    // Button (UI) Activate
+                    
                 }
                 else
                 {
                     isAlterClicked = false;
+                    // TODO //
+                    // Button (UI) Un-Activate
                 }
 
             }
