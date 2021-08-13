@@ -16,9 +16,6 @@ public class CameraController : MonoBehaviour
     private Vector3 initialPosition;
     private Quaternion initialRotation;
 
-    
-
-  
     void Awake() {
        initialPosition = transform.position;
        initialRotation = transform.rotation ;

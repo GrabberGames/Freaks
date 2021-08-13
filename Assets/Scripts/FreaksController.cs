@@ -21,6 +21,8 @@ public class FreaksController : MonoBehaviour
 
     public bool isEnemyFound;
     public Team myTeam;
+
+    public float attack;    // Variable to be used when adding freaks later
      
 
     // Start is called before the first frame update

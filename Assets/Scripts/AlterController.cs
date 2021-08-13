@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AlterController : Building
+public class AlterController : Building, DamageService, HealthService
 {
     public GameObject whiteFreaksPref;
     
@@ -17,6 +17,8 @@ public class AlterController : Building
 
     
    [SerializeField] private bool isAlterClicked = false;
+
+   public float healthPoint = 2000.0f;
 
     // Update is called once per frame
     void Update()
@@ -97,4 +99,14 @@ public class AlterController : Building
     {
         return;
     }
+
+    public void DamageTaken(float damageTaken)
+     {
+         healthPoint -= damageTaken;
+     } 
+
+     public float GetCurrentHP()
+     {
+         return healthPoint;
+     }
 }
