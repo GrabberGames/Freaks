@@ -6,8 +6,13 @@ public class CameraController : MonoBehaviour
 {
     private Camera mainCamera;
     public float zoomSpeed = 10.0f;
-    public float currentZoom;
+    private float[] rangeY = { 142f, 348.25f };
+    private float[] rangeZ = { 9.2f, 64.2f };
+    public float currentY;
+    public float currentZ;
 
+    private float delta;
+    private float nor;
     private Transform player; // Player object
 
     private Transform alter; // Alter object
@@ -26,7 +31,9 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         mainCamera = GetComponent<Camera>();
-        currentZoom =110.0f;
+        currentY = transform.position.y;
+        currentZ = transform.position.z;
+        nor = (rangeY[1] - rangeY[0]) / (rangeZ[1] - rangeZ[0]);
     }
 
     // Update is called once per frame
@@ -39,9 +46,10 @@ public class CameraController : MonoBehaviour
     }
     void Zoom()
     {
-        currentZoom += Input.GetAxis("Mouse ScrollWheel") * -3 * zoomSpeed;
-        currentZoom = Mathf.Clamp(currentZoom, 30f, 131f);
-        mainCamera.fieldOfView = currentZoom;
+        delta += Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed;
+        currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
+        currentZ = Mathf.Clamp(currentZ + delta,       rangeZ[0], rangeZ[1]);
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, currentY, currentZ);
     }
 
     private void Move()

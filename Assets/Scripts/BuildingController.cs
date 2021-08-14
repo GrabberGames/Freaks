@@ -64,7 +64,7 @@ public class BuildingController : MonoBehaviour
                     buttens.SetActive(true);
                 }
             }
-
+            /*
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
                 case "Box1":
@@ -72,7 +72,7 @@ public class BuildingController : MonoBehaviour
                 case "Box3":
                     ViewPreview();
                     break;
-            }
+            }*/
 
             
 
