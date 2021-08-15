@@ -44,15 +44,15 @@ public class CameraController : MonoBehaviour
         Move();
         alter = GameObject.Find("Alter").transform;
         player = GameObject.Find("Waron").transform;
+        //print(currentY + "," + currentZ);
+        currentY = transform.position.y;
+        currentZ = transform.position.z;
     }
     void Zoom()
     {
-        delta += Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed;
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
-            currentZ = Mathf.Clamp(currentZ + delta, rangeZ[0], rangeZ[1]);
-        }
+        delta = Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed;
+        currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
+        currentZ = Mathf.Clamp(currentZ + delta, rangeZ[0], rangeZ[1]);
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, currentY, currentZ);
     }
 
