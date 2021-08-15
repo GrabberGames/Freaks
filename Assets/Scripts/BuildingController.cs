@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class BuildingController : MonoBehaviour
 {
-    [SerializeField] private Button build;
-    [SerializeField] private GameObject buildList;
+    //[SerializeField] private Button build;
+    //[SerializeField] private GameObject buildList;
     [SerializeField] private GameObject[] Buildings;
     [SerializeField] private ParticleSystem fx_Smoke01; //build FX
     [SerializeField] private GameObject AlterRange;
@@ -64,30 +64,8 @@ public class BuildingController : MonoBehaviour
                     buttens.SetActive(true);
                 }
             }
-            /*
-            switch (EventSystem.current.currentSelectedGameObject.name)
-            {
-                case "Box1":
-                case "Box2":
-                case "Box3":
-                    ViewPreview();
-                    break;
-            }*/
-
-            
-
         }
 
-       
-
-
-
-
-
-
-
-
-        
         if(isPreviewActivate)
         {
             ViewPreview();
@@ -125,7 +103,6 @@ public class BuildingController : MonoBehaviour
             }
         }
         
-
         // FX End
         if (fx_Smoke01.isStopped)
         {
@@ -139,6 +116,8 @@ public class BuildingController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
+        Vector3 buildPos = building.transform.position;
+
         if (Physics.Raycast(ray, out hit))
         {
             Vector3 _location = hit.point;
@@ -149,12 +128,22 @@ public class BuildingController : MonoBehaviour
         {
             AlterRange.SetActive(true);
         }
+
+        /*
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            buttens.SetActive(false);
+            isPreviewActivate = false;
+            Destroy(GameObject.Find("Workshop_pre(Clone)"));
+        }
+        */
     }
 
     private void Build()
     {
         isPreviewActivate = false;
-        
+        buttens.SetActive(false);
+
         building.GetComponent<Collider>().isTrigger = false;
         building.GetComponent<BuildingPreview>().Destroy();
 
@@ -177,27 +166,10 @@ public class BuildingController : MonoBehaviour
     {
         Debug.Log("!!");
         buildnum = buildingNum;
-        //SetBuildBtnActivate();
-        //SetBuildListBtnActivate();
 
         building = Instantiate(Buildings[buildingNum]);
         building.AddComponent<BuildingPreview>();
         building.GetComponent<BuildingPreview>().Init(buildingNum);
         isPreviewActivate = true;
     }
-
-
-    /*
-    private void SetBuildBtnActivate()
-    {
-        build.gameObject.SetActive(isBtnActivate);
-        isBtnActivate = !isBtnActivate;
-    }
-
-    public void SetBuildListBtnActivate()
-    {
-        buildList.gameObject.SetActive(isBtnListActivate);
-        isBtnListActivate = !isBtnListActivate;
-    }
-    */
 }
