@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 6088049028451936381}
   - component: {fileID: 2084545476819190321}
   - component: {fileID: 8234966571311708998}
-  - component: {fileID: 1735608298573535239}
   m_Layer: 0
   m_Name: Fx_Black_Projectile
   m_TagString: Untagged
@@ -4936,22 +4935,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!111 &1735608298573535239
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1884593457619100049}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: cb16b8eb9919cdc4c8bb61834b1a9702, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: cb16b8eb9919cdc4c8bb61834b1a9702, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &2852894700351541972
 GameObject:
   m_ObjectHideFlags: 0
