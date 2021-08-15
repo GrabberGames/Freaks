@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 118309057598073135}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Alter_VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 318955048471550236}
   - component: {fileID: 318955048471550242}
   - component: {fileID: 318955048471550243}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light_Mood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4848,7 +4848,7 @@ GameObject:
   - component: {fileID: 318955049183416965}
   - component: {fileID: 318955049183416971}
   - component: {fileID: 318955049183416964}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light_Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9663,7 +9663,7 @@ GameObject:
   - component: {fileID: 3567189134111320879}
   - component: {fileID: 1613912472589590501}
   - component: {fileID: 965239989311503921}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Alter_Christal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9763,7 +9763,7 @@ GameObject:
   - component: {fileID: 1862213973420373158}
   - component: {fileID: 1862213973420373156}
   - component: {fileID: 1862213973420373159}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14634,7 +14634,7 @@ GameObject:
   - component: {fileID: 1862213973438033214}
   - component: {fileID: 1862213973438033212}
   - component: {fileID: 1862213973438033215}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_mood (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19505,7 +19505,7 @@ GameObject:
   - component: {fileID: 1862213973504276030}
   - component: {fileID: 1862213973504276028}
   - component: {fileID: 1862213973504276031}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_mood_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24375,7 +24375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1862213973537548152}
   - component: {fileID: 1862213973537548153}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24425,7 +24425,7 @@ GameObject:
   - component: {fileID: 1862213973741401317}
   - component: {fileID: 1862213973741401315}
   - component: {fileID: 1862213973741401314}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29305,7 +29305,7 @@ GameObject:
   - component: {fileID: 1862213973773494202}
   - component: {fileID: 1862213973773494200}
   - component: {fileID: 1862213973773494203}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34127,7 +34127,7 @@ GameObject:
   - component: {fileID: 1862213974074018127}
   - component: {fileID: 1862213974074018125}
   - component: {fileID: 1862213974074018124}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle1_2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39017,7 +39017,7 @@ GameObject:
   - component: {fileID: 1862213974240048351}
   - component: {fileID: 1862213974240048350}
   - component: {fileID: 1862213974240048337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43839,7 +43839,7 @@ GameObject:
   - component: {fileID: 1862213974245073417}
   - component: {fileID: 1862213974245073527}
   - component: {fileID: 1862213974245073526}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48653,8 +48653,8 @@ GameObject:
   - component: {fileID: 575586311717733537}
   - component: {fileID: 828544849935024820}
   - component: {fileID: 6080688393991291265}
-  m_Layer: 0
-  m_Name: Alter_Pre
+  m_Layer: 3
+  m_Name: Alter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48692,6 +48692,8 @@ MonoBehaviour:
   whiteFreaksPref: {fileID: 6038292716800411747, guid: b71ce7eef1472cc4ba194a6ce312fd6c, type: 3}
   essence: 1000
   whiteFreaks: 5
+  isAlterClicked: 0
+  healthPoint: 2000
 --- !u!65 &828544849935024820
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48732,7 +48734,7 @@ GameObject:
   - component: {fileID: 1862213974459251110}
   - component: {fileID: 1862213974459251108}
   - component: {fileID: 1862213974459251111}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53554,7 +53556,7 @@ GameObject:
   - component: {fileID: 1862213974460549715}
   - component: {fileID: 1862213974460549713}
   - component: {fileID: 1862213974460549712}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle1_mood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58425,7 +58427,7 @@ GameObject:
   - component: {fileID: 1862213974497125715}
   - component: {fileID: 1862213974497125713}
   - component: {fileID: 1862213974497125712}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63237,7 +63239,7 @@ GameObject:
   - component: {fileID: 1862213974885675754}
   - component: {fileID: 1862213974885675752}
   - component: {fileID: 1862213974885675755}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_mood (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68109,7 +68111,7 @@ GameObject:
   - component: {fileID: 1862213975129730316}
   - component: {fileID: 1862213975129730319}
   - component: {fileID: 1862213975129730314}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Alter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72936,7 +72938,7 @@ GameObject:
   - component: {fileID: 3684661780482421660}
   - component: {fileID: 3684661780482421659}
   - component: {fileID: 1172641133704122250}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77832,7 +77834,7 @@ GameObject:
   - component: {fileID: 4836619363520115091}
   - component: {fileID: 4836619363520115089}
   - component: {fileID: 4836619363520115090}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Ring_Mood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82645,7 +82647,7 @@ GameObject:
   - component: {fileID: 4836619363537769309}
   - component: {fileID: 4836619363537769299}
   - component: {fileID: 4836619363537769308}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87458,7 +87460,7 @@ GameObject:
   - component: {fileID: 4836619363798817930}
   - component: {fileID: 4836619363798817928}
   - component: {fileID: 4836619363798817929}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Light2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92271,7 +92273,7 @@ GameObject:
   - component: {fileID: 4836619363800467021}
   - component: {fileID: 4836619363800467011}
   - component: {fileID: 4836619363800467020}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97075,7 +97077,7 @@ GameObject:
   - component: {fileID: 4836619364671241094}
   - component: {fileID: 4836619364671241092}
   - component: {fileID: 4836619364671241093}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Christal_Mood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101888,7 +101890,7 @@ GameObject:
   - component: {fileID: 4836619365163895793}
   - component: {fileID: 4836619365163895799}
   - component: {fileID: 4836619365163895792}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Mood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106701,7 +106703,7 @@ GameObject:
   - component: {fileID: 4836619365419346937}
   - component: {fileID: 4836619365419346943}
   - component: {fileID: 4836619365419346936}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111514,7 +111516,7 @@ GameObject:
   - component: {fileID: 4942039590783391902}
   - component: {fileID: 8303086609666971451}
   - component: {fileID: 6115477138067973105}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AlterChristal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111596,7 +111598,7 @@ GameObject:
   - component: {fileID: 6136124893745309375}
   - component: {fileID: 6136124893745309374}
   - component: {fileID: 6136124893745309372}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116493,7 +116495,7 @@ GameObject:
   - component: {fileID: 6136124894045776588}
   - component: {fileID: 6136124894045776591}
   - component: {fileID: 6136124894045776589}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121389,7 +121391,7 @@ GameObject:
   - component: {fileID: 6136124894100074707}
   - component: {fileID: 6136124894100074705}
   - component: {fileID: 6136124894100074704}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Christal_Mood3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126203,7 +126205,7 @@ GameObject:
   - component: {fileID: 6136124894665957727}
   - component: {fileID: 6136124894665957726}
   - component: {fileID: 6136124894665957724}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131099,7 +131101,7 @@ GameObject:
   - component: {fileID: 6136124895075366136}
   - component: {fileID: 6136124895075366142}
   - component: {fileID: 6136124895075366137}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Christal_Mood2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135912,7 +135914,7 @@ GameObject:
   - component: {fileID: 6136124895365993450}
   - component: {fileID: 6136124895365993448}
   - component: {fileID: 6136124895365993451}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Christal_Mood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140725,7 +140727,7 @@ GameObject:
   - component: {fileID: 6136124895430553220}
   - component: {fileID: 6136124895430553226}
   - component: {fileID: 6136124895430553221}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Core_Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145534,7 +145536,7 @@ GameObject:
   - component: {fileID: 5974097336411963224}
   - component: {fileID: 8434317043358092178}
   - component: {fileID: 7929795343163484742}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AlterCore Variant 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145640,7 +145642,7 @@ GameObject:
   - component: {fileID: 7940091766773793558}
   - component: {fileID: 7940091766773793556}
   - component: {fileID: 7940091766773793557}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150511,7 +150513,7 @@ GameObject:
   - component: {fileID: 7940091767302784010}
   - component: {fileID: 7940091767302784008}
   - component: {fileID: 7940091767302784009}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155315,7 +155317,7 @@ GameObject:
   - component: {fileID: 8308612546788726025}
   - component: {fileID: 8308612546788726026}
   - component: {fileID: 8308612546788726027}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160119,7 +160121,7 @@ GameObject:
   - component: {fileID: 8521768912198489013}
   - component: {fileID: 8521768912198489011}
   - component: {fileID: 8521768912198489012}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164982,6 +164984,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5b0776307d1b51848a99e7e65faa0a53, type: 3}
       propertyPath: m_Name
       value: Alter_Foundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5b0776307d1b51848a99e7e65faa0a53, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b0776307d1b51848a99e7e65faa0a53, type: 3}

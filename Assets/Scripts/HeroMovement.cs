@@ -30,15 +30,18 @@ namespace WarriorAnims
         private Rigidbody rigid;
         private Camera mainCamera;
         private NavMeshAgent agent;
+       
 
         private Vector3 targetPos;
         private Vector3 velocity;
         private Vector3 TowardVec;
         private Vector3 UseSkillTowardVector;
+        private WaronSkillManage waronSkillManage;
 
         private bool isAction = false;
         private bool isAnimationEnd = false;
         private int nowAnimationState = 0;
+        private bool SkillStop = false;
 
         CharacterStat characterStat = new CharacterStat();
 
@@ -69,6 +72,7 @@ namespace WarriorAnims
             mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;
+            waronSkillManage = GetComponentInChildren<WaronSkillManage>();
         }
         public override void SetCharacterStat()
         {
@@ -94,35 +98,27 @@ namespace WarriorAnims
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
+                waronSkillManage.UseSkillNumber = 0;
                 nowAnimationState = (int)AnimationState.Q;
                 ThrowingRock();
             }
             else if (Input.GetKeyDown(KeyCode.W))
             {
+                waronSkillManage.UseSkillNumber = 1;
                 nowAnimationState = (int)AnimationState.W;
                 LeafOfPride();
             }
             else if(Input.GetKeyDown(KeyCode.E))
             {
+                waronSkillManage.UseSkillNumber = 2;
                 nowAnimationState = (int)AnimationState.E;
                 BoldRush();
             }
             else if(Input.GetKeyDown(KeyCode.R))
             {
+                waronSkillManage.UseSkillNumber = 3;
                 nowAnimationState = (int)AnimationState.R;
                 ShockOfLand();
-            }
-        }
-        void ActionManage()
-        {
-            if (isAction)
-            {
-                switch (nowAnimationState)
-                {
-                    case 2:
-                        rigid.MovePosition(transform.position + UseSkillTowardVector * 20 * Time.deltaTime);
-                        break;
-                }
             }
         }
         #region Q_Skill
@@ -144,6 +140,7 @@ namespace WarriorAnims
             animator.SetBool("Attack", false);
             isAction = false;
             nowAnimationState = (int)AnimationState.L;
+            waronSkillManage.UseSkillNumber = -1;
         }
         #endregion Q_Skill
 
@@ -169,6 +166,7 @@ namespace WarriorAnims
             isAction = false;
             nowAnimationState = (int)AnimationState.L;
             SetAnimatorRootMotion(false);
+            waronSkillManage.UseSkillNumber = -1;
         }
         #endregion W_Skill
 
@@ -187,12 +185,14 @@ namespace WarriorAnims
         }
         IEnumerator BoldRush_Stop()
         {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("MoveAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
+            yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("MoveAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f) || SkillStop);
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
+            SkillStop = false;
             nowAnimationState = (int)AnimationState.L;
             SetAnimatorRootMotion(false);
+            waronSkillManage.UseSkillNumber = -1;
         }
         #endregion E_Skill
 
@@ -210,12 +210,12 @@ namespace WarriorAnims
         }
         IEnumerator ShockOfLand_Stop()
         {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
-            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1")) //R스킬 모션이 끝나면
-
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f); 
+            rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
             nowAnimationState = (int)AnimationState.L;
+            waronSkillManage.UseSkillNumber = -1;
         }
         #endregion R_Skill
         IEnumerator Die()
@@ -247,48 +247,6 @@ namespace WarriorAnims
             characterStat.Hp = 400;
             isAction = false;
             yield return null;
-        }
-
-        public void Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
-        {
-            StopCoroutine("_Lock");
-            StartCoroutine(_Lock(lockMovement, lockAction, timed, delayTime, lockTime));
-        }
-        public IEnumerator _Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
-        {
-            if (delayTime > 0) yield return new WaitForSeconds(delayTime);
-            if (lockMovement) { LockMove(true); }
-            if (lockAction) { LockAction(true); }
-            if(timed)
-            {
-                if(lockTime >0)
-                {
-                    yield return new WaitForSeconds(lockTime);
-                    UnLock(lockMovement, lockAction);
-                }
-            }
-
-        }
-        public void LockMove(bool b)
-        {
-            if(b)
-            {
-                animator.SetBool("Moving", false);
-                SetAnimatorRootMotion(true);
-            }
-            else
-            {
-                SetAnimatorRootMotion(false);
-            }
-        }
-        public void LockAction(bool b)
-        {
-            //isAction = b;
-        }
-        public void UnLock(bool movement, bool actions)
-        {
-            if (movement) LockMove(false);
-            //if (actions) isAction = false;
         }
 
         public void SetAnimatorRootMotion(bool b)
@@ -334,6 +292,11 @@ namespace WarriorAnims
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
                 animator.SetBool("Moving", false);
             }
+        }
+        void Break()
+        {
+            SkillStop = true;
+            SetAnimatorRootMotion(false);
         }
     }
 }

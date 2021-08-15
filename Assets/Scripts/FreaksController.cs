@@ -23,8 +23,9 @@ public class FreaksController : MonoBehaviour
     public Team myTeam;
 
     public float attack;    // Variable to be used when adding freaks later
-     
-
+    private float freaksMoveSpeed;
+    private float hp;
+    private bool isStuern = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,12 +33,15 @@ public class FreaksController : MonoBehaviour
         enemy = GameObject.Find("Waron");
         alter = GameObject.Find("Alter");
         alterPosition = alter.transform.position;
+        freaksMoveSpeed = agent.speed;
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        if (isStuern)
+            return;
         float dist = Vector3.Distance(enemy.transform.position, gameObject.transform.position); // Distance between of enemy and Freaks
 
         if (dist <= 7.5f)
@@ -61,5 +65,21 @@ public class FreaksController : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, 7.5f);
+    }
+    public IEnumerator MoveSpeedSlow(float value)
+    {
+        agent.speed = freaksMoveSpeed * value;
+        yield return new WaitForSeconds(1.5f);
+        agent.speed = freaksMoveSpeed;
+    }
+    public void Damaged(float value)
+    {
+        hp -= value;
+    }
+    public IEnumerator Stuern(float value)
+    {
+        isStuern = true;
+        yield return new WaitForSeconds(value);
+        isStuern = false;
     }
 }
