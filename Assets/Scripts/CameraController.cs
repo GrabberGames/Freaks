@@ -8,7 +8,9 @@ public class CameraController : MonoBehaviour
     public float zoomSpeed = 10.0f;
 
     private float[] rangeY = { 142f, 348.25f };
+    private float[] initialrangeY = { 142f, 348.25f };
     private float[] rangeZ = { 9.2f, 64.2f };
+    private float[] initialrangeZ = { 9.2f, 64.2f };
     private float currentY;
     private float currentZ;
 
@@ -44,7 +46,6 @@ public class CameraController : MonoBehaviour
         Move();
         alter = GameObject.Find("Alter").transform;
         player = GameObject.Find("Waron").transform;
-        print(rangeZ[0] + ", " + rangeZ[1]);
         currentY = transform.position.y;
         currentZ = transform.position.z;
     }
@@ -80,18 +81,23 @@ public class CameraController : MonoBehaviour
             currentZ += 4.0f;
             rangeZ[0] += 4; rangeZ[1] += 4;
             transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);
-        } 
+        }
 
-        if (Input.GetKey("space"))
+        if (Input.GetKeyDown("space"))
         {
-            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
-            transform.position = new Vector3(player.position.x, currentY, currentZ);
+            print(rangeZ[0] + ", " + rangeZ[1]);
+            print(currentZ);
+            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
+            transform.position = new Vector3(player.position.x, transform.position.y, 2*currentZ - rangeZ[0]);
+            rangeZ[0] += currentZ - rangeZ[0];
+            rangeZ[1] += currentZ - rangeZ[0];
+            currentZ = transform.position.z;
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
-            transform.position = new Vector3(alter.position.x, currentY, currentZ);
+            transform.position = new Vector3(alter.position.x, transform.position.y, player.position.z);
         }
     }
 }
