@@ -6,10 +6,11 @@ public class CameraController : MonoBehaviour
 {
     private Camera mainCamera;
     public float zoomSpeed = 10.0f;
+
     private float[] rangeY = { 142f, 348.25f };
     private float[] rangeZ = { 9.2f, 64.2f };
-    public float currentY;
-    public float currentZ;
+    private float currentY;
+    private float currentZ;
 
     private float delta;
     private float nor;
@@ -64,27 +65,26 @@ public class CameraController : MonoBehaviour
         } 
         
         if(Input.mousePosition.y > Screen.height){
-            transform.Translate(0, 0, 4.0f);
-            transform.position = new Vector3(transform.position.x, initialPosition.y , transform.position.z);
+            currentZ -= 4.0f;
+            transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);
         } 
 
-        if(Input.mousePosition.y < 10){
-            transform.Translate(0, 0, -4.0f);
-            transform.position = new Vector3(transform.position.x, initialPosition.y , transform.position.z);
+        if(Input.mousePosition.y < 10)
+        {
+            currentZ += 4.0f;
+            transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);
         } 
 
         if (Input.GetKey("space"))
         {
-            transform.LookAt(player);
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
-            transform.position = new Vector3(player.position.x, transform.position.y, player.position.z);
+            transform.position = new Vector3(player.position.x, transform.position.y, currentZ);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
-            transform.LookAt(alter);
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
-            transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z);
+            transform.position = new Vector3(alter.position.x, transform.position.y, currentZ);
         }
 
     }
