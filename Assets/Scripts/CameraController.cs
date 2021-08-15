@@ -44,15 +44,17 @@ public class CameraController : MonoBehaviour
         Move();
         alter = GameObject.Find("Alter").transform;
         player = GameObject.Find("Waron").transform;
-        //print(currentY + "," + currentZ);
+        print(rangeZ[0] + ", " + rangeZ[1]);
         currentY = transform.position.y;
         currentZ = transform.position.z;
     }
     void Zoom()
     {
-        delta = Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed;
-        currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
-        currentZ = Mathf.Clamp(currentZ + delta, rangeZ[0], rangeZ[1]);
+        if ((delta = Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed) != 0)
+        {
+            currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
+            currentZ = Mathf.Clamp(currentZ + delta, rangeZ[0], rangeZ[1]);
+        }
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, currentY, currentZ);
     }
 
@@ -83,14 +85,13 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey("space"))
         {
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
-            transform.position = new Vector3(player.position.x, transform.position.y, currentZ);
+            transform.position = new Vector3(player.position.x, currentY, currentZ);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
-            transform.position = new Vector3(alter.position.x, transform.position.y, currentZ);
+            transform.position = new Vector3(alter.position.x, currentY, currentZ);
         }
-
     }
 }

@@ -98,25 +98,25 @@ namespace WarriorAnims
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                waronSkillManage.UseSkillNumber = 0;
+                waronSkillManage.UseSkillNumber = 1;
                 nowAnimationState = (int)AnimationState.Q;
                 ThrowingRock();
             }
             else if (Input.GetKeyDown(KeyCode.W))
             {
-                waronSkillManage.UseSkillNumber = 1;
+                waronSkillManage.UseSkillNumber = 2;
                 nowAnimationState = (int)AnimationState.W;
                 LeafOfPride();
             }
             else if(Input.GetKeyDown(KeyCode.E))
             {
-                waronSkillManage.UseSkillNumber = 2;
+                waronSkillManage.UseSkillNumber = 3;
                 nowAnimationState = (int)AnimationState.E;
                 BoldRush();
             }
             else if(Input.GetKeyDown(KeyCode.R))
             {
-                waronSkillManage.UseSkillNumber = 3;
+                waronSkillManage.UseSkillNumber = 4;
                 nowAnimationState = (int)AnimationState.R;
                 ShockOfLand();
             }
@@ -140,7 +140,7 @@ namespace WarriorAnims
             animator.SetBool("Attack", false);
             isAction = false;
             nowAnimationState = (int)AnimationState.L;
-            waronSkillManage.UseSkillNumber = -1;
+            waronSkillManage.UseSkillNumber = 0;
         }
         #endregion Q_Skill
 
@@ -149,7 +149,6 @@ namespace WarriorAnims
         { 
             agent.ResetPath();
             isAction = true;
-            //Lock(true, true, true, 0, warriorTiming.TimingLock(warrior, "dash"));
             animator.SetBool("Moving", false); 
             SetAnimatorRootMotion(true);
             animator.SetBool("Dash", true);
@@ -160,13 +159,16 @@ namespace WarriorAnims
         }
         IEnumerator LeafOfPride_Stop()
         {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.60f);
+            waronSkillManage.SkillOnTrigger();
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.75f);
             rigid.velocity = Vector3.zero;
             animator.SetBool("Dash", false);
             isAction = false;
             nowAnimationState = (int)AnimationState.L;
             SetAnimatorRootMotion(false);
-            waronSkillManage.UseSkillNumber = -1;
+            waronSkillManage.UseSkillNumber = 0;
+            waronSkillManage.AllColliderOff();
         }
         #endregion W_Skill
 
@@ -180,11 +182,12 @@ namespace WarriorAnims
             animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
-            animator.SetInteger("TriggerNumber", 11);
+            animator.SetInteger("TriggerNumber", 11); 
             StartCoroutine(BoldRush_Stop());
         }
         IEnumerator BoldRush_Stop()
         {
+            waronSkillManage.SkillOnTrigger();
             yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("MoveAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f) || SkillStop);
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
@@ -192,7 +195,8 @@ namespace WarriorAnims
             SkillStop = false;
             nowAnimationState = (int)AnimationState.L;
             SetAnimatorRootMotion(false);
-            waronSkillManage.UseSkillNumber = -1;
+            waronSkillManage.UseSkillNumber = 0;
+            waronSkillManage.AllColliderOff();
         }
         #endregion E_Skill
 
@@ -215,7 +219,7 @@ namespace WarriorAnims
             animator.SetBool("Attack", false);
             isAction = false;
             nowAnimationState = (int)AnimationState.L;
-            waronSkillManage.UseSkillNumber = -1;
+            waronSkillManage.UseSkillNumber = 0;
         }
         #endregion R_Skill
         IEnumerator Die()
@@ -293,7 +297,7 @@ namespace WarriorAnims
                 animator.SetBool("Moving", false);
             }
         }
-        void Break()
+        public void Break()
         {
             SkillStop = true;
             SetAnimatorRootMotion(false);

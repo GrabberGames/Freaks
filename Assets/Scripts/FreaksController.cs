@@ -41,7 +41,12 @@ public class FreaksController : MonoBehaviour
     void Update()
     {
         if (isStuern)
+        {
+            agent.isStopped = true;
             return;
+        }
+        else
+            agent.isStopped = false;
         float dist = Vector3.Distance(enemy.transform.position, gameObject.transform.position); // Distance between of enemy and Freaks
 
         if (dist <= 7.5f)
@@ -68,16 +73,19 @@ public class FreaksController : MonoBehaviour
     }
     public IEnumerator MoveSpeedSlow(float value)
     {
+        print("movespeed");
         agent.speed = freaksMoveSpeed * value;
         yield return new WaitForSeconds(1.5f);
         agent.speed = freaksMoveSpeed;
     }
     public void Damaged(float value)
     {
+        print("damaged");
         hp -= value;
     }
     public IEnumerator Stuern(float value)
     {
+        print("stuern");
         isStuern = true;
         yield return new WaitForSeconds(value);
         isStuern = false;
