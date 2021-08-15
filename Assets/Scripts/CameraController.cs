@@ -48,8 +48,11 @@ public class CameraController : MonoBehaviour
     void Zoom()
     {
         delta += Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed;
-        currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
-        currentZ = Mathf.Clamp(currentZ + delta,       rangeZ[0], rangeZ[1]);
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
+            currentZ = Mathf.Clamp(currentZ + delta, rangeZ[0], rangeZ[1]);
+        }
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, currentY, currentZ);
     }
 
@@ -66,12 +69,14 @@ public class CameraController : MonoBehaviour
         
         if(Input.mousePosition.y > Screen.height){
             currentZ -= 4.0f;
+            rangeZ[0] -= 4; rangeZ[1] -= 4;
             transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);
         } 
 
         if(Input.mousePosition.y < 10)
         {
             currentZ += 4.0f;
+            rangeZ[0] += 4; rangeZ[1] += 4;
             transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);
         } 
 
