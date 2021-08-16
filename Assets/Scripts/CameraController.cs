@@ -70,7 +70,6 @@ public class CameraController : MonoBehaviour
         if (Input.mousePosition.x > Screen.width){
             transform.Translate(2.0f, 0, 0);
         } 
-       
         if(Input.mousePosition.x < 0){
             transform.Translate(-2.0f, 0, 0);
         } 
@@ -90,10 +89,10 @@ public class CameraController : MonoBehaviour
         
         if (Input.GetKeyDown("space"))
         {
-            rangeZ[0] = 9.2f; 
-            rangeZ[1] = 64.2f;
+            rangeZ[0] = player.position.z + transform.position.y / nor; 
+            rangeZ[1] = player.position.z + transform.position.y / nor + 55;
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
-            transform.position = new Vector3(player.position.x, transform.position.y, transform.position.y / nor);
+            transform.position = new Vector3(player.position.x, transform.position.y, player.position.z + transform.position.y / nor);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
