@@ -85,13 +85,8 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            print(rangeZ[0] + ", " + rangeZ[1]);
-            print(currentZ);
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
-            transform.position = new Vector3(player.position.x, transform.position.y, 2*currentZ - rangeZ[0]);
-            rangeZ[0] += currentZ - rangeZ[0];
-            rangeZ[1] += currentZ - rangeZ[0];
-            currentZ = transform.position.z;
+            transform.position = new Vector3(player.position.x, transform.position.y, currentZ - rangeZ[0]);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
