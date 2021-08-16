@@ -89,8 +89,8 @@ public class CameraController : MonoBehaviour
         
         if (Input.GetKeyDown("space"))
         {
-            rangeZ[0] = player.position.z + transform.position.y / nor; 
-            rangeZ[1] = player.position.z + transform.position.y / nor + 55;
+            rangeZ[0] = (player.position.z + (transform.position.y / nor)) - ((transform.position.y - rangeY[0]) / nor);
+            rangeZ[1] = rangeZ[0]+55;
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
             transform.position = new Vector3(player.position.x, transform.position.y, player.position.z + transform.position.y / nor);
         }
