@@ -10,9 +10,7 @@ public class CameraController : MonoBehaviour
 
     private Camera mainCamera;
     private float[] rangeY = { 142f, 348.25f };
-    private float[] initialrangeY = { 142f, 348.25f };
     private float[] rangeZ = { 9.2f, 64.2f };
-    private float[] initialrangeZ = { 9.2f, 64.2f };
     private float currentY;
     private float currentZ;
     private float delta;
@@ -60,7 +58,7 @@ public class CameraController : MonoBehaviour
         if ((delta = Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed) != 0)
         {
             currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
-            currentZ = Mathf.Clamp(currentZ + delta, rangeZ[0], rangeZ[1]);
+            currentZ = Mathf.Clamp(currentZ + delta,       rangeZ[0], rangeZ[1]);
         }
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, currentY, currentZ);
         
@@ -92,8 +90,10 @@ public class CameraController : MonoBehaviour
         
         if (Input.GetKeyDown("space"))
         {
-            //transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, 0));
-            transform.position = player.position + offset;
+            rangeZ[0] = 9.2f; 
+            rangeZ[1] = 64.2f;
+            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
+            transform.position = new Vector3(player.position.x, transform.position.y, transform.position.y / nor);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
