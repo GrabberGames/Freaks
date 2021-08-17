@@ -13,6 +13,7 @@ TagManager:
   - Blue
   - Building
   - BlackFreaks
+  - Ground
   layers:
   - Default
   - TransparentFX

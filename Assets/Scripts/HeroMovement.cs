@@ -39,7 +39,6 @@ namespace WarriorAnims
         private WaronSkillManage waronSkillManage;
 
         private bool isAction = false;
-        private bool isAnimationEnd = false;
         private int nowAnimationState = 0;
         private bool SkillStop = false;
 

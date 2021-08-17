@@ -97,8 +97,10 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
-            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f , transform.rotation.z));
-            transform.position = new Vector3(alter.position.x, transform.position.y, player.position.z);
+            rangeZ[0] = (alter.position.z + (transform.position.y / nor)) - ((transform.position.y - rangeY[0]) / nor);
+            rangeZ[1] = rangeZ[0] + 55;
+            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
+            transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z + transform.position.y / nor);
         }
     }
 }
