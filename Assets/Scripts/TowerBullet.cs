@@ -13,7 +13,7 @@ public class TowerBullet : MonoBehaviour
     public void InitSetting(GameObject player)
     {
         this.player = player;
-        StartCoroutine(StartProjectile(0.1f));
+        StartCoroutine(StartProjectile(0.5f));
     }
 
     private void Update()
@@ -23,17 +23,19 @@ public class TowerBullet : MonoBehaviour
             case 1:
                 fx_blackTower[1].transform.position = this.transform.position;
                 fx_blackTower[1].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[1].transform.position);
+                transform.position -= (transform.position - playerPos) * BulletSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.identity;
                 break;
             case 2:
                 fx_blackTower[2].transform.position = this.transform.position;
                 fx_blackTower[2].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[2].transform.position);
+                transform.position -= (transform.position - playerPos) * BulletSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.identity;
                 break;
             default:
                 break;
 
         }
-        transform.position -= (transform.position - playerPos) * BulletSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.identity;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -61,7 +63,6 @@ public class TowerBullet : MonoBehaviour
     }
     IEnumerator DeleteThis()
     {
-        fx_blackTower[1].Play(false);
         Destroy(fx_blackTower[1]);
         yield return new WaitForSeconds(fx_blackTower[2].main.startLifetimeMultiplier);
         State = 3;
