@@ -127,6 +127,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletSpeed: 2
   fx_blackTower:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  fx_blackTowerPre:
   - {fileID: 4273757762055975717, guid: ab7b9b24012bbfe45b42923fc7855ad8, type: 3}
   - {fileID: 2084545476819190321, guid: 49aac961c4ddfc8469847709910adcbe, type: 3}
   - {fileID: 1890042663343123345, guid: 6031199c8b298b34f84154acbcc5bf72, type: 3}

@@ -6,18 +6,16 @@ public class TowerAttack : MonoBehaviour
 {
     public GameObject bullet;
     public GameObject bulletpre;
-    public float AttackPerSeconds = 1f;
+    private float AttackPerSeconds = 4f;
     public GameObject player;
 
     private Vector3 bulletSpawnPosition;
+    public ParticleSystem fx_blackTower;
 
-    //WarriorAnims.HeroMovement heroMovement;
-    // Start is called before the first frame update
     void Start()
     {
         FindHero();
-        //heroMovement = player.GetComponent<WarriorAnims.HeroMovement>();
-        bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 38.98f, transform.position.z - 0.29f);
+        bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
         print(bulletSpawnPosition);
     }
     // Update is called once per frame
@@ -47,7 +45,11 @@ public class TowerAttack : MonoBehaviour
     {
         bullet = Instantiate(bulletpre, bulletSpawnPosition, Quaternion.Euler(bulletSpawnPosition - player.transform.position));
         bullet.GetComponent<TowerBullet>().InitSetting(player);
-        yield return new WaitForSeconds(100f);
+        fx_blackTower.Play(true);
+        yield return new WaitForSeconds(fx_blackTower.main.startDelayMultiplier);
+        fx_blackTower.Play(false);
+        yield return new WaitForSeconds(AttackPerSeconds - fx_blackTower.main.startDelayMultiplier);
         StartCoroutine(FindInAttackRange());
     }
+
 }

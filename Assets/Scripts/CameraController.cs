@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Vector3 offset;
     public float zoomSpeed = 10.0f;
 
 
     private Camera mainCamera;
-    private float[] rangeY = { 142f, 348.25f };
-    private float[] rangeZ = { 9.2f, 64.2f };
+    public  float[] rangeY = { 142f, 348.25f };
+    public  float[] rangeZ = { 64.2f, 9.2f };
     private float currentY;
     private float currentZ;
     private float delta;
@@ -75,32 +74,32 @@ public class CameraController : MonoBehaviour
         } 
         
         if(Input.mousePosition.y > Screen.height){
-            currentZ -= 4.0f;
-            rangeZ[0] -= 4; rangeZ[1] -= 4;
+            currentZ += 4.0f;
+            rangeZ[0] += 4; rangeZ[1] += 4;
             transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);
         } 
 
         if(Input.mousePosition.y < 10)
         {
-            currentZ += 4.0f;
-            rangeZ[0] += 4; rangeZ[1] += 4;
+            currentZ -= 4.0f;
+            rangeZ[0] -= 4; rangeZ[1] -= 4;
             transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);
         }
         
         if (Input.GetKeyDown("space"))
         {
-            rangeZ[0] = (player.position.z + (transform.position.y / nor)) - ((transform.position.y - rangeY[0]) / nor);
-            rangeZ[1] = rangeZ[0]+55;
-            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
-            transform.position = new Vector3(player.position.x, transform.position.y, player.position.z + transform.position.y / nor);
+            rangeZ[1] = (player.position.z - (transform.position.y / nor)) + ((transform.position.y + rangeY[0]) / nor);
+            rangeZ[0] = rangeZ[1] + 55;
+            transform.rotation = Quaternion.Euler(new Vector3(75.0f, 0, transform.rotation.z));
+            transform.position = new Vector3(player.position.x, transform.position.y, player.position.z - transform.position.y / nor);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
-            rangeZ[0] = (alter.position.z + (transform.position.y / nor)) - ((transform.position.y - rangeY[0]) / nor);
-            rangeZ[1] = rangeZ[0] + 55;
-            transform.rotation = Quaternion.Euler(new Vector3(75.0f, -180.0f, transform.rotation.z));
-            transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z + transform.position.y / nor);
+            rangeZ[1] = (alter.position.z - (transform.position.y / nor)) + ((transform.position.y + rangeY[0]) / nor);
+            rangeZ[0] = rangeZ[1] + 55;
+            transform.rotation = Quaternion.Euler(new Vector3(75.0f, 0, transform.rotation.z));
+            transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z - transform.position.y / nor);
         }
     }
 }

@@ -4,44 +4,66 @@ using UnityEngine;
 
 public class TowerBullet : MonoBehaviour
 {
-    public float BulletSpeed = 2;
-    Quaternion DirRot;
+    public float BulletSpeed = 8000;
+    Vector3 playerPos;
     GameObject player;
     public ParticleSystem[] fx_blackTower;
-    private bool[] State;
+    public ParticleSystem[] fx_blackTowerPre;
+    private int State = 0;
     public void InitSetting(GameObject player)
     {
         this.player = player;
-        Instantiate(fx_blackTower[0], transform.position, Quaternion.Euler(transform.position - player.transform.position));
-        fx_blackTower[0].Play(true);
-        StartCoroutine(effectManage(0, 0.1f, false));
+        StartCoroutine(StartProjectile(0.1f));
     }
     private void Update()
     {
-        fx_blackTower[0].transform.position = this.transform.position;
-        fx_blackTower[1].transform.position = this.transform.position;
-        fx_blackTower[2].transform.position = this.transform.position;
-        transform.position -= (transform.position - player.transform.position).normalized * BulletSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.Euler(transform.position - player.transform.position);
+        playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 5f, player.transform.position.z);
+        switch (State) {
+            case 1:
+                fx_blackTower[1].transform.position = this.transform.position;
+                fx_blackTower[1].transform.rotation = Quaternion.LookRotation(playerPos);
+                break;
+            case 2:
+                fx_blackTower[2].transform.position = this.transform.position;
+                fx_blackTower[2].transform.rotation = Quaternion.LookRotation(playerPos);
+                break;
+            default:
+                break;
+
+        }
+        transform.position -= (transform.position - playerPos) * BulletSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.Euler(transform.position - playerPos);
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform.name == "Waron")
-        {
-            Instantiate(fx_blackTower[2], transform.position, Quaternion.Euler(transform.position - player.transform.position));
+        {   
+            fx_blackTower[1].Play(false);
+            fx_blackTower[2] = Instantiate(fx_blackTowerPre[2]);
+            fx_blackTower[2].transform.SetParent(this.gameObject.transform);
+            fx_blackTower[2].transform.position = transform.position;
+            fx_blackTower[2].transform.rotation = Quaternion.identity;
             fx_blackTower[2].Play(true);
+            State = 2;
             StartCoroutine(DeleteThis());
         }
     }
-    IEnumerator effectManage(int number, float waitTime, bool onoff)
+    IEnumerator StartProjectile(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        fx_blackTower[number].Play(onoff);
-        Instantiate(fx_blackTower[1], transform.position, Quaternion.Euler(transform.position - player.transform.position));
+        fx_blackTower[1] = Instantiate(fx_blackTowerPre[1]);
+        fx_blackTower[1].transform.SetParent(this.gameObject.transform);
+        fx_blackTower[1].transform.position = transform.position;
+        fx_blackTower[1].transform.rotation = Quaternion.identity;
         fx_blackTower[1].Play(true);
+        State = 1;
     }
-    IEnumerator DeleteThis() {
+    IEnumerator DeleteThis()
+    {
+        Destroy(fx_blackTower[1]);
         yield return new WaitForSeconds(fx_blackTower[2].main.startLifetimeMultiplier);
+        State = 3;
+        Destroy(fx_blackTower[2]);
         Destroy(this.gameObject);
     }
 }
