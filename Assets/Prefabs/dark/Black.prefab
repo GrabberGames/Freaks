@@ -62756,9 +62756,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4341074732798798531}
     m_Modifications:
+    - target: {fileID: 184457065526840504, guid: ab7b9b24012bbfe45b42923fc7855ad8, type: 3}
+      propertyPath: m_Name
+      value: Particle_
+      objectReference: {fileID: 0}
+    - target: {fileID: 1579336483502806895, guid: ab7b9b24012bbfe45b42923fc7855ad8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1579336483502806895, guid: ab7b9b24012bbfe45b42923fc7855ad8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 3266228392774877167, guid: ab7b9b24012bbfe45b42923fc7855ad8, type: 3}
       propertyPath: m_Name
-      value: Fx_Black_Engage
+      value: Fx_Black_Emit
       objectReference: {fileID: 0}
     - target: {fileID: 4273757762055975717, guid: ab7b9b24012bbfe45b42923fc7855ad8, type: 3}
       propertyPath: looping
