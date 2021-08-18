@@ -99,9 +99,10 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
             rangeZ[0] = alter.position.z - transform.position.y / -nor + (transform.position.y - rangeY[0]) / nor;
-            rangeZ[1] = rangeZ[0] + 55;
+            rangeZ[1] = rangeZ[0] - 55;
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, 0, transform.rotation.z));
-            transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z - transform.position.y / -nor);
+            transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z + transform.position.y / -nor);
+            currentZ = transform.position.z;
         }
     }
 }
