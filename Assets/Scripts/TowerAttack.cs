@@ -31,6 +31,7 @@ public class TowerAttack : MonoBehaviour
     {
         if(other.transform.name == "Waron")
         {
+            print("*");
             StartCoroutine(FindInAttackRange());
         }
     }
@@ -38,7 +39,8 @@ public class TowerAttack : MonoBehaviour
     {
         if (other.transform.name == "Waron")
         {
-            StopCoroutine(FindInAttackRange());
+            print("!");
+            StopAllCoroutines();
         }
     }
     IEnumerator FindInAttackRange()

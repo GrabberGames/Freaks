@@ -15,24 +15,25 @@ public class TowerBullet : MonoBehaviour
         this.player = player;
         StartCoroutine(StartProjectile(0.1f));
     }
+
     private void Update()
     {
         playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 5f, player.transform.position.z);
         switch (State) {
             case 1:
                 fx_blackTower[1].transform.position = this.transform.position;
-                fx_blackTower[1].transform.rotation = Quaternion.LookRotation(playerPos);
+                fx_blackTower[1].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[1].transform.position);
                 break;
             case 2:
                 fx_blackTower[2].transform.position = this.transform.position;
-                fx_blackTower[2].transform.rotation = Quaternion.LookRotation(playerPos);
+                fx_blackTower[2].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[2].transform.position);
                 break;
             default:
                 break;
 
         }
         transform.position -= (transform.position - playerPos) * BulletSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.Euler(transform.position - playerPos);
+        transform.rotation = Quaternion.identity;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -42,7 +43,7 @@ public class TowerBullet : MonoBehaviour
             fx_blackTower[2] = Instantiate(fx_blackTowerPre[2]);
             fx_blackTower[2].transform.SetParent(this.gameObject.transform);
             fx_blackTower[2].transform.position = transform.position;
-            fx_blackTower[2].transform.rotation = Quaternion.identity;
+            fx_blackTower[2].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[2].transform.position);
             fx_blackTower[2].Play(true);
             State = 2;
             StartCoroutine(DeleteThis());
@@ -54,12 +55,13 @@ public class TowerBullet : MonoBehaviour
         fx_blackTower[1] = Instantiate(fx_blackTowerPre[1]);
         fx_blackTower[1].transform.SetParent(this.gameObject.transform);
         fx_blackTower[1].transform.position = transform.position;
-        fx_blackTower[1].transform.rotation = Quaternion.identity;
+        fx_blackTower[1].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[1].transform.position);
         fx_blackTower[1].Play(true);
         State = 1;
     }
     IEnumerator DeleteThis()
     {
+        fx_blackTower[1].Play(false);
         Destroy(fx_blackTower[1]);
         yield return new WaitForSeconds(fx_blackTower[2].main.startLifetimeMultiplier);
         State = 3;
