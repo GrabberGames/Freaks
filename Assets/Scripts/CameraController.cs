@@ -9,14 +9,13 @@ public class CameraController : MonoBehaviour
 
 
     private Camera mainCamera;
-    private float[] rangeY = { 142f, 348.25f };
-    private float[] rangeZ = { 64.2f, 9.2f };
+    public float[] rangeY = { 142f, 348.25f };
+    public float[] rangeZ = { 64.2f, 9.2f };
     private float currentY;
     private float currentZ;
     private float delta;
     private float nor;
     private Transform player; // Player object
-
     private Transform alter; // Alter object
 
     // private Vector3 lookOffset;    // The position of camera which view target
@@ -98,7 +97,7 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
-            rangeZ[0] = alter.position.z - transform.position.y / -nor + (transform.position.y - rangeY[0]) / nor;
+            rangeZ[0] = alter.position.z + transform.position.y / -nor + (transform.position.y - rangeY[0]) / nor;
             rangeZ[1] = rangeZ[0] - 55;
             transform.rotation = Quaternion.Euler(new Vector3(75.0f, 0, transform.rotation.z));
             transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z + transform.position.y / -nor);
