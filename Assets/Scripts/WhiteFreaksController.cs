@@ -7,10 +7,12 @@ public class WhiteFreaksController : MonoBehaviour
 {
     public GameObject miningWorkshop;
     public NavMeshAgent navMeshAgent;
+    private AlterController alterController;
 
     private GameObject alter;
     private bool isMining = false;
     private bool hasEssense = false;
+    private bool isFinish = false;
     private Vector3 alterPosition;
 
 
@@ -19,6 +21,7 @@ public class WhiteFreaksController : MonoBehaviour
     {
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         alter = GameObject.Find("Alter");
+        alterController = alter.GetComponent<AlterController>();
         alterPosition = alter.transform.position;
     }  
     public void SetMiningWorkShop()
@@ -40,6 +43,18 @@ public class WhiteFreaksController : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
+        // 건물 건설 완료 시
+        if (isFinish)
+        {
+            string name = collision.transform.name;
+            if (name == "Alter")
+            {
+                alterController.returnedBusyFreeks();
+                Destroy(this.gameObject);
+                isMining = false;
+            }
+        }
+
         if(isMining)
         {
             string name = collision.transform.name;
@@ -48,7 +63,7 @@ public class WhiteFreaksController : MonoBehaviour
                 navMeshAgent.SetDestination(miningWorkshop.transform.position);
                 if (hasEssense)
                 {
-                    alter.GetComponent<AlterController>().essence += 10;
+                    alterController.essence += 10;
                     hasEssense = false;
                 }
             }
@@ -73,6 +88,12 @@ public class WhiteFreaksController : MonoBehaviour
         {
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         }
+    }
+
+    public void FinishMining()
+    {
+        navMeshAgent.SetDestination(alterPosition);
+        isFinish = true;
     }
 
 }

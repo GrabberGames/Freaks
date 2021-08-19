@@ -9,9 +9,9 @@ public class SwitchController : MonoBehaviour
     //private Renderer targetRenderer;
 
     
-    private GameObject switchObject;
+    private GameObject[] switchObjects;
 
-    public GameObject switchPre;
+    public GameObject switchObject;
     public ParticleSystem[] fx_Switch;   // INDEX => ON: 0 || OFF: 1
     public bool isSwitchBtnActivate = false;
 
@@ -26,6 +26,8 @@ public class SwitchController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        switchObjects = new GameObject[] { transform.GetChild(0).gameObject, transform.GetChild(1).gameObject, transform.GetChild(2).gameObject};
+
         alter = GameObject.Find("Alter");
         alterController = alter.GetComponent<AlterController>();
         //targetRenderer = gameObject.GetComponent<MeshRenderer>();
@@ -36,12 +38,6 @@ public class SwitchController : MonoBehaviour
     public void CreateNewSwitch()
     {
         isSwitchBtnActivate = true;
-
-        // switch Instantiate
-        switchObject = Instantiate(switchPre, pos, Quaternion.Euler(180f, 0, 0));
-        switchObject.AddComponent<BuildingPreview>();
-        buildingPreview = switchObject.GetComponent<BuildingPreview>();
-        buildingPreview.Init((int)BuildingPreview.BuildingNum.Switch);
     }
 
 

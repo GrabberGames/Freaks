@@ -87,8 +87,13 @@ public class BuildingController : MonoBehaviour
                 else if (buildnum == 2) // WorkShop °Ç¼³
                 {
                     workshopController = building.GetComponentInParent<WorkshopController>();
-                    workshopController.Init(building.GetComponent<BuildingPreview>().GetBelowObject());
-                    building.GetComponent<BuildingPreview>().GetBelowObject().GetComponent<MeshRenderer>().enabled = false;
+                    GameObject belowObejct = building.GetComponent<BuildingPreview>().GetBelowObject();
+                    workshopController.Init(belowObejct);
+
+                    if(belowObejct.transform.parent.name != "SwitchController")
+                    {
+                        belowObejct.GetComponent<MeshRenderer>().enabled = false;
+                    }
                 }
 
                 Build();

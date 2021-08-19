@@ -14,7 +14,6 @@ public class WorkshopController : Building
         Red
     }
 
-
     public int remainEssense = 1000;
     private GameObject whiteFreeks = null;
     private Renderer roofRenderer;
@@ -28,6 +27,8 @@ public class WorkshopController : Building
     private bool isFreeksEnter = false;
     private bool beConstructed = true;
     private int currentRoofNum;
+
+    private bool isSwitch = false;
 
     private void Update()
     {
@@ -51,33 +52,61 @@ public class WorkshopController : Building
 
     private void OnCollisionEnter(Collision collision)
     {
+        // ¿öÅ©¼¥ °Ç¼³
         if (!isFreeksEnter && collision.transform.gameObject == whiteFreeks)
         {
             isFreeksEnter = true;
+            
             whiteFreeks.SetActive(false);
             StartCoroutine(SetActive());
-            StartCoroutine(FreeksEnter());
+            StartCoroutine(EnterFreeks());
 
             if (beConstructed) ConstructBuilding();
+            
         }
     }
     public void Init(GameObject mark)
     {
-        essenceSpot = mark.GetComponent<EssenceSpot>();
-        this.transform.position = mark.transform.position;
-        isSetted = true;
+        if(mark.GetComponent<EssenceSpot>())
+        {
+            essenceSpot = mark.GetComponent<EssenceSpot>();
+            this.transform.position = mark.transform.position;
+            isSetted = true;
+        }
+        else
+        {
+            isSwitch = true;
+            beConstructed = true;
+        }
     }
     #region MiningCoroutine
     IEnumerator SetActive()
     {
-        yield return new WaitForSeconds(freeksActiveDelay);
-        whiteFreeks.SetActive(true);
-        essenceSpot.Digging();
+        if(isSwitch)
+        {
+            yield return new WaitForSeconds(5.0f);
+            whiteFreeks.SetActive(true);
+            whiteFreeks.GetComponent<WhiteFreaksController>().FinishMining();
+        }
+        else
+        {
+            yield return new WaitForSeconds(freeksActiveDelay);
+            essenceSpot.Digging();
+            whiteFreeks.SetActive(true);
+        }
+
     }
 
-    IEnumerator FreeksEnter()
+    IEnumerator EnterFreeks()
     {
-        yield return new WaitForSeconds(freeksActiveDelay + 0.5f);
+        if(isSwitch)
+        {
+            yield return new WaitForSeconds(5.5f);
+        }
+        else 
+        { 
+            yield return new WaitForSeconds(freeksActiveDelay + 1.5f);
+        }
         isFreeksEnter = false;
     }
     #endregion

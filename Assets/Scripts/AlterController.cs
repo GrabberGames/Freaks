@@ -109,4 +109,9 @@ public class AlterController : Building, DamageService, HealthService
      {
          return healthPoint;
      }
+
+    public void returnedBusyFreeks()
+    {
+        busyWhiteF--;
+    }
 }

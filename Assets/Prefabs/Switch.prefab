@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 90
-  isTimerON: 1
+  isTimerON: 0
 --- !u!54 &8791480077572075155
 Rigidbody:
   m_ObjectHideFlags: 0

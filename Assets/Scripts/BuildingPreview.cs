@@ -68,9 +68,11 @@ public class BuildingPreview : MonoBehaviour
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large" || parent.name == "SwitchController"))
+                {
                     belowObject = other.gameObject;
-                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
+                }
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large" || parent.name == "SwitchController"))
                 {
                     areyouSure = true;
                 }
@@ -95,7 +97,8 @@ public class BuildingPreview : MonoBehaviour
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large"))
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large" ||
+                    parent.name == "Switch_N" || parent.name == "Switch_S" || parent.name == "Swtich_E"))
                 {
                     areyouSure = false;
                 }
@@ -126,7 +129,7 @@ public class BuildingPreview : MonoBehaviour
             case (int)BuildingNum.Workshop:
                 if (belowObject != null)
                 {
-                    return areyouSure && belowObject.transform.parent.transform.parent.name == "Arrow";
+                    return areyouSure && (belowObject.transform.parent.name == "SwitchController" || belowObject.transform.parent.transform.parent.name == "Arrow");
                 }
                 else
                     return false;
