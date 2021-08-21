@@ -9,8 +9,8 @@ public class CameraController : MonoBehaviour
 
 
     private Camera mainCamera;
-    public float[] rangeY = { 142f, 348.25f };
-    public float[] rangeZ = { 64.2f, 9.2f };
+    private float[] rangeY = { 142f, 348.25f };
+    private float[] rangeZ = { 64.2f, 9.2f };
     private float currentY;
     private float currentZ;
     private float delta;
