@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SwitchTimer : MonoBehaviour
 {
-    [SerializeField] private int timer = 90;
-
     public bool isTimerON = false;
+
+    [SerializeField] private int timer = 90;
 
 
     private void Update()

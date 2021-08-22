@@ -11,19 +11,22 @@ public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
 
+    // FX
+    [SerializeField] private ParticleSystem fx_Move;
+
+    // wShot the ray to the pos. of Mouse Pointer Clicked.
     private RaycastHit hit;
     private string hitColliderName;
 
-    int min = 0;
-    int sec = 0;
+    private int min = 0;
+    private int sec = 0;
 
-    // FX
-    [SerializeField] private ParticleSystem fx_Move;
 
     private void Start()
     {
         StartCoroutine(PlayTimer());
     }
+
 
     private void Update()
     {
@@ -49,6 +52,7 @@ public class GameController : MonoBehaviour
         } 
     }
 
+
     // FX Play on Mouse Click pos.
     private void FXmovePlayer()
     {
@@ -70,6 +74,7 @@ public class GameController : MonoBehaviour
             fx_Move.Stop();
         }
     }
+
 
     // 삭제 예정
     //public void ObjectMove(NavMeshAgent agent)

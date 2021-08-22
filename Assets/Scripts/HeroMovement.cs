@@ -7,7 +7,6 @@ namespace WarriorAnims
 {
     public class HeroMovement : SuperStateMachine
     {
-        public Warrior warrior;
         private enum AnimationState
         {
             L,
@@ -17,6 +16,9 @@ namespace WarriorAnims
             R,
             D
         }
+
+        public Warrior warrior;
+
         [HideInInspector] public SuperCharacterController superCharacterController;
         [HideInInspector] public WarriorMovementController warriorMovementController;
         [HideInInspector] public WarriorInputController warriorInputController;
@@ -30,19 +32,18 @@ namespace WarriorAnims
         private Rigidbody rigid;
         private Camera mainCamera;
         private NavMeshAgent agent;
-       
+        private WaronSkillManage waronSkillManage;
+        private CharacterStat characterStat = new CharacterStat();
 
         private Vector3 targetPos;
         private Vector3 velocity;
         private Vector3 TowardVec;
         private Vector3 UseSkillTowardVector;
-        private WaronSkillManage waronSkillManage;
 
+        private bool SkillStop = false;
         private bool isAction = false;
         private int nowAnimationState = 0;
-        private bool SkillStop = false;
 
-        CharacterStat characterStat = new CharacterStat();
 
         private void Awake()
         {
@@ -50,6 +51,7 @@ namespace WarriorAnims
             targetPos = transform.position;
             SetCharacterStat();
             animator = GetComponentInChildren<Animator>();
+
             if (animator == null)
             {
                 Debug.LogError("ERROR: There is no Animator component for character.");
@@ -58,21 +60,27 @@ namespace WarriorAnims
             else
             {
                 animator.gameObject.AddComponent<WarriorCharacterAnimatorEvents>();
-                animator.GetComponent<WarriorCharacterAnimatorEvents>().heroMovement = this;
                 animator.gameObject.AddComponent<AnimatorParentMove>();
+
+                animator.GetComponent<WarriorCharacterAnimatorEvents>().heroMovement = this;
                 animator.GetComponent<AnimatorParentMove>().animator = animator;
                 animator.GetComponent<AnimatorParentMove>().heroMovement = this;
+
                 animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
                 animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
             }
-            warriorTiming = gameObject.AddComponent<WarriorTiming>();
-            warriorTiming.heroMovement = this;
+
+            agent = GetComponent<NavMeshAgent>();
             rigid = GetComponent<Rigidbody>();
             mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-            agent = GetComponent<NavMeshAgent>();
+
+            warriorTiming = gameObject.AddComponent<WarriorTiming>();
+            warriorTiming.heroMovement = this;
             agent.updateRotation = false;
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
         }
+
+
         public override void SetCharacterStat()
         {
             characterStat.Hp = 400;
@@ -81,20 +89,27 @@ namespace WarriorAnims
             characterStat.AttackSpeed = 1;
             characterStat.Armor = 10;
         }
+
+
         private void Update()
         {
             CharacterMovement();
             ChooseCoroutine();
         }
 
-        void ChooseCoroutine()
+
+        private void ChooseCoroutine()
         {
             if (isAction)
+            {
                 return;
+            }
+                
             if (characterStat.Hp <= 0)
             {
                 StartCoroutine("Die");
             }
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 waronSkillManage.UseSkillNumber = 1;
@@ -120,6 +135,8 @@ namespace WarriorAnims
                 ShockOfLand();
             }
         }
+
+
         #region Q_Skill
         void ThrowingRock()
         {
@@ -142,6 +159,7 @@ namespace WarriorAnims
             waronSkillManage.UseSkillNumber = 0;
         }
         #endregion Q_Skill
+
 
         #region W_Skill
         void LeafOfPride()
@@ -171,6 +189,7 @@ namespace WarriorAnims
         }
         #endregion W_Skill
 
+
         #region E_Skill
         void BoldRush()
         {
@@ -199,6 +218,7 @@ namespace WarriorAnims
         }
         #endregion E_Skill
 
+
         #region R_Skill
         void ShockOfLand()
         {
@@ -221,6 +241,8 @@ namespace WarriorAnims
             waronSkillManage.UseSkillNumber = 0;
         }
         #endregion R_Skill
+
+
         IEnumerator Die()
         {
             //사망시 현재 위치로 destination을 변경하고
@@ -239,6 +261,8 @@ namespace WarriorAnims
             yield return new WaitForSeconds(2f);
             StartCoroutine("Revive");
         }
+
+
         IEnumerator Revive()
         {
             //isAction Flag를 False로 변경하고 
@@ -252,40 +276,53 @@ namespace WarriorAnims
             yield return null;
         }
 
+
         public void SetAnimatorRootMotion(bool b)
         {
             useRootMotion = b;
         }
-        void CharacterMovement()
+
+
+        private void CharacterMovement()
         {
             //현재 다른 동작 중이라면 움직임을 제한시킵니다.
             if (isAction)
+            {
                 return;
+            }
+                
             if (Input.GetMouseButtonDown(1))
             {
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
+
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
                 {
                     targetPos = new Vector3(hit.point.x , transform.position.y, hit.point.z);
                     SetDestination(targetPos);
                 }
             }
+
             Move();
         }
+
 
         void SetDestination(Vector3 dest)
         {
             agent.SetDestination(dest);
             animator.SetBool("Moving", true);
         }
+
+
         void Move()
         {
             var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
+            
             if(dir != Vector3.zero)
             {
                 TowardVec = dir;
             }
+
             velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
             animator.SetFloat("Velocity Z", velocity.magnitude);
             transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
@@ -296,6 +333,8 @@ namespace WarriorAnims
                 animator.SetBool("Moving", false);
             }
         }
+
+
         public void Break()
         {
             SkillStop = true;

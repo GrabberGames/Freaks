@@ -7,10 +7,14 @@ public class WaronSkillManage : MonoBehaviour
     public GameObject[] SkillColliderList;
 
     public int UseSkillNumber { get; set; }
+
+
     private void Awake()
     {
         AllColliderOff();
     }
+
+
     public void AllColliderOff()
     {
         foreach (var all in SkillColliderList)
@@ -18,6 +22,8 @@ public class WaronSkillManage : MonoBehaviour
             all.GetComponent<Collider>().enabled = false;
         }
     }
+
+
     public bool SkillOnTrigger()
     {
         SkillColliderList[UseSkillNumber].GetComponent<Collider>().enabled = true;

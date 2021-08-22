@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public enum Team
-{
-    Blue,
-    Red
-}
 public class FreaksController : MonoBehaviour
 {
+    public enum Team
+    {
+        Blue,
+        Red
+    }
+
     private NavMeshAgent agent;
     private GameController gameController;
 
@@ -26,6 +27,8 @@ public class FreaksController : MonoBehaviour
     private float freaksMoveSpeed;
     private float hp;
     private bool isStuern = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +63,8 @@ public class FreaksController : MonoBehaviour
             agent.SetDestination(alterPosition);
         }
     }
+
+
     public void ChangeAlterPosition(Vector3 alterPosition)
     {
         this.alterPosition = alterPosition;
@@ -71,6 +76,8 @@ public class FreaksController : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, 7.5f);
     }
+
+
     public IEnumerator MoveSpeedSlow(float value)
     {
         print("movespeed");
@@ -78,11 +85,15 @@ public class FreaksController : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         agent.speed = freaksMoveSpeed;
     }
+    
+    
     public void Damaged(float value)
     {
         print("damaged");
         hp -= value;
     }
+
+
     public IEnumerator Stuern(float value)
     {
         print("stuern");

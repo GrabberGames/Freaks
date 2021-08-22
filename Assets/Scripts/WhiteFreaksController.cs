@@ -7,12 +7,14 @@ public class WhiteFreaksController : MonoBehaviour
 {
     public GameObject miningWorkshop;
     public NavMeshAgent navMeshAgent;
-    private AlterController alterController;
 
+    private AlterController alterController;
     private GameObject alter;
+
     private bool isMining = false;
     private bool hasEssense = false;
     private bool isFinish = false;
+
     private Vector3 alterPosition;
 
 
@@ -24,6 +26,8 @@ public class WhiteFreaksController : MonoBehaviour
         alterController = alter.GetComponent<AlterController>();
         alterPosition = alter.transform.position;
     }  
+
+
     public void SetMiningWorkShop()
     {
         ChkNavMesh();
@@ -32,6 +36,7 @@ public class WhiteFreaksController : MonoBehaviour
         isMining = true;
         print("SetMining");
     }
+
 
     public void SetSwitch(Vector3 pos)
     {
@@ -47,6 +52,7 @@ public class WhiteFreaksController : MonoBehaviour
         if (isFinish)
         {
             string name = collision.transform.name;
+
             if (name == "Alter")
             {
                 alterController.returnedBusyFreeks();
@@ -58,9 +64,11 @@ public class WhiteFreaksController : MonoBehaviour
         if(isMining)
         {
             string name = collision.transform.name;
+
             if (name == "Alter")
             {
                 navMeshAgent.SetDestination(miningWorkshop.transform.position);
+
                 if (hasEssense)
                 {
                     alterController.essence += 10;
@@ -77,10 +85,13 @@ public class WhiteFreaksController : MonoBehaviour
             }
         }
     }
+
+
     public void ChangeAlterPosition(Vector3 alterPosition)
     {
         this.alterPosition = alterPosition;
     }
+
 
     private void ChkNavMesh()
     {
@@ -90,10 +101,10 @@ public class WhiteFreaksController : MonoBehaviour
         }
     }
 
+
     public void FinishMining()
     {
         navMeshAgent.SetDestination(alterPosition);
         isFinish = true;
     }
-
 }

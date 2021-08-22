@@ -6,19 +6,17 @@ using UnityEngine.AI;
 public class AlterController : Building, DamageService, HealthService
 {
     public GameObject whiteFreaksPref;
-    
 
+    public float healthPoint = 2000.0f;
     public int essence = 1000;
-    [SerializeField] 
-    private int whiteFreaks = 5;
-    private int busyWhiteF = 0;
+
+    [SerializeField] private int whiteFreaks = 5;
+    [SerializeField] private bool isAlterClicked = false;
 
     private List<GameObject> miningFreaks = new List<GameObject>();
 
-    
-   [SerializeField] private bool isAlterClicked = false;
+    private int busyWhiteF = 0;
 
-   public float healthPoint = 2000.0f;
 
     // Update is called once per frame
     void Update()
@@ -26,10 +24,12 @@ public class AlterController : Building, DamageService, HealthService
         newMiningWorkshopChk();
     }
 
+
     public bool CanBuild()
     {
         return whiteFreaks - busyWhiteF > 0;
     }
+
 
     public void GoBuild(GameObject building)
     {
@@ -49,8 +49,8 @@ public class AlterController : Building, DamageService, HealthService
             whiteFreaksController.SetMiningWorkShop();
             building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreaks);
         }
-        
     }
+
 
     private void newMiningWorkshopChk()
     {
@@ -78,6 +78,7 @@ public class AlterController : Building, DamageService, HealthService
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit))
             {
                 GameObject hitGameObject = hit.transform.gameObject;
@@ -90,25 +91,30 @@ public class AlterController : Building, DamageService, HealthService
         }
     }
 
+
     public override void SetMaterial(bool isRed)
     {
         return;
     }
+
 
     public override void SetOpacity(bool isTransparent)
     {
         return;
     }
 
-    public void DamageTaken(float damageTaken)
-     {
-         healthPoint -= damageTaken;
-     } 
 
-     public float GetCurrentHP()
-     {
-         return healthPoint;
-     }
+    public void DamageTaken(float damageTaken)
+    {
+         healthPoint -= damageTaken;
+    } 
+
+
+    public float GetCurrentHP()
+    {
+        return healthPoint;
+    }
+
 
     public void returnedBusyFreeks()
     {

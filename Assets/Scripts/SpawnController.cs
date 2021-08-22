@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum Wave
-{
-    w0,
-    w1, w2, w3, w4, w5,
-    w6, w7, w8, w9, w10
-}
-
-
 
 public class SpawnController: MonoBehaviour
 {
+    public enum Wave
+    {
+        w0,
+        w1, w2, w3, w4, w5,
+        w6, w7, w8, w9, w10
+    }
+
+
     //public TextMeshProUGUI timerText;
     public GameObject[] Minion;     // Minion: close range || Minion_2: long range
     public GameObject[] SpawnPoint;
@@ -37,6 +37,7 @@ public class SpawnController: MonoBehaviour
         randomSpawn = Random.Range(0, SpawnPoint.Length);   // random spawn position set   
         // StartCoroutine(MinionSpawn());  DO NOT USE IT!!!!!
     }
+
 
     /* DO NOT USE IT!!!!!
     IEnumerator SpawnTimer() // Enemy Spawn Timer

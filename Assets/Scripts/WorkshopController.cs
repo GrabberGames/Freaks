@@ -14,21 +14,29 @@ public class WorkshopController : Building
         Red
     }
 
-    public int remainEssense = 1000;
-    private GameObject whiteFreeks = null;
-    private Renderer roofRenderer;
 
-    private EssenceSpot essenceSpot;
-    private bool isSetted;
+    public int remainEssense = 1000;
+
     [SerializeField] private Material[] materials;
 
-    private float freeksActiveDelay = 2.0f;
+    private GameObject whiteFreeks = null;
+    private Renderer roofRenderer;
+    private EssenceSpot essenceSpot;
 
+    private bool isSetted;
     private bool isFreeksEnter = false;
     private bool beConstructed = true;
+    private bool isSwitch = false;
+    private float freeksActiveDelay = 2.0f;
     private int currentRoofNum;
 
-    private bool isSwitch = false;
+
+    private void Start()
+    {
+        currentRoofNum = GetRoofNum();
+        roofRenderer = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
+    }
+
 
     private void Update()
     {
@@ -39,16 +47,12 @@ public class WorkshopController : Building
         }
     }
 
+
     public void SetMiningFreeks(GameObject whiteFreeks)
     {
         this.whiteFreeks = whiteFreeks;
     }
 
-    private void Start()
-    {
-        currentRoofNum = GetRoofNum();
-        roofRenderer = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -61,10 +65,14 @@ public class WorkshopController : Building
             StartCoroutine(SetActive());
             StartCoroutine(EnterFreeks());
 
-            if (beConstructed) ConstructBuilding();
-            
+            if (beConstructed)
+            {
+                ConstructBuilding();
+            }
         }
     }
+
+
     public void Init(GameObject mark)
     {
         if(mark.GetComponent<EssenceSpot>())
@@ -94,7 +102,6 @@ public class WorkshopController : Building
             essenceSpot.Digging();
             whiteFreeks.SetActive(true);
         }
-
     }
 
     IEnumerator EnterFreeks()
@@ -114,26 +121,38 @@ public class WorkshopController : Building
 
     public void ChangeRoof()
     {
-        if (!IsRoofChange()) return;
+        if (!IsRoofChange())
+        {
+            return;
+        }
 
         currentRoofNum = GetRoofNum();
         roofRenderer.material = materials[currentRoofNum];
     }
+
 
     private bool IsRoofChange()
     {
         return currentRoofNum != GetRoofNum();
     }
 
+
     private int GetRoofNum()
     {
         int roofNum = remainEssense / 500;
-        if (roofNum > 2) roofNum = 2;
+
+        if (roofNum > 2)
+        {
+            roofNum = 2;
+        }
+
         return roofNum;
     }
 
+
     public override void SetOpacity(bool isTransparent)
     {
+        // Empty
     }
 
 
@@ -142,23 +161,20 @@ public class WorkshopController : Building
         if (canBuild)
         {
             Material[] mats = { materials[(int)MaterialNum.Green], materials[(int)MaterialNum.Green], materials[(int)MaterialNum.Green] };
-
             roofRenderer.materials = mats;
         }
         else
         {
             Material[] mats = { materials[(int)MaterialNum.Red], materials[(int)MaterialNum.Red], materials[(int)MaterialNum.Red] };
-
             roofRenderer.materials = mats;
         }
     }
 
+
     private void ConstructBuilding()
     {
         Material[] mats = { materials[(int)MaterialNum.LargeRoof], materials[(int)MaterialNum.Leg], materials[(int)MaterialNum.Leg] };
-
         roofRenderer.materials = mats;
         beConstructed = false;
     }
-
 }

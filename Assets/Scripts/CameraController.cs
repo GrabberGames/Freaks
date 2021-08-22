@@ -7,24 +7,23 @@ public class CameraController : MonoBehaviour
     public Vector3 offset;
     public float zoomSpeed = 10.0f;
 
-
+    private Transform player; // Player object
+    private Transform alter; // Alter object
     private Camera mainCamera;
+
     private float[] rangeY = { 142f, 348.25f };
     private float[] rangeZ = { 64.2f, 9.2f };
     private float currentY;
     private float currentZ;
     private float delta;
     private float nor;
-    private Transform player; // Player object
-    private Transform alter; // Alter object
-
-    // private Vector3 lookOffset;    // The position of camera which view target
-
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
 
-    void Awake() {
+
+    void Awake() 
+    {
        initialPosition = transform.position;
        initialRotation = transform.rotation;
     }
@@ -39,11 +38,13 @@ public class CameraController : MonoBehaviour
         nor = (rangeY[1] - rangeY[0]) / (rangeZ[0] - rangeZ[1]);
     }
 
+
     // Update is called once per frame
     void Update()
     {
         Zoom();
         Move();
+
         alter = GameObject.Find("Alter").transform;
         player = GameObject.Find("Waron").transform;
         currentY = transform.position.y;
@@ -51,29 +52,32 @@ public class CameraController : MonoBehaviour
     }
 
 
-    void Zoom()
+    private void Zoom()
     {
-        
         if ((delta = Input.GetAxis("Mouse ScrollWheel") * -5 * zoomSpeed) != 0)
         {
             currentY = Mathf.Clamp(currentY + delta * nor, rangeY[0], rangeY[1]);
             currentZ = Mathf.Clamp(currentZ - delta,       rangeZ[1], rangeZ[0]);
         }
+
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, currentY, currentZ);
-        
     }
+
 
     private void Move()
     {
-        
-        if (Input.mousePosition.x > Screen.width){
+        if (Input.mousePosition.x > Screen.width) 
+        {
             transform.Translate(2.0f, 0, 0);
         } 
-        if(Input.mousePosition.x < 0){
+
+        if(Input.mousePosition.x < 0) 
+        {
             transform.Translate(-2.0f, 0, 0);
         } 
         
-        if(Input.mousePosition.y > Screen.height){
+        if(Input.mousePosition.y > Screen.height)
+        {
             currentZ += 4.0f;
             rangeZ[0] += 4; rangeZ[1] += 4;
             transform.position = new Vector3(transform.position.x, transform.position.y , currentZ);

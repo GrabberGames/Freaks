@@ -5,6 +5,8 @@ using UnityEngine;
 public class EssenceManager : MonoBehaviour
 {
     public Material[] materials;
+
+
     // Start is called before the first frame update
     void Start()
     {

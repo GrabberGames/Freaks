@@ -12,16 +12,17 @@ public class BuildingPreview : MonoBehaviour
         Switch
     }
 
-    private List<Collider> colliders = new List<Collider>();
-    private GameObject belowObject;
     [SerializeField] private int me;
+
     private bool areyouSure = false;
     private bool cantbuild;
     private int distance = 0;
 
+    private List<Collider> colliders = new List<Collider>();
+    private GameObject belowObject;
     private Building parentController;
     private WorkshopController workshopController;
-    Transform parent;
+    private Transform parent;
 
 
     private void Awake()
@@ -30,9 +31,8 @@ public class BuildingPreview : MonoBehaviour
     }
 
 
-    void Update()
+    private void Update()
     {
-
         if (me == 0)    //알터의 경우
         { 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -64,7 +64,9 @@ public class BuildingPreview : MonoBehaviour
         {
             case (int)BuildingNum.Alter:
                 if (parent !=  null && parent.name == "Road")
+                {
                     belowObject = parent.gameObject;
+                }
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
@@ -97,8 +99,7 @@ public class BuildingPreview : MonoBehaviour
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large" ||
-                    parent.name == "Switch_N" || parent.name == "Switch_S" || parent.name == "Swtich_E"))
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large" || parent.name == "Switch_N" || parent.name == "Switch_S" || parent.name == "Swtich_E"))
                 {
                     areyouSure = false;
                 }
@@ -118,7 +119,8 @@ public class BuildingPreview : MonoBehaviour
         switch (me)
         {
             case (int)BuildingNum.Alter:
-                if (belowObject != null) { 
+                if (belowObject != null) 
+                { 
                     return distance <= 69 && belowObject.transform.name == "Road";
                 }       
                 else
@@ -132,11 +134,11 @@ public class BuildingPreview : MonoBehaviour
                     return areyouSure && (belowObject.transform.parent.name == "SwitchController" || belowObject.transform.parent.transform.parent.name == "Arrow");
                 }
                 else
+                {
                     return false;
-
+                }
             case (int)BuildingNum.Switch:
                 return areyouSure;
-
         }
         return false;
     }
@@ -150,18 +152,14 @@ public class BuildingPreview : MonoBehaviour
             case (int)BuildingNum.Alter:
                 parentController = GetComponentInParent<AlterController>();
                 break;
-
             case (int)BuildingNum.Tower:
                 break;
-
             case (int)BuildingNum.Workshop:
                 parentController = GetComponentInParent<WorkshopController>();
                 break;
-
             case (int)BuildingNum.Switch:
                 return;
         }
-
         parentController.SetOpacity(true);
     }
 

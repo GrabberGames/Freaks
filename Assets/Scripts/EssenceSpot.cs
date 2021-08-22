@@ -5,11 +5,13 @@ using UnityEngine;
 public class EssenceSpot : MonoBehaviour
 {
     public int RemainEssence;
-    [SerializeField]
-    private int GetEssencePerOnce = 50;
+
+    [SerializeField] private int GetEssencePerOnce = 50;
+    
     private Material navy, blue, sky_blue;
     private Material material;
-    //private bool isDig = false;
+
+
     void Start()
     {
         material = this.gameObject.GetComponent<Renderer>().material;
@@ -17,27 +19,39 @@ public class EssenceSpot : MonoBehaviour
         blue = GetComponentInParent<EssenceManager>().materials[1];
         sky_blue = GetComponentInParent<EssenceManager>().materials[2];
     }
+
+
     // Update is called once per frame
     void Update()
     {
         SetColor();
     }
+
+
     public int GetRemainEssence()
     {
         return RemainEssence;
     }
+
+
     public Material GetNowMaterial()
     {
         return gameObject.GetComponent<Renderer>().material;
     }
+
+
     public void SetRemainEssence(int variance)
     {
         RemainEssence -= variance;
     }
+
+
     public void Digging()
     {
         RemainEssence -= GetEssencePerOnce;
     }
+
+
     void SetColor()
     {
         if(RemainEssence >= 801)

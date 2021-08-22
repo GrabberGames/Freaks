@@ -5,18 +5,26 @@ using UnityEngine;
 public class WaronSkill : MonoBehaviour
 {
     WarriorAnims.HeroMovement heroMovement;
-    WaronSkillManage waronSkillManage;
-    FreaksController freaksController;
-    int UseSkillNumber;
+
+    private WaronSkillManage waronSkillManage;
+    private FreaksController freaksController;
+    
+    private int UseSkillNumber;
+
+
     private void Awake()
     {
         waronSkillManage = GetComponentInParent<WaronSkillManage>();
         heroMovement = GetComponentInParent<WarriorAnims.HeroMovement>();
     }
+
+
     public void Renew()
     {
         UseSkillNumber = waronSkillManage.UseSkillNumber;
     }
+
+
     private void OnTriggerEnter(Collider other)
     {
         print("*");
