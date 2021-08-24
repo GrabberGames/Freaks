@@ -13,19 +13,27 @@ public class Kali : MonoBehaviour
         R,
         D
     }
-    private bool isAction;
-    private bool canNormalAttack;
-    private int AttackNum;
+    private bool isAction = false;
+    private bool canNormalAttack = true;
+    private float canNormalAttackTime = 2f;
+    private int AttackNum = 0;
     private Vector3 TowardVec;
     private Vector3 targetPos;
 
+    //public Avatar[] avatars;
+    //public Avatar avatar;
     private Animator animator;
     private Camera mainCamera;
     private NavMeshAgent agent;
     private Rigidbody rigid;
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+
+        animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
+        animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+
+        //avatar = GetComponentInChildren<Avatar>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         rigid = GetComponent<Rigidbody>();
@@ -34,27 +42,55 @@ public class Kali : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //avatar = avatars[0];
     }
-    IEnumerator Attack()
+    void ChooseAction()
     {
-        if(Input.GetMouseButtonDown(0) && AttackNum == 0)
+        // Normal Attack
+        Basic_Attack();
+
+        //Q
+
+        //W
+
+        //E
+        
+        //R
+    }
+    void Basic_Attack()
+    {
+        print(!canNormalAttack + " " + AttackNum);
+        if (!canNormalAttack)
+            return;
+        if(Input.GetMouseButtonDown(0) && AttackNum == 0 && canNormalAttack)
         {
-            animator.SetBool("Attack", true);
+            //avatar = avatars[1];
             AttackNum++;
+            StartCoroutine(CoolTime(canNormalAttackTime, canNormalAttack, "Attack", "Trigger"));
         }
-        else if(Input.GetMouseButtonDown(0) && AttackNum == 1)
+        if(Input.GetMouseButtonDown(0) && AttackNum == 2 && canNormalAttack)
         {
+            canNormalAttack = false;
             animator.SetTrigger("Trigger");
             AttackNum++;
-        }
+            StopCoroutine (CoolTime(canNormalAttackTime, canNormalAttack, "Attack", "Trigger"));
 
-        yield return new WaitForSeconds(1f);
+            StartCoroutine(CoolTime(canNormalAttackTime, canNormalAttack, "Attack", "Trigger"));
+        }
+    }
+    IEnumerator CoolTime(float time, bool b, string str, string tri)
+    {
+        yield return new WaitForSeconds(time);
+        b = !b;
+        animator.SetBool(str, !b);
+        animator.SetTrigger(tri);
     }
     // Update is called once per frame
     void Update()
     {
         CharacterMovement();
+        ChooseAction();
+        print(animator.GetBool("Moving"));
     }
     private void CharacterMovement()
     {
