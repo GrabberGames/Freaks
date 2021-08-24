@@ -8,9 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Arrow_Small
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: e17754d7559a70f4985b817f48d2fdfa, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -59,8 +59,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture0:
+        m_Texture: {fileID: 2800000, guid: 2e255826ee5821d458beed8b277573e4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_d8bc5a7c6740498eb96a96fd1c6de02d_Out_0:
         m_Texture: {fileID: 2800000, guid: 556c78b7b622a7d49901b0b4e19a4e6c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -83,6 +91,9 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FresnelBias: 0.08
+    - _FresnelPower: 1
+    - _FresnelScale: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -95,9 +106,13 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - __dirty: 0
     m_Colors:
     - Vector2_aefc51803626468d93e187720b33beb1: {r: 1, g: 0.1, b: 0, a: 0}
     - Vector2_d4d5b53cc35d40cb9d72579261570939: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0, g: 0.96835494, b: 1, a: 1}
+    - _Color0: {r: 0, g: 0.990309, b: 1, a: 0}
+    - _Color1: {r: 0, g: 0.1481996, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _speed: {r: 1, g: 0.25, b: 0, a: 0}
   m_BuildTextureStacks: []
