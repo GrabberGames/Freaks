@@ -165,7 +165,7 @@ public class Kali : MonoBehaviour
             return;
         if(Input.GetMouseButtonDown(0) && canNormalAttack)
         {
-            print("*");
+            //print("*");
             if(AttackNum == 0)
             {
                 animator.SetBool("Attack", true);
@@ -193,7 +193,7 @@ public class Kali : MonoBehaviour
     {
         CharacterMovement();
         ChooseAction();
-        print(canNormalAttack);
+        //print(canNormalAttack);
     }
     private void CharacterMovement()
     {

@@ -6,7 +6,6 @@ using TMPro;
 
 
 
-
 public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
@@ -21,10 +20,20 @@ public class GameController : MonoBehaviour
     private int min = 0;
     private int sec = 0;
 
+    public int wave_min = 0;
+    public int wave_sec = 0;
+
+    private SpawnController spawnController;
+
+
 
     private void Start()
     {
+        spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
+
         StartCoroutine(PlayTimer());
+        StartCoroutine(WaveTimer());
+
     }
 
 
@@ -53,6 +62,29 @@ public class GameController : MonoBehaviour
     }
 
 
+    IEnumerator WaveTimer()
+    {
+        // 2mins Timer
+        while(wave_min < 2)
+        {
+            wave_sec++;
+
+            if (wave_sec > 59)
+            {
+                wave_sec = 0;
+                wave_min++;
+            }
+            yield return new WaitForSeconds(1);
+        }
+
+        if (wave_min >= 2)
+        {
+            Debug.Log("!!");
+            spawnController.StartCoroutine("FreaksSpawn");
+        }
+    }
+
+
     // FX Play on Mouse Click pos.
     private void FXmovePlayer()
     {
@@ -74,32 +106,4 @@ public class GameController : MonoBehaviour
             fx_Move.Stop();
         }
     }
-
-
-    // 삭제 예정
-    //public void ObjectMove(NavMeshAgent agent)
-    //{
-    //    if (Input.GetMouseButtonDown(0))    // Get Hero's name
-    //    {
-    //        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-    //        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-    //        {
-    //            Debug.Log(hit.transform.gameObject.name);
-    //            hitColliderName = hit.transform.gameObject.name;
-    //        }
-    //    }
-
-    //    if (Input.GetMouseButtonDown(1))    // Right Mouse Click && Hero Clicked
-    //    {
-    //        Debug.Log(hitColliderName);
-    //        agent = GameObject.Find(hitColliderName).GetComponent<NavMeshAgent>();
-    //        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    // Ray Set; Mouse Pointer Position
-    //        Debug.Log(ray);
-    //        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-    //        {
-    //            agent.SetDestination(hit.point); // Hero Move
-    //        }
-    //    }
-    //}
 }
