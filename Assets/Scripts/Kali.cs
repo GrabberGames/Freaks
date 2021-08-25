@@ -20,6 +20,8 @@ public class Kali : MonoBehaviour
     private Vector3 TowardVec;
     private Vector3 targetPos;
 
+    private int nowAnimationState = 0;
+    private bool useRootMotion = false;
     //public Avatar[] avatars;
     //public Avatar avatar;
     private Animator animator;
@@ -28,7 +30,7 @@ public class Kali : MonoBehaviour
     private Rigidbody rigid;
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
 
         animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
         animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
@@ -46,51 +48,152 @@ public class Kali : MonoBehaviour
     }
     void ChooseAction()
     {
+        if (isAction)
+            return;
+
         // Normal Attack
         Basic_Attack();
 
         //Q
-
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Determination();
+            nowAnimationState = (int)AnimationState.Q;
+        }
         //W
 
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            Atonement();
+            nowAnimationState = (int)AnimationState.W;
+        }
         //E
-        
+
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            Evation();
+            nowAnimationState = (int)AnimationState.E;
+        }
         //R
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            HorizonofMemory();
+            nowAnimationState = (int)AnimationState.R;
+        }
     }
+    void OnAnimatorMove()
+    {
+        if (useRootMotion)
+        {
+            transform.rotation = animator.rootRotation;
+            transform.position += animator.deltaPosition;
+        }
+    }
+    #region Q_Skill
+    void Determination()
+    {
+        agent.ResetPath();
+        isAction = true;
+        animator.SetBool("Skill", true);
+        animator.SetInteger("SkillNumber", 1);
+        StartCoroutine(Determination_Stop());
+    }
+    IEnumerator Determination_Stop()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun attack3") && !animator.IsInTransition(0));
+        isAction = false;
+        animator.SetBool("Skill", false);
+        nowAnimationState = (int)AnimationState.L;
+    }
+    #endregion
+    #region W_Skill
+    void Atonement()
+    {
+        agent.ResetPath();
+        isAction = true;
+        animator.SetBool("Skill", true);
+        animator.SetInteger("SkillNumber", 2);
+        StartCoroutine(Atonement_Stop());
+    }
+    IEnumerator Atonement_Stop()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("TwoGun Attack 05") && !animator.IsInTransition(0));
+        isAction = false;
+        animator.SetBool("Skill", false);
+        nowAnimationState = (int)AnimationState.L;
+    }
+    #endregion
+    #region E_Skill
+    void Evation()
+    {
+        agent.ResetPath();
+        useRootMotion = true;
+        isAction = true;
+        animator.SetBool("Skill", true);
+        animator.SetInteger("SkillNumber", 3);
+        StartCoroutine(Evation_Stop());
+    }
+    IEnumerator Evation_Stop()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Jumbo Back Attack") && !animator.IsInTransition(0));
+        useRootMotion = false;
+        isAction = false;
+        animator.SetBool("Skill", false);
+        nowAnimationState = (int)AnimationState.L;
+    }
+    #endregion
+    #region R_Skill
+    void HorizonofMemory()
+    {
+        agent.ResetPath();
+        isAction = true;
+        animator.SetBool("Skill", true);
+        animator.SetInteger("SkillNumber", 4);
+        StartCoroutine(HorizonofMemory_Stop());
+    }
+    IEnumerator HorizonofMemory_Stop()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0));
+        isAction = false;
+        animator.SetBool("Skill", false);
+        nowAnimationState = (int)AnimationState.L;
+    }
+    #endregion
     void Basic_Attack()
     {
-        print(!canNormalAttack + " " + AttackNum);
         if (!canNormalAttack)
             return;
-        if(Input.GetMouseButtonDown(0) && AttackNum == 0 && canNormalAttack)
+        if(Input.GetMouseButtonDown(0) && canNormalAttack)
         {
-            //avatar = avatars[1];
-            AttackNum++;
-            StartCoroutine(CoolTime(canNormalAttackTime, canNormalAttack, "Attack", "Trigger"));
-        }
-        if(Input.GetMouseButtonDown(0) && AttackNum == 2 && canNormalAttack)
-        {
-            canNormalAttack = false;
-            animator.SetTrigger("Trigger");
-            AttackNum++;
-            StopCoroutine (CoolTime(canNormalAttackTime, canNormalAttack, "Attack", "Trigger"));
-
-            StartCoroutine(CoolTime(canNormalAttackTime, canNormalAttack, "Attack", "Trigger"));
+            print("*");
+            if(AttackNum == 0)
+            {
+                animator.SetBool("Attack", true);
+                animator.SetBool("NormalAttack", true);
+                AttackNum = 1;
+            }
+            else
+            {
+                animator.SetBool("Attack", true);
+                animator.SetBool("NormalAttack", false);
+                AttackNum = 0;
+            }
+            StartCoroutine(CoolTime(canNormalAttackTime, canNormalAttack));
         }
     }
-    IEnumerator CoolTime(float time, bool b, string str, string tri)
+    IEnumerator CoolTime(float time, bool b)
     {
-        yield return new WaitForSeconds(time);
         b = !b;
-        animator.SetBool(str, !b);
-        animator.SetTrigger(tri);
+        yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("Normal Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Normal Attack 2")) && !animator.IsInTransition(0));
+        animator.SetBool("Attack", false);
+        b = !b; 
     }
     // Update is called once per frame
     void Update()
     {
         CharacterMovement();
         ChooseAction();
-        print(animator.GetBool("Moving"));
+        print(canNormalAttack);
     }
     private void CharacterMovement()
     {
