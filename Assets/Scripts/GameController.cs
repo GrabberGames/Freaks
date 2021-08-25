@@ -80,7 +80,10 @@ public class GameController : MonoBehaviour
         if (wave_min >= 2)
         {
             Debug.Log("!!");
-            spawnController.StartCoroutine("FreaksSpawn");
+            spawnController.FreaksSpawn();
+            wave_min = 0;
+            wave_sec = 0;
+            StartCoroutine(WaveTimer());
         }
     }
 
