@@ -72,6 +72,15 @@ public class WorkshopController : Building
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if(isSwitch && collision.transform.gameObject == whiteFreeks)
+        {
+            GameObject.Find("SwitchController").GetComponent<SwitchController>().SwitchFX(gameObject.transform.position, "ON");
+            Destroy(this.gameObject);
+        }
+    }
+
 
     public void Init(GameObject mark)
     {

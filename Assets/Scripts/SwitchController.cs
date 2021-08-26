@@ -92,9 +92,27 @@ public class SwitchController : MonoBehaviour
     }
 
 
-    void SwitchFX(Vector3 pos, string onOff)
+    public void SwitchFX(Vector3 workshopPos, string onOff)
     {
         Debug.Log("POS: " + pos);
+
+        // Vector3(-8.8653307,0,156.667099) 0 
+        // Vector3(-28.9882011,0,-172.248169) 1 
+        // Vector3(285.082642,0,-16.6710186) 2 
+        if (workshopPos.x > 280f)
+        {
+            pos = switchObjects[2].transform.position;
+        }
+        else if (workshopPos.z > 0)
+        {
+            pos = switchObjects[0].transform.position;
+        }
+        else
+        {
+            pos = switchObjects[1].transform.position;
+        }
+        
+
         // switch ON FX
         pos.y = 0.5f; pos.x += 1.0f; // FX Pos. calibration
 
