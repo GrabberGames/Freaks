@@ -22,8 +22,6 @@ public class Kali : MonoBehaviour
 
     private int nowAnimationState = 0;
     private bool useRootMotion = false;
-    //public Avatar[] avatars;
-    //public Avatar avatar;
     private Animator animator;
     private Camera mainCamera;
     private NavMeshAgent agent;
@@ -35,16 +33,14 @@ public class Kali : MonoBehaviour
         animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
         animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
 
-        //avatar = GetComponentInChildren<Avatar>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         rigid = GetComponent<Rigidbody>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
-    // Start is called before the first frame update
     void Start()
     {
-        //avatar = avatars[0];
+
     }
     void ChooseAction()
     {
@@ -165,7 +161,6 @@ public class Kali : MonoBehaviour
             return;
         if(Input.GetMouseButtonDown(0) && canNormalAttack)
         {
-            //print("*");
             if(AttackNum == 0)
             {
                 animator.SetBool("Attack", true);
@@ -188,12 +183,11 @@ public class Kali : MonoBehaviour
         animator.SetBool("Attack", false);
         b = !b; 
     }
-    // Update is called once per frame
     void Update()
     {
         CharacterMovement();
         ChooseAction();
-        //print(canNormalAttack);
+        print(transform.position);
     }
     private void CharacterMovement()
     {
