@@ -26,21 +26,31 @@ public class Kali : MonoBehaviour
     private Camera mainCamera;
     private NavMeshAgent agent;
     private Rigidbody rigid;
+
+    public KailAni kailAni;
     private void Awake()
     {
         animator = GetComponent<Animator>();
-
-        animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
-        animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
-
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
+
         rigid = GetComponent<Rigidbody>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     void Start()
     {
 
+    }
+    public void SetStartPos()
+    {
+        kailAni.SetStartPosition();
+    }
+    public void SetEndPos()
+    {
+        kailAni.SetEndPosition();
+    }
+    public void SetPos()
+    {
+        transform.position += kailAni.returnMove();
     }
     void ChooseAction()
     {
@@ -77,19 +87,12 @@ public class Kali : MonoBehaviour
             nowAnimationState = (int)AnimationState.R;
         }
     }
-    void OnAnimatorMove()
-    {
-        if (useRootMotion)
-        {
-            transform.rotation = animator.rootRotation;
-            transform.position += animator.deltaPosition;
-        }
-    }
     #region Q_Skill
     void Determination()
     {
         agent.ResetPath();
         isAction = true;
+        animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 1);
         StartCoroutine(Determination_Stop());
@@ -107,6 +110,7 @@ public class Kali : MonoBehaviour
     {
         agent.ResetPath();
         isAction = true;
+        animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 2);
         StartCoroutine(Atonement_Stop());
@@ -125,6 +129,7 @@ public class Kali : MonoBehaviour
         agent.ResetPath();
         useRootMotion = true;
         isAction = true;
+        animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 3);
         StartCoroutine(Evation_Stop());
@@ -143,6 +148,7 @@ public class Kali : MonoBehaviour
     {
         agent.ResetPath();
         isAction = true;
+        animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 4);
         StartCoroutine(HorizonofMemory_Stop());
@@ -187,7 +193,6 @@ public class Kali : MonoBehaviour
     {
         CharacterMovement();
         ChooseAction();
-        print(transform.position);
     }
     private void CharacterMovement()
     {

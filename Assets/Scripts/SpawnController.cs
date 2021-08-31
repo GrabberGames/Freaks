@@ -22,7 +22,6 @@ public class SpawnController: MonoBehaviour
         while (cm_num > 0)  // close range minion spawn
         {
             Instantiate(Freakses[0], SpawnPoint[randomSpawn].transform.position, Quaternion.identity);   
-            Debug.Log("!");
             cm_num--;
         }
 

@@ -20,7 +20,6 @@ public class TowerAttack : MonoBehaviour
         FindHero();
 
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
-        print(bulletSpawnPosition);
     }
 
 

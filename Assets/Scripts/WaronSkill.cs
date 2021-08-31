@@ -27,7 +27,6 @@ public class WaronSkill : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("*");
         if (other.transform.tag == "BlackFreaks")
         {
             switch (UseSkillNumber)
