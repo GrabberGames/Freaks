@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
@@ -9,27 +10,32 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
+    public Image mask;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;
 
     // wShot the ray to the pos. of Mouse Pointer Clicked.
+    private SpawnController spawnController;
     private RaycastHit hit;
-    private string hitColliderName;
 
+    private string hitColliderName;
     private int min = 0;
     private int sec = 0;
+    private float originalSize;
+    private float value = 0;
 
     public int wave_min = 0;
     public int wave_sec = 0;
 
-    private SpawnController spawnController;
+
 
 
 
     private void Start()
     {
         spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
+        originalSize = mask.rectTransform.rect.width;
 
         StartCoroutine(PlayTimer());
         StartCoroutine(WaveTimer());
@@ -68,6 +74,9 @@ public class GameController : MonoBehaviour
         while(wave_min < 2)
         {
             wave_sec++;
+            value += 0.825f;
+
+            mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize - value);
 
             if (wave_sec > 59)
             {
@@ -79,11 +88,14 @@ public class GameController : MonoBehaviour
 
         if (wave_min >= 2)
         {
+            mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize);
+
             Debug.Log("!!");
             spawnController.FreaksSpawn();
             wave_min = 0;
             wave_sec = 0;
             StartCoroutine(WaveTimer());
+            value = 0;
         }
     }
 

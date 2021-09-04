@@ -29,6 +29,7 @@ public class BuildingController : MonoBehaviour
     private FreaksController[] freaksControllers;
     private GameObject belowObejct;
 
+    private bool isClicked = false;
     private bool cantbuild;
     private bool isPreviewActivate = false;
     private int buildnum;
@@ -99,21 +100,29 @@ public class BuildingController : MonoBehaviour
                     fx_Smoke01.Play(true);
                 }
             }
-
-            // Build Cancel
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                buttens.SetActive(false);
-                isPreviewActivate = false;
-                Destroy(building);
-            }
         }
-        
+
+        // Build Cancel
+        if (Input.GetKeyDown(KeyCode.Escape) && isClicked)
+        {
+            buttens.SetActive(false);
+            isPreviewActivate = false;
+            Destroy(building);
+            isClicked = false;
+        }
+
+
         // FX End
         if (fx_Smoke01.isStopped)
         {
             fx_Smoke01.Stop();
         }
+    }
+
+
+    public void BtnClick()
+    {
+        isClicked = true;
     }
 
 
@@ -132,7 +141,7 @@ public class BuildingController : MonoBehaviour
 
         if (buildnum == 0)
         {
-            AlterRange.SetActive(true);
+            //AlterRange.SetActive(true);
         }
     }
 
