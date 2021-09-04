@@ -327,7 +327,7 @@ namespace WarriorAnims
             animator.SetFloat("Velocity Z", velocity.magnitude);
             transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
             
-            if(Vector3.Distance(transform.position, targetPos) <= 0.5f)
+            if(Vector3.Distance(transform.position, targetPos) <= 0.1f)
             {
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
                 animator.SetBool("Moving", false);

@@ -227,11 +227,8 @@ public class Kali : MonoBehaviour
         }
         transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
 
-<<<<<<< HEAD
+
         if (Vector3.Distance(transform.position, targetPos) <= 0.5f)
-=======
-        if (Vector3.Distance(transform.position, targetPos) <= 0.1f)
->>>>>>> parent of 2c55be85 (카일 애니메이션 수정중)
         {
             animator.SetBool("Moving", false);
         }
