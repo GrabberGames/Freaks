@@ -180,10 +180,7 @@ public class Kali : MonoBehaviour
     {
         CharacterMovement();
         ChooseAction();
-<<<<<<< Updated upstream
-=======
         //print(transform.position);
->>>>>>> Stashed changes
     }
     private void CharacterMovement()
     {
@@ -217,11 +214,7 @@ public class Kali : MonoBehaviour
         }
         transform.parent.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
 
-<<<<<<< Updated upstream
-        if (Vector3.Distance(transform.parent.position, targetPos) <= 0.1f)
-=======
         if (Vector3.Distance(transform.position, targetPos) <= 0.5f)
->>>>>>> Stashed changes
         {
             animator.SetBool("Moving", false);
         }

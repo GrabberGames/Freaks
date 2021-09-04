@@ -85,11 +85,8 @@ public class GameController : MonoBehaviour
 
         if (wave_min >= 2)
         {
-<<<<<<< Updated upstream
-=======
             GaugeBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, orignalSize);
             Debug.Log("!!");
->>>>>>> Stashed changes
             spawnController.FreaksSpawn();
             wave_min = 0;
             wave_sec = 0;
