@@ -27,17 +27,30 @@ public class Kali : MonoBehaviour
     private NavMeshAgent agent;
     private Rigidbody rigid;
 
+    public KailAni kailAni;
     private void Awake()
     {
-        animator = GetComponentInParent<Animator>();
-        agent = GetComponentInParent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
 
-        rigid = GetComponentInChildren<Rigidbody>();
+        rigid = GetComponent<Rigidbody>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     void Start()
     {
 
+    }
+    public void SetStartPos()
+    {
+        kailAni.SetStartPosition();
+    }
+    public void SetEndPos()
+    {
+        kailAni.SetEndPosition();
+    }
+    public void SetPos()
+    {
+        transform.position += kailAni.returnMove();
     }
     void ChooseAction()
     {
@@ -197,7 +210,7 @@ public class Kali : MonoBehaviour
 
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                targetPos = new Vector3(hit.point.x, transform.parent.position.y, hit.point.z);
+                targetPos = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(targetPos);
                 animator.SetBool("Moving", true);
             }
@@ -206,15 +219,19 @@ public class Kali : MonoBehaviour
     }
     void Move()
     {
-        var dir = new Vector3(agent.steeringTarget.x, transform.parent.position.y, agent.steeringTarget.z) - transform.parent.position;
+        var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
 
         if (dir != Vector3.zero)
         {
             TowardVec = dir;
         }
-        transform.parent.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
+        transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
 
+<<<<<<< HEAD
         if (Vector3.Distance(transform.position, targetPos) <= 0.5f)
+=======
+        if (Vector3.Distance(transform.position, targetPos) <= 0.1f)
+>>>>>>> parent of 2c55be85 (카일 애니메이션 수정중)
         {
             animator.SetBool("Moving", false);
         }
