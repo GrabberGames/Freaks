@@ -99,7 +99,8 @@ public class Kali : MonoBehaviour
     }
     IEnumerator Determination_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun attack3") && !animator.IsInTransition(0));
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun attack3") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
+        print("*");
         isAction = false;
         animator.SetBool("Skill", false);
         nowAnimationState = (int)AnimationState.L;
