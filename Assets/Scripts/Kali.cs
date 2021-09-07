@@ -40,6 +40,14 @@ public class Kali : MonoBehaviour
     {
 
     }
+    void OnAnimatorMove()
+    {
+        if (useRootMotion)
+        {
+            transform.rotation = animator.rootRotation;
+            transform.position += animator.deltaPosition;
+        }
+    }
     public void SetStartPos()
     {
         kailAni.SetStartPosition();
@@ -63,6 +71,7 @@ public class Kali : MonoBehaviour
         //Q
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            useRootMotion = true;
             Determination();
             nowAnimationState = (int)AnimationState.Q;
         }
@@ -70,6 +79,7 @@ public class Kali : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.W))
         {
+            useRootMotion = true;
             Atonement();
             nowAnimationState = (int)AnimationState.W;
         }
@@ -77,12 +87,14 @@ public class Kali : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.E))
         {
+            useRootMotion = true;
             Evation();
             nowAnimationState = (int)AnimationState.E;
         }
         //R
         else if (Input.GetKeyDown(KeyCode.R))
         {
+            useRootMotion = true;
             HorizonofMemory();
             nowAnimationState = (int)AnimationState.R;
         }
@@ -102,6 +114,7 @@ public class Kali : MonoBehaviour
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun attack3") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         print("*");
         isAction = false;
+        useRootMotion = false;
         animator.SetBool("Skill", false);
         nowAnimationState = (int)AnimationState.L;
     }
@@ -118,8 +131,9 @@ public class Kali : MonoBehaviour
     }
     IEnumerator Atonement_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("TwoGun Attack 05") && !animator.IsInTransition(0));
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("TwoGun Attack 05") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         isAction = false;
+        useRootMotion = false;
         animator.SetBool("Skill", false);
         nowAnimationState = (int)AnimationState.L;
     }
@@ -137,7 +151,7 @@ public class Kali : MonoBehaviour
     }
     IEnumerator Evation_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Jumbo Back Attack") && !animator.IsInTransition(0));
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Jumbo Back Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         useRootMotion = false;
         isAction = false;
         animator.SetBool("Skill", false);
@@ -156,8 +170,9 @@ public class Kali : MonoBehaviour
     }
     IEnumerator HorizonofMemory_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0));
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         isAction = false;
+        useRootMotion = false;
         animator.SetBool("Skill", false);
         nowAnimationState = (int)AnimationState.L;
     }
