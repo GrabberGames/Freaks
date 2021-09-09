@@ -13,7 +13,7 @@ public class AlterBullet : MonoBehaviour
     public GameObject enemy;
 
     private Vector3 enemyPos;
-    private float BulletSpeed = 8000f;
+    private float BulletSpeed = 8f;
     
     private int State = 0;
     // 1 = 투사체 날라가는 중
@@ -34,19 +34,20 @@ public class AlterBullet : MonoBehaviour
             FX_Alter_Hit.transform.rotation = Quaternion.LookRotation(enemyPos - FX_Alter_Hit.transform.position);
             FX_Alter_Hit.Play(true);
             State = 2;
+            StartCoroutine(DeleteThis());
         }
     }
     // Update is called once per frame
     void Update()
     {
-        enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1.5f, enemy.transform.position.z);
+        enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y , enemy.transform.position.z);
         switch(State)
         {
             case 1: //투사체 날라가는 중
                 FX_Alter_Projectile.transform.position = transform.position;
-                FX_Alter_Projectile.transform.rotation = Quaternion.LookRotation(enemyPos - FX_Alter_Projectile.transform.position);
+                FX_Alter_Projectile.transform.rotation = Quaternion.identity;
                 transform.position -= (transform.position - enemyPos) * BulletSpeed * Time.deltaTime;
-                transform.rotation = Quaternion.identity;
+                transform.rotation = Quaternion.LookRotation(enemyPos - transform.position);
                 break;
             case 2: // 투사체 피격
                 FX_Alter_Hit.transform.position = transform.position;
@@ -58,14 +59,17 @@ public class AlterBullet : MonoBehaviour
         FX_Alter_Projectile = Instantiate(FX_Alter_Projectile_Pre);
         FX_Alter_Projectile.transform.SetParent(this.gameObject.transform);
         FX_Alter_Projectile.transform.position = transform.position;
-        FX_Alter_Projectile.transform.rotation = Quaternion.LookRotation(enemyPos - FX_Alter_Projectile.transform.position);
+        FX_Alter_Projectile.transform.rotation = Quaternion.identity;
         FX_Alter_Projectile.Play(true);
+        for(int i = 0; i < 3; i++)
+        {
+            FX_Alter_Projectile.transform.GetChild(i).GetComponent<ParticleSystem>().Play(true);
+        }
         State = 1;
     }
     IEnumerator DeleteThis()
     {
-
-        yield return new WaitForSeconds(FX_Alter_Hit.main.startLifetimeMultiplier);
+        yield return new WaitForSeconds(0.05f);
         State = 3;
         Destroy(FX_Alter_Hit);
         Destroy(FX_Alter_Projectile);

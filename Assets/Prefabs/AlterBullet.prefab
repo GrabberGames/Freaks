@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 309017012989154234}
   - component: {fileID: 7162540831878058529}
   - component: {fileID: 6853206175738083950}
-  - component: {fileID: 3177131756479620973}
   - component: {fileID: 6009017645647060361}
   m_Layer: 0
   m_Name: AlterBullet
@@ -114,27 +113,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3177131756479620973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6618458519227913306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bc28a57ea1aebb47872730dcf57f39b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fx_blackTower:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  fx_blackTowerPre:
-  - {fileID: 4273757762055975717, guid: ab7b9b24012bbfe45b42923fc7855ad8, type: 3}
-  - {fileID: 2084545476819190321, guid: 49aac961c4ddfc8469847709910adcbe, type: 3}
-  - {fileID: 1890042663343123345, guid: 6031199c8b298b34f84154acbcc5bf72, type: 3}
-  BulletSpeed: 2
 --- !u!114 &6009017645647060361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,4 +129,12 @@ MonoBehaviour:
   FX_Alter_Projectile_Pre: {fileID: 2309894074307391341, guid: 859d062d2a4bc664d8d8a9dcec627bd1, type: 3}
   FX_Alter_Hit: {fileID: 0}
   FX_Alter_Hit_Pre: {fileID: 6560637152202493890, guid: b6b9eb0564cd6d841a660d29f512134f, type: 3}
+  FX_Alter_Projectiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   enemy: {fileID: 0}

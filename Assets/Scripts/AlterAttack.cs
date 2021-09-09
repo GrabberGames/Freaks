@@ -18,6 +18,7 @@ public class AlterAttack : MonoBehaviour
     {
         FindEnemy();
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
+        print(bulletSpawnPosition);
     }
 
 
