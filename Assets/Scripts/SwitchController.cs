@@ -18,9 +18,10 @@ public class SwitchController : MonoBehaviour
     private GameObject alter;
     private AlterController alterController;
     private BuildingPreview buildingPreview;
+    private SpawnController spawnController;
     Vector3 pos;
     private bool isTimerON;
-
+    private int isActivate = 3;
 
 
     // Start is called before the first frame update
@@ -30,6 +31,7 @@ public class SwitchController : MonoBehaviour
 
         alter = GameObject.Find("Alter");
         alterController = alter.GetComponent<AlterController>();
+        spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
         //targetRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
@@ -111,7 +113,8 @@ public class SwitchController : MonoBehaviour
         {
             pos = switchObjects[1].transform.position;
         }
-        
+        isActivate--;
+        print(isActivate);
 
         // switch ON FX
         pos.y = 0.5f; pos.x += 1.0f; // FX Pos. calibration
@@ -140,6 +143,11 @@ public class SwitchController : MonoBehaviour
             {
                 SwitchControl();
             }
+        }
+
+        if(isActivate == 0)
+        {
+            spawnController.SetIsRageActivate(true);
         }
     }
 }
