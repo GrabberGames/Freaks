@@ -28,7 +28,7 @@ MonoBehaviour:
   FX_Alter_Projectile: {fileID: 0}
   FX_Alter_Projectile_Pre: {fileID: 7560077816265688549}
   FX_Alter_Hit: {fileID: 0}
-  FX_Alter_Hit_Pre: {fileID: 7495172925390155730, guid: 667559ed336b8fb4bb06c75faf7019a2, type: 3}
+  FX_Alter_Hit_Pre: {fileID: 0}
   enemy: {fileID: 0}
 --- !u!1001 &8958061000011393835
 PrefabInstance:
@@ -37,10 +37,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 61485755481374250, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1000447046323749983, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -72,10 +68,6 @@ PrefabInstance:
     - target: {fileID: 1493972129667247820, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_Name
       value: FX_Alter_Projectile2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1493972129667247822, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-      propertyPath: playOnAwake
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493972129667247823, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_RootOrder
@@ -121,10 +113,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1966063987926822369, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3468548602763245354, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -153,21 +141,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3798157162895912270, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5605332884828325612, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6310664135463962012, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8037549792155431368, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-      propertyPath: playOnAwake
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8111085231311251989, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalRotation.w

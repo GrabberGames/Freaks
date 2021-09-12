@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class AlterBullet : MonoBehaviour
 {
+    public ParticleSystem FX_Alter_Projectile;
     public ParticleSystem FX_Alter_Projectile_Pre;
-    public GameObject FX_Alter_Hit;
-    public GameObject FX_Alter_Hit_Pre;
+    public ParticleSystem FX_Alter_Hit;
+    public ParticleSystem FX_Alter_Hit_Pre;
 
     [HideInInspector]
     public GameObject enemy;
 
     private Vector3 enemyPos;
-    private float BulletSpeed = 8f;
-    private bool One = false;
+    private float BulletSpeed = 1f;
+    
     private int State = 0;
     // 1 = 투사체 날라가는 중
     // 2 = 블랙프릭스랑 충돌
@@ -24,13 +25,11 @@ public class AlterBullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("BlackFreaks") && !One)
+        if (other.transform.CompareTag("BlackFreaks"))
         {
             State = 2;
             FX_Alter_Projectile_Pre.Play(false);
-            FX_Alter_Hit = Instantiate(FX_Alter_Hit_Pre, transform);
-            FX_Alter_Hit.AddComponent<Follow>().InitSetting(enemy);
-            One = !One;
+            FX_Alter_Hit_Pre.Play(true);
             StartCoroutine(DeleteThis());
         }
     }
@@ -48,9 +47,10 @@ public class AlterBullet : MonoBehaviour
     }
     IEnumerator DeleteThis()
     {
-        print(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
-        yield return new WaitForSeconds(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
+        yield return new WaitForSeconds(0.05f);
         State = 3;
+        Destroy(FX_Alter_Hit);
+        Destroy(FX_Alter_Projectile);
         Destroy(this.gameObject);
     }
 }
