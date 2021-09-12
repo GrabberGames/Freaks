@@ -25,10 +25,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261be94945ba7d64f8c90c99aa29242b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FX_Alter_Projectile: {fileID: 0}
   FX_Alter_Projectile_Pre: {fileID: 7560077816265688549}
   FX_Alter_Hit: {fileID: 0}
-  FX_Alter_Hit_Pre: {fileID: 0}
+  FX_Alter_Hit_Pre: {fileID: 3630178053069705049, guid: e02c9c93873aabb4dae90d3e827cb0e6, type: 3}
   enemy: {fileID: 0}
 --- !u!1001 &8958061000011393835
 PrefabInstance:
