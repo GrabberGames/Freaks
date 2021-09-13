@@ -28,7 +28,11 @@ public class Kali : MonoBehaviour
     private Rigidbody rigid;
 
     public KailAni kailAni;
+
+    public AudioSource[] audioSource;
+    private bool MovingAudioSoungIsActive = false;
     private void Awake()
+
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -107,6 +111,7 @@ public class Kali : MonoBehaviour
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 1);
+        audioSource[0].Play();
         StartCoroutine(Determination_Stop());
     }
     IEnumerator Determination_Stop()
@@ -127,6 +132,7 @@ public class Kali : MonoBehaviour
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 2);
+        audioSource[1].Play();
         StartCoroutine(Atonement_Stop());
     }
     IEnumerator Atonement_Stop()
@@ -147,6 +153,7 @@ public class Kali : MonoBehaviour
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 3);
+        audioSource[2].Play();
         StartCoroutine(Evation_Stop());
     }
     IEnumerator Evation_Stop()
@@ -166,10 +173,13 @@ public class Kali : MonoBehaviour
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 4);
+        audioSource[3].Play();
         StartCoroutine(HorizonofMemory_Stop());
     }
     IEnumerator HorizonofMemory_Stop()
     {
+        yield return new WaitForSeconds(0.2f);
+        audioSource[4].Play();
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         isAction = false;
         useRootMotion = false;
@@ -195,6 +205,7 @@ public class Kali : MonoBehaviour
                 animator.SetBool("NormalAttack", false);
                 AttackNum = 0;
             }
+            audioSource[5].Play();
             StartCoroutine(CoolTime(canNormalAttackTime, canNormalAttack));
         }
     }
@@ -209,7 +220,23 @@ public class Kali : MonoBehaviour
     {
         CharacterMovement();
         ChooseAction();
-        //print(transform.position);
+        if(animator.GetBool("Moving") && !MovingAudioSoungIsActive)
+        {
+            MovingAudioSoungIsActive = true;
+            StartCoroutine(MoveSound());
+        }
+        if(animator.GetBool("Moving") == false)
+        {
+            MovingAudioSoungIsActive = false;
+            StopCoroutine(MoveSound());
+        }
+    }
+    IEnumerator MoveSound()
+    {
+        audioSource[6].Play();
+        yield return new WaitForSeconds(2f);
+        MovingAudioSoungIsActive = false;
+
     }
     private void CharacterMovement()
     {
