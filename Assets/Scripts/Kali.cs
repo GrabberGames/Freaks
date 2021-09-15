@@ -31,6 +31,9 @@ public class Kali : MonoBehaviour
 
     public AudioSource[] audioSource;
     private bool MovingAudioSoungIsActive = false;
+
+    private GameObject R_Skill;
+    public GameObject R_Skill_Prefab;
     private void Awake()
 
     {
@@ -180,6 +183,8 @@ public class Kali : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         audioSource[4].Play();
+        R_Skill = Instantiate(R_Skill_Prefab);
+        R_Skill.GetComponent<Kail_R>().Trigger(transform.position);
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         isAction = false;
         useRootMotion = false;
