@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
 
 public class AlterController : Building, DamageService, HealthService
 {
     public GameObject whiteFreaksPref;
+    public TextMeshProUGUI wFreaksCount;
+    public TextMeshProUGUI mineCount;
 
     public float healthPoint = 2000.0f;
     public int essence = 1000;
@@ -18,10 +22,16 @@ public class AlterController : Building, DamageService, HealthService
     private int busyWhiteF = 0;
 
 
+
     // Update is called once per frame
     void Update()
     {
         newMiningWorkshopChk();
+
+        if (whiteFreaks - busyWhiteF >= 0)
+        {
+            wFreaksCount.text = string.Format("{0:D2} / {1:D2}", busyWhiteF, whiteFreaks);
+        }
     }
 
 
