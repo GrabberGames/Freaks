@@ -53,6 +53,7 @@ public class Kali : MonoBehaviour
         {
             transform.rotation = animator.rootRotation;
             transform.position += animator.deltaPosition;
+            TowardVec = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         }
     }
     public void SetStartPos()
@@ -114,11 +115,12 @@ public class Kali : MonoBehaviour
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 1);
-        audioSource[0].Play();
         StartCoroutine(Determination_Stop());
     }
     IEnumerator Determination_Stop()
     {
+        yield return new WaitForSeconds(0.2f);
+        audioSource[0].Play();
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun attack3") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         print("*");
         isAction = false;
@@ -135,11 +137,12 @@ public class Kali : MonoBehaviour
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 2);
-        audioSource[1].Play();
         StartCoroutine(Atonement_Stop());
     }
     IEnumerator Atonement_Stop()
     {
+        yield return new WaitForSeconds(0.2f);
+        audioSource[1].Play();
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("TwoGun Attack 05") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         isAction = false;
         useRootMotion = false;
@@ -181,8 +184,9 @@ public class Kali : MonoBehaviour
     }
     IEnumerator HorizonofMemory_Stop()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.816f);
         audioSource[4].Play();
+        yield return new WaitForSeconds(1f);
         R_Skill = Instantiate(R_Skill_Prefab);
         R_Skill.GetComponent<Kail_R>().Trigger(transform.position);
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
