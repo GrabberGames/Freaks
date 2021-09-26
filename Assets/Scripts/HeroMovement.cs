@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace WarriorAnims
 {
-    public class HeroMovement : SuperStateMachine
+    public class HeroMovement : SuperStateMachine, IStatus
     {
         private enum AnimationState
         {
@@ -33,7 +33,6 @@ namespace WarriorAnims
         private Camera mainCamera;
         private NavMeshAgent agent;
         private WaronSkillManage waronSkillManage;
-        private CharacterStat characterStat = new CharacterStat();
 
         private Vector3 targetPos;
         private Vector3 velocity;
@@ -44,12 +43,28 @@ namespace WarriorAnims
         private bool isAction = false;
         private int nowAnimationState = 0;
 
+        private Stat stat = new Stat();
+        protected override void Init()
+        {
+            stat.tag = "player";
+            stat.attack = 10;
+            stat.health = 100;
+        }
 
+        public float GetHealth()
+        {
+            return stat.health;
+        }
+
+        public float GetPrice()
+        {
+            return stat.price;
+        }
         private void Awake()
         {
             TowardVec = transform.position;
             targetPos = transform.position;
-            SetCharacterStat();
+
             animator = GetComponentInChildren<Animator>();
 
             if (animator == null)
@@ -78,16 +93,10 @@ namespace WarriorAnims
             warriorTiming.heroMovement = this;
             agent.updateRotation = false;
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
-        }
 
-
-        public override void SetCharacterStat()
-        {
-            characterStat.Hp = 400;
-            characterStat.Mp = 100;
-            characterStat.MoveSpeed = 10;
-            characterStat.AttackSpeed = 1;
-            characterStat.Armor = 10;
+            Init();
+            print(stat.health);
+            print(stat.attack);
         }
 
 
@@ -105,7 +114,7 @@ namespace WarriorAnims
                 return;
             }
                 
-            if (characterStat.Hp <= 0)
+            if (stat.health <= 0)
             {
                 StartCoroutine("Die");
             }
@@ -271,7 +280,7 @@ namespace WarriorAnims
             animator.SetInteger("TriggerNumber", 7);
             animator.SetTrigger("Trigger");
             animator.SetBool("Damaged", false);
-            characterStat.Hp = 400;
+            stat.health = 400;
             isAction = false;
             yield return null;
         }

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class Kali : MonoBehaviour
-{
+public class Kali : StatusClass, IStatus
+{    
     private enum AnimationState
     {
         L,
@@ -34,18 +34,38 @@ public class Kali : MonoBehaviour
 
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
-    private void Awake()
 
+    private Stat stat = new Stat();
+    protected override void Init()
+    {
+        stat.tag = "player";
+        stat.attack = 80;
+        stat.health = 200;
+    }
+    public float GetHealth()
+    {
+        return stat.health;
+    }
+    public float GetPrice()
+    {
+        return stat.price;
+    }
+
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
         rigid = GetComponent<Rigidbody>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+
     }
     void Start()
     {
+        Init();
 
+        print(stat.health);
+        print(stat.attack);
     }
     void OnAnimatorMove()
     {
@@ -55,18 +75,6 @@ public class Kali : MonoBehaviour
             transform.position += animator.deltaPosition;
             TowardVec = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         }
-    }
-    public void SetStartPos()
-    {
-        kailAni.SetStartPosition();
-    }
-    public void SetEndPos()
-    {
-        kailAni.SetEndPosition();
-    }
-    public void SetPos()
-    {
-        transform.position += kailAni.returnMove();
     }
     void ChooseAction()
     {

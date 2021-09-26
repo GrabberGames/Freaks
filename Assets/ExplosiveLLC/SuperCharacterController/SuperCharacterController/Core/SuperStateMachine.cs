@@ -9,18 +9,8 @@ using System.Collections.Generic;
 /// 
 
 
-public class SuperStateMachine : MonoBehaviour {
+public class SuperStateMachine : StatusClass {
 
-    protected class CharacterStat
-    {
-        public int Hp;
-        public int Mp;
-        public int MoveSpeed;
-        public int AttackSpeed;
-        public int Armor;
-    }
-
-    public virtual void SetCharacterStat() { }
     protected float timeEnteredState;
 
     public class State
