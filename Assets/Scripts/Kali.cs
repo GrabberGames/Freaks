@@ -63,9 +63,6 @@ public class Kali : StatusClass, IStatus
     void Start()
     {
         Init();
-
-        print(stat.health);
-        print(stat.attack);
     }
     void OnAnimatorMove()
     {

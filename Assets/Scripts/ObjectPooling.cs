@@ -4,44 +4,61 @@ using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
 {
-    public static ObjectPooling Instance;
+    public static ObjectPooling Instance = null;
 
     [SerializeField]
-    private int WhiteFreaksCountLimit;                          //화이트 프릭스 인구수 제한
+    private int WhiteFreaksCountLimit = 100;                          //화이트 프릭스 인구수 제한
     [SerializeField]
-    private GameObject WhiteFreaksObjectPrefab;       //화이트 프릭스 프리팹
-    private Queue<GameObject> WhiteFreaksQueue;    //화이트 프릭스 오브젝트 큐
+    private GameObject WhiteFreaksObject;       //화이트 프릭스 프리팹
+    private Queue<GameObject> WhiteFreaksQueue = new Queue<GameObject>();    //화이트 프릭스 오브젝트 큐
 
     [SerializeField]
-    private int BlackFreaksCountLimit;                          // 블랙 프릭스 인구수 제한
+    private int BlackFreaksCountLimit = 100;                          // 블랙 프릭스 인구수 제한
     [SerializeField]
-    private GameObject BlackFreaksObjectPrefab;       //블랙 프릭스 프리팹
-    private Queue<GameObject> BlackFreaksQueue;    //블랙 프릭스 오브젝트 큐
+    private GameObject BlackFreaksObject;       //블랙 프릭스 프리팹
+    private Queue<GameObject> BlackFreaksQueue = new Queue<GameObject>();    //블랙 프릭스 오브젝트 큐
 
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != null)
+            Destroy(this.gameObject);
+
         Initialize();
     }
     private void Initialize()                                             //초기 설정
     { 
         for (int i = 0; i < WhiteFreaksCountLimit; i++)     //화이트 프릭스 인구수 제한 만큼 Instantiate로 생성해서 Queue에 Enqueue
         {
-            WhiteFreaksQueue.Enqueue(CreateNewObject(WhiteFreaksObjectPrefab)); 
+            WhiteFreaksQueue.Enqueue(CreateNewObject("WhiteFreaks")); 
         }
         for (int i = 0; i < BlackFreaksCountLimit; i++)     //블랙 프릭스 인구수 제한 만큼 Instantiate로 생성해서 Queue에 Enqueue
         {
-            BlackFreaksQueue.Enqueue(CreateNewObject(BlackFreaksObjectPrefab));
+            BlackFreaksQueue.Enqueue(CreateNewObject("BlackFreaks"));
         }
     }
-    private GameObject CreateNewObject(GameObject objectName)  //Instatiate로 오브젝트 생성
+    private GameObject CreateNewObject(string Obj)  //Instatiate로 오브젝트 생성
     {
-        var newObj = Instantiate(objectName);   //objectName에 해당하는 Prefab을 Instantiate로 생성 후 return
-        newObj.SetActive(false);                         //해당 Object를 SetActive(false)로 설정.
-        return newObj; 
+        GameObject newObj;
+        switch (Obj)
+        {
+            case "WhiteFreaks":
+                newObj = Instantiate(WhiteFreaksObject);
+                //newObj.gameObject.transform.SetParent(this.gameObject.transform);
+                newObj.SetActive(false);
+                return newObj;
+            case "BlackFreaks":
+                newObj = Instantiate(BlackFreaksObject);
+                newObj.SetActive(false);
+                return newObj;
+            default:
+                break;
+        }
+        return null;
     }
-    public static GameObject GetObject(string objectName)               //해당 오브젝트를 사용할 스크립트에서 호출하면 됨
+    public GameObject GetObject(string objectName)               //해당 오브젝트를 사용할 스크립트에서 호출하면 됨
     { 
         switch(objectName)
         {
@@ -49,6 +66,7 @@ public class ObjectPooling : MonoBehaviour
                 if(Instance.WhiteFreaksQueue.Count > 0)                           //사용할 수 있는 화이트프릭스가 있으면
                 {
                     var obj = Instance.WhiteFreaksQueue.Dequeue();           //Dequeue하여 리턴해줌
+                    obj.transform.position = GameObject.Find("Alter").transform.position;
                     obj.SetActive(true);
                     return obj;
                 }
@@ -72,7 +90,7 @@ public class ObjectPooling : MonoBehaviour
                 return null;
         }
     }
-    public static void ReturnObject(GameObject obj)                     //파괴된 | 사라진 오브젝트 반환 & 사용할 스크립트에서 호출하면 됨.
+    public void ReturnObject(GameObject obj)                     //파괴된 | 사라진 오브젝트 반환 & 사용할 스크립트에서 호출하면 됨.
     { 
         obj.gameObject.SetActive(false);                                          //해당 오브젝트 OFF
 

@@ -95,8 +95,6 @@ namespace WarriorAnims
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
 
             Init();
-            print(stat.health);
-            print(stat.attack);
         }
 
 
