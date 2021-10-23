@@ -58,7 +58,6 @@ public class Kali : StatusClass, IStatus
 
         rigid = GetComponent<Rigidbody>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-
     }
     void Start()
     {
@@ -120,14 +119,10 @@ public class Kali : StatusClass, IStatus
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 1);
-        StartCoroutine(Determination_Stop());
-    }
-    IEnumerator Determination_Stop()
-    {
-        yield return new WaitForSeconds(0.2f);
         audioSource[0].Play();
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun attack3") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
-        print("*");
+    }
+    public void Q_Stop()
+    {
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
@@ -142,13 +137,10 @@ public class Kali : StatusClass, IStatus
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 2);
-        StartCoroutine(Atonement_Stop());
-    }
-    IEnumerator Atonement_Stop()
-    {
-        yield return new WaitForSeconds(0.2f);
         audioSource[1].Play();
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("TwoGun Attack 05") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
+    }
+    public void W_Stop()
+    {
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
@@ -165,11 +157,9 @@ public class Kali : StatusClass, IStatus
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 3);
         audioSource[2].Play();
-        StartCoroutine(Evation_Stop());
     }
-    IEnumerator Evation_Stop()
+    public void E_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Jumbo Back Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         useRootMotion = false;
         isAction = false;
         animator.SetBool("Skill", false);
@@ -185,16 +175,18 @@ public class Kali : StatusClass, IStatus
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 4);
         audioSource[3].Play();
-        StartCoroutine(HorizonofMemory_Stop());
     }
-    IEnumerator HorizonofMemory_Stop()
+    public void R_Sound()
     {
-        yield return new WaitForSeconds(0.816f);
         audioSource[4].Play();
-        yield return new WaitForSeconds(1f);
+    }
+    public void R_Instantiate()
+    {
         R_Skill = Instantiate(R_Skill_Prefab);
         R_Skill.GetComponent<Kail_R>().Trigger(transform.position);
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
+    }
+    public void R_Stop()
+    {
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
@@ -232,6 +224,7 @@ public class Kali : StatusClass, IStatus
     }
     void Update()
     {
+        print(isAction);
         CharacterMovement();
         ChooseAction();
         if(animator.GetBool("Moving") && !MovingAudioSoungIsActive)
