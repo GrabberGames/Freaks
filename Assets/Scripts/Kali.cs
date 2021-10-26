@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class Kali : MonoBehaviour
-{
+public class Kali : StatusClass, IStatus
+{    
     private enum AnimationState
     {
         L,
@@ -31,8 +31,27 @@ public class Kali : MonoBehaviour
 
     public AudioSource[] audioSource;
     private bool MovingAudioSoungIsActive = false;
-    private void Awake()
 
+    private GameObject R_Skill;
+    public GameObject R_Skill_Prefab;
+
+    private Stat stat = new Stat();
+    protected override void Init()
+    {
+        stat.tag = "player";
+        stat.attack = 80;
+        stat.health = 200;
+    }
+    public float GetHealth()
+    {
+        return stat.health;
+    }
+    public float GetPrice()
+    {
+        return stat.price;
+    }
+
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -42,7 +61,7 @@ public class Kali : MonoBehaviour
     }
     void Start()
     {
-
+        Init();
     }
     void OnAnimatorMove()
     {
@@ -50,19 +69,8 @@ public class Kali : MonoBehaviour
         {
             transform.rotation = animator.rootRotation;
             transform.position += animator.deltaPosition;
+            TowardVec = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         }
-    }
-    public void SetStartPos()
-    {
-        kailAni.SetStartPosition();
-    }
-    public void SetEndPos()
-    {
-        kailAni.SetEndPosition();
-    }
-    public void SetPos()
-    {
-        transform.position += kailAni.returnMove();
     }
     void ChooseAction()
     {
@@ -112,12 +120,9 @@ public class Kali : MonoBehaviour
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 1);
         audioSource[0].Play();
-        StartCoroutine(Determination_Stop());
     }
-    IEnumerator Determination_Stop()
+    public void Q_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun attack3") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
-        print("*");
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
@@ -133,11 +138,9 @@ public class Kali : MonoBehaviour
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 2);
         audioSource[1].Play();
-        StartCoroutine(Atonement_Stop());
     }
-    IEnumerator Atonement_Stop()
+    public void W_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("TwoGun Attack 05") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
@@ -154,11 +157,9 @@ public class Kali : MonoBehaviour
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 3);
         audioSource[2].Play();
-        StartCoroutine(Evation_Stop());
     }
-    IEnumerator Evation_Stop()
+    public void E_Stop()
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Jumbo Back Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
         useRootMotion = false;
         isAction = false;
         animator.SetBool("Skill", false);
@@ -174,13 +175,18 @@ public class Kali : MonoBehaviour
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 4);
         audioSource[3].Play();
-        StartCoroutine(HorizonofMemory_Stop());
     }
-    IEnumerator HorizonofMemory_Stop()
+    public void R_Sound()
     {
-        yield return new WaitForSeconds(0.2f);
         audioSource[4].Play();
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Gun Air Attack") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
+    }
+    public void R_Instantiate()
+    {
+        R_Skill = Instantiate(R_Skill_Prefab);
+        R_Skill.GetComponent<Kail_R>().Trigger(transform.position);
+    }
+    public void R_Stop()
+    {
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
@@ -218,6 +224,7 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
+        print(isAction);
         CharacterMovement();
         ChooseAction();
         if(animator.GetBool("Moving") && !MovingAudioSoungIsActive)

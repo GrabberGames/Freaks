@@ -49,7 +49,7 @@ public class AlterBullet : MonoBehaviour
     }
     IEnumerator DeleteThis()
     {
-        print(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
+        //print(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
         yield return new WaitForSeconds(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
         State = 3;
         Destroy(this.gameObject);

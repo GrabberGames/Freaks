@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
 
 
 
+
     private void Start()
     {
         spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
