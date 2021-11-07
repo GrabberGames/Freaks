@@ -1,10 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
+using System.IO;
+
+class StatInfo
+{
+    public string m_tag{ get; set; }
+    public float m_attack{ get; set; }
+    public float m_health{ get; set; }
+    public float m_attack_speed{ get; set; }
+    public float m_move_speed{ get; set; }
+    public float m_range{ get; set; }
+    public float m_armor { get; set; }
+    public Dictionary<string, StatInfo> Json { get; set; }
+    /*
+    public StatInfo(string tag, float attack, float health, float attack_speed, float move_speed, float range, float armor)
+    {
+        m_tag = tag;
+        m_attack = attack;
+        m_health = health;
+        m_attack_speed = attack_speed;
+        m_move_speed = move_speed;
+        m_range = range;
+        m_armor = armor;
+    }*/
+}
 
 public class ObjectPooling : MonoBehaviour
 {
     public static ObjectPooling Instance = null;
+
+    Dictionary<string, StatInfo> data = new Dictionary<string, StatInfo>();
+    public void _load()
+    {
+        string jdata = File.ReadAllText(Application.dataPath + "/JsonDotNet/StatusInfo.Json");
+        data = JsonConvert.DeserializeObject<StatInfo>(jdata).Json;
+
+        var enumData = data.GetEnumerator();
+
+        while(enumData.MoveNext())
+        {
+            Debug.Log(enumData.Current.Key);
+        }
+
+    }
 
     [SerializeField]
     private int WhiteFreaksCountLimit = 100;                          //화이트 프릭스 인구수 제한
@@ -25,7 +65,7 @@ public class ObjectPooling : MonoBehaviour
             Instance = this;
         else if (Instance != null)
             Destroy(this.gameObject);
-
+        _load();
         Initialize();
     }
     private void Initialize()                                             //초기 설정
@@ -108,7 +148,4 @@ public class ObjectPooling : MonoBehaviour
                 break;
         }
     }
-
-
-
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class Kali : StatusClass, IStatus
+public class Kali : MonoBehaviour
 {    
     private enum AnimationState
     {
@@ -35,21 +35,7 @@ public class Kali : StatusClass, IStatus
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
 
-    private Stat stat = new Stat();
-    protected override void Init()
-    {
-        stat.tag = "player";
-        stat.attack = 80;
-        stat.health = 200;
-    }
-    public float GetHealth()
-    {
-        return stat.health;
-    }
-    public float GetPrice()
-    {
-        return stat.price;
-    }
+ 
 
     private void Awake()
     {
@@ -61,7 +47,7 @@ public class Kali : StatusClass, IStatus
     }
     void Start()
     {
-        Init();
+
     }
     void OnAnimatorMove()
     {
@@ -83,7 +69,7 @@ public class Kali : StatusClass, IStatus
         //Q
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            useRootMotion = true;
+            useRootMotion = true; ChangRotate();
             Determination();
             nowAnimationState = (int)AnimationState.Q;
         }
@@ -91,7 +77,7 @@ public class Kali : StatusClass, IStatus
 
         else if (Input.GetKeyDown(KeyCode.W))
         {
-            useRootMotion = true;
+            useRootMotion = true; ChangRotate();
             Atonement();
             nowAnimationState = (int)AnimationState.W;
         }
@@ -99,16 +85,26 @@ public class Kali : StatusClass, IStatus
 
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            useRootMotion = true;
+            useRootMotion = true; ChangRotate();
             Evation();
             nowAnimationState = (int)AnimationState.E;
         }
         //R
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            useRootMotion = true;
+            useRootMotion = true; ChangRotate();
             HorizonofMemory();
             nowAnimationState = (int)AnimationState.R;
+        }
+    }
+    void ChangRotate()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            TowardVec = hit.point;
         }
     }
     #region Q_Skill
@@ -224,7 +220,6 @@ public class Kali : StatusClass, IStatus
     }
     void Update()
     {
-        print(isAction);
         CharacterMovement();
         ChooseAction();
         if(animator.GetBool("Moving") && !MovingAudioSoungIsActive)
@@ -247,6 +242,7 @@ public class Kali : StatusClass, IStatus
     }
     private void CharacterMovement()
     {
+        transform.LookAt(TowardVec);
         //현재 다른 동작 중이라면 움직임을 제한시킵니다.
         if (isAction)
         {
@@ -269,14 +265,7 @@ public class Kali : StatusClass, IStatus
     }
     void Move()
     {
-        var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
-
-        if (dir != Vector3.zero)
-        {
-            TowardVec = dir;
-        }
-        transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
-
+        TowardVec = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
 
         if (Vector3.Distance(transform.position, targetPos) <= 0.5f)
         {
