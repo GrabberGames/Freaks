@@ -1,145 +1,129 @@
 {
   "Json": {
     "alter": {
-      "tag": "player",
       "attack": 50,
       "hp": 2000,
-      "as": 0.6,
+      "ats": 0.6,
       "ms": 0,
       "rg": 3,
       "am": 0
     },
     "whitefreaks": {
-      "tag": "player",
       "attack": 0,
       "hp": 50,
-      "as": 0,
+      "ats": 0,
       "ms": 10,
       "rg": 0,
       "am": 0
     },
     "whitetower": {
-      "tag": "player",
       "attack": 70,
       "hp": 400,
-      "as": 0.3,
+      "ats": 0.3,
       "ms": 0,
       "rg": 4,
       "am": 0
     },
     "workshop": {
-      "tag": "player",
       "attack": 0,
       "hp": 10,
-      "as": 0,
+      "ats": 0,
       "ms": 0,
       "rg": 0,
       "am": 0
     },
     "blackfreaks": {
-      "tag": "enemy",
       "attack": 20,
       "hp": 200,
-      "as": 0.7,
+      "ats": 0.7,
       "ms": 10,
       "rg": 1.25,
       "am": 0
     },
-    "blacktower" : {
-      "tag": "enemy",
+    "blacktower": {
       "attack": 100,
       "hp": 1500,
-      "as": 0.3,
+      "ats": 0.3,
       "ms": 0,
       "rg": 4,
       "am": 100
     },
     "switchoff": {
-      "tag": "enemy",
       "attack": 0,
       "hp": 987654321,
-      "as": 0,
+      "ats": 0,
       "ms": 0,
       "rg": 0,
       "am": 0
     },
     "switchon": {
-      "tag": "neutrality",
       "attack": 0,
       "hp": 987654321,
-      "as": 0,
+      "ats": 0,
       "ms": 0,
       "rg": 0,
       "am": 0
     },
     "essenceS": {
-      "tag": "neutrality",
       "attack": 0,
       "hp": 987654321,
-      "as": 0,
+      "ats": 0,
       "ms": 0,
       "rg": 0,
       "am": 0
     },
     "essenceM": {
-      "tag": "neutrality",
       "attack": 0,
       "hp": 987654321,
-      "as": 0,
+      "ats": 0,
       "ms": 0,
       "rg": 0,
       "am": 0
     },
     "essenceL": {
-      "tag": "neutrality",
       "attack": 0,
       "hp": 987654321,
-      "as": 0,
+      "ats": 0,
       "ms": 0,
       "rg": 0,
       "am": 0
     },
     "warron": {
-      "tag": "Hero",
       "attack": 40,
       "hp": 375,
-      "as": 0.6,
+      "ats": 0.6,
       "ms": 8,
       "rg": 1.25,
       "am": 20
     },
     "kyle": {
-      "tag": "Hero",
       "attack": 30,
       "hp": 350,
-      "as": 0.5,
+      "ats": 0.5,
       "ms": 7,
       "rg": 2.5,
       "am": 10
     },
     "rowenn": {
-      "tag": "Hero",
       "attack": 20,
       "hp": 325,
-      "as": 0.5,
+      "ats": 0.5,
       "ms": 7,
       "rg": 2.2,
       "am": 0
     },
     "arcanna": {
-      "tag": "Hero",
       "attack": 35,
       "hp": 350,
-      "as": 0.6,
+      "ats": 0.6,
       "ms": 8,
       "rg": 1.5,
       "am": 10
     },
     "louis": {
-      "tag": "Hero",
       "attack": 20,
       "hp": 325,
-      "as": 0.5,
+      "ats": 0.5,
       "ms": 7,
       "rg": 2.2,
       "am": 0

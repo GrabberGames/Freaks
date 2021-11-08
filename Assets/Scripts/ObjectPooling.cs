@@ -4,46 +4,56 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 
-class StatInfo
-{
-    public string m_tag{ get; set; }
-    public float m_attack{ get; set; }
-    public float m_health{ get; set; }
-    public float m_attack_speed{ get; set; }
-    public float m_move_speed{ get; set; }
-    public float m_range{ get; set; }
-    public float m_armor { get; set; }
-    public Dictionary<string, StatInfo> Json { get; set; }
-    /*
-    public StatInfo(string tag, float attack, float health, float attack_speed, float move_speed, float range, float armor)
-    {
-        m_tag = tag;
-        m_attack = attack;
-        m_health = health;
-        m_attack_speed = attack_speed;
-        m_move_speed = move_speed;
-        m_range = range;
-        m_armor = armor;
-    }*/
-}
-
 public class ObjectPooling : MonoBehaviour
 {
-    public static ObjectPooling Instance = null;
+    public static ObjectPooling instance = null;
+    static ObjectPooling Instance
+    {
+        get
+        {
+            Init();
+            return instance;
+        }
+    }
+    static void Init()
+    {
+        if (instance == null)
+        {
+            GameObject ob_go = GameObject.Find("ObjectPooling");
 
-    Dictionary<string, StatInfo> data = new Dictionary<string, StatInfo>();
+            if(ob_go == null)
+            {
+                ob_go = new GameObject { name = "ObjectPooling" };
+                ob_go.AddComponent<ObjectPooling>();
+            }
+            DontDestroyOnLoad(ob_go);
+            instance = ob_go.GetComponent<ObjectPooling>();
+        }
+    }
+
+    Dictionary<string, Stat> data = new Dictionary<string, Stat>();
     public void _load()
     {
         string jdata = File.ReadAllText(Application.dataPath + "/JsonDotNet/StatusInfo.Json");
-        data = JsonConvert.DeserializeObject<StatInfo>(jdata).Json;
+        data = JsonConvert.DeserializeObject<Stat>(jdata).Json;
+    }
+    public Stat Get_Stat(string _objName)
+    {
+        if (data.Count == 0)
+            _load();
 
         var enumData = data.GetEnumerator();
 
-        while(enumData.MoveNext())
+        while (enumData.MoveNext())
         {
-            Debug.Log(enumData.Current.Key);
+            print(enumData.Current.Key);
+            if(enumData.Current.Key == _objName)
+            {
+                print(enumData.Current.Value.attack);
+                return enumData.Current.Value;
+            }
         }
-
+        return null;
     }
 
     [SerializeField]
@@ -61,10 +71,7 @@ public class ObjectPooling : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != null)
-            Destroy(this.gameObject);
+        Init();
         _load();
         Initialize();
     }
