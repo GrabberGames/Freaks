@@ -37,7 +37,6 @@ public class WhiteFreaksController : MonoBehaviour
 
         navMeshAgent.SetDestination(miningWorkshop.transform.position);
         isMining = true;
-        print("SetMining");
     }
 
 
