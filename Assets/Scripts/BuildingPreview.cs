@@ -15,7 +15,6 @@ public class BuildingPreview : MonoBehaviour
     [SerializeField] private int me;
 
     private bool areyouSure = false;
-    private bool cantbuild;
     private int distance = 0;
 
     private List<Collider> colliders = new List<Collider>();
@@ -33,9 +32,10 @@ public class BuildingPreview : MonoBehaviour
 
     private void Update()
     {
-        if (me == 0)    //알터의 경우
+        if (me == (int) BuildingNum.Alter)
         { 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
@@ -43,19 +43,26 @@ public class BuildingPreview : MonoBehaviour
                 distance = (int)(Vector3.Distance(GameObject.Find("Alter").transform.position, hit.point));
             }
         }
-        if(me == 2)     //워크샵의 경우
+
+        if(me == (int) BuildingNum.Workshop)
         {
+            // 건설 가능 지역 머티리얼 표현
             SetMaterial(areyouSure);
         }
     }
 
 
+    /// <summary>
+    /// 겹쳐 있는 오브젝트 리턴
+    /// </summary>
+    /// <returns></returns>
     public GameObject GetBelowObject()
     {
         return belowObject;
     }
 
-
+    // 각 건물의 건설 조건에 따른 건설 가능/불가 설정
+    #region OnTriggerEnter/Exit
     private void OnTriggerEnter(Collider other)
     {
         parent = other.transform.parent;
@@ -112,8 +119,12 @@ public class BuildingPreview : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
+    /// <summary>
+    /// 건설 가능 여부 리턴
+    /// </summary>
+    /// <returns></returns>
     public bool IsBuildable()
     {
         switch (me)
@@ -144,6 +155,10 @@ public class BuildingPreview : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 머티리얼 초기화
+    /// </summary>
+    /// <returns></returns>
     public void Init(int n)
     {
         me = n;
