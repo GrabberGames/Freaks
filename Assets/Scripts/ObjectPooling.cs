@@ -50,7 +50,8 @@ public class ObjectPooling : MonoBehaviour
                 newObj.SetActive(false);
                 return newObj;
             case "BlackFreaks":
-                newObj = Instantiate(BlackFreaksObject);
+                Vector3 spawnPos = new Vector3(0, 0, 0);
+                newObj = Instantiate(BlackFreaksObject, spawnPos, Quaternion.identity);
                 newObj.SetActive(false);
                 return newObj;
             default:
