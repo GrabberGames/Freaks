@@ -44,7 +44,7 @@ public class AlterController : Building, DamageService, HealthService
     public void GoBuild(GameObject building)
     {
         busyWhiteF++;
-        GameObject whiteFreaks = ObjectPooling.Instance.GetObject("WhiteFreaks");
+        GameObject whiteFreaks = ObjectPooling.instance.GetObject("WhiteFreaks");
         whiteFreaks.transform.position = transform.position;
         //GameObject whiteFreaks = Instantiate(whiteFreaksPref, transform.position, transform.rotation);
         WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();

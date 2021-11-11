@@ -17,16 +17,19 @@ public class WhiteFreaksController : MonoBehaviour
 
     private Vector3 alterPosition;
 
-
+    Stat _stat = new Stat();
     // Start is called before the first frame update
     void Start()
     {
+        _stat = ObjectPooling.instance.Get_Stat("whitefreaks");
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         alter = GameObject.Find("Alter");
         alterController = alter.GetComponent<AlterController>();
         alterPosition = alter.transform.position;
-    }  
-
+        print(_stat.attack);
+        print(_stat.hp);
+        print(_stat.ats);
+    }
 
     public void SetMiningWorkShop()
     {
@@ -34,7 +37,6 @@ public class WhiteFreaksController : MonoBehaviour
 
         navMeshAgent.SetDestination(miningWorkshop.transform.position);
         isMining = true;
-        print("SetMining");
     }
 
 

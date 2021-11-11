@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace WarriorAnims
 {
-    public class HeroMovement : SuperStateMachine, IStatus
+    public class HeroMovement : SuperStateMachine
     {
         private enum AnimationState
         {
@@ -42,24 +42,7 @@ namespace WarriorAnims
         private bool SkillStop = false;
         private bool isAction = false;
         private int nowAnimationState = 0;
-
-        private Stat stat = new Stat();
-        protected override void Init()
-        {
-            stat.tag = "player";
-            stat.attack = 10;
-            stat.health = 100;
-        }
-
-        public float GetHealth()
-        {
-            return stat.health;
-        }
-
-        public float GetPrice()
-        {
-            return stat.price;
-        }
+ 
         private void Awake()
         {
             TowardVec = transform.position;
@@ -94,7 +77,6 @@ namespace WarriorAnims
             agent.updateRotation = false;
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
 
-            Init();
         }
 
 
@@ -110,11 +92,6 @@ namespace WarriorAnims
             if (isAction)
             {
                 return;
-            }
-                
-            if (stat.health <= 0)
-            {
-                StartCoroutine("Die");
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
@@ -278,7 +255,6 @@ namespace WarriorAnims
             animator.SetInteger("TriggerNumber", 7);
             animator.SetTrigger("Trigger");
             animator.SetBool("Damaged", false);
-            stat.health = 400;
             isAction = false;
             yield return null;
         }

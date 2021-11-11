@@ -23,7 +23,7 @@ public class SpawnController: MonoBehaviour
         
         while (cm_num > 0)  // close range minion spawn
         {
-            var obj = ObjectPooling.Instance.GetObject("BlackFreaks");
+            var obj = ObjectPooling.instance.GetObject("BlackFreaks");
             obj.transform.position = SpawnPoint[randomSpawn].transform.position;
             //Instantiate(Freakses[0], SpawnPoint[randomSpawn].transform.position, Quaternion.identity);
             if (isRage)

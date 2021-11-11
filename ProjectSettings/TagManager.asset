@@ -14,6 +14,10 @@ TagManager:
   - Building
   - BlackFreaks
   - Ground
+  - player
+  - enemy
+  - neutrality
+  - Hero
   layers:
   - Default
   - TransparentFX

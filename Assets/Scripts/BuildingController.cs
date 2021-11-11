@@ -13,7 +13,6 @@ public class BuildingController : MonoBehaviour
         Workshop
     }
 
-
     public Material[] materials;
     public GameObject buttens;
 
@@ -36,16 +35,15 @@ public class BuildingController : MonoBehaviour
 
     private Vector3 hittedPoint;
 
-
     private void Start()
     {
         alterController = GameObject.Find("Alter").GetComponent<AlterController>();
     }
 
 
-    // Update is called once per frame
     void Update()
     {
+        // 알터가 클릭이 됐을 시 버튼 UI 생성
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -60,10 +58,12 @@ public class BuildingController : MonoBehaviour
             }
         }
 
+        // 건설 모드 진입 시
         if(isPreviewActivate)
         {
             ViewPreview();
 
+            // 건설 가능할 때 클릭이 인풋되면 건설
             if (building.GetComponent<BuildingPreview>().IsBuildable() && Input.GetMouseButtonDown(0))
             {
                 // FX Start
@@ -91,7 +91,6 @@ public class BuildingController : MonoBehaviour
                 }
 
                 Build();
-                Debug.Log("Builded");
 
                 if (Physics.Raycast(ray, out hit))  // smoke FX 
                 {
@@ -145,7 +144,9 @@ public class BuildingController : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// 건물 건설
+    /// </summary>
     private void Build()
     {
         isPreviewActivate = false;
@@ -172,17 +173,5 @@ public class BuildingController : MonoBehaviour
                 freaksControllers[i].ChangeAlterPosition(hittedPoint);
             } 
         }
-    }
-
-
-    public void ConstructBuilding(int buildingNum)
-    {
-        buildnum = buildingNum;
-
-        building = Instantiate(Buildings[buildingNum]);
-        building.AddComponent<BuildingPreview>();
-        building.GetComponent<BuildingPreview>().Init(buildingNum);
-
-        isPreviewActivate = true;
     }
 }

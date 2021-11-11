@@ -1,0 +1,132 @@
+{
+  "Json": {
+    "alter": {
+      "attack": 50,
+      "hp": 2000,
+      "ats": 0.6,
+      "ms": 0,
+      "rg": 3,
+      "am": 0
+    },
+    "whitefreaks": {
+      "attack": 0,
+      "hp": 50,
+      "ats": 0,
+      "ms": 10,
+      "rg": 0,
+      "am": 0
+    },
+    "whitetower": {
+      "attack": 70,
+      "hp": 400,
+      "ats": 0.3,
+      "ms": 0,
+      "rg": 4,
+      "am": 0
+    },
+    "workshop": {
+      "attack": 0,
+      "hp": 10,
+      "ats": 0,
+      "ms": 0,
+      "rg": 0,
+      "am": 0
+    },
+    "blackfreaks": {
+      "attack": 20,
+      "hp": 200,
+      "ats": 0.7,
+      "ms": 10,
+      "rg": 1.25,
+      "am": 0
+    },
+    "blacktower": {
+      "attack": 100,
+      "hp": 1500,
+      "ats": 0.3,
+      "ms": 0,
+      "rg": 4,
+      "am": 100
+    },
+    "switchoff": {
+      "attack": 0,
+      "hp": 987654321,
+      "ats": 0,
+      "ms": 0,
+      "rg": 0,
+      "am": 0
+    },
+    "switchon": {
+      "attack": 0,
+      "hp": 987654321,
+      "ats": 0,
+      "ms": 0,
+      "rg": 0,
+      "am": 0
+    },
+    "essenceS": {
+      "attack": 0,
+      "hp": 987654321,
+      "ats": 0,
+      "ms": 0,
+      "rg": 0,
+      "am": 0
+    },
+    "essenceM": {
+      "attack": 0,
+      "hp": 987654321,
+      "ats": 0,
+      "ms": 0,
+      "rg": 0,
+      "am": 0
+    },
+    "essenceL": {
+      "attack": 0,
+      "hp": 987654321,
+      "ats": 0,
+      "ms": 0,
+      "rg": 0,
+      "am": 0
+    },
+    "warron": {
+      "attack": 40,
+      "hp": 375,
+      "ats": 0.6,
+      "ms": 8,
+      "rg": 1.25,
+      "am": 20
+    },
+    "kyle": {
+      "attack": 30,
+      "hp": 350,
+      "ats": 0.5,
+      "ms": 7,
+      "rg": 2.5,
+      "am": 10
+    },
+    "rowenn": {
+      "attack": 20,
+      "hp": 325,
+      "ats": 0.5,
+      "ms": 7,
+      "rg": 2.2,
+      "am": 0
+    },
+    "arcanna": {
+      "attack": 35,
+      "hp": 350,
+      "ats": 0.6,
+      "ms": 8,
+      "rg": 1.5,
+      "am": 10
+    },
+    "louis": {
+      "attack": 20,
+      "hp": 325,
+      "ats": 0.5,
+      "ms": 7,
+      "rg": 2.2,
+      "am": 0
+    }
+  }
+}

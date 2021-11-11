@@ -1,10 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
+using System.IO;
 
 public class ObjectPooling : MonoBehaviour
 {
-    public static ObjectPooling Instance = null;
+    public static ObjectPooling instance = null;
+    static ObjectPooling Instance
+    {
+        get
+        {
+            Init();
+            return instance;
+        }
+    }
+    static void Init()
+    {
+        if (instance == null)
+        {
+            GameObject ob_go = GameObject.Find("ObjectPooling");
+
+            if(ob_go == null)
+            {
+                ob_go = new GameObject { name = "ObjectPooling" };
+                ob_go.AddComponent<ObjectPooling>();
+            }
+            DontDestroyOnLoad(ob_go);
+            instance = ob_go.GetComponent<ObjectPooling>();
+        }
+    }
+
+    Dictionary<string, Stat> data = new Dictionary<string, Stat>();
+    public void _load()
+    {
+        string jdata = File.ReadAllText(Application.dataPath + "/JsonDotNet/StatusInfo.Json");
+        data = JsonConvert.DeserializeObject<Stat>(jdata).Json;
+    }
+    public Stat Get_Stat(string _objName)
+    {
+        if (data.Count == 0)
+            _load();
+
+        var enumData = data.GetEnumerator();
+
+        while (enumData.MoveNext())
+        {
+            print(enumData.Current.Key);
+            if(enumData.Current.Key == _objName)
+            {
+                print(enumData.Current.Value.attack);
+                return enumData.Current.Value;
+            }
+        }
+        return null;
+    }
 
     [SerializeField]
     private int WhiteFreaksCountLimit = 100;                          //화이트 프릭스 인구수 제한
@@ -21,11 +71,8 @@ public class ObjectPooling : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != null)
-            Destroy(this.gameObject);
-
+        Init();
+        _load();
         Initialize();
     }
     private void Initialize()                                             //초기 설정
@@ -109,7 +156,4 @@ public class ObjectPooling : MonoBehaviour
                 break;
         }
     }
-
-
-
 }
