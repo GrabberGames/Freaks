@@ -21,7 +21,7 @@ public class ObjectPooling : MonoBehaviour
         {
             GameObject ob_go = GameObject.Find("ObjectPooling");
 
-            if(ob_go == null)
+            if (ob_go == null)
             {
                 ob_go = new GameObject { name = "ObjectPooling" };
                 ob_go.AddComponent<ObjectPooling>();
@@ -47,7 +47,7 @@ public class ObjectPooling : MonoBehaviour
         while (enumData.MoveNext())
         {
             print(enumData.Current.Key);
-            if(enumData.Current.Key == _objName)
+            if (enumData.Current.Key == _objName)
             {
                 print(enumData.Current.Value.attack);
                 return enumData.Current.Value;
@@ -57,16 +57,16 @@ public class ObjectPooling : MonoBehaviour
     }
 
     [SerializeField]
-    private int WhiteFreaksCountLimit = 100;                          //È­ÀÌÆ® ÇÁ¸¯½º ÀÎ±¸¼ö Á¦ÇÑ
+    private int WhiteFreaksCountLimit = 100;                          //È­ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
-    private GameObject WhiteFreaksObject;       //È­ÀÌÆ® ÇÁ¸¯½º ÇÁ¸®ÆÕ
-    private Queue<GameObject> WhiteFreaksQueue = new Queue<GameObject>();    //È­ÀÌÆ® ÇÁ¸¯½º ¿ÀºêÁ§Æ® Å¥
+    private GameObject WhiteFreaksObject;       //È­ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Queue<GameObject> WhiteFreaksQueue = new Queue<GameObject>();    //È­ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å¥
 
     [SerializeField]
-    private int BlackFreaksCountLimit = 100;                          // ºí·¢ ÇÁ¸¯½º ÀÎ±¸¼ö Á¦ÇÑ
+    private int BlackFreaksCountLimit = 100;                          // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
-    private GameObject BlackFreaksObject;       //ºí·¢ ÇÁ¸¯½º ÇÁ¸®ÆÕ
-    private Queue<GameObject> BlackFreaksQueue = new Queue<GameObject>();    //ºí·¢ ÇÁ¸¯½º ¿ÀºêÁ§Æ® Å¥
+    private GameObject BlackFreaksObject;       //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Queue<GameObject> BlackFreaksQueue = new Queue<GameObject>();    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å¥
 
 
     private void Awake()
@@ -75,18 +75,18 @@ public class ObjectPooling : MonoBehaviour
         _load();
         Initialize();
     }
-    private void Initialize()                                             //ÃÊ±â ¼³Á¤
-    { 
-        for (int i = 0; i < WhiteFreaksCountLimit; i++)     //È­ÀÌÆ® ÇÁ¸¯½º ÀÎ±¸¼ö Á¦ÇÑ ¸¸Å­ Instantiate·Î »ý¼ºÇØ¼­ Queue¿¡ Enqueue
+    private void Initialize()                                             //ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½
+    {
+        for (int i = 0; i < WhiteFreaksCountLimit; i++)     //È­ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å­ Instantiateï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ Queueï¿½ï¿½ Enqueue
         {
-            WhiteFreaksQueue.Enqueue(CreateNewObject("WhiteFreaks")); 
+            WhiteFreaksQueue.Enqueue(CreateNewObject("WhiteFreaks"));
         }
-        for (int i = 0; i < BlackFreaksCountLimit; i++)     //ºí·¢ ÇÁ¸¯½º ÀÎ±¸¼ö Á¦ÇÑ ¸¸Å­ Instantiate·Î »ý¼ºÇØ¼­ Queue¿¡ Enqueue
+        for (int i = 0; i < BlackFreaksCountLimit; i++)     //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å­ Instantiateï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ Queueï¿½ï¿½ Enqueue
         {
             BlackFreaksQueue.Enqueue(CreateNewObject("BlackFreaks"));
         }
     }
-    private GameObject CreateNewObject(string Obj)  //Instatiate·Î ¿ÀºêÁ§Æ® »ý¼º
+    private GameObject CreateNewObject(string Obj)  //Instatiateï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     {
         GameObject newObj;
         switch (Obj)
@@ -97,7 +97,7 @@ public class ObjectPooling : MonoBehaviour
                 newObj.SetActive(false);
                 return newObj;
             case "BlackFreaks":
-                Vector3 spawnPos = new Vector3(0, 0, 0);
+                Vector3 spawnPos = new Vector3(0, -20, 200);
                 newObj = Instantiate(BlackFreaksObject, spawnPos, Quaternion.identity);
                 newObj.SetActive(false);
                 return newObj;
@@ -106,14 +106,14 @@ public class ObjectPooling : MonoBehaviour
         }
         return null;
     }
-    public GameObject GetObject(string objectName)               //ÇØ´ç ¿ÀºêÁ§Æ®¸¦ »ç¿ëÇÒ ½ºÅ©¸³Æ®¿¡¼­ È£ÃâÇÏ¸é µÊ
-    { 
-        switch(objectName)
+    public GameObject GetObject(string objectName)               //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½
+    {
+        switch (objectName)
         {
             case ("WhiteFreaks"):
-                if(Instance.WhiteFreaksQueue.Count > 0)                           //»ç¿ëÇÒ ¼ö ÀÖ´Â È­ÀÌÆ®ÇÁ¸¯½º°¡ ÀÖÀ¸¸é
+                if (Instance.WhiteFreaksQueue.Count > 0)                           //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ È­ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 {
-                    var obj = Instance.WhiteFreaksQueue.Dequeue();           //DequeueÇÏ¿© ¸®ÅÏÇØÁÜ
+                    var obj = Instance.WhiteFreaksQueue.Dequeue();           //Dequeueï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     obj.transform.position = GameObject.Find("Alter").transform.position;
                     obj.SetActive(true);
                     return obj;
@@ -124,9 +124,9 @@ public class ObjectPooling : MonoBehaviour
                 }
 
             case ("BlackFreaks"):
-                if (Instance.BlackFreaksQueue.Count > 0)                         //»ç¿ëÇÒ ¼ö ÀÖ´Â ºí·¢ ÇÁ¸¯½º°¡ ÀÖÀ¸¸é
+                if (Instance.BlackFreaksQueue.Count > 0)                         //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 {
-                    var obj = Instance.BlackFreaksQueue.Dequeue();          //DequeueÇÏ¿© ¸®ÅÏÇØÁÜ
+                    var obj = Instance.BlackFreaksQueue.Dequeue();          //Dequeueï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     obj.SetActive(true);
                     return obj;
                 }
@@ -138,18 +138,18 @@ public class ObjectPooling : MonoBehaviour
                 return null;
         }
     }
-    public void ReturnObject(GameObject obj)                     //ÆÄ±«µÈ | »ç¶óÁø ¿ÀºêÁ§Æ® ¹ÝÈ¯ & »ç¿ëÇÒ ½ºÅ©¸³Æ®¿¡¼­ È£ÃâÇÏ¸é µÊ.
-    { 
-        obj.gameObject.SetActive(false);                                          //ÇØ´ç ¿ÀºêÁ§Æ® OFF
+    public void ReturnObject(GameObject obj)                     //ï¿½Ä±ï¿½ï¿½ï¿½ | ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯ & ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½.
+    {
+        obj.gameObject.SetActive(false);                                          //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® OFF
 
         switch (obj.name)
         {
             case ("WhiteFreaks"):
-                Instance.WhiteFreaksQueue.Enqueue(obj);                     //È­ÀÌÆ® ÇÁ¸¯½º Queue¿¡ Enqueue
+                Instance.WhiteFreaksQueue.Enqueue(obj);                     //È­ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Queueï¿½ï¿½ Enqueue
                 break;
 
             case ("BlackFreaks"):
-                Instance.BlackFreaksQueue.Enqueue(obj);                     //ºí·¢ ÇÁ¸¯½º Queue¿¡ Enqueue
+                Instance.BlackFreaksQueue.Enqueue(obj);                     //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Queueï¿½ï¿½ Enqueue
                 break;
 
             default:
