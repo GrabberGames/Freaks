@@ -22,7 +22,10 @@ public class FreaksController : MonoBehaviour
     private Vector3 alterPosition;
     bool playerInRange;
     float timer;
-    Stat _stat = new Stat();
+    Stat white_stat = new Stat();
+    Stat black_stat = new Stat();
+    Stat waron_stat = new Stat();
+    Stat kail_stat = new Stat();
     private bool isStuern = false;
     bool damaged;
     bool isDead;
@@ -32,9 +35,13 @@ public class FreaksController : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _stat = ObjectPooling.instance.Get_Stat("whitefreaks");
-        currentHealth = startingHealth;
-        enemyHealth = _stat.hp;
+        white_stat = ObjectPooling.instance.Get_Stat("whitefreaks");
+        black_stat = ObjectPooling.instance.Get_Stat("blackfreaks");
+        waron_stat = ObjectPooling.instance.Get_Stat("waron");
+        kail_stat = ObjectPooling.instance.Get_Stat("kail");
+
+        currentHealth = black_stat.hp;
+        enemyHealth = white_stat.hp;
         MoveSpeed = agent.speed;
     }
 
@@ -60,7 +67,7 @@ public class FreaksController : MonoBehaviour
         //공격 -> 지금은 white_freaks health밖에 없어서 나중에 수정 필요
         // 공격 중 다른 오브젝트에게 공격 -> 타겟팅 변경 O
         timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks && playerInRange && enemyHealth > 0)
+        if (timer >= timeBetweenAttacks && playerInRange)
         {
             Attack(near);
         }
@@ -120,15 +127,31 @@ public class FreaksController : MonoBehaviour
         transform.GetComponent<CapsuleCollider>().isTrigger = true;
     }
 
-    void TakeDamage(GameObject near, float amout)
+    void TakeDamage(GameObject near, float amount)//공격
     {
+        if (near == kail)
+        {
+            kail_stat.hp -= amount;
+        }
+        else if (near == waron)
+        {
+            waron_stat.hp -= amount;
+        }
+        else if (near == white_freaks)
+        {
+            white_stat.hp -= amount;
+        }
+        else if (near == alter)
+        {
 
+        }
     }
 
+    //black freaks 공격
     void Attack(GameObject near)
     {
         timer = 0f;
-        //health가 아직 안되있기에 변경 필요 + 공격받았을 때의 상황이 모두 함수가 안되어있음
+
         if (currentHealth > 0)
         {
             TakeDamage(near, attackDamage);
