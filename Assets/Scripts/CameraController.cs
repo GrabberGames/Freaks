@@ -4,7 +4,49 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Vector3 offset;
+    public float panSpeed = 20f;
+    public float panBorderThickness = 10f;
+
+    public float minY = 20f;
+    public float maxY = 120f;
+
+    public float scrollSpeed = 20f;
+
+    private void Update()
+    {
+        Vector3 pos = transform.position;
+
+        if (Input.GetKey("up") || Input.mousePosition.y >= Screen.height - panBorderThickness)
+        {
+            pos.z += panSpeed * Time.deltaTime;
+        }
+
+        if (Input.GetKey("down") || Input.mousePosition.y <= panBorderThickness)
+        {
+            pos.z -= panSpeed * Time.deltaTime;
+        }
+
+        if (Input.GetKey("right") || Input.mousePosition.x >= Screen.width - panBorderThickness)
+        {
+            pos.x += panSpeed * Time.deltaTime;
+        }
+
+        if (Input.GetKey("left") || Input.mousePosition.x <= panBorderThickness)
+        {
+            pos.x -= panSpeed * Time.deltaTime;
+        }
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        pos.y -= scroll * scrollSpeed * 100f * Time.deltaTime;
+
+        pos.x = Mathf.Clamp(pos.x, -210, 175);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        pos.z = Mathf.Clamp(pos.z, -200, 20);
+
+        transform.position = pos;
+    }
+}
+/*public Vector3 offset;
     public float zoomSpeed = 10.0f;
 
     private Transform player; // Player object
@@ -107,5 +149,4 @@ public class CameraController : MonoBehaviour
             transform.position = new Vector3(alter.position.x, transform.position.y, alter.position.z + transform.position.y / -nor);
             currentZ = transform.position.z;
         }
-    }
-}
+    }*/
