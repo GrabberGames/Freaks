@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float panSpeed = 20f;
+    public float panSpeed = 100f;
     public float panBorderThickness = 10f;
 
-    public float minY = 20f;
-    public float maxY = 120f;
+    public float minY = 100f;
+    public float maxY = 300f;
 
-    public float scrollSpeed = 20f;
+    public float scrollSpeed = 50f;
 
     private void Update()
     {
