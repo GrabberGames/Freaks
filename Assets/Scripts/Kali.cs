@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Kali : MonoBehaviour
 {    
-    private enum AnimationState
+    private enum PlayerState
     {
-        L,
+        Attack,
+        Die,
+        Moving,
+        Idle,
         Q,
         W,
         E,
         R,
-        D
     }
     private bool isAction = false;
     private bool canNormalAttack = true;
@@ -19,8 +21,10 @@ public class Kali : MonoBehaviour
     private int AttackNum = 0;
     private Vector3 TowardVec;
     private Vector3 targetPos;
+    private Vector3 _destPos;
+    private Vector3 dir;
 
-    private int nowAnimationState = 0;
+    PlayerState _state = PlayerState.Idle;
     private bool useRootMotion = false;
     private Animator animator;
     private Camera mainCamera;
@@ -34,8 +38,7 @@ public class Kali : MonoBehaviour
 
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
-
- 
+    private Stat _stat = new Stat();
 
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class Kali : MonoBehaviour
     }
     void Start()
     {
+        _stat = ObjectPooling.instance.Get_Stat("kyle");
 
     }
     void OnAnimatorMove()
@@ -71,7 +75,7 @@ public class Kali : MonoBehaviour
         {
             useRootMotion = true; ChangRotate();
             Determination();
-            nowAnimationState = (int)AnimationState.Q;
+            _state = PlayerState.Q;
         }
         //W
 
@@ -79,22 +83,22 @@ public class Kali : MonoBehaviour
         {
             useRootMotion = true; ChangRotate();
             Atonement();
-            nowAnimationState = (int)AnimationState.W;
+            _state = PlayerState.W;
         }
         //E
 
         else if (Input.GetKeyDown(KeyCode.E))
         {
             useRootMotion = true; ChangRotate();
-            Evation();
-            nowAnimationState = (int)AnimationState.E;
+             Evation();
+            _state = PlayerState.E;
         }
         //R
         else if (Input.GetKeyDown(KeyCode.R))
         {
             useRootMotion = true; ChangRotate();
             HorizonofMemory();
-            nowAnimationState = (int)AnimationState.R;
+            _state = PlayerState.R;
         }
     }
     void ChangRotate()
@@ -104,7 +108,8 @@ public class Kali : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            TowardVec = hit.point;
+            dir = hit.point;
+            transform.LookAt(dir);
         }
     }
     #region Q_Skill
@@ -122,7 +127,7 @@ public class Kali : MonoBehaviour
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
-        nowAnimationState = (int)AnimationState.L;
+        _state = PlayerState.Idle;
     }
     #endregion
     #region W_Skill
@@ -140,7 +145,7 @@ public class Kali : MonoBehaviour
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
-        nowAnimationState = (int)AnimationState.L;
+        _state = PlayerState.Idle;
     }
     #endregion
     #region E_Skill
@@ -159,7 +164,7 @@ public class Kali : MonoBehaviour
         useRootMotion = false;
         isAction = false;
         animator.SetBool("Skill", false);
-        nowAnimationState = (int)AnimationState.L;
+        _state = PlayerState.Idle;
     }
     #endregion
     #region R_Skill
@@ -186,7 +191,7 @@ public class Kali : MonoBehaviour
         isAction = false;
         useRootMotion = false;
         animator.SetBool("Skill", false);
-        nowAnimationState = (int)AnimationState.L;
+        _state = PlayerState.Idle;
     }
     #endregion
     void Basic_Attack()
@@ -220,8 +225,32 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
-        CharacterMovement();
         ChooseAction();
+        switch(_state)
+        {
+            case PlayerState.Q:
+            case PlayerState.W:
+            case PlayerState.E:
+            case PlayerState.R:
+                return;
+            case PlayerState.Moving:
+                UpdateMoving();
+                print("!");
+                break;
+
+            case PlayerState.Die:
+                UpdateDie();
+                break;
+
+            case PlayerState.Attack:
+                break;
+
+            case PlayerState.Idle:
+                UpdateIdle();
+                break;
+
+        }
+        //CharacterMovement();
         if(animator.GetBool("Moving") && !MovingAudioSoungIsActive)
         {
             MovingAudioSoungIsActive = true;
@@ -240,14 +269,34 @@ public class Kali : MonoBehaviour
         MovingAudioSoungIsActive = false;
 
     }
-    private void CharacterMovement()
+    private void UpdateDie()
     {
-        transform.LookAt(TowardVec);
-        //현재 다른 동작 중이라면 움직임을 제한시킵니다.
-        if (isAction)
+
+    }
+    private void UpdateIdle()
+    {
+        if (Input.GetMouseButtonDown(1))
         {
-            return;
+            agent.velocity = Vector3.zero;
+            RaycastHit hit;
+
+            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                agent.SetDestination(dir);
+                animator.SetBool("Moving", true);
+                _state = PlayerState.Moving;
+            }
         }
+    }
+    private void UpdateMoving()
+    {
+        dir = new Vector3(agent.steeringTarget.x, agent.steeringTarget.y, agent.steeringTarget.z);
+        print(dir);
+        if (dir.magnitude < 0.0001f)
+            _state = PlayerState.Idle;
+
+        transform.LookAt(dir);
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -256,20 +305,9 @@ public class Kali : MonoBehaviour
 
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                targetPos = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                agent.SetDestination(targetPos);
-                animator.SetBool("Moving", true);
+                dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                agent.SetDestination(dir);
             }
-        }
-        Move();
-    }
-    void Move()
-    {
-        TowardVec = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
-
-        if (Vector3.Distance(transform.position, targetPos) <= 0.5f)
-        {
-            animator.SetBool("Moving", false);
         }
     }
 }

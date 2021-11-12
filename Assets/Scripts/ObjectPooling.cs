@@ -46,10 +46,8 @@ public class ObjectPooling : MonoBehaviour
 
         while (enumData.MoveNext())
         {
-            print(enumData.Current.Key);
             if (enumData.Current.Key == _objName)
             {
-                print(enumData.Current.Value.attack);
                 return enumData.Current.Value;
             }
         }
