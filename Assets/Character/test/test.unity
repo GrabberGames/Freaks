@@ -434,6 +434,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: black freaks2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dd4583e57c212b541b8d2db6bf53b9a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2726568780636716469, guid: dd4583e57c212b541b8d2db6bf53b9a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.197032
@@ -553,7 +557,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -761,7 +765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2726568780636716469, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -844,7 +848,7 @@ Animator:
   m_GameObject: {fileID: 2074799490}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1bacb0b8063a41e44b44f9474d4ec554, type: 2}
+  m_Controller: {fileID: 9100000, guid: 27cce9f92135a7149819ab0aeb76d23b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
