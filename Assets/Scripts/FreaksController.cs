@@ -26,14 +26,17 @@ public class FreaksController : MonoBehaviour
     Stat black_stat = new Stat();
     Stat waron_stat = new Stat();
     Stat kail_stat = new Stat();
+    FreaksAttack freaksAttack;
     private bool isStuern = false;
     bool damaged;
     bool isDead;
-    public bool isEnemyFound;
-
+    bool isEnemyFound;
     // Start is called before the first frame update
     void Start()
     {
+        freaksAttack = gameObject.GetComponentInChildren<FreaksAttack>();
+        isEnemyFound = freaksAttack.isEnemyFound;
+
         agent = GetComponent<NavMeshAgent>();
         white_stat = ObjectPooling.instance.Get_Stat("whitefreaks");
         black_stat = ObjectPooling.instance.Get_Stat("blackfreaks");
@@ -50,7 +53,6 @@ public class FreaksController : MonoBehaviour
         waron = GameObject.Find("Waron");
         alter = GameObject.Find("Alter");
         kail = GameObject.Find("Kail");
-        white_freaks = GameObject.Find("White Freaks");
         alterPosition = alter.transform.position;
     }
 
@@ -72,43 +74,17 @@ public class FreaksController : MonoBehaviour
             Attack(near);
         }
 
-        //이동
-        float dist_alter = Vector3.Distance(alter.transform.position, gameObject.transform.position); // Distance between of alter and black_freaks
-        float dist_waron = Vector3.Distance(waron.transform.position, gameObject.transform.position); // Distance between of waron and black_freaks
-        float dist_kail = Vector3.Distance(kail.transform.position, gameObject.transform.position); // Distance between of kail and black_freaks
-        float dist_white = Vector3.Distance(white_freaks.transform.position, gameObject.transform.position); // Distance between of white_freaks and black_freaks
-
-        //가장 먼저 시야에 들어온 플레이어 오브젝트에게 접근
-        if (dist_alter <= 7.5f)
-        {
-            isEnemyFound = true;
-            agent.SetDestination(alter.transform.position);
-        }
-        else if (dist_waron <= 7.5f)
-        {
-            isEnemyFound = true;
-            agent.SetDestination(waron.transform.position);
-        }
-        else if (dist_kail <= 7.5f)
-        {
-            isEnemyFound = true;
-            agent.SetDestination(kail.transform.position);
-        }
-        else if (dist_white <= 7.5f)
-        {
-            isEnemyFound = true;
-            agent.SetDestination(white_freaks.transform.position);
-        }
-        else
-        {
-            isEnemyFound = false;
-        }
-
         //적이 근처에 없다면 알터를 향해 진군
         if (agent.enabled && !isEnemyFound)
         {
             agent.SetDestination(alterPosition);
         }
+    }
+
+    //이동
+    public void move(GameObject near)
+    {
+        agent.SetDestination(near.transform.position);
     }
 
     public void Damaged(float amount)// 영웅으로부터 공격을 받았을 때의 상황
@@ -137,13 +113,13 @@ public class FreaksController : MonoBehaviour
         {
             waron_stat.hp -= amount;
         }
-        else if (near == white_freaks)
-        {
-            white_stat.hp -= amount;
-        }
         else if (near == alter)
         {
 
+        }
+        else
+        {
+            white_stat.hp -= amount;
         }
     }
 
@@ -180,21 +156,15 @@ public class FreaksController : MonoBehaviour
             Debug.Log(e.ToString());
         }
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)//두 게임오브젝트의 충돌발생 경우
     {
-        if (other.gameObject == waron || other.gameObject == kail || other.gameObject == white_freaks || other.gameObject == alter)
-        {
-            playerInRange = true;
-            near = other.gameObject;
-        }
+        playerInRange = true;
+        near = other.gameObject;
     }
-    void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)//충돌이 끝난 경우
     {
-        if (other.gameObject == waron || other.gameObject == kail || other.gameObject == white_freaks || other.gameObject == alter)
-        {
-            playerInRange = false;
-            near = null;
-        }
+        playerInRange = false;
+        near = null;
     }
     public IEnumerator MoveSpeedSlow(float value)
     {
