@@ -11,18 +11,27 @@ public class PauseUIController : MonoBehaviour
 
     private bool isMain;
     private bool isHome;
+    public bool isMenuON;
 
 
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // IF Menu Window is OFF && IF Player KeyDown the Escape; Menu Window ON
+        if (Input.GetKeyDown(KeyCode.Escape) && !isMenuON)
         {
             Debug.Log("Menu!");
             Time.timeScale = 0; // Game Pause
 
+            isMenuON = true;
             inGameWin.SetActive(true);   // Pause Window ON
             menuWins[0].SetActive(true);
+        }
+        // IF Menu Window is On && IF Player KeyDown the Escape; Menu Window OFF
+        else if (Input.GetKeyDown(KeyCode.Escape) && isMenuON)
+        {
+            Debug.Log("Menu OFF!");
+            MenuWinOFF();
         }
     }
 
@@ -37,6 +46,16 @@ public class PauseUIController : MonoBehaviour
             }
         }
         menuWins[target].SetActive(true);
+    }
+
+
+    public void MenuWinOFF()
+    {
+        Time.timeScale = 1;
+
+        isMenuON = false;
+        inGameWin.SetActive(false);
+        menuWins[0].SetActive(false);
     }
 
 
