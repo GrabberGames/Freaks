@@ -11,7 +11,6 @@ public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public Image mask;
-    public GameObject pauseWin;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;
@@ -45,22 +44,7 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         FXmovePlayer();
-        MenuControll();
     }
-
-
-    private void MenuControll()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("Menu!");
-            Time.timeScale = 0; // Game Pause
-
-            pauseWin.SetActive(true);   // Pause Window ON
-        }
-    }
-
-
 
 
     IEnumerator PlayTimer()
