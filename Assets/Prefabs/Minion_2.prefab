@@ -93,7 +93,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6786269160480896655}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -127,8 +127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de43124b5d57ee45aca4baecf53bad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
+  enemyHealth: 0
+  MoveSpeed: 0
+  timeBetweenAttacks: 0.5
+  attackDamage: 10
   isEnemyFound: 0
-  myTeam: 1
 --- !u!195 &9058720004211826746
 NavMeshAgent:
   m_ObjectHideFlags: 0
