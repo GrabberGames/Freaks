@@ -174,4 +174,15 @@ public class BuildingController : MonoBehaviour
             } 
         }
     }
+
+    public void ConstructBuilding(int buildingNum)
+    {
+        buildnum = buildingNum;
+
+        building = Instantiate(Buildings[buildingNum]);
+        building.AddComponent<BuildingPreview>();
+        building.GetComponent<BuildingPreview>().Init(buildingNum);
+
+        isPreviewActivate = true;
+    }
 }
