@@ -64,8 +64,7 @@ public class ObjectPooling : MonoBehaviour
     private int BlackFreaksCountLimit = 100;                          // ���� ������ �α��� ����
     [SerializeField]
     private GameObject BlackFreaksObject;       //���� ������ ������
-    [SerializeField]
-    private GameObject BlackFreaksChild;
+
     private Queue<GameObject> BlackFreaksQueue = new Queue<GameObject>();    //���� ������ ������Ʈ ť
 
 
@@ -89,7 +88,6 @@ public class ObjectPooling : MonoBehaviour
     private GameObject CreateNewObject(string Obj)  //Instatiate�� ������Ʈ ����
     {
         GameObject newObj;
-        GameObject collider;
         switch (Obj)
         {
             case "WhiteFreaks":
@@ -100,8 +98,6 @@ public class ObjectPooling : MonoBehaviour
             case "BlackFreaks":
                 Vector3 spawnPos = new Vector3(0, -20, 200);
                 newObj = Instantiate(BlackFreaksObject, spawnPos, Quaternion.identity);
-                collider = Instantiate(BlackFreaksChild, spawnPos, Quaternion.identity);
-                collider.transform.parent = newObj.transform;
 
                 newObj.SetActive(false);
                 return newObj;
