@@ -19,9 +19,6 @@ public class Kali : MonoBehaviour
     private bool canNormalAttack = true;
     private float canNormalAttackTime = 2f;
     private int AttackNum = 0;
-    private Vector3 TowardVec;
-    private Vector3 targetPos;
-    private Vector3 _destPos;
     private Vector3 dir;
 
     PlayerState _state = PlayerState.Idle;
@@ -59,7 +56,7 @@ public class Kali : MonoBehaviour
         {
             transform.rotation = animator.rootRotation;
             transform.position += animator.deltaPosition;
-            TowardVec = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+            //dir = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         }
     }
     void ChooseAction()
@@ -109,6 +106,7 @@ public class Kali : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             dir = hit.point;
+            dir.y = transform.position.y;
             transform.LookAt(dir);
         }
     }
@@ -225,6 +223,9 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
+        Vector3 look = transform.TransformDirection(Vector3.forward);
+        Debug.DrawRay(transform.position + Vector3.up, look * 20, Color.red);
+
         ChooseAction();
         switch(_state)
         {
@@ -232,10 +233,10 @@ public class Kali : MonoBehaviour
             case PlayerState.W:
             case PlayerState.E:
             case PlayerState.R:
+                transform.LookAt(dir);
                 return;
             case PlayerState.Moving:
                 UpdateMoving();
-                print("!");
                 break;
 
             case PlayerState.Die:
@@ -259,6 +260,7 @@ public class Kali : MonoBehaviour
         if(animator.GetBool("Moving") == false)
         {
             MovingAudioSoungIsActive = false;
+
             StopCoroutine(MoveSound());
         }
     }
@@ -279,8 +281,8 @@ public class Kali : MonoBehaviour
         {
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-
-            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000,  mask))
             {
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
@@ -291,9 +293,8 @@ public class Kali : MonoBehaviour
     }
     private void UpdateMoving()
     {
-        dir = new Vector3(agent.steeringTarget.x, agent.steeringTarget.y, agent.steeringTarget.z);
-        print(dir);
-        if (dir.magnitude < 0.0001f)
+        dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
+        if (dir.magnitude < 0.01f)
             _state = PlayerState.Idle;
 
         transform.LookAt(dir);
@@ -302,8 +303,8 @@ public class Kali : MonoBehaviour
         {
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-
-            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000,  mask))
             {
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
