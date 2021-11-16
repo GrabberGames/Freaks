@@ -30,7 +30,7 @@ public class FreaksController : MonoBehaviour
     private bool isStuern = false;
     bool damaged;
     bool isDead;
-    bool isEnemyFound;
+    bool isEnemyFound = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,11 +66,12 @@ public class FreaksController : MonoBehaviour
         else
             agent.isStopped = false;
 
-        //공격 -> 지금은 white_freaks health밖에 없어서 나중에 수정 필요
+
         // 공격 중 다른 오브젝트에게 공격 -> 타겟팅 변경 O
         timer += Time.deltaTime;
         if (timer >= timeBetweenAttacks && playerInRange)
         {
+            isEnemyFound = true;
             Attack(near);
         }
 
@@ -123,7 +124,7 @@ public class FreaksController : MonoBehaviour
         }
     }
 
-    //black freaks 공격
+    // 공격
     void Attack(GameObject near)
     {
         timer = 0f;
@@ -139,7 +140,8 @@ public class FreaksController : MonoBehaviour
         this.alterPosition = alterPosition;
     }
 
-    public IEnumerator StartDamage(float damage, Vector3 playerPosition, float delay, float pushBack)//영웅에게 공격받았을 때 영웅에게 튕겨져 나가는 효과를 주도록 움직이는 힘을 가함
+    //영웅에게 공격받았을 때 영웅에게 튕겨져 나가는 효과를 주도록 움직이는 힘을 가함
+    public IEnumerator StartDamage(float damage, Vector3 playerPosition, float delay, float pushBack)
     {
         yield return new WaitForSeconds(delay);
 
@@ -161,11 +163,13 @@ public class FreaksController : MonoBehaviour
         playerInRange = true;
         near = other.gameObject;
     }
+
     void OnTriggerExit(Collider other)//충돌이 끝난 경우
     {
         playerInRange = false;
         near = null;
     }
+
     public IEnumerator MoveSpeedSlow(float value)
     {
         print("movespeed");
