@@ -37,7 +37,6 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(PlayTimer());
         StartCoroutine(WaveTimer());
-
     }
 
 
@@ -106,7 +105,9 @@ public class GameController : MonoBehaviour
             RaycastHit hit;
             Vector3 mPos;
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            int layerMask = (1 << LayerMask.NameToLayer("Building")) + (1 << LayerMask.NameToLayer("Walkable"));
+
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity,layerMask))
             {
                 mPos = hit.point; mPos.y = 0.3f;
                 fx_Move.transform.position = mPos;
