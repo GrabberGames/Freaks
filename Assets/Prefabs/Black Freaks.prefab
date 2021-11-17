@@ -229,11 +229,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1779575061090656721}
   - component: {fileID: 3690244209726583725}
-  - component: {fileID: 4806675370879677483}
   - component: {fileID: 6314032459936158585}
   - component: {fileID: 6919672777757940346}
   - component: {fileID: 3882083136659003254}
   - component: {fileID: 3549013873572975733}
+  - component: {fileID: 8217623443827192736}
   m_Layer: 6
   m_Name: Black Freaks
   m_TagString: BlackFreaks
@@ -250,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 1439325293407091563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.187582, y: 3.187582, z: 3.187582}
   m_Children:
   - {fileID: 6553565536217443705}
   - {fileID: 7508756394616723778}
@@ -268,7 +268,7 @@ Animator:
   m_GameObject: {fileID: 1439325293407091563}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 586543f3d095a5c4b87eff0f9f141dad, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4813ffbba7263a94b8799c5260823e97, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -277,20 +277,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &4806675370879677483
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439325293407091563}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &6314032459936158585
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -388,6 +374,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 15
   m_ObstacleAvoidanceType: 4
+--- !u!136 &8217623443827192736
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439325293407091563}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1446491053324888280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,7 +1199,6 @@ GameObject:
   - component: {fileID: 6553565536217443705}
   - component: {fileID: 7509017670686515903}
   - component: {fileID: 8494686041222532039}
-  - component: {fileID: 8663425743350318352}
   m_Layer: 6
   m_Name: Black Freaks
   m_TagString: BlackFreaks
@@ -1215,7 +1214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7190300757588081263}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.493592, y: -0.11579313, z: 0.094311334}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2171423, y: 0.2171423, z: 0.2171423}
   m_Children: []
   m_Father: {fileID: 1779575061090656721}
@@ -1232,8 +1231,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21.147888, y: 3.1391997, z: 26.896624}
-  m_Center: {x: 25.15499, y: 1.0695978, z: -1.9763631}
+  m_Size: {x: 29, y: 29, z: 29}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8494686041222532039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1247,22 +1246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemyFound: 0
---- !u!54 &8663425743350318352
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7190300757588081263}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &7312772450270245139
 GameObject:
   m_ObjectHideFlags: 0
