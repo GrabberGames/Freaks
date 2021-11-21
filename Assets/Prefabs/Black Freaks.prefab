@@ -266,7 +266,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439325293407091563}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4813ffbba7263a94b8799c5260823e97, type: 2}
   m_CullingMode: 0
@@ -336,6 +336,7 @@ MonoBehaviour:
   MoveSpeed: 0
   timeBetweenAttacks: 0.5
   attackDamage: 10
+  near: {fileID: 0}
 --- !u!54 &3882083136659003254
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -362,7 +363,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 50
   m_Acceleration: 200
   avoidancePriority: 99
   m_AngularSpeed: 10

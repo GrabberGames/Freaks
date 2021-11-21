@@ -16,7 +16,7 @@ public class FreaksController : MonoBehaviour
     private GameObject black_freaks;
     private GameObject kail;
     private GameObject waron;
-    private GameObject near;
+    public GameObject near;
     private NavMeshAgent agent;
 
     private Vector3 alterPosition;
@@ -35,7 +35,6 @@ public class FreaksController : MonoBehaviour
     void Start()
     {
         freaksAttack = gameObject.GetComponentInChildren<FreaksAttack>();
-        isEnemyFound = freaksAttack.isEnemyFound;
 
         agent = GetComponent<NavMeshAgent>();
         white_stat = ObjectPooling.instance.Get_Stat("whitefreaks");
@@ -46,6 +45,9 @@ public class FreaksController : MonoBehaviour
         currentHealth = black_stat.hp;
         enemyHealth = white_stat.hp;
         MoveSpeed = agent.speed;
+
+        alterPosition = alter.transform.position;
+        agent.SetDestination(alterPosition);
     }
 
     void Awake()
@@ -53,7 +55,6 @@ public class FreaksController : MonoBehaviour
         waron = GameObject.Find("Waron");
         alter = GameObject.Find("Alter");
         kail = GameObject.Find("Kail");
-        alterPosition = alter.transform.position;
     }
 
     void Update()
@@ -71,15 +72,15 @@ public class FreaksController : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= timeBetweenAttacks && playerInRange)
         {
-            isEnemyFound = true;
+            Debug.Log("attack");
             Attack(near);
         }
-
-        //적이 근처에 없다면 알터를 향해 진군
-        if (agent.enabled && !isEnemyFound)
-        {
-            agent.SetDestination(alterPosition);
+        isEnemyFound = freaksAttack.isEnemyFound;
+        if (isEnemyFound){
+            Debug.Log("hihi");
+            agent.Move(near.transform.position);
         }
+
     }
 
     //이동
@@ -160,14 +161,23 @@ public class FreaksController : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)//두 게임오브젝트의 충돌발생 경우
     {
-        playerInRange = true;
-        near = other.gameObject;
+        if (other.transform.name == "Alter" || other.transform.name=="Waron"|| other.transform.name == "Kail")
+        {
+            playerInRange = true;
+            near = other.gameObject;
+            agent.SetDestination(near.transform.position);
+            Debug.Log("position");
+        }
     }
 
     void OnTriggerExit(Collider other)//충돌이 끝난 경우
     {
-        playerInRange = false;
-        near = null;
+        if (other.transform.name == "Alter" || other.transform.name == "Waron" || other.transform.name == "Kail")
+        {
+            playerInRange = false;
+            near = null;
+            agent.SetDestination(alterPosition);
+        }
     }
 
     public IEnumerator MoveSpeedSlow(float value)
