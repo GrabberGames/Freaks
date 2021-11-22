@@ -20,7 +20,6 @@ public class PauseUIController : MonoBehaviour
         // IF Menu Window is OFF && IF Player KeyDown the Escape; Menu Window ON
         if (Input.GetKeyDown(KeyCode.Escape) && !isMenuON)
         {
-            Debug.Log("Menu!");
             Time.timeScale = 0; // Game Pause
 
             isMenuON = true;
@@ -30,7 +29,6 @@ public class PauseUIController : MonoBehaviour
         // IF Menu Window is On && IF Player KeyDown the Escape; Menu Window OFF
         else if (Input.GetKeyDown(KeyCode.Escape) && isMenuON)
         {
-            Debug.Log("Menu OFF!");
             MenuWinOFF();
         }
     }

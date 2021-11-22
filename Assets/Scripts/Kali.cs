@@ -223,9 +223,6 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
-        Vector3 look = transform.TransformDirection(Vector3.forward);
-        Debug.DrawRay(transform.position + Vector3.up, look * 20, Color.red);
-
         ChooseAction();
         switch(_state)
         {

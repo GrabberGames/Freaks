@@ -16,20 +16,14 @@ public class AlterAttack : MonoBehaviour
 
     void Start()
     {
-        FindEnemy();
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
-    }
-
-
-    void FindEnemy()
-    {
-        enemy = GameObject.FindGameObjectWithTag("BlackFreaks");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("BlackFreaks"))
         {
+            enemy = other.gameObject;
             StartCoroutine(FindInAttackRange());
         }
     }

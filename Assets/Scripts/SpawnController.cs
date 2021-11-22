@@ -42,7 +42,6 @@ public class SpawnController: MonoBehaviour
                 Instantiate(Freakses[1], SpawnPoint[(randomSpawn + 1) % 3].transform.position, Quaternion.identity);
                 Instantiate(Freakses[1], SpawnPoint[(randomSpawn + 1) % 3].transform.position, Quaternion.identity);
             }
-            Debug.Log("?");
             lm_num--;
         }
     }

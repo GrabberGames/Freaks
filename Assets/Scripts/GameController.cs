@@ -86,8 +86,6 @@ public class GameController : MonoBehaviour
         if (wave_min >= 2)
         {
             mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize);
-
-            Debug.Log("!!");
             spawnController.FreaksSpawn();
             wave_min = 0;
             wave_sec = 0;

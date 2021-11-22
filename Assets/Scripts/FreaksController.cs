@@ -72,12 +72,10 @@ public class FreaksController : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= timeBetweenAttacks && playerInRange)
         {
-            Debug.Log("attack");
             Attack(near);
         }
         isEnemyFound = freaksAttack.isEnemyFound;
         if (isEnemyFound){
-            Debug.Log("hihi");
             agent.Move(near.transform.position);
         }
 
@@ -182,7 +180,6 @@ public class FreaksController : MonoBehaviour
 
     public IEnumerator MoveSpeedSlow(float value)
     {
-        print("movespeed");
         agent.speed = MoveSpeed * value;
         yield return new WaitForSeconds(1.5f);
         agent.speed = MoveSpeed;
@@ -190,7 +187,6 @@ public class FreaksController : MonoBehaviour
 
     public IEnumerator Stuern(float value)
     {
-        print("stuern");
         isStuern = true;
         yield return new WaitForSeconds(value);
         isStuern = false;

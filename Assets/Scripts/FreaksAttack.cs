@@ -18,7 +18,6 @@ public class FreaksAttack : MonoBehaviour
     {
         if (other.transform.name == "Alter" || other.transform.name == "Waron" || other.transform.name == "Kail")
         {
-            Debug.Log("balc");
             isEnemyFound = true;
             freaksController.near = other.gameObject;
         }
