@@ -164,7 +164,6 @@ public class FreaksController : MonoBehaviour
             playerInRange = true;
             near = other.gameObject;
             agent.SetDestination(near.transform.position);
-            Debug.Log("position");
         }
     }
 
