@@ -106,7 +106,7 @@ public class BuildingPreview : MonoBehaviour
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
-                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large" || parent.name == "Switch_N" || parent.name == "Switch_S" || parent.name == "Swtich_E"))
+                if (parent != null && (parent.name == "Small" || parent.name == "Medium" || parent.name == "Large" || parent.name == "SwitchController"))
                 {
                     areyouSure = false;
                 }
