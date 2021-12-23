@@ -28,12 +28,12 @@ public class WorkshopController : Building
     private bool beConstructed = true;
     private bool isSwitch = false;
     private float freeksActiveDelay = 2.0f;
+    private int currentRoofNum;
 
-    [SerializeField]
-    private bool fadeOutChk = false;
 
     private void Start()
     {
+        currentRoofNum = GetRoofNum();
         roofRenderer = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
     }
 
@@ -42,23 +42,8 @@ public class WorkshopController : Building
     {
         if (isSetted)
         {
-            //roofRenderer.material = essenceSpot.GetNowMaterial();
-            SetRoofMaterial();
+            roofRenderer.material = essenceSpot.GetNowMaterial();
             remainEssense = essenceSpot.GetRemainEssence();
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform.gameObject == this.gameObject)
-                {
-                    Destroy();
-                }
-            }
         }
     }
 
@@ -142,10 +127,43 @@ public class WorkshopController : Building
     }
     #endregion
 
+
+    public void ChangeRoof()
+    {
+        if (!IsRoofChange())
+        {
+            return;
+        }
+
+        currentRoofNum = GetRoofNum();
+        roofRenderer.material = materials[currentRoofNum];
+    }
+
+
+    private bool IsRoofChange()
+    {
+        return currentRoofNum != GetRoofNum();
+    }
+
+
+    private int GetRoofNum()
+    {
+        int roofNum = remainEssense / 500;
+
+        if (roofNum > 2)
+        {
+            roofNum = 2;
+        }
+
+        return roofNum;
+    }
+
+
     public override void SetOpacity(bool isTransparent)
     {
         // Empty
     }
+
 
     public override void SetMaterial(bool canBuild)
     {
@@ -164,32 +182,8 @@ public class WorkshopController : Building
 
     private void ConstructBuilding()
     {
+        Material[] mats = { materials[(int)MaterialNum.LargeRoof], materials[(int)MaterialNum.Leg], materials[(int)MaterialNum.Leg] };
+        roofRenderer.materials = mats;
         beConstructed = false;
-    }
-
-    private void SetRoofMaterial()
-    {
-        Material mat = materials[(int)MaterialNum.SmallRoof];
-        string materialName = essenceSpot.GetNowMaterial().name;
-        if (materialName == "Arrow_Medium (Instance)")
-        {
-            mat = materials[(int)MaterialNum.MeduimRoof];
-        }
-        else if(materialName == "Arrow_Large (Instance)")
-        {
-            mat = materials[(int)MaterialNum.LargeRoof];
-        }
-        roofRenderer.material = mat;
-    }
-
-    private void Destroy()
-    {
-        Material[] mats = { materials[(int)MaterialNum.SmallRoof], materials[(int)MaterialNum.Leg], materials[(int)MaterialNum.Leg] };
-
-        Material mat = materials[(int)MaterialNum.SmallRoof];
-        Color color = mat.color;
-
-        roofRenderer.material.color = new Color(color.r, color.g, color.b, 0);
-        print(mat.color.a);
     }
 }

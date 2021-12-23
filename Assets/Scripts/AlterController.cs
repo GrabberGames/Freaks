@@ -136,19 +136,4 @@ public class AlterController : Building, DamageService, HealthService
     {
         busyWhiteF--;
     }
-
-    private void Destroy()
-    {
-        ParticleSystem Destruction =  transform.GetChild(2).GetComponent<ParticleSystem>();
-        Destruction.gameObject.SetActive(true);
-        Destruction.Play();
-        StartCoroutine(VFXOff());
-
-    }
-
-    IEnumerator VFXOff()
-    {
-        yield return new WaitForSeconds(2.4f);
-        transform.GetChild(0).gameObject.SetActive(false);
-    }
 }
