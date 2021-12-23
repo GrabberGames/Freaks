@@ -28,9 +28,7 @@ public class SpawnController: MonoBehaviour
             //Instantiate(Freakses[0], SpawnPoint[randomSpawn].transform.position, Quaternion.identity);
             if (isRage)
             {
-                Instantiate(Freakses[0], SpawnPoint[randomSpawn].transform.position, Quaternion.identity);
-                Instantiate(Freakses[0], SpawnPoint[(randomSpawn + 1) % 3].transform.position, Quaternion.identity);
-                Instantiate(Freakses[0], SpawnPoint[(randomSpawn + 1) % 3].transform.position, Quaternion.identity);
+                obj.transform.position = SpawnPoint[randomSpawn + 1].transform.position;
             }
             cm_num--;
         }
@@ -44,7 +42,6 @@ public class SpawnController: MonoBehaviour
                 Instantiate(Freakses[1], SpawnPoint[(randomSpawn + 1) % 3].transform.position, Quaternion.identity);
                 Instantiate(Freakses[1], SpawnPoint[(randomSpawn + 1) % 3].transform.position, Quaternion.identity);
             }
-            Debug.Log("?");
             lm_num--;
         }
     }

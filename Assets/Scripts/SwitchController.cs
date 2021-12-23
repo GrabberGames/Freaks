@@ -12,7 +12,7 @@ public class SwitchController : MonoBehaviour
     private GameObject[] switchObjects;
 
     public GameObject switchObject;
-    public ParticleSystem[] fx_Switch;   // INDEX => ON: 0 || OFF: 1
+    public Material[] material_Switch;   // INDEX => ON: 0 || OFF: 1
     public bool isSwitchBtnActivate = false;
 
     private GameObject alter;
@@ -96,38 +96,54 @@ public class SwitchController : MonoBehaviour
 
     public void SwitchFX(Vector3 workshopPos, string onOff)
     {
-        Debug.Log("POS: " + pos);
-
+        GameObject parentObject;
+        ParticleSystem onFx, offFx;
         // Vector3(-8.8653307,0,156.667099) 0 
         // Vector3(-28.9882011,0,-172.248169) 1 
         // Vector3(285.082642,0,-16.6710186) 2 
         if (workshopPos.x > 280f)
         {
             pos = switchObjects[2].transform.position;
+            parentObject = switchObjects[2];
+            onFx = parentObject.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
+            offFx = parentObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         }
         else if (workshopPos.z > 0)
         {
             pos = switchObjects[0].transform.position;
+            parentObject = switchObjects[0];
+            onFx = parentObject.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
+            offFx = parentObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         }
         else
         {
             pos = switchObjects[1].transform.position;
+            parentObject = switchObjects[1];
+            onFx = parentObject.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
+            offFx = parentObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         }
         isActivate--;
-        print(isActivate);
 
         // switch ON FX
         pos.y = 0.5f; pos.x += 1.0f; // FX Pos. calibration
 
         if (onOff.Equals("ON"))
         {
-            Instantiate(fx_Switch[0], pos, Quaternion.Euler(-90f, 0, 0));
-            fx_Switch[0].Play(true);
+            offFx.Pause();
+            offFx.gameObject.SetActive(false);
+            onFx.gameObject.SetActive(true);
+            onFx.Play();
+
+            parentObject.transform.GetChild(1).GetComponent<MeshRenderer>().material = material_Switch[1];
         }
         else if (onOff.Equals("OFF"))
         {
-            Instantiate(fx_Switch[1], pos, Quaternion.Euler(-90f, 0, 0));
-            fx_Switch[1].Play(true);
+            onFx.Pause();
+            onFx.gameObject.SetActive(false);
+            offFx.gameObject.SetActive(true);
+            offFx.Play();
+
+            parentObject.transform.GetChild(1).GetComponent<MeshRenderer>().material = material_Switch[0];
         }
     }
 

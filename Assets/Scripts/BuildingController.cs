@@ -127,14 +127,15 @@ public class BuildingController : MonoBehaviour
 
     private void ViewPreview()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.nearClipPlane;
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
-
-        Vector3 buildPos = building.transform.position;
 
         if (Physics.Raycast(ray, out hit))
         {
-            Vector3 _location = hit.point; _location.y = 0;
+            Vector3 _location = hit.point;
+            _location.y = 0;
             building.transform.position = _location;
         }
 

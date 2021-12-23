@@ -26,11 +26,7 @@ public class WhiteFreaksController : MonoBehaviour
         alter = GameObject.Find("Alter");
         alterController = alter.GetComponent<AlterController>();
         alterPosition = alter.transform.position;
-        print(_stat.attack);
-        print(_stat.hp);
-        print(_stat.ats);
     }
-
     public void SetMiningWorkShop()
     {
         ChkNavMesh();

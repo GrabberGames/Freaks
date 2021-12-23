@@ -7,14 +7,16 @@ namespace WarriorAnims
 {
     public class HeroMovement : SuperStateMachine
     {
-        private enum AnimationState
+        private enum PlayerState
         {
-            L,
+            Attack,
+            Die,
+            Moving,
+            Idle,
             Q,
             W,
             E,
             R,
-            D
         }
 
         public Warrior warrior;
@@ -34,19 +36,16 @@ namespace WarriorAnims
         private NavMeshAgent agent;
         private WaronSkillManage waronSkillManage;
 
-        private Vector3 targetPos;
+        //
         private Vector3 velocity;
-        private Vector3 TowardVec;
-        private Vector3 UseSkillTowardVector;
-
+        private Vector3 dir;
+        PlayerState _state = PlayerState.Idle;
+        //
         private bool SkillStop = false;
         private bool isAction = false;
-        private int nowAnimationState = 0;
  
         private void Awake()
         {
-            TowardVec = transform.position;
-            targetPos = transform.position;
 
             animator = GetComponentInChildren<Animator>();
 
@@ -79,44 +78,130 @@ namespace WarriorAnims
 
         }
 
-
         private void Update()
         {
-            CharacterMovement();
-            ChooseCoroutine();
+            ChooseAction();
+            print(_state);
+            switch (_state)
+            {
+                case PlayerState.Q:
+                case PlayerState.W:
+                case PlayerState.E:
+                case PlayerState.R:
+                    transform.LookAt(dir);
+                    return;
+                case PlayerState.Moving:
+                    UpdateMoving();
+                    break;
+
+                case PlayerState.Die:
+                    UpdateDie();
+                    break;
+
+                case PlayerState.Attack:
+                    break;
+
+                case PlayerState.Idle:
+                    UpdateIdle();
+                    break;
+
+            }
         }
 
+        private void UpdateDie()
+        {
 
-        private void ChooseCoroutine()
+        }
+        private void UpdateIdle()
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                agent.velocity = Vector3.zero;
+                RaycastHit hit;
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+                if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
+                {
+                    dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                    agent.SetDestination(dir);
+                    animator.SetBool("Moving", true); 
+                    velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
+                    animator.SetFloat("Velocity Z", velocity.magnitude);
+                    _state = PlayerState.Moving;
+                }
+            }
+        }
+
+        private void UpdateMoving()
+        {
+            velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
+            dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
+            if (dir.magnitude < 0.01f)
+            {
+                animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+                animator.SetBool("Moving", false);
+                _state = PlayerState.Idle;
+            }
+
+            transform.LookAt(dir);
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                agent.velocity = Vector3.zero;
+                RaycastHit hit;
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+                if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
+                {
+                    dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                    agent.SetDestination(dir);
+                }
+            }
+        }
+        void ChangRotate()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                dir = hit.point;
+                dir.y = transform.position.y;
+                transform.LookAt(dir);
+            }
+        }
+        void ChooseAction()
         {
             if (isAction)
-            {
                 return;
-            }
 
+            //Q
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                waronSkillManage.UseSkillNumber = 1;
-                nowAnimationState = (int)AnimationState.Q;
+                useRootMotion = true; ChangRotate();
                 ThrowingRock();
+                _state = PlayerState.Q;
             }
+            //W
+
             else if (Input.GetKeyDown(KeyCode.W))
             {
-                waronSkillManage.UseSkillNumber = 2;
-                nowAnimationState = (int)AnimationState.W;
+                useRootMotion = true; ChangRotate();
                 LeafOfPride();
+                _state = PlayerState.W;
             }
-            else if(Input.GetKeyDown(KeyCode.E))
+            //E
+
+            else if (Input.GetKeyDown(KeyCode.E))
             {
-                waronSkillManage.UseSkillNumber = 3;
-                nowAnimationState = (int)AnimationState.E;
+                useRootMotion = true; ChangRotate();
                 BoldRush();
+                _state = PlayerState.E;
             }
-            else if(Input.GetKeyDown(KeyCode.R))
+            //R
+            else if (Input.GetKeyDown(KeyCode.R))
             {
-                waronSkillManage.UseSkillNumber = 4;
-                nowAnimationState = (int)AnimationState.R;
+                useRootMotion = true; ChangRotate();
                 ShockOfLand();
+                _state = PlayerState.R;
             }
         }
 
@@ -131,16 +216,15 @@ namespace WarriorAnims
             animator.SetInteger("Action", 1);
             animator.SetInteger("TriggerNumber", 12);
             animator.SetTrigger("Trigger");
-            StartCoroutine(ThrowingRock_Stop());
         }
-        IEnumerator ThrowingRock_Stop()
+        public void ThrowingRock_Stop()
         {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("RangeAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f);
-            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RangeAttack1")) //Q스킬 모션이 끝나면
             animator.SetBool("Attack", false);
             isAction = false;
-            nowAnimationState = (int)AnimationState.L;
             waronSkillManage.UseSkillNumber = 0;
+            animator.SetBool("Moving", true);
+            _state = PlayerState.Idle;
+            print("!");
         }
         #endregion Q_Skill
 
@@ -156,20 +240,19 @@ namespace WarriorAnims
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 3);
-            StartCoroutine(LeafOfPride_Stop());
         }
-        IEnumerator LeafOfPride_Stop()
+        public void LeafOfPride_Stop()
         {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.60f);
+            //yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.60f);
             waronSkillManage.SkillOnTrigger();
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.75f);
+            //yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.75f);
             rigid.velocity = Vector3.zero;
             animator.SetBool("Dash", false);
             isAction = false;
-            nowAnimationState = (int)AnimationState.L;
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
+            _state = PlayerState.Idle;
         }
         #endregion W_Skill
 
@@ -185,20 +268,18 @@ namespace WarriorAnims
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 11); 
-            StartCoroutine(BoldRush_Stop());
         }
-        IEnumerator BoldRush_Stop()
+        public void BoldRush_Stop()
         {
             waronSkillManage.SkillOnTrigger();
-            yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("MoveAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f) || SkillStop);
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
             SkillStop = false;
-            nowAnimationState = (int)AnimationState.L;
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
+            _state = PlayerState.Idle;
         }
         #endregion E_Skill
 
@@ -213,110 +294,22 @@ namespace WarriorAnims
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 10);
-            StartCoroutine(ShockOfLand_Stop());
         }
-        IEnumerator ShockOfLand_Stop()
+        public void ShockOfLand_Stop()
         {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack1") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f); 
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
-            nowAnimationState = (int)AnimationState.L;
             waronSkillManage.UseSkillNumber = 0;
+            _state = PlayerState.Idle;
         }
         #endregion R_Skill
-
-
-        IEnumerator Die()
-        {
-            //사망시 현재 위치로 destination을 변경하고
-            //Animator의 변수들을 변경해줍니다.
-            SetDestination(transform.position);
-            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-            animator.SetBool("Moving", false);
-
-            //isAction Flag를 true로 변경하고 
-            //Animator의 변수들을 변경해줍니다.
-            isAction = true;
-            animator.SetBool("Damaged", true);
-            animator.SetTrigger("Trigger");
-            animator.SetInteger("TriggerNumber", 6);
-
-            yield return new WaitForSeconds(2f);
-            StartCoroutine("Revive");
-        }
-
-
-        IEnumerator Revive()
-        {
-            //isAction Flag를 False로 변경하고 
-            //Animator의 변수들을 변경해줍니다.
-            //캐릭터의 Hp를 400으로 변경해줍니다.
-            animator.SetInteger("TriggerNumber", 7);
-            animator.SetTrigger("Trigger");
-            animator.SetBool("Damaged", false);
-            isAction = false;
-            yield return null;
-        }
 
 
         public void SetAnimatorRootMotion(bool b)
         {
             useRootMotion = b;
         }
-
-
-        private void CharacterMovement()
-        {
-            //현재 다른 동작 중이라면 움직임을 제한시킵니다.
-            if (isAction)
-            {
-                return;
-            }
-                
-            if (Input.GetMouseButtonDown(1))
-            {
-                agent.velocity = Vector3.zero;
-                RaycastHit hit;
-
-                if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
-                {
-                    targetPos = new Vector3(hit.point.x , transform.position.y, hit.point.z);
-                    SetDestination(targetPos);
-                }
-            }
-
-            Move();
-        }
-
-
-        void SetDestination(Vector3 dest)
-        {
-            agent.SetDestination(dest);
-            animator.SetBool("Moving", true);
-        }
-
-
-        void Move()
-        {
-            var dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z) - transform.position;
-            
-            if(dir != Vector3.zero)
-            {
-                TowardVec = dir;
-            }
-
-            velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
-            animator.SetFloat("Velocity Z", velocity.magnitude);
-            transform.forward = new Vector3(TowardVec.x, 0, TowardVec.z);
-            
-            if(Vector3.Distance(transform.position, targetPos) <= 0.5f)
-            {
-                animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-                animator.SetBool("Moving", false);
-            }
-        }
-
 
         public void Break()
         {

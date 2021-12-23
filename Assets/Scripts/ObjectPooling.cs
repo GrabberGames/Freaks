@@ -46,10 +46,8 @@ public class ObjectPooling : MonoBehaviour
 
         while (enumData.MoveNext())
         {
-            print(enumData.Current.Key);
             if (enumData.Current.Key == _objName)
             {
-                print(enumData.Current.Value.attack);
                 return enumData.Current.Value;
             }
         }
@@ -57,17 +55,23 @@ public class ObjectPooling : MonoBehaviour
     }
 
     [SerializeField]
-    private int WhiteFreaksCountLimit = 100;                          //ȭ��Ʈ ������ �α��� ����
+    private int WhiteFreaksCountLimit = 100;                   
     [SerializeField]
-    private GameObject WhiteFreaksObject;       //ȭ��Ʈ ������ ������
-    private Queue<GameObject> WhiteFreaksQueue = new Queue<GameObject>();    //ȭ��Ʈ ������ ������Ʈ ť
+    private GameObject WhiteFreaksObject;       
+    private Queue<GameObject> WhiteFreaksQueue = new Queue<GameObject>();    
 
     [SerializeField]
-    private int BlackFreaksCountLimit = 100;                          // ���� ������ �α��� ����
+    private int BlackFreaksCountLimit = 100;                       
     [SerializeField]
-    private GameObject BlackFreaksObject;       //���� ������ ������
-    private Queue<GameObject> BlackFreaksQueue = new Queue<GameObject>();    //���� ������ ������Ʈ ť
+    private GameObject BlackFreaksObject;       
+    private Queue<GameObject> BlackFreaksQueue = new Queue<GameObject>();
 
+    public GameObject Alter = null;
+
+    public void Alter_Setting(GameObject Alter)
+    {
+        this.Alter = Alter;
+    }
 
     private void Awake()
     {
@@ -75,30 +79,28 @@ public class ObjectPooling : MonoBehaviour
         _load();
         Initialize();
     }
-    private void Initialize()                                             //�ʱ� ����
+    private void Initialize()                                             
     {
-        for (int i = 0; i < WhiteFreaksCountLimit; i++)     //ȭ��Ʈ ������ �α��� ���� ��ŭ Instantiate�� �����ؼ� Queue�� Enqueue
+        for (int i = 0; i < WhiteFreaksCountLimit; i++)     
         {
             WhiteFreaksQueue.Enqueue(CreateNewObject("WhiteFreaks"));
         }
-        for (int i = 0; i < BlackFreaksCountLimit; i++)     //���� ������ �α��� ���� ��ŭ Instantiate�� �����ؼ� Queue�� Enqueue
+        for (int i = 0; i < BlackFreaksCountLimit; i++)     
         {
             BlackFreaksQueue.Enqueue(CreateNewObject("BlackFreaks"));
         }
     }
-    private GameObject CreateNewObject(string Obj)  //Instatiate�� ������Ʈ ����
+    private GameObject CreateNewObject(string Obj)  
     {
         GameObject newObj;
         switch (Obj)
         {
             case "WhiteFreaks":
                 newObj = Instantiate(WhiteFreaksObject);
-                //newObj.gameObject.transform.SetParent(this.gameObject.transform);
                 newObj.SetActive(false);
                 return newObj;
             case "BlackFreaks":
-                Vector3 spawnPos = new Vector3(0, -20, 200);
-                newObj = Instantiate(BlackFreaksObject, spawnPos, Quaternion.identity);
+                newObj = Instantiate(BlackFreaksObject);
                 newObj.SetActive(false);
                 return newObj;
             default:
@@ -106,15 +108,15 @@ public class ObjectPooling : MonoBehaviour
         }
         return null;
     }
-    public GameObject GetObject(string objectName)               //�ش� ������Ʈ�� ����� ��ũ��Ʈ���� ȣ���ϸ� ��
+    public GameObject GetObject(string objectName)               
     {
         switch (objectName)
         {
             case ("WhiteFreaks"):
-                if (Instance.WhiteFreaksQueue.Count > 0)                           //����� �� �ִ� ȭ��Ʈ�������� ������
+                if (Instance.WhiteFreaksQueue.Count > 0)                          
                 {
-                    var obj = Instance.WhiteFreaksQueue.Dequeue();           //Dequeue�Ͽ� ��������
-                    obj.transform.position = GameObject.Find("Alter").transform.position;
+                    var obj = Instance.WhiteFreaksQueue.Dequeue();
+                    obj.transform.position = Alter.transform.position;
                     obj.SetActive(true);
                     return obj;
                 }
@@ -124,9 +126,9 @@ public class ObjectPooling : MonoBehaviour
                 }
 
             case ("BlackFreaks"):
-                if (Instance.BlackFreaksQueue.Count > 0)                         //����� �� �ִ� ���� �������� ������
+                if (Instance.BlackFreaksQueue.Count > 0)                        
                 {
-                    var obj = Instance.BlackFreaksQueue.Dequeue();          //Dequeue�Ͽ� ��������
+                    var obj = Instance.BlackFreaksQueue.Dequeue();         
                     obj.SetActive(true);
                     return obj;
                 }
@@ -138,18 +140,18 @@ public class ObjectPooling : MonoBehaviour
                 return null;
         }
     }
-    public void ReturnObject(GameObject obj)                     //�ı��� | ����� ������Ʈ ��ȯ & ����� ��ũ��Ʈ���� ȣ���ϸ� ��.
+    public void ReturnObject(GameObject obj)                    
     {
-        obj.gameObject.SetActive(false);                                          //�ش� ������Ʈ OFF
+        obj.gameObject.SetActive(false);                               
 
         switch (obj.name)
         {
             case ("WhiteFreaks"):
-                Instance.WhiteFreaksQueue.Enqueue(obj);                     //ȭ��Ʈ ������ Queue�� Enqueue
+                Instance.WhiteFreaksQueue.Enqueue(obj);         
                 break;
 
             case ("BlackFreaks"):
-                Instance.BlackFreaksQueue.Enqueue(obj);                     //���� ������ Queue�� Enqueue
+                Instance.BlackFreaksQueue.Enqueue(obj);         
                 break;
 
             default:

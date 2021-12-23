@@ -21,8 +21,11 @@ public class AlterController : Building, DamageService, HealthService
 
     private int busyWhiteF = 0;
 
-
-
+    private void Start() //오브젝트 풀링에서 알터를 설정해주는 함수입니다.
+    {
+        if(ObjectPooling.instance.Alter == null)
+            ObjectPooling.instance.Alter_Setting(this.gameObject);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -45,7 +48,8 @@ public class AlterController : Building, DamageService, HealthService
     {
         busyWhiteF++;
         GameObject whiteFreaks = ObjectPooling.instance.GetObject("WhiteFreaks");
-        whiteFreaks.transform.position = transform.position;
+        Vector3 po = new Vector3(transform.position.x + 1, transform.position.y + 2, transform.position.z);
+        whiteFreaks.transform.position = po;
         //GameObject whiteFreaks = Instantiate(whiteFreaksPref, transform.position, transform.rotation);
         WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();
         miningFreaks.Add(whiteFreaks);
@@ -131,5 +135,20 @@ public class AlterController : Building, DamageService, HealthService
     public void returnedBusyFreeks()
     {
         busyWhiteF--;
+    }
+
+    private void Destroy()
+    {
+        ParticleSystem Destruction =  transform.GetChild(2).GetComponent<ParticleSystem>();
+        Destruction.gameObject.SetActive(true);
+        Destruction.Play();
+        StartCoroutine(VFXOff());
+
+    }
+
+    IEnumerator VFXOff()
+    {
+        yield return new WaitForSeconds(2.4f);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }

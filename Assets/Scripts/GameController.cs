@@ -11,7 +11,6 @@ public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public Image mask;
-    public GameObject pauseWin;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;
@@ -38,29 +37,13 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(PlayTimer());
         StartCoroutine(WaveTimer());
-
     }
 
 
     private void Update()
     {
         FXmovePlayer();
-        MenuControll();
     }
-
-
-    private void MenuControll()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("Menu!");
-            Time.timeScale = 0; // Game Pause
-
-            pauseWin.SetActive(true);   // Pause Window ON
-        }
-    }
-
-
 
 
     IEnumerator PlayTimer()
@@ -103,8 +86,6 @@ public class GameController : MonoBehaviour
         if (wave_min >= 2)
         {
             mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize);
-
-            Debug.Log("!!");
             spawnController.FreaksSpawn();
             wave_min = 0;
             wave_sec = 0;
@@ -122,7 +103,9 @@ public class GameController : MonoBehaviour
             RaycastHit hit;
             Vector3 mPos;
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            int layerMask = (1 << LayerMask.NameToLayer("Building")) + (1 << LayerMask.NameToLayer("Walkable"));
+
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity,layerMask))
             {
                 mPos = hit.point; mPos.y = 0.3f;
                 fx_Move.transform.position = mPos;
