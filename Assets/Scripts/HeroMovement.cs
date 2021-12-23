@@ -81,7 +81,6 @@ namespace WarriorAnims
         private void Update()
         {
             ChooseAction();
-            print(_state);
             switch (_state)
             {
                 case PlayerState.Q:

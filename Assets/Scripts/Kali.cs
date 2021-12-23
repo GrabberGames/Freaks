@@ -30,12 +30,84 @@ public class Kali : MonoBehaviour
 
     public KailAni kailAni;
 
+    //skill cooltime variable
+    float t_time = 0.0f;
+    float q_time = 0.0f;
+    float w_time = 0.0f;
+    float e_time = 0.0f;
+    float r_time = 0.0f;
+    bool press = false;
+    WaitForSeconds seconds = new WaitForSeconds(0.1f);
+
+    //sound variable
     public AudioSource[] audioSource;
     private bool MovingAudioSoungIsActive = false;
 
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
     private Stat _stat = new Stat();
+
+    void Activation(string skill)
+    {
+        switch(skill)
+        {
+            case "Q":
+                q_time = 11.0f;
+                break;
+
+            case "W":
+                w_time = 15.0f;
+                break;
+
+            case "E":
+                e_time = 16.0f;
+                break;
+
+            case "R":
+                r_time = 90.0f;
+                break;
+        }
+        t_time = Mathf.Max(q_time, w_time, e_time, r_time, t_time);
+        //이미 실행 중이라면
+        if(press == true)
+        {
+        }
+        //코루틴 처음 시작하면
+        else
+        {
+            press = true;
+            StartCoroutine(Skill_CoolTime());
+        }
+    }
+    IEnumerator Skill_CoolTime()
+    {
+        while(t_time > 0)
+        {
+            if(q_time > 0.1f)
+            {
+                q_time -= 0.1f;
+            }
+            if(w_time> 0.1f)
+            {
+                w_time -= 0.1f;
+            }
+            if (e_time > 0.1f)
+            {
+                e_time -= 0.1f;
+            }
+            if (r_time > 0.1f)
+            {
+                r_time -= 0.1f;
+            }
+            if(t_time < 0.1f)
+            {
+                t_time = 0.1f;
+                press = false;
+            }
+            t_time -= 0.1f;
+            yield return seconds;
+        }
+    }
 
     private void Awake()
     {
@@ -70,7 +142,11 @@ public class Kali : MonoBehaviour
         //Q
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            useRootMotion = true; ChangRotate();
+            if (q_time > 0.1f)
+                return;
+            //useRootMotion = true; 
+            ChangRotate();
+            Activation("Q");
             Determination();
             _state = PlayerState.Q;
         }
@@ -78,22 +154,31 @@ public class Kali : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.W))
         {
+            if (w_time > 0.1f)
+                return;
             useRootMotion = true; ChangRotate();
             Atonement();
+            Activation("W");
             _state = PlayerState.W;
         }
         //E
 
         else if (Input.GetKeyDown(KeyCode.E))
         {
+            if (e_time > 0.1f)
+                return;
             useRootMotion = true; ChangRotate();
-             Evation();
+            Activation("E");
+            Evation();
             _state = PlayerState.E;
         }
         //R
         else if (Input.GetKeyDown(KeyCode.R))
         {
+            if (r_time > 0.1f)
+                return;
             useRootMotion = true; ChangRotate();
+            Activation("R");
             HorizonofMemory();
             _state = PlayerState.R;
         }
@@ -223,6 +308,10 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
+        print(t_time);
+        print(q_time);
+        print(w_time);
+
         ChooseAction();
         switch(_state)
         {
