@@ -308,10 +308,6 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
-        print(t_time);
-        print(q_time);
-        print(w_time);
-
         ChooseAction();
         switch(_state)
         {
@@ -363,6 +359,7 @@ public class Kali : MonoBehaviour
     }
     private void UpdateIdle()
     {
+        animator.SetBool("Moving", false);
         if (Input.GetMouseButtonDown(1))
         {
             agent.velocity = Vector3.zero;
@@ -380,7 +377,7 @@ public class Kali : MonoBehaviour
     private void UpdateMoving()
     {
         dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
-        if (dir.magnitude < 0.01f)
+        if ((dir - transform.position).magnitude < 0.1f)
             _state = PlayerState.Idle;
 
         transform.LookAt(dir);

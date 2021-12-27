@@ -25,6 +25,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da29f23f5e8538e4e8e0ebafa2aeaf7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletSpeed: 10
+  Bullet: {fileID: 0}
+  Hit: {fileID: 0}
 --- !u!1001 &8958061000011393835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493972129667247823, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -82.085
+      value: -61.3
       objectReference: {fileID: 0}
     - target: {fileID: 1493972129667247823, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalPosition.y

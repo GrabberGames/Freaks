@@ -43,7 +43,77 @@ namespace WarriorAnims
         //
         private bool SkillStop = false;
         private bool isAction = false;
- 
+
+        //skill cooltime variable
+        float t_time = 0.0f;
+        float q_time = 0.0f;
+        float w_time = 0.0f;
+        float e_time = 0.0f;
+        float r_time = 0.0f;
+        bool press = false;
+        WaitForSeconds seconds = new WaitForSeconds(0.1f);
+        void Activation(string skill)
+        {
+            switch (skill)
+            {
+                case "Q":
+                    q_time = 6.0f;
+                    break;
+
+                case "W":
+                    w_time = 12.0f;
+                    break;
+
+                case "E":
+                    e_time = 14.0f;
+                    break;
+
+                case "R":
+                    r_time = 120.0f;
+                    break;
+            }
+            t_time = Mathf.Max(q_time, w_time, e_time, r_time, t_time);
+            //이미 실행 중이라면
+            if (press == true)
+            {
+            }
+            //코루틴 처음 시작하면
+            else
+            {
+                press = true;
+                StartCoroutine(Skill_CoolTime());
+            }
+        }
+        IEnumerator Skill_CoolTime()
+        {
+            while (t_time > 0)
+            {
+                if (q_time > 0.1f)
+                {
+                    q_time -= 0.1f;
+                }
+                if (w_time > 0.1f)
+                {
+                    w_time -= 0.1f;
+                }
+                if (e_time > 0.1f)
+                {
+                    e_time -= 0.1f;
+                }
+                if (r_time > 0.1f)
+                {
+                    r_time -= 0.1f;
+                }
+                if (t_time < 0.1f)
+                {
+                    t_time = 0.1f;
+                    press = false;
+                }
+                t_time -= 0.1f;
+                yield return seconds;
+            }
+        }
+
         private void Awake()
         {
 
@@ -113,6 +183,8 @@ namespace WarriorAnims
         }
         private void UpdateIdle()
         {
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+            animator.SetBool("Moving", false);
             if (Input.GetMouseButtonDown(1))
             {
                 agent.velocity = Vector3.zero;
@@ -175,7 +247,10 @@ namespace WarriorAnims
             //Q
             if (Input.GetKeyDown(KeyCode.Q))
             {
+                if (q_time > 0.1f)
+                    return;
                 useRootMotion = true; ChangRotate();
+                Activation("Q");
                 ThrowingRock();
                 _state = PlayerState.Q;
             }
@@ -183,7 +258,10 @@ namespace WarriorAnims
 
             else if (Input.GetKeyDown(KeyCode.W))
             {
+                if (w_time > 0.1f)
+                    return;
                 useRootMotion = true; ChangRotate();
+                Activation("W");
                 LeafOfPride();
                 _state = PlayerState.W;
             }
@@ -191,14 +269,20 @@ namespace WarriorAnims
 
             else if (Input.GetKeyDown(KeyCode.E))
             {
+                if (e_time > 0.1f)
+                    return;
                 useRootMotion = true; ChangRotate();
+                Activation("E");
                 BoldRush();
                 _state = PlayerState.E;
             }
             //R
             else if (Input.GetKeyDown(KeyCode.R))
             {
+                if (r_time > 0.1f)
+                    return;
                 useRootMotion = true; ChangRotate();
+                Activation("R");
                 ShockOfLand();
                 _state = PlayerState.R;
             }
@@ -218,12 +302,12 @@ namespace WarriorAnims
         }
         public void ThrowingRock_Stop()
         {
+            print("!");
             animator.SetBool("Attack", false);
             isAction = false;
             waronSkillManage.UseSkillNumber = 0;
             animator.SetBool("Moving", true);
             _state = PlayerState.Idle;
-            print("!");
         }
         #endregion Q_Skill
 
@@ -240,11 +324,12 @@ namespace WarriorAnims
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 3);
         }
-        public void LeafOfPride_Stop()
+        public void LeafOfPride_Stop_1()
         {
-            //yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.60f);
             waronSkillManage.SkillOnTrigger();
-            //yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dash-Forward") && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.75f);
+        }
+        public void LeafOfPride_Stop_2()
+        {
             rigid.velocity = Vector3.zero;
             animator.SetBool("Dash", false);
             isAction = false;
