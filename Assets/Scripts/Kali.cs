@@ -42,12 +42,13 @@ public class Kali : MonoBehaviour
 
     //sound variable
     public AudioSource[] audioSource;
+    public AudioSource[] skill_voice;
     private bool MovingAudioSoungIsActive = false;
 
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
     private Stat _stat = new Stat();
-
+    
     void Activation(string skill)
     {
         switch(skill)
@@ -121,7 +122,6 @@ public class Kali : MonoBehaviour
     void Start()
     {
         _stat = ObjectPooling.instance.Get_Stat("kyle");
-
     }
     void OnAnimatorMove()
     {
@@ -199,6 +199,7 @@ public class Kali : MonoBehaviour
     #region Q_Skill
     void Determination()
     {
+        AudioManager.instance.Read("Q스킬 " + Random.Range(1, 3));
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
@@ -217,6 +218,7 @@ public class Kali : MonoBehaviour
     #region W_Skill
     void Atonement()
     {
+        AudioManager.instance.Read("W스킬 " + Random.Range(1, 3));
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
@@ -235,6 +237,7 @@ public class Kali : MonoBehaviour
     #region E_Skill
     void Evation()
     {
+        AudioManager.instance.Read("E스킬 " + Random.Range(1, 3));
         agent.ResetPath();
         useRootMotion = true;
         isAction = true;
@@ -254,6 +257,7 @@ public class Kali : MonoBehaviour
     #region R_Skill
     void HorizonofMemory()
     {
+        AudioManager.instance.Read("R 스킬");
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
