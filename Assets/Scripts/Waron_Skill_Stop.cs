@@ -8,7 +8,6 @@ public class Waron_Skill_Stop : MonoBehaviour
 
     public void Waron_Q_Stop()
     {
-        print("@");
         if(hero == null)
         {
             hero = GetComponentInParent<WarriorAnims.HeroMovement>();

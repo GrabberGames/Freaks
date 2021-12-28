@@ -183,13 +183,12 @@ namespace WarriorAnims
         }
         private void UpdateIdle()
         {
-            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             animator.SetBool("Moving", false);
             if (Input.GetMouseButtonDown(1))
             {
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
-                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Freaks_Way") | LayerMask.GetMask("None_Freaks_Way") | LayerMask.GetMask("Building");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
                     dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
@@ -206,7 +205,7 @@ namespace WarriorAnims
         {
             velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
             dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
-            if (dir.magnitude < 0.01f)
+            if ((dir - transform.position).magnitude < 0.1f)
             {
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
                 animator.SetBool("Moving", false);
@@ -217,9 +216,10 @@ namespace WarriorAnims
 
             if (Input.GetMouseButtonDown(1))
             {
+                animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
-                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Freaks_Way") | LayerMask.GetMask("None_Freaks_Way") | LayerMask.GetMask("Building");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
                     dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
@@ -302,11 +302,11 @@ namespace WarriorAnims
         }
         public void ThrowingRock_Stop()
         {
-            print("!");
             animator.SetBool("Attack", false);
             isAction = false;
             waronSkillManage.UseSkillNumber = 0;
             animator.SetBool("Moving", true);
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion Q_Skill
@@ -336,6 +336,7 @@ namespace WarriorAnims
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion W_Skill
@@ -363,6 +364,7 @@ namespace WarriorAnims
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion E_Skill
@@ -385,6 +387,7 @@ namespace WarriorAnims
             animator.SetBool("Attack", false);
             isAction = false;
             waronSkillManage.UseSkillNumber = 0;
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion R_Skill
