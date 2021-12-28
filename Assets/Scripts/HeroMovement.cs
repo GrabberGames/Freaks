@@ -39,6 +39,7 @@ namespace WarriorAnims
         //
         private Vector3 velocity;
         private Vector3 dir;
+        private Vector3 look_dir;
         PlayerState _state = PlayerState.Idle;
         //
         private bool SkillStop = false;
@@ -157,8 +158,7 @@ namespace WarriorAnims
                 case PlayerState.W:
                 case PlayerState.E:
                 case PlayerState.R:
-                    transform.LookAt(dir);
-                    return;
+                    break;
                 case PlayerState.Moving:
                     UpdateMoving();
                     break;
@@ -187,7 +187,7 @@ namespace WarriorAnims
             animator.SetBool("Moving", false);
             if (Input.GetMouseButtonDown(1))
             {
-                agent.velocity = Vector3.zero;
+                //agent.velocity = Vector3.zero;
                 RaycastHit hit;
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
@@ -205,19 +205,19 @@ namespace WarriorAnims
         private void UpdateMoving()
         {
             velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
-            dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
-            if (dir.magnitude < 0.01f)
+            look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
+            if ((dir-transform.position).magnitude < 0.1f)
             {
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
                 animator.SetBool("Moving", false);
                 _state = PlayerState.Idle;
             }
 
-            transform.LookAt(dir);
+            transform.LookAt(look_dir);
 
             if (Input.GetMouseButtonDown(1))
             {
-                agent.velocity = Vector3.zero;
+                //agent.velocity = Vector3.zero;
                 RaycastHit hit;
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
@@ -234,9 +234,9 @@ namespace WarriorAnims
 
             if (Physics.Raycast(ray, out hit))
             {
-                dir = hit.point;
-                dir.y = transform.position.y;
-                transform.LookAt(dir);
+                look_dir = hit.point;
+                look_dir.y = transform.position.y;
+                transform.LookAt(look_dir);
             }
         }
         void ChooseAction()
@@ -302,11 +302,12 @@ namespace WarriorAnims
         }
         public void ThrowingRock_Stop()
         {
-            print("!");
+            rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
             waronSkillManage.UseSkillNumber = 0;
             animator.SetBool("Moving", true);
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion Q_Skill
@@ -336,6 +337,7 @@ namespace WarriorAnims
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion W_Skill
@@ -363,6 +365,7 @@ namespace WarriorAnims
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion E_Skill
@@ -385,6 +388,7 @@ namespace WarriorAnims
             animator.SetBool("Attack", false);
             isAction = false;
             waronSkillManage.UseSkillNumber = 0;
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion R_Skill

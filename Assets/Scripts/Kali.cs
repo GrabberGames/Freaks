@@ -20,6 +20,7 @@ public class Kali : MonoBehaviour
     private float canNormalAttackTime = 2f;
     private int AttackNum = 0;
     private Vector3 dir;
+    private Vector3 look_dir;
 
     PlayerState _state = PlayerState.Idle;
     private bool useRootMotion = false;
@@ -190,9 +191,9 @@ public class Kali : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            dir = hit.point;
-            dir.y = transform.position.y;
-            transform.LookAt(dir);
+            look_dir = hit.point;
+            look_dir.y = transform.position.y;
+            transform.LookAt(look_dir);
         }
     }
     #region Q_Skill
@@ -315,8 +316,7 @@ public class Kali : MonoBehaviour
             case PlayerState.W:
             case PlayerState.E:
             case PlayerState.R:
-                transform.LookAt(dir);
-                return;
+                break;
             case PlayerState.Moving:
                 UpdateMoving();
                 break;
@@ -376,11 +376,11 @@ public class Kali : MonoBehaviour
     }
     private void UpdateMoving()
     {
-        dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
+        look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
         if ((dir - transform.position).magnitude < 0.1f)
             _state = PlayerState.Idle;
 
-        transform.LookAt(dir);
+        transform.LookAt(look_dir);
 
         if (Input.GetMouseButtonDown(1))
         {
