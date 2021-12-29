@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 public class Kali : MonoBehaviour
-{    
+{
     private enum PlayerState
     {
         Attack,
@@ -48,10 +48,21 @@ public class Kali : MonoBehaviour
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
     private Stat _stat = new Stat();
-    
+
+    //Particle Skill Prefab
+    public ParticleSystem _Q_ps;
+    public ParticleSystem _W_ps;
+    public ParticleSystem _E_ps;
+
+    //Reference ParticleSystem Born Position
+    public GameObject _left_arm;
+    public GameObject _right_arm;
+
+    //Kyle Bullet Prefab 
+    public GameObject _bullet;
     void Activation(string skill)
     {
-        switch(skill)
+        switch (skill)
         {
             case "Q":
                 q_time = 11.0f;
@@ -70,22 +81,22 @@ public class Kali : MonoBehaviour
                 break;
         }
         t_time = Mathf.Max(q_time, w_time, e_time, r_time, t_time);
-        //�̹� ���� ���̶��
-        if(press == true)
+        //이미 실행 중이라면
+        if (press == true)
         {
         }
-        //�ڷ�ƾ ó�� �����ϸ�
+        //코루틴 처음 시작하면
         else
         {
             press = true;
             StartCoroutine(Skill_CoolTime());
         }
     }
-
-    public float getTimer(string type) {
-        switch(type) {
+    public float getTimer(string type)
+    {
+        switch (type)
+        {
             case "Q":
-                Debug.Log(q_time);
                 return q_time;
             case "W":
                 return w_time;
@@ -100,13 +111,13 @@ public class Kali : MonoBehaviour
 
     IEnumerator Skill_CoolTime()
     {
-        while(t_time > 0)
+        while (t_time > 0)
         {
-            if(q_time > 0.1f)
+            if (q_time > 0.1f)
             {
                 q_time -= 0.1f;
             }
-            if(w_time> 0.1f)
+            if (w_time > 0.1f)
             {
                 w_time -= 0.1f;
             }
@@ -118,7 +129,7 @@ public class Kali : MonoBehaviour
             {
                 r_time -= 0.1f;
             }
-            if(t_time < 0.1f)
+            if (t_time < 0.1f)
             {
                 t_time = 0.1f;
                 press = false;
@@ -213,10 +224,21 @@ public class Kali : MonoBehaviour
             transform.LookAt(look_dir);
         }
     }
+
     #region Q_Skill
     void Determination()
     {
-        AudioManager.a_instance.Read("Q��ų " + Random.Range(1, 3));
+        AudioManager.a_instance.Read("Q스킬 " + Random.Range(1, 3));
+        ParticleSystem _q = Instantiate(_Q_ps);
+        _q.transform.position = _left_arm.transform.position;
+        _q.Play();
+        StartCoroutine(Q_ParticleOff(_q));
+
+        GameObject go = Instantiate(_bullet);
+        go.transform.position = transform.position;
+        go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", look_dir);
+
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
@@ -231,11 +253,17 @@ public class Kali : MonoBehaviour
         animator.SetBool("Skill", false);
         _state = PlayerState.Idle;
     }
+    IEnumerator Q_ParticleOff(ParticleSystem _q)
+    {
+        yield return new WaitForSeconds(_q.main.startLifetimeMultiplier);
+        Destroy(_q);
+    }
     #endregion
+
     #region W_Skill
     void Atonement()
     {
-        AudioManager.a_instance.Read("W��ų " + Random.Range(1, 3));
+        AudioManager.a_instance.Read("W스킬 " + Random.Range(1, 3));
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
@@ -254,7 +282,7 @@ public class Kali : MonoBehaviour
     #region E_Skill
     void Evation()
     {
-        AudioManager.a_instance.Read("E��ų " + Random.Range(1, 3));
+        AudioManager.a_instance.Read("E스킬 " + Random.Range(1, 3));
         agent.ResetPath();
         useRootMotion = true;
         isAction = true;
@@ -274,7 +302,7 @@ public class Kali : MonoBehaviour
     #region R_Skill
     void HorizonofMemory()
     {
-        AudioManager.a_instance.Read("R ��ų");
+        AudioManager.a_instance.Read("R 스킬");
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
@@ -303,9 +331,9 @@ public class Kali : MonoBehaviour
     {
         if (!canNormalAttack)
             return;
-        if(Input.GetMouseButtonDown(0) && canNormalAttack)
+        if (Input.GetMouseButtonDown(0) && canNormalAttack)
         {
-            if(AttackNum == 0)
+            if (AttackNum == 0)
             {
                 animator.SetBool("Attack", true);
                 animator.SetBool("NormalAttack", true);
@@ -326,12 +354,12 @@ public class Kali : MonoBehaviour
         b = !b;
         yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("Normal Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Normal Attack 2")) && !animator.IsInTransition(0));
         animator.SetBool("Attack", false);
-        b = !b; 
+        b = !b;
     }
     void Update()
     {
         ChooseAction();
-        switch(_state)
+        switch (_state)
         {
             case PlayerState.Q:
             case PlayerState.W:
@@ -355,12 +383,12 @@ public class Kali : MonoBehaviour
 
         }
         //CharacterMovement();
-        if(animator.GetBool("Moving") && !MovingAudioSoungIsActive)
+        if (animator.GetBool("Moving") && !MovingAudioSoungIsActive)
         {
             MovingAudioSoungIsActive = true;
             StartCoroutine(MoveSound());
         }
-        if(animator.GetBool("Moving") == false)
+        if (animator.GetBool("Moving") == false)
         {
             MovingAudioSoungIsActive = false;
 
@@ -386,7 +414,7 @@ public class Kali : MonoBehaviour
             agent.velocity = Vector3.zero;
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
-            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000,  mask))
+            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
@@ -408,7 +436,7 @@ public class Kali : MonoBehaviour
             agent.velocity = Vector3.zero;
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
-            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000,  mask))
+            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
