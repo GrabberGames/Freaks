@@ -70,17 +70,34 @@ public class Kali : MonoBehaviour
                 break;
         }
         t_time = Mathf.Max(q_time, w_time, e_time, r_time, t_time);
-        //ÀÌ¹Ì ½ÇÇà ÁßÀÌ¶ó¸é
+        //ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½
         if(press == true)
         {
         }
-        //ÄÚ·çÆ¾ Ã³À½ ½ÃÀÛÇÏ¸é
+        //ï¿½Ú·ï¿½Æ¾ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
         else
         {
             press = true;
             StartCoroutine(Skill_CoolTime());
         }
     }
+
+    public float getTimer(string type) {
+        switch(type) {
+            case "Q":
+                Debug.Log(q_time);
+                return q_time;
+            case "W":
+                return w_time;
+            case "E":
+                return e_time;
+            case "R":
+                return r_time;
+            default:
+                return 0;
+        }
+    }
+
     IEnumerator Skill_CoolTime()
     {
         while(t_time > 0)
@@ -199,7 +216,7 @@ public class Kali : MonoBehaviour
     #region Q_Skill
     void Determination()
     {
-        AudioManager.a_instance.Read("Q½ºÅ³ " + Random.Range(1, 3));
+        AudioManager.a_instance.Read("Qï¿½ï¿½Å³ " + Random.Range(1, 3));
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
@@ -218,7 +235,7 @@ public class Kali : MonoBehaviour
     #region W_Skill
     void Atonement()
     {
-        AudioManager.a_instance.Read("W½ºÅ³ " + Random.Range(1, 3));
+        AudioManager.a_instance.Read("Wï¿½ï¿½Å³ " + Random.Range(1, 3));
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
@@ -237,7 +254,7 @@ public class Kali : MonoBehaviour
     #region E_Skill
     void Evation()
     {
-        AudioManager.a_instance.Read("E½ºÅ³ " + Random.Range(1, 3));
+        AudioManager.a_instance.Read("Eï¿½ï¿½Å³ " + Random.Range(1, 3));
         agent.ResetPath();
         useRootMotion = true;
         isAction = true;
@@ -257,7 +274,7 @@ public class Kali : MonoBehaviour
     #region R_Skill
     void HorizonofMemory()
     {
-        AudioManager.a_instance.Read("R ½ºÅ³");
+        AudioManager.a_instance.Read("R ï¿½ï¿½Å³");
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);

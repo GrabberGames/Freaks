@@ -10,13 +10,17 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
+    public TextMeshProUGUI[] kailSkillCoolTimers;
     public Image mask;
+    public int wave_min = 0;
+    public int wave_sec = 0;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;
 
     // wShot the ray to the pos. of Mouse Pointer Clicked.
     private SpawnController spawnController;
+    private Kali kyle;
     private RaycastHit hit;
 
     private string hitColliderName;
@@ -25,14 +29,12 @@ public class GameController : MonoBehaviour
     private float originalSize;
     private float value = 0;
 
-    public int wave_min = 0;
-    public int wave_sec = 0;
-
 
 
     private void Start()
     {
         spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
+        kyle = GameObject.Find("Kyle").GetComponent<Kali>();
         originalSize = mask.rectTransform.rect.width;
 
         StartCoroutine(PlayTimer());
@@ -43,6 +45,7 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         FXmovePlayer();
+        kailSCool();
     }
 
 
@@ -118,4 +121,13 @@ public class GameController : MonoBehaviour
             fx_Move.Stop();
         }
     }
+
+
+    // Skill Cool Timer UI Controll; Kail
+    public void kailSCool(){
+        kailSkillCoolTimers[0].text = string.Format("{0:N1}", kyle.getTimer("Q"));
+        kailSkillCoolTimers[1].text = string.Format("{0:N1}", kyle.getTimer("W"));
+        kailSkillCoolTimers[2].text = string.Format("{0:N1}", kyle.getTimer("E"));
+        kailSkillCoolTimers[3].text = string.Format("{0:N1}", kyle.getTimer("R"));
+    }    
 }
