@@ -5,14 +5,13 @@ using UnityEngine;
 public class Kail_R : MonoBehaviour
 {
     ParticleSystem particle;
-    public void Trigger(Vector3 Position)
+    public void Trigger()
     {
         particle = GetComponent<ParticleSystem>();
-        StartCoroutine(R(Position));
+        StartCoroutine(R());
     }
-    public IEnumerator R(Vector3 Position)
+    public IEnumerator R()
     {
-        transform.position = Position;
         yield return new WaitForSeconds(particle.main.startLifetimeMultiplier);
         Destroy(gameObject);
     }

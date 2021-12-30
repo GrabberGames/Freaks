@@ -42,7 +42,6 @@ public class Kali : MonoBehaviour
 
     //sound variable
     public AudioSource[] audioSource;
-    public AudioSource[] skill_voice;
     private bool MovingAudioSoungIsActive = false;
 
     private GameObject R_Skill;
@@ -317,8 +316,15 @@ public class Kali : MonoBehaviour
     }
     public void R_Instantiate()
     {
-        R_Skill = Instantiate(R_Skill_Prefab);
-        R_Skill.GetComponent<Kail_R>().Trigger(transform.position);
+        RaycastHit hit;
+        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+
+        if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
+        {
+            R_Skill = Instantiate(R_Skill_Prefab);
+            R_Skill.transform.position = new Vector3(hit.point.x, hit.point.y +0.2f, hit.point.z);
+            R_Skill.GetComponent<Kail_R>().Trigger();
+        }
     }
     public void R_Stop()
     {

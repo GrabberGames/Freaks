@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Kyle_Bullet : MonoBehaviour
 {
-    private float _bullet_speed = 30f;
+    private float _bullet_speed = 60f;
     private float _bullet_time = 0f;
 
     public GameObject enemy;
@@ -46,7 +46,7 @@ public class Kyle_Bullet : MonoBehaviour
 
             case "Q":
                 _bullet = _Bullet.Q; 
-                _bullet_time = 3f;  //체공시간 3초
+                _bullet_time = 1f;  //체공시간 3초
                 ps_tile =  Instantiate(projectile_skill, transform);
                 ps_tile.transform.LookAt(look_dir);
                 ps_tile.Play();
@@ -57,7 +57,7 @@ public class Kyle_Bullet : MonoBehaviour
             case "W":
             case "E":
                 _bullet = _Bullet.WE;
-                _bullet_time = 2f;  //체공시간 2초
+                _bullet_time = 0.5f;  //체공시간 2초
                 ps_tile = Instantiate(projectile_skill);
                 ps_tile.Play();
                 Invoke("Destroy", _bullet_time);
