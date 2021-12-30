@@ -229,6 +229,7 @@ public class Kali : MonoBehaviour
     void Determination()
     {
         AudioManager.a_instance.Read("Q스킬 " + Random.Range(1, 3));
+
         ParticleSystem _q = Instantiate(_Q_ps);
         _q.transform.position = _left_arm.transform.position;
         _q.Play();
