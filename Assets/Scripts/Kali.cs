@@ -338,7 +338,7 @@ public class Kali : MonoBehaviour
     {
         if (!canNormalAttack)
             return;
-        if (Input.GetMouseButtonDown(0) && canNormalAttack)
+        if (Input.GetMouseButtonDown(0))
         {
             if (AttackNum == 0)
             {
@@ -353,15 +353,12 @@ public class Kali : MonoBehaviour
                 AttackNum = 0;
             }
             audioSource[5].Play();
-            StartCoroutine(CoolTime(canNormalAttackTime, canNormalAttack));
+            canNormalAttack = false;
         }
     }
-    IEnumerator CoolTime(float time, bool b)
-    {
-        b = !b;
-        yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("Normal Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Normal Attack 2")) && !animator.IsInTransition(0));
+    public void Normal_Attack_Fun() { 
         animator.SetBool("Attack", false);
-        b = !b;
+        canNormalAttack = true;
     }
     void Update()
     {

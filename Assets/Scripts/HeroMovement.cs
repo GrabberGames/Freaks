@@ -187,7 +187,7 @@ namespace WarriorAnims
             animator.SetBool("Moving", false);
             if (Input.GetMouseButtonDown(1))
             {
-                //agent.velocity = Vector3.zero;
+                agent.velocity = Vector3.zero;
                 RaycastHit hit;
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
@@ -217,7 +217,7 @@ namespace WarriorAnims
 
             if (Input.GetMouseButtonDown(1))
             {
-                //agent.velocity = Vector3.zero;
+                agent.velocity = Vector3.zero;
                 RaycastHit hit;
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
