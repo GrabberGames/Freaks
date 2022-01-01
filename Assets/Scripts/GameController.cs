@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI[] kailSkillCoolTimers;
+    public Image[] kyleCoolMasks;
     public Image mask;
     public int wave_min = 0;
     public int wave_sec = 0;
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour
     private int sec = 0;
     private float originalSize;
     private float value = 0;
+    private float[] skillSizes = new float[4];
 
 
 
@@ -36,6 +38,11 @@ public class GameController : MonoBehaviour
         spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
         kyle = GameObject.Find("Kyle").GetComponent<Kali>();
         originalSize = mask.rectTransform.rect.width;
+
+        for (int i = 0; i < 4; i++) {
+            skillSizes[i] = kyleCoolMasks[i].rectTransform.rect.height;
+            Debug.Log(skillSizes[i]);
+        } 
 
         StartCoroutine(PlayTimer());
         StartCoroutine(WaveTimer());
@@ -46,6 +53,7 @@ public class GameController : MonoBehaviour
     {
         FXmovePlayer();
         kailSCool();
+        kailSCoolBtn();
     }
 
 
@@ -125,9 +133,30 @@ public class GameController : MonoBehaviour
 
     // Skill Cool Timer UI Controll; Kail
     public void kailSCool(){
+        // CoolTime Text print
         kailSkillCoolTimers[0].text = string.Format("{0:N1}", kyle.getTimer("Q"));
         kailSkillCoolTimers[1].text = string.Format("{0:N1}", kyle.getTimer("W"));
         kailSkillCoolTimers[2].text = string.Format("{0:N1}", kyle.getTimer("E"));
         kailSkillCoolTimers[3].text = string.Format("{0:N1}", kyle.getTimer("R"));
-    }    
+    }
+    
+
+    public void kailSCoolBtn() {
+        // CoolTime Gauge(mask) handler
+        if(Input.GetKeyDown(KeyCode.Q)) {
+            kyleCoolMasks[0].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[0] - 90f); // TODO: 2021.12.31; reduce val. test
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
