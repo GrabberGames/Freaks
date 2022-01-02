@@ -31,6 +31,9 @@ public class Kali : MonoBehaviour
 
     public KailAni kailAni;
 
+
+    WaitForSeconds seconds_2s = new WaitForSeconds(2f);
+
     //skill cooltime variable
     float t_time = 0.0f;
     float q_time = 0.0f;
@@ -38,7 +41,7 @@ public class Kali : MonoBehaviour
     float e_time = 0.0f;
     float r_time = 0.0f;
     bool press = false;
-    WaitForSeconds seconds = new WaitForSeconds(0.1f);
+    WaitForSeconds seconds_01s = new WaitForSeconds(0.1f);
 
     //sound variable
     public AudioSource[] audioSource;
@@ -59,6 +62,10 @@ public class Kali : MonoBehaviour
 
     //Kyle Bullet Prefab 
     public GameObject _bullet;
+
+    //Kyle Sound Priority Variable & Far Distance Judge
+    private int _priority = 0;
+    private float _dist = 0f;
     void Activation(string skill)
     {
         switch (skill)
@@ -107,7 +114,6 @@ public class Kali : MonoBehaviour
                 return 0;
         }
     }
-
     IEnumerator Skill_CoolTime()
     {
         while (t_time > 0)
@@ -134,10 +140,9 @@ public class Kali : MonoBehaviour
                 press = false;
             }
             t_time -= 0.1f;
-            yield return seconds;
+            yield return seconds_01s;
         }
     }
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -224,12 +229,73 @@ public class Kali : MonoBehaviour
         }
     }
 
+    public void SoundPlay(string _name, int idx = 0)
+    {
+        if (AudioManager.a_instance.Check() == true)
+            _priority = 0;
+        string _soundname = "";
+        switch(_name)
+        {            
+            case "장거리 이동":
+            case "단거리 이동":
+                //현재 실행중인 사운드가 없으면 실행
+                if (_priority == 0)
+                {
+                    _priority = 3;
+                       _soundname = $"{_name} " + Random.Range(1, 11);
+                }
+                break;
+
+            case "Q":
+            case "W":
+            case "E":
+            case "R":
+                //현재 실행중인 사운드가 없거나 우선순위 3순위인게 실행중이면 하이재킹.
+                if (_priority == 0 || _priority > 2)
+                {
+                    _priority = 2;
+                    if (idx == 3)
+                        _soundname = $"{_name}스킬";
+                    else
+                        _soundname = $"{_name}스킬 " + Random.Range(1, 3);
+                    audioSource[idx].Play();
+                }
+                break;
+
+            case "시작":
+            case "승리":
+            case "부활":
+            case "스위치":
+                //현재 실행중인 사운드가 없거나 우선순위 2, 3순위인게 실행중이면 하이재킹.
+                if (_priority == 0 || _priority > 1)
+                {
+                    _priority = 1;
+                    if(idx != 0)
+                    {
+                        if (idx == 1)
+                            _soundname = "첫번째 ";
+                        else if (idx == 2)
+                            _soundname = "두번째";
+                        else if (idx == 3)
+                            _soundname = "세번째";
+                        _soundname += $"{_name} " + Random.Range(1, 3);
+                    }
+                    else
+                        _soundname = $"{_name} " + Random.Range(1, 3);
+                }
+                break;
+
+
+        }
+        //실행하기.
+        AudioManager.a_instance.Read(_soundname);
+    }
+
     #region Q_Skill
     void Determination()
     {
-        AudioManager.a_instance.Read("Q스킬 " + Random.Range(1, 3));
-
-        ParticleSystem _q = Instantiate(_Q_ps);
+        SoundPlay("Q", 0);
+           ParticleSystem _q = Instantiate(_Q_ps);
         _q.transform.position = _left_arm.transform.position;
         _q.Play();
         StartCoroutine(Q_ParticleOff(_q));
@@ -244,7 +310,6 @@ public class Kali : MonoBehaviour
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 1);
-        audioSource[0].Play();
     }
     public void Q_Stop()
     {
@@ -259,17 +324,15 @@ public class Kali : MonoBehaviour
         Destroy(_q);
     }
     #endregion
-
     #region W_Skill
     void Atonement()
     {
-        AudioManager.a_instance.Read("W스킬 " + Random.Range(1, 3));
+        SoundPlay("W", 1);
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 2);
-        audioSource[1].Play();
     }
     public void W_Stop()
     {
@@ -282,7 +345,7 @@ public class Kali : MonoBehaviour
     #region E_Skill
     void Evation()
     {
-        AudioManager.a_instance.Read("E스킬 " + Random.Range(1, 3));
+        SoundPlay("E", 2);
         agent.ResetPath();
         useRootMotion = true;
         isAction = true;
@@ -302,13 +365,12 @@ public class Kali : MonoBehaviour
     #region R_Skill
     void HorizonofMemory()
     {
-        AudioManager.a_instance.Read("R 스킬");
+        SoundPlay("R", 3);
         agent.ResetPath();
         isAction = true;
         animator.SetBool("Moving", false);
         animator.SetBool("Skill", true);
         animator.SetInteger("SkillNumber", 4);
-        audioSource[3].Play();
     }
     public void R_Sound()
     {
@@ -362,6 +424,7 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
+        print(_dist);
         ChooseAction();
         switch (_state)
         {
@@ -402,9 +465,8 @@ public class Kali : MonoBehaviour
     IEnumerator MoveSound()
     {
         audioSource[6].Play();
-        yield return new WaitForSeconds(2f);
+        yield return seconds_2s;
         MovingAudioSoungIsActive = false;
-
     }
     private void UpdateDie()
     {
@@ -420,6 +482,11 @@ public class Kali : MonoBehaviour
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
+                _dist = Vector3.Distance(transform.position, hit.point);
+                if (_dist > 120f)
+                    SoundPlay("장거리 이동");
+                else
+                    SoundPlay("단거리 이동");
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
                 animator.SetBool("Moving", true);
@@ -442,6 +509,11 @@ public class Kali : MonoBehaviour
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
+                _dist = Vector3.Distance(transform.position, hit.point);
+                if(_dist > 120f)
+                    SoundPlay("장거리 이동");
+                else
+                    SoundPlay("단거리 이동");
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
             }

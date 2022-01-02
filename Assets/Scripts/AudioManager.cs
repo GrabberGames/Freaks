@@ -13,10 +13,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    [SerializeField] AudioSource[] sfxPlayer;
+    [SerializeField] AudioSource sfxPlayer;
 
     Dictionary<string, AudioClip> data = new Dictionary<string, AudioClip>();
 
+    bool SoundIsEnd = false;
     static void Init()
     {
         if (a_instance == null)
@@ -32,6 +33,10 @@ public class AudioManager : MonoBehaviour
              a_instance = ob_go.GetComponent<AudioManager>();
         }
     }
+    public void Stop()
+    {
+        sfxPlayer.Stop();
+    }
     public void Load()
     {
         object[] tmp = Resources.LoadAll("Audios");
@@ -44,11 +49,19 @@ public class AudioManager : MonoBehaviour
             data.Add(audioName, audioClip);
         }
     }
-
+    public bool Check()
+    {
+        if (sfxPlayer.isPlaying)
+            SoundIsEnd = false;
+        else
+            SoundIsEnd = true;
+        return SoundIsEnd;
+    }
     public void Read(string text)
     {
         if (data.Count == 0)
             Load();
+
 
         var enumData = data.GetEnumerator();
 
@@ -56,15 +69,8 @@ public class AudioManager : MonoBehaviour
         {
             if (enumData.Current.Key == text)
             {
-                for(int i = 0; i < sfxPlayer.Length; i++)
-                {
-                    if(!sfxPlayer[i].isPlaying)
-                    {
-                        sfxPlayer[i].clip = enumData.Current.Value;
-                        sfxPlayer[i].Play();
-                        return;
-                    }
-                }
+                sfxPlayer.clip = enumData.Current.Value;
+                sfxPlayer.Play();
                 return;
             }
         }
