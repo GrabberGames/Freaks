@@ -143,18 +143,38 @@ public class GameController : MonoBehaviour
 
     public void kailSCoolBtn() {
         // CoolTime Gauge(mask) handler
-        if(Input.GetKeyDown(KeyCode.Q)) {
-            kyleCoolMasks[0].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[0] - 90f); // TODO: 2021.12.31; reduce val. test
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            StartCoroutine(ScoolMask(0.367f, "Q", 0));
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            StartCoroutine(ScoolMask(0.267f, "W", 1));
+
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(ScoolMask(0.250f, "E", 2));
+
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(ScoolMask(0.045f, "R", 3));
         }
     }
 
 
+    IEnumerator ScoolMask(float val, string skill, int indx)
+    {
+        float _val = val;
 
-
-
-
-
-
+        while (kyle.getTimer(skill) > 0.1f)
+        {
+            kyleCoolMasks[indx].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[indx] - val);
+            val += _val;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 
 
 
