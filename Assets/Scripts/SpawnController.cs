@@ -28,7 +28,8 @@ public class SpawnController: MonoBehaviour
             //Instantiate(Freakses[0], SpawnPoint[randomSpawn].transform.position, Quaternion.identity);
             if (isRage)
             {
-                obj.transform.position = SpawnPoint[randomSpawn + 1].transform.position;
+                var rageObj = ObjectPooling.instance.GetObject("BlackFreaks");
+                rageObj.transform.position = SpawnPoint[randomSpawn + 1].transform.position;
             }
             cm_num--;
         }

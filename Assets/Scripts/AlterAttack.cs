@@ -8,6 +8,7 @@ public class AlterAttack : MonoBehaviour
     public GameObject enemy;
     public ParticleSystem FX_Alter_Emit;
     public ParticleSystem FX_Alter_Smoke;
+    public AudioSource SFXAttackStart;
 
     private float AttackPerSeconds = 4f;
 
@@ -24,6 +25,10 @@ public class AlterAttack : MonoBehaviour
         if (other.transform.CompareTag("BlackFreaks"))
         {
             enemy = other.gameObject;
+            if (!SFXAttackStart.isPlaying)
+            {
+                SFXAttackStart.Play();
+            }
             StartCoroutine(FindInAttackRange());
         }
     }

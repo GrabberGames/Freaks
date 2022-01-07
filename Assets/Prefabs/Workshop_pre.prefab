@@ -1409,3 +1409,4 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 905a8523de338974396ba6a6121522d4, type: 2}
   - {fileID: 2100000, guid: b1a9baaa92702e743bc7e6b97c716695, type: 2}
   - {fileID: 2100000, guid: ccf83dbfa2487064ca1a2b2e59c42a44, type: 2}
+  VFXWorkshopBuild: {fileID: 2263844207823160281, guid: 71fe95db95728754b872e80803bf07a6, type: 3}

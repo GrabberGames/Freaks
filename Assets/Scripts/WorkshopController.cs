@@ -14,7 +14,6 @@ public class WorkshopController : Building
         Red
     }
 
-
     public int remainEssense = 1000;
 
     [SerializeField] private Material[] materials;

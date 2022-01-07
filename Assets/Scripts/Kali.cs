@@ -424,7 +424,7 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
-        print(_dist);
+       //print(_dist);
         ChooseAction();
         switch (_state)
         {
