@@ -7,6 +7,7 @@ public class AlterBullet : MonoBehaviour
     public ParticleSystem FX_Alter_Projectile_Pre;
     public GameObject FX_Alter_Hit;
     public GameObject FX_Alter_Hit_Pre;
+    public AudioSource SFXAlterBulletEx;
 
     [HideInInspector]
     public GameObject enemy;
@@ -52,6 +53,7 @@ public class AlterBullet : MonoBehaviour
         //print(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
         yield return new WaitForSeconds(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
         State = 3;
+        SFXAlterBulletEx.Play();
         Destroy(this.gameObject);
     }
 }

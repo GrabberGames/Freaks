@@ -10,7 +10,8 @@ public class FreaksAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        freaksController = transform.parent.gameObject.transform.GetComponent<FreaksController>();
+        //freaksController = transform.parent.gameObject.transform.GetComponent<FreaksController>();
+        freaksController = GetComponent<FreaksController>();
     }
 
 

@@ -10,6 +10,8 @@ public class AlterController : Building, DamageService, HealthService
     public GameObject whiteFreaksPref;
     public TextMeshProUGUI wFreaksCount;
     public TextMeshProUGUI mineCount;
+    public GameObject VFXAlterDestroy;
+    public AudioSource SFXAlterDestroy;
 
     public float healthPoint = 2000.0f;
     public int essence = 1000;
@@ -34,6 +36,11 @@ public class AlterController : Building, DamageService, HealthService
         if (whiteFreaks - busyWhiteF >= 0)
         {
             wFreaksCount.text = string.Format("{0:D2} / {1:D2}", busyWhiteF, whiteFreaks);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            AlterDestroy();
         }
     }
 
@@ -135,5 +142,12 @@ public class AlterController : Building, DamageService, HealthService
     public void returnedBusyFreeks()
     {
         busyWhiteF--;
+    }
+
+    private void AlterDestroy()
+    {
+        SFXAlterDestroy.Play();
+        Instantiate(VFXAlterDestroy);
+        Destroy(transform.GetChild(0).gameObject);
     }
 }
