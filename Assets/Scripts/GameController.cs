@@ -41,7 +41,6 @@ public class GameController : MonoBehaviour
 
         for (int i = 0; i < 4; i++) {
             skillSizes[i] = kyleCoolMasks[i].rectTransform.rect.height;
-            Debug.Log(skillSizes[i]);
         } 
 
         StartCoroutine(PlayTimer());

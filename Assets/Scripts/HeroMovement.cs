@@ -183,6 +183,7 @@ namespace WarriorAnims
         }
         private void UpdateIdle()
         {
+            agent.velocity = Vector3.zero;
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             animator.SetBool("Moving", false);
             if (Input.GetMouseButtonDown(1))
@@ -305,6 +306,7 @@ namespace WarriorAnims
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
+            SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             animator.SetBool("Moving", true);
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
