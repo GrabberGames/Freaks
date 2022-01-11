@@ -8,7 +8,6 @@ public class Waron_Skill_Stop : MonoBehaviour
 
     public void Waron_Q_Stop()
     {
-        print("Q");
         if(hero == null)
         {
             hero = GetComponentInParent<WarriorAnims.HeroMovement>();
@@ -18,7 +17,6 @@ public class Waron_Skill_Stop : MonoBehaviour
     }
     public void Waron_W_Stop_1()
     {
-        print("W");
         if (hero == null)
         {
             hero = GetComponentInParent<WarriorAnims.HeroMovement>();
@@ -27,7 +25,6 @@ public class Waron_Skill_Stop : MonoBehaviour
     }
     public void Waron_W_Stop_2()
     {
-        print("W!");
         if (hero == null)
         {
             hero = GetComponentInParent<WarriorAnims.HeroMovement>();

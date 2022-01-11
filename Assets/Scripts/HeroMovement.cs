@@ -53,6 +53,10 @@ namespace WarriorAnims
         float r_time = 0.0f;
         bool press = false;
         WaitForSeconds seconds = new WaitForSeconds(0.1f);
+
+        //skill vfx prefabs 
+        public GameObject R_particle;
+
         void Activation(string skill)
         {
             switch (skill)
@@ -104,6 +108,17 @@ namespace WarriorAnims
                 if (r_time > 0.1f)
                 {
                     r_time -= 0.1f;
+                    if(R_particle.activeInHierarchy)
+                    {
+                        if(r_time < 96.0f && r_time > 95.9f)
+                        {
+                            StartCoroutine(R_Shader_Value_Change(0.4f));
+                        }
+                        if(r_time < 95.0f)
+                        {
+                            R_particle.SetActive(false);
+                        }
+                    }
                 }
                 if (t_time < 0.1f)
                 {
@@ -391,7 +406,17 @@ namespace WarriorAnims
             isAction = false;
             waronSkillManage.UseSkillNumber = 0;
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+            R_particle.SetActive(true);
+            StartCoroutine(R_Shader_Value_Change(0.1f));
             _state = PlayerState.Idle;
+        }
+        IEnumerator R_Shader_Value_Change(float _value)
+        {
+            yield return new WaitForSeconds(1f);
+            //Debug.Log(R_particle.transform.GetChild(0).transform.GetChild(0) + " " + gameObject);
+            //print(R_particle.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.GetFloat("Mask Clip Value"));
+
+            R_particle.transform.GetChild(0).GetComponentInChildren<Renderer>().sharedMaterial.SetFloat("_Cutoff", _value);
         }
         #endregion R_Skill
 

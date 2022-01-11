@@ -187,7 +187,6 @@ GameObject:
   - component: {fileID: 487146}
   - component: {fileID: 3320634}
   - component: {fileID: 2369120}
-  - component: {fileID: 64583076319660614}
   - component: {fileID: -3579892955419831767}
   m_Layer: 0
   m_Name: SM_Veh_Car_Van_01
@@ -268,20 +267,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64583076319660614
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 130278}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 97982d8a36ff16f4a88f291ef2443e49, type: 3}
 --- !u!65 &-3579892955419831767
 BoxCollider:
   m_ObjectHideFlags: 0
