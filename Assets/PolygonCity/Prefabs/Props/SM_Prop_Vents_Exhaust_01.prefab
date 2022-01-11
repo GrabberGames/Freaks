@@ -16,12 +16,13 @@ GameObject:
   - component: {fileID: 64661154842631092}
   - component: {fileID: 64159984482060036}
   - component: {fileID: -6145580654950757729}
-  m_Layer: 0
+  - component: {fileID: 1258678557772601465}
+  m_Layer: 9
   m_Name: SM_Prop_Vents_Exhaust_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &496374
 Transform:
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 117306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.64796, y: 3.6479585, z: 3.64796}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -155,3 +156,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.86809826, y: 1.6302991, z: 2.726616}
   m_Center: {x: -0.00000333786, y: 0.81514955, z: 1.363306}
+--- !u!65 &1258678557772601465
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117306}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8680984, y: 1.6302993, z: 2.7266166}
+  m_Center: {x: -0.0000033378599, y: 0.81514966, z: 1.3632911}

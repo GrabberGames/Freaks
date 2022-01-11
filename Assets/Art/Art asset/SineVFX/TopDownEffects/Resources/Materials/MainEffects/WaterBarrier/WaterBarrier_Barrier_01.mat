@@ -195,7 +195,7 @@ Material:
     - _WavesEnabled: 0
     - _WavesScale: 8
     - _WavesSpeed: 4
-    - __dirty: 0
+    - __dirty: 1
     m_Colors:
     - _BackColor: {r: 1, g: 0, b: 0, a: 1}
     - _EdgeGlowColor: {r: 1, g: 0, b: 0, a: 1}

@@ -11,14 +11,13 @@ GameObject:
   - component: {fileID: 467878}
   - component: {fileID: 3395774}
   - component: {fileID: 2306966}
-  - component: {fileID: 64732304882736528}
   - component: {fileID: -476965020781438302}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Bld_Apartment_Stack_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &467878
 Transform:
@@ -29,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 151176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.6636174, y: 3.663617, z: 4.0342073}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -83,20 +82,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64732304882736528
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151176}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43145123891503732, guid: 786104971c0b24244bd4083b3272a39f, type: 2}
 --- !u!65 &-476965020781438302
 BoxCollider:
   m_ObjectHideFlags: 0
