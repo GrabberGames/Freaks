@@ -14,12 +14,13 @@ GameObject:
   - component: {fileID: 64448163309284736}
   - component: {fileID: 64654087423707874}
   - component: {fileID: -5894541931920845034}
-  m_Layer: 0
+  - component: {fileID: 7454986683175220305}
+  m_Layer: 9
   m_Name: SM_Prop_Vents_End_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &414098
 Transform:
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 130136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.6479602, y: 3.6479585, z: 3.6479602}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -125,3 +126,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9204025, y: 0.8034608, z: 1.0877323}
   m_Center: {x: -0.0000047683716, y: 0.40173033, z: 0.54386425}
+--- !u!65 &7454986683175220305
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.92040265, y: 0.8034609, z: 1.0877326}
+  m_Center: {x: -0.000012397767, y: 0.4017304, z: 0.543872}
