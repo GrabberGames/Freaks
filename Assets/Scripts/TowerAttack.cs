@@ -8,49 +8,48 @@ public class TowerAttack : MonoBehaviour
     public GameObject bulletpre;
     public GameObject player;
     public ParticleSystem fx_blackTower;
-
+    public ParticleSystem fx_hit;
+    Stat _stat = new Stat();
 
     private float AttackPerSeconds = 4f;
 
     private Vector3 bulletSpawnPosition;
 
 
+    bool isAttack = false;
+
     void Start()
     {
-        FindHero();
+        _stat = ObjectPooling.instance.Get_Stat("blacktower");
 
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
     }
 
-
-    void FindHero()
+    private void Update()
     {
-        player = GameObject.Find("Waron");
-    }
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.transform.name == "Waron")
+        if(player == null)
         {
-            StartCoroutine(FindInAttackRange());
+            if (GameManager.Instance.Player == null)
+                return;
+            else
+                player = GameManager.Instance.Player;
+        }
+        if((player.transform.position - transform.position).magnitude <=  _stat.ATTACK_RANGE)
+        {
+            if (isAttack)
+                return;
+            else
+            {
+                StartCoroutine(FindInAttackRange());
+                isAttack = true;
+            }
         }
     }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.name == "Waron")
-        {
-            StopAllCoroutines();
-        }
-    }
-
 
     IEnumerator FindInAttackRange()
     {
         bullet = Instantiate(bulletpre, bulletSpawnPosition, Quaternion.Euler(bulletSpawnPosition - player.transform.position));
-        bullet.GetComponent<TowerBullet>().InitSetting(player);
+        bullet.GetComponent<TowerBullet>().InitSetting();
         fx_blackTower.Play(true);
 
         yield return new WaitForSeconds(fx_blackTower.main.startDelayMultiplier);
@@ -58,7 +57,6 @@ public class TowerAttack : MonoBehaviour
         fx_blackTower.Play(false);
 
         yield return new WaitForSeconds(AttackPerSeconds - fx_blackTower.main.startDelayMultiplier);
-
-        StartCoroutine(FindInAttackRange());
+        isAttack = false;
     }
 }

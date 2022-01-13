@@ -42,8 +42,8 @@ public class FreaksController : MonoBehaviour
         waron_stat = ObjectPooling.instance.Get_Stat("waron");
         kail_stat = ObjectPooling.instance.Get_Stat("kail");
 
-        currentHealth = black_stat.hp;
-        enemyHealth = white_stat.hp;
+        currentHealth = black_stat.HP;
+        enemyHealth = white_stat.HP;
         MoveSpeed = agent.speed;
 
         alterPosition = alter.transform.position;
@@ -107,11 +107,11 @@ public class FreaksController : MonoBehaviour
     {
         if (near == kail)
         {
-            kail_stat.hp -= amount;
+            kail_stat.HP -= amount;
         }
         else if (near == waron)
         {
-            waron_stat.hp -= amount;
+            waron_stat.HP -= amount;
         }
         else if (near == alter)
         {
@@ -119,7 +119,7 @@ public class FreaksController : MonoBehaviour
         }
         else
         {
-            white_stat.hp -= amount;
+            white_stat.HP -= amount;
         }
     }
 

@@ -4,7 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Kali : MonoBehaviour
 {
-    private enum PlayerState
+    enum Layers 
+    { 
+        Enemy = 7,
+    }
+    public enum PlayerState
     {
         Attack,
         Die,
@@ -15,6 +19,38 @@ public class Kali : MonoBehaviour
         E,
         R,
     }
+    PlayerState _state= PlayerState.Idle;
+    public PlayerState State
+    {
+        get { return _state; }
+        set
+        {
+            _state = value;
+            Animator animator = GetComponent<Animator>();
+            switch (_state)
+            {
+                case PlayerState.Idle:
+                    animator.CrossFade("Idle", 0.1f, -1, 0);
+                    break;
+                case PlayerState.Q:
+                    animator.Play("Gun attack3");
+                    break;
+                case PlayerState.W:
+                    animator.Play("TwoGun Attack 05");
+                    break;
+                case PlayerState.E:
+                    animator.Play("Jumbo Back Attack");
+                    break;
+                case PlayerState.R:
+                    animator.Play("Gun Air Attack");
+                    break;
+                case PlayerState.Moving:
+                    animator.CrossFade("Strafe_Run_Front", 0.1f, -1, 0);
+                    break;
+            }
+
+        }
+    }
     private bool isAction = false;
     private bool canNormalAttack = true;
     private float canNormalAttackTime = 2f;
@@ -22,7 +58,6 @@ public class Kali : MonoBehaviour
     private Vector3 dir;
     private Vector3 look_dir;
 
-    PlayerState _state = PlayerState.Idle;
     private bool useRootMotion = false;
     private Animator animator;
     private Camera mainCamera;
@@ -66,6 +101,9 @@ public class Kali : MonoBehaviour
     //Kyle Sound Priority Variable & Far Distance Judge
     private int _priority = 0;
     private float _dist = 0f;
+
+    //Kyle Basic Attack Target Object
+    GameObject _lockTarget;
     void Activation(string skill)
     {
         switch (skill)
@@ -169,19 +207,16 @@ public class Kali : MonoBehaviour
         if (isAction)
             return;
 
-        // Normal Attack
-        Basic_Attack();
-
         //Q
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (q_time > 0.1f)
                 return;
             //useRootMotion = true; 
+            State = PlayerState.Q;
             ChangRotate();
             Activation("Q");
             Determination();
-            _state = PlayerState.Q;
         }
         //W
 
@@ -189,10 +224,10 @@ public class Kali : MonoBehaviour
         {
             if (w_time > 0.1f)
                 return;
+            State = PlayerState.W;
             useRootMotion = true; ChangRotate();
             Atonement();
             Activation("W");
-            _state = PlayerState.W;
         }
         //E
 
@@ -200,20 +235,20 @@ public class Kali : MonoBehaviour
         {
             if (e_time > 0.1f)
                 return;
+            State = PlayerState.E;
             useRootMotion = true; ChangRotate();
             Activation("E");
             Evation();
-            _state = PlayerState.E;
         }
         //R
         else if (Input.GetKeyDown(KeyCode.R))
         {
             if (r_time > 0.1f)
                 return;
+            State = PlayerState.R;
             useRootMotion = true; ChangRotate();
             Activation("R");
             HorizonofMemory();
-            _state = PlayerState.R;
         }
     }
     void ChangRotate()
@@ -228,7 +263,7 @@ public class Kali : MonoBehaviour
             transform.LookAt(look_dir);
         }
     }
-
+    
     public void SoundPlay(string _name, int idx = 0)
     {
         if (AudioManager.a_instance.Check() == true)
@@ -295,8 +330,15 @@ public class Kali : MonoBehaviour
     void Determination()
     {
         SoundPlay("Q", 0);
-           ParticleSystem _q = Instantiate(_Q_ps);
+
+        agent.ResetPath();
+        isAction = true;
+    }
+    public void Q_Bullet_Spawn()
+    {
+        ParticleSystem _q = Instantiate(_Q_ps);
         _q.transform.position = _left_arm.transform.position;
+        _q.transform.LookAt(look_dir);
         _q.Play();
         StartCoroutine(Q_ParticleOff(_q));
 
@@ -304,24 +346,20 @@ public class Kali : MonoBehaviour
         go.transform.position = transform.position;
         go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", look_dir);
-
-        agent.ResetPath();
-        isAction = true;
-        animator.SetBool("Moving", false);
-        animator.SetBool("Skill", true);
-        animator.SetInteger("SkillNumber", 1);
     }
     public void Q_Stop()
     {
         isAction = false;
         useRootMotion = false;
-        animator.SetBool("Skill", false);
-        _state = PlayerState.Idle;
+        State = PlayerState.Idle;
     }
     IEnumerator Q_ParticleOff(ParticleSystem _q)
     {
         yield return new WaitForSeconds(_q.main.startLifetimeMultiplier);
-        Destroy(_q);
+        if (_q != null)
+            Destroy(_q);
+        else
+            yield return null;
     }
     #endregion
     #region W_Skill
@@ -330,16 +368,12 @@ public class Kali : MonoBehaviour
         SoundPlay("W", 1);
         agent.ResetPath();
         isAction = true;
-        animator.SetBool("Moving", false);
-        animator.SetBool("Skill", true);
-        animator.SetInteger("SkillNumber", 2);
     }
     public void W_Stop()
     {
         isAction = false;
         useRootMotion = false;
-        animator.SetBool("Skill", false);
-        _state = PlayerState.Idle;
+        State = PlayerState.Idle;
     }
     #endregion
     #region E_Skill
@@ -349,17 +383,13 @@ public class Kali : MonoBehaviour
         agent.ResetPath();
         useRootMotion = true;
         isAction = true;
-        animator.SetBool("Moving", false);
-        animator.SetBool("Skill", true);
-        animator.SetInteger("SkillNumber", 3);
         audioSource[2].Play();
     }
     public void E_Stop()
     {
         useRootMotion = false;
         isAction = false;
-        animator.SetBool("Skill", false);
-        _state = PlayerState.Idle;
+        State = PlayerState.Idle;
     }
     #endregion
     #region R_Skill
@@ -368,9 +398,6 @@ public class Kali : MonoBehaviour
         SoundPlay("R", 3);
         agent.ResetPath();
         isAction = true;
-        animator.SetBool("Moving", false);
-        animator.SetBool("Skill", true);
-        animator.SetInteger("SkillNumber", 4);
     }
     public void R_Sound()
     {
@@ -392,42 +419,54 @@ public class Kali : MonoBehaviour
     {
         isAction = false;
         useRootMotion = false;
-        animator.SetBool("Skill", false);
-        _state = PlayerState.Idle;
+        State = PlayerState.Idle;
     }
     #endregion
     void Basic_Attack()
     {
-        if (!canNormalAttack)
+        if (!canNormalAttack || _lockTarget == null)
             return;
-        if (Input.GetMouseButtonDown(0))
+
+        transform.LookAt(_lockTarget.transform);
+        agent.SetDestination(transform.position);
+
+        if (AttackNum == 0)
         {
-            if (AttackNum == 0)
-            {
-                animator.SetBool("Attack", true);
-                animator.SetBool("NormalAttack", true);
-                AttackNum = 1;
-            }
-            else
-            {
-                animator.SetBool("Attack", true);
-                animator.SetBool("NormalAttack", false);
-                AttackNum = 0;
-            }
-            audioSource[5].Play();
-            canNormalAttack = false;
+            GameObject go = Instantiate(_bullet);
+            print(_left_arm.transform.position + " " + transform.position);
+            go.transform.position = _left_arm.transform.position;
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir);
+            animator.CrossFade("Normal Attack 1", 0.1f);
+            animator.SetBool("Moving", false);
+            AttackNum = 1;
         }
+        else
+        {
+            GameObject go = Instantiate(_bullet);
+            go.transform.position = _right_arm.transform.position;
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir);
+            animator.CrossFade("Normal Attack 2", 0.1f);
+            animator.SetBool("Moving", false);
+            AttackNum = 0;
+        }
+        audioSource[5].Play();
+        canNormalAttack = false;
     }
-    public void Normal_Attack_Fun() { 
-        animator.SetBool("Attack", false);
+    public void Normal_Attack_Fun()
+    {
+        _lockTarget = null;
         canNormalAttack = true;
+        State = PlayerState.Idle;
     }
     void Update()
     {
-       //print(_dist);
         ChooseAction();
-        switch (_state)
+
+        switch (State)
         {
+            case PlayerState.Attack:
+                Basic_Attack();
+                break;
             case PlayerState.Q:
             case PlayerState.W:
             case PlayerState.E:
@@ -441,25 +480,23 @@ public class Kali : MonoBehaviour
                 UpdateDie();
                 break;
 
-            case PlayerState.Attack:
-                break;
-
             case PlayerState.Idle:
                 UpdateIdle();
                 break;
 
         }
+        IEnumerator co = MoveSound();
         //CharacterMovement();
         if (animator.GetBool("Moving") && !MovingAudioSoungIsActive)
         {
             MovingAudioSoungIsActive = true;
-            StartCoroutine(MoveSound());
+            StartCoroutine(co);
         }
         if (animator.GetBool("Moving") == false)
         {
             MovingAudioSoungIsActive = false;
-
-            StopCoroutine(MoveSound());
+            audioSource[6].Stop();
+            StopCoroutine(co);
         }
     }
     IEnumerator MoveSound()
@@ -474,14 +511,29 @@ public class Kali : MonoBehaviour
     }
     private void UpdateIdle()
     {
-        animator.SetBool("Moving", false);
         if (Input.GetMouseButtonDown(1))
         {
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
+                if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                    _lockTarget = hit.collider.gameObject;
+                else
+                    _lockTarget = null;
+
+                if (_lockTarget != null) //기본 공격 할 대상이 있다.
+                {
+                    float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+                    if (distance <= _stat.ATTACK_RANGE)
+                    {
+                        State = PlayerState.Attack;
+                        return;
+                    }
+                }
+
                 _dist = Vector3.Distance(transform.position, hit.point);
                 if (_dist > 120f)
                     SoundPlay("장거리 이동");
@@ -489,16 +541,28 @@ public class Kali : MonoBehaviour
                     SoundPlay("단거리 이동");
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
-                animator.SetBool("Moving", true);
-                _state = PlayerState.Moving;
+                animator.CrossFade("Strafe_Run_Front", 0.1f, -1, 0);
+                State = PlayerState.Moving;
             }
         }
     }
     private void UpdateMoving()
     {
+        if (_lockTarget != null) //기본 공격 할 대상이 있다.
+        {
+            float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+            if(distance <= _stat.ATTACK_RANGE)
+            {
+                State = PlayerState.Attack;
+                return;
+            }
+        }
+        animator.SetBool("Moving", true);
+
         look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
         if ((dir - transform.position).magnitude < 0.1f)
-            _state = PlayerState.Idle;
+            State = PlayerState.Idle;
 
         transform.LookAt(look_dir);
 
@@ -506,9 +570,15 @@ public class Kali : MonoBehaviour
         {
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
+
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
+                if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                    _lockTarget = hit.collider.gameObject;
+                else
+                    _lockTarget = null;
+
                 _dist = Vector3.Distance(transform.position, hit.point);
                 if(_dist > 120f)
                     SoundPlay("장거리 이동");

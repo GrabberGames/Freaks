@@ -91,15 +91,7 @@ AnimatorState:
   m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -6261265563238771805}
-  - {fileID: -6902248758596465432}
-  - {fileID: 4206258461813841610}
-  - {fileID: -3889166946140958815}
-  - {fileID: 3426470537647891110}
-  - {fileID: 4371566259070282519}
-  - {fileID: 7452876652820263720}
-  - {fileID: 8356507280902409604}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -309,8 +301,7 @@ AnimatorState:
   m_Name: Gun Air Attack
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 2084025708171387840}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -392,8 +383,7 @@ AnimatorState:
   m_Name: Strafe_Run_Front
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 6807644797347167687}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -544,10 +534,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8026316
-  m_HasExitTime: 0
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0.12931032
+  m_ExitTime: 1
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -587,8 +577,7 @@ AnimatorState:
   m_Name: Normal Attack 1
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 1773206831936565474}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -614,8 +603,7 @@ AnimatorState:
   m_Name: TwoGun Attack 05
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -6169042691737689207}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -648,10 +636,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.78571427
-  m_HasExitTime: 0
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0.12931041
+  m_ExitTime: 1
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -778,8 +766,7 @@ AnimatorState:
   m_Name: Jumbo Back Attack
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 4556004472236365527}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -864,8 +851,7 @@ AnimatorState:
   m_Name: Gun_groggy_end
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -4193416611591926420}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -916,8 +902,7 @@ AnimatorState:
   m_Name: Gun attack3
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 3534941562919299501}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -927,7 +912,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 19d1dfb2df886f4459c489b51b3f2ba9, type: 2}
+  m_Motion: {fileID: 7400000, guid: f57fd56dd4532b149be3666db7dc205a, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1044,8 +1029,7 @@ AnimatorState:
   m_Name: Normal Attack 2
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 2628402375109414373}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0

@@ -5,38 +5,42 @@ using UnityEngine;
 public class TowerBullet : MonoBehaviour
 {
     public ParticleSystem[] fx_blackTower;
-    public ParticleSystem[] fx_blackTowerPre;
-    public float BulletSpeed = 8000;
+    public GameObject[] fx_blackTowerPre;
+    private float BulletSpeed = 20f;
 
     private Vector3 playerPos;
     private GameObject player;
 
     private int State = 0;
 
+    private bool isCrushed = false;
 
-    public void InitSetting(GameObject player)
+    public void InitSetting()
     {
-        this.player = player;
+        if (player == null)
+        {
+            if (GameManager.Instance.Player == null)
+                return;
+            else
+                player = GameManager.Instance.Player;
+        }
         StartCoroutine(StartProjectile(0.5f));
     }
 
 
     private void Update()
     {
-        playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 5f, player.transform.position.z);
+        playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 4f, player.transform.position.z);
 
         switch (State) 
         {
             case 1:
-                fx_blackTower[1].transform.position = this.transform.position;
-                fx_blackTower[1].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[1].transform.position);
-                transform.position -= (transform.position - playerPos) * BulletSpeed * Time.deltaTime;
+                fx_blackTower[0].transform.LookAt(playerPos);
+                transform.position += (playerPos - transform.position).normalized * BulletSpeed * Time.deltaTime;
                 transform.rotation = Quaternion.identity;
                 break;
             case 2:
-                fx_blackTower[2].transform.position = this.transform.position;
-                fx_blackTower[2].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[2].transform.position);
-                transform.position -= (transform.position - playerPos) * BulletSpeed * Time.deltaTime;
+                transform.position += (playerPos-transform.position).normalized * BulletSpeed * Time.deltaTime;
                 transform.rotation = Quaternion.identity;
                 break;
             default:
@@ -47,17 +51,24 @@ public class TowerBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.name == "Waron")
-        {   
-            fx_blackTower[1].Play(false);
-            fx_blackTower[2] = Instantiate(fx_blackTowerPre[2]);
-            fx_blackTower[2].transform.SetParent(this.gameObject.transform);
-            fx_blackTower[2].transform.position = transform.position;
-            fx_blackTower[2].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[2].transform.position);
-            fx_blackTower[2].Play(true);
-            State = 2;
+        if(other.gameObject == player)
+        {
+            if (isCrushed == true)
+            {
+                return;
+            }
+            fx_blackTower[0].Pause();
+            fx_blackTower[0].Play(false);
+            fx_blackTowerPre[0].SetActive(false);
+            Destroy(fx_blackTowerPre[0]);
 
+            fx_blackTowerPre[1].SetActive(true);
+            fx_blackTower[1] = fx_blackTowerPre[1].GetComponent<ParticleSystem>();
+            fx_blackTower[1].Play(true);
+
+            State = 2;
             StartCoroutine(DeleteThis());
+            isCrushed = true;
         }
     }
 
@@ -65,24 +76,18 @@ public class TowerBullet : MonoBehaviour
     IEnumerator StartProjectile(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-
-        fx_blackTower[1] = Instantiate(fx_blackTowerPre[1]);
-        fx_blackTower[1].transform.SetParent(this.gameObject.transform);
-        fx_blackTower[1].transform.position = transform.position;
-        fx_blackTower[1].transform.rotation = Quaternion.LookRotation(playerPos - fx_blackTower[1].transform.position);
-        fx_blackTower[1].Play(true);
+        fx_blackTowerPre[0].SetActive(true);
+        fx_blackTower[0] = fx_blackTowerPre[0].GetComponent<ParticleSystem>();
+        fx_blackTower[0].Play(true);
         State = 1;
     }
 
 
     IEnumerator DeleteThis()
     {
-        Destroy(fx_blackTower[1]);
-
-        yield return new WaitForSeconds(fx_blackTower[2].main.startLifetimeMultiplier);
-        
+        yield return new WaitForSeconds(fx_blackTower[1].main.startLifetimeMultiplier); 
+        fx_blackTowerPre[1].SetActive(false);
         State = 3;
-        Destroy(fx_blackTower[2]);
-        Destroy(this.gameObject);
+        Destroy(fx_blackTower[1]);
     }
 }

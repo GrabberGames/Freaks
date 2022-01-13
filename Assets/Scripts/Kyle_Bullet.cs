@@ -112,7 +112,7 @@ public class Kyle_Bullet : MonoBehaviour
             case _Bullet.Basic:
                 Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.transform.position.z);
                 transform.position -= (transform.position - enemyPos) * _bullet_speed * Time.deltaTime;
-                transform.rotation = Quaternion.LookRotation(enemyPos - transform.position);
+                transform.LookAt(enemyPos);
                 break;
             case _Bullet.Q:
             case _Bullet.WE:

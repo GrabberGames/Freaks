@@ -1,132 +1,148 @@
 {
   "Json": {
     "alter": {
-      "attack": 50,
-      "hp": 2000,
-      "ats": 0.6,
-      "ms": 0,
-      "rg": 3,
-      "am": 0
+      "PD": 50,
+      "ED" : 0,
+      "HP": 2000,
+      "ATTACK_SPEED": 0.6,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 3,
+      "ARMOR": 0
     },
     "whitefreaks": {
-      "attack": 0,
-      "hp": 50,
-      "ats": 0,
-      "ms": 10,
-      "rg": 0,
-      "am": 0
+      "PD": 0,
+      "ED": 0,
+      "HP": 50,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 10,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
     },
     "whitetower": {
-      "attack": 70,
-      "hp": 400,
-      "ats": 0.3,
-      "ms": 0,
-      "rg": 4,
-      "am": 0
+      "PD": 70,
+      "ED": 0,
+      "HP": 400,
+      "ATTACK_SPEED": 0.3,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 4,
+      "ARMOR":25
     },
     "workshop": {
-      "attack": 0,
-      "hp": 10,
-      "ats": 0,
-      "ms": 0,
-      "rg": 0,
-      "am": 0
+      "PD": 0,
+      "ED": 0,
+      "HP": 10,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
     },
     "blackfreaks": {
-      "attack": 20,
-      "hp": 200,
-      "ats": 0.7,
-      "ms": 10,
-      "rg": 1.25,
-      "am": 0
+      "PD": 20,
+      "ED": 0,
+      "HP": 200,
+      "ATTACK_SPEED": 0.7,
+      "MOVE_SPEED": 10,
+      "ATTACK_RANGE": 1.25,
+      "ARMOR": 15
     },
     "blacktower": {
-      "attack": 100,
-      "hp": 1500,
-      "ats": 0.3,
-      "ms": 0,
-      "rg": 4,
-      "am": 100
+      "PD": 100,
+      "ED": 0,
+      "HP": 1500,
+      "ATTACK_SPEED": 0.3,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 30,
+      "ARMOR": 100
     },
     "switchoff": {
-      "attack": 0,
-      "hp": 987654321,
-      "ats": 0,
-      "ms": 0,
-      "rg": 0,
-      "am": 0
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
     },
     "switchon": {
-      "attack": 0,
-      "hp": 987654321,
-      "ats": 0,
-      "ms": 0,
-      "rg": 0,
-      "am": 0
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
     },
     "essenceS": {
-      "attack": 0,
-      "hp": 987654321,
-      "ats": 0,
-      "ms": 0,
-      "rg": 0,
-      "am": 0
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
     },
     "essenceM": {
-      "attack": 0,
-      "hp": 987654321,
-      "ats": 0,
-      "ms": 0,
-      "rg": 0,
-      "am": 0
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
     },
     "essenceL": {
-      "attack": 0,
-      "hp": 987654321,
-      "ats": 0,
-      "ms": 0,
-      "rg": 0,
-      "am": 0
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
     },
     "warron": {
-      "attack": 40,
-      "hp": 375,
-      "ats": 0.6,
-      "ms": 8,
-      "rg": 1.25,
-      "am": 20
+      "PD": 40,
+      "ED": 10,
+      "HP": 375,
+      "ATTACK_SPEED": 0.6,
+      "MOVE_SPEED": 6,
+      "ATTACK_RANGE": 1.25,
+      "ARMOR": 20
     },
     "kyle": {
-      "attack": 30,
-      "hp": 350,
-      "ats": 0.5,
-      "ms": 7,
-      "rg": 2.5,
-      "am": 10
+      "PD": 30,
+      "ED": 15,
+      "HP": 350,
+      "ATTACK_SPEED": 0.5,
+      "MOVE_SPEED": 7,
+      "ATTACK_RANGE": 25,
+      "ARMOR": 10
     },
     "rowenn": {
-      "attack": 20,
-      "hp": 325,
-      "ats": 0.5,
-      "ms": 7,
-      "rg": 2.2,
-      "am": 0
+      "PD": 20,
+      "ED": 30,
+      "HP": 335,
+      "ATTACK_SPEED": 0.5,
+      "MOVE_SPEED": 7,
+      "ATTACK_RANGE": 2.2,
+      "ARMOR": 0
     },
     "arcanna": {
-      "attack": 35,
-      "hp": 350,
-      "ats": 0.6,
-      "ms": 8,
-      "rg": 1.5,
-      "am": 10
+      "PD": 35,
+      "ED": 15,
+      "HP": 350,
+      "ATTACK_SPEED": 0.6,
+      "MOVE_SPEED": 8,
+      "ATTACK_RANGE": 1.5,
+      "ARMOR": 10
     },
     "louis": {
-      "attack": 20,
-      "hp": 325,
-      "ats": 0.5,
-      "ms": 7,
-      "rg": 2.2,
-      "am": 0
+      "PD": 20,
+      "ED": 35,
+      "HP": 325,
+      "ATTACK_SPEED": 0.5,
+      "MOVE_SPEED": 7,
+      "ATTACK_RANGE": 2.2,
+      "ARMOR": 0
     }
   }
 }

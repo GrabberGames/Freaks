@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  projectile_basic: {fileID: 0}
+  projectile_basic: {fileID: 5474633276044552177, guid: 6d6ae0f9e31455a4e8475205f7fe8b0d, type: 3}
   projectile_skill: {fileID: 5474633276044552177, guid: 6d6ae0f9e31455a4e8475205f7fe8b0d, type: 3}
   hit_basic: {fileID: 6044794180335798499, guid: 1307981d632c0f145855aa124caf4c04, type: 3}
   hit_skill: {fileID: 6044794180335798499, guid: 1307981d632c0f145855aa124caf4c04, type: 3}

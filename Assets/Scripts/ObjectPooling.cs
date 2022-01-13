@@ -96,11 +96,11 @@ public class ObjectPooling : MonoBehaviour
         switch (Obj)
         {
             case "WhiteFreaks":
-                newObj = Instantiate(WhiteFreaksObject);
+                newObj = Instantiate(WhiteFreaksObject, gameObject.transform);
                 newObj.SetActive(false);
                 return newObj;
             case "BlackFreaks":
-                newObj = Instantiate(BlackFreaksObject);
+                newObj = Instantiate(BlackFreaksObject, gameObject.transform);
                 newObj.SetActive(false);
                 return newObj;
             default:

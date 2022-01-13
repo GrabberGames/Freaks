@@ -19,23 +19,23 @@ public class CharacterAttack : MonoBehaviour
     {
         if (near == kail)
         {
-            kail_stat.hp -= amount;
+            kail_stat.HP -= amount;
         }
         else if (near == waron)
         {
-            waron_stat.hp -= amount;
+            waron_stat.HP -= amount;
         }
         else if (near == alter)
         {
-            alter_stat.hp -= amount;
+            alter_stat.HP -= amount;
         }
         else if (near == black_freaks)
         {
-            black_stat.hp -= amount;
+            black_stat.HP -= amount;
         }
         else
         {
-            white_stat.hp -= amount;
+            white_stat.HP -= amount;
         }
     }
 }

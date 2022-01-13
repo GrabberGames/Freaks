@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Stat 
 {
-    public float attack { get; set; }
-    public float hp { get; set; }
-    public float ats { get; set; }
-    public float ms { get; set; }
-    public float rg { get; set; }
-    public float am { get; set; }
+    public float PD { get; set; }
+    public float ED { get; set; }
+    public float HP { get; set; }
+    public float ATTACK_SPEED { get; set; }
+    public float MOVE_SPEED { get; set; }
+    public float ATTACK_RANGE { get; set; }
+    public float ARMOR { get; set; }
     public Dictionary<string, Stat> Json { get; set; }
 }
