@@ -19,11 +19,11 @@ public class ObjectPooling : MonoBehaviour
     {
         if (instance == null)
         {
-            GameObject ob_go = GameObject.Find("ObjectPooling");
+            GameObject ob_go = GameObject.Find("@ObjectPooling");
 
             if (ob_go == null)
             {
-                ob_go = new GameObject { name = "ObjectPooling" };
+                ob_go = new GameObject { name = "@ObjectPooling" };
                 ob_go.AddComponent<ObjectPooling>();
             }
             DontDestroyOnLoad(ob_go);

@@ -26,8 +26,11 @@ public class GameManager : MonoBehaviour
 
     static GameManager s_instance;
 
+    DamageManager _damage = new DamageManager();
+
     public static GameManager Instance { get { Init();  return s_instance; } }
 
+    public static DamageManager Damage { get { return Instance._damage; } }
     static void Init()
     {
         if(s_instance == null)

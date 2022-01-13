@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
-        kyle = GameObject.Find("Kyle").GetComponent<Kali>();
+        kyle = GameObject.Find("kyle").GetComponent<Kali>();
         originalSize = mask.rectTransform.rect.width;
 
         for (int i = 0; i < 4; i++) {

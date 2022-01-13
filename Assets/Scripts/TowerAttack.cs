@@ -9,7 +9,7 @@ public class TowerAttack : MonoBehaviour
     public GameObject player;
     public ParticleSystem fx_blackTower;
     public ParticleSystem fx_hit;
-    Stat _stat = new Stat();
+    Stat _stat;
 
     private float AttackPerSeconds = 4f;
 
@@ -20,7 +20,7 @@ public class TowerAttack : MonoBehaviour
 
     void Start()
     {
-        _stat = ObjectPooling.instance.Get_Stat("blacktower");
+        _stat = GetComponent<Stat>();
 
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
     }
@@ -49,7 +49,7 @@ public class TowerAttack : MonoBehaviour
     IEnumerator FindInAttackRange()
     {
         bullet = Instantiate(bulletpre, bulletSpawnPosition, Quaternion.Euler(bulletSpawnPosition - player.transform.position));
-        bullet.GetComponent<TowerBullet>().InitSetting();
+        bullet.GetComponent<TowerBullet>().InitSetting(_stat.PD);
         fx_blackTower.Play(true);
 
         yield return new WaitForSeconds(fx_blackTower.main.startDelayMultiplier);

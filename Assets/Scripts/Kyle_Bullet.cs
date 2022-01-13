@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Kyle_Bullet : MonoBehaviour
 {
-    private float _bullet_speed = 60f;
+    private float _bullet_speed = 40;
     private float _bullet_time = 0f;
 
     public GameObject enemy;
@@ -17,6 +17,9 @@ public class Kyle_Bullet : MonoBehaviour
     private ParticleSystem ps_hit; // <- use hit particle
     private Vector3 dir;
     private Vector3 look_dir;
+
+    private float _damage;
+
     enum _Bullet
     {
         Basic,  //ÆòÅ¸
@@ -24,11 +27,12 @@ public class Kyle_Bullet : MonoBehaviour
         WE      //WE
     }
     _Bullet _bullet = _Bullet.Basic;
-    public void InitSetting(GameObject enemy, string _state, Vector3 dir)
+    public void InitSetting(GameObject enemy, string _state, Vector3 dir, float damage)
     {
         this.enemy = enemy;
         look_dir = dir;
         this.dir = (transform.position - dir).normalized;
+        _damage = damage;
         StartProjectile(enemy, _state);
     }
 
@@ -39,7 +43,7 @@ public class Kyle_Bullet : MonoBehaviour
             case "Basic":
                 _bullet = _Bullet.Basic;
                 ps_tile = Instantiate(projectile_basic, transform);
-                ps_tile.transform.LookAt(look_dir);
+                ps_tile.transform.SetParent(this.gameObject.transform);
                 ps_tile.Play();
                 StartCoroutine(DT());
                 break;
@@ -72,20 +76,23 @@ public class Kyle_Bullet : MonoBehaviour
     {
         if(other.transform.CompareTag("BlackFreaks") || other.transform.CompareTag("BlackTower"))
         {
+            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
+            
             switch (_bullet)
             {
                 case _Bullet.Basic:
                     ps_hit = Instantiate(hit_basic);
                     ps_hit.transform.position = transform.position;
-                    ps_hit.transform.rotation = transform.rotation;
+                    //ps_hit.transform.rotation = transform.rotation;
                     ps_hit.Play();
+                    StartCoroutine(DT_Hit());
                     break;
                 case _Bullet.Q :
                 case _Bullet.WE:
                     ps_hit = Instantiate(hit_skill);
                     ps_hit.transform.position = transform.position;
-                    ps_hit.transform.rotation = transform.rotation;
                     ps_hit.Play();
+                    StartCoroutine(DT_Hit());
                     break;
                 default:
                     break;
@@ -101,6 +108,11 @@ public class Kyle_Bullet : MonoBehaviour
         yield return new WaitForSeconds(ps_tile.main.startLifetimeMultiplier);
         Destroy();
     }
+    IEnumerator DT_Hit()
+    {
+        yield return new WaitForSeconds(ps_hit.main.startLifetimeMultiplier);
+        Destroy();
+    }
     void Update()
     {
         if (ps_tile != null)
@@ -110,8 +122,10 @@ public class Kyle_Bullet : MonoBehaviour
         switch (_bullet)
         {
             case _Bullet.Basic:
+                if (enemy == null)
+                    return;
                 Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.transform.position.z);
-                transform.position -= (transform.position - enemyPos) * _bullet_speed * Time.deltaTime;
+                transform.position += (enemyPos - transform.position).normalized * _bullet_speed * Time.deltaTime;
                 transform.LookAt(enemyPos);
                 break;
             case _Bullet.Q:

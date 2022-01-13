@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Kali : MonoBehaviour
 {
+    #region variables
     enum Layers 
     { 
         Enemy = 7,
@@ -54,6 +55,7 @@ public class Kali : MonoBehaviour
     private bool isAction = false;
     private bool canNormalAttack = true;
     private float canNormalAttackTime = 2f;
+    private int E_AttackNum = 0;
     private int AttackNum = 0;
     private Vector3 dir;
     private Vector3 look_dir;
@@ -66,6 +68,7 @@ public class Kali : MonoBehaviour
 
     public KailAni kailAni;
 
+    Stat _stat;
 
     WaitForSeconds seconds_2s = new WaitForSeconds(2f);
 
@@ -84,9 +87,9 @@ public class Kali : MonoBehaviour
 
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
-    private Stat _stat = new Stat();
 
     //Particle Skill Prefab
+    public ParticleSystem _Basic_ps;
     public ParticleSystem _Q_ps;
     public ParticleSystem _W_ps;
     public ParticleSystem _E_ps;
@@ -104,6 +107,8 @@ public class Kali : MonoBehaviour
 
     //Kyle Basic Attack Target Object
     GameObject _lockTarget;
+    #endregion
+
     void Activation(string skill)
     {
         switch (skill)
@@ -191,7 +196,7 @@ public class Kali : MonoBehaviour
     }
     void Start()
     {
-        _stat = ObjectPooling.instance.Get_Stat("kyle");
+        _stat = GetComponent<Stat>();
     }
     void OnAnimatorMove()
     {
@@ -345,7 +350,7 @@ public class Kali : MonoBehaviour
         GameObject go = Instantiate(_bullet);
         go.transform.position = transform.position;
         go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", look_dir);
+        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", look_dir, 140+_stat.PD);
     }
     public void Q_Stop()
     {
@@ -390,6 +395,12 @@ public class Kali : MonoBehaviour
         useRootMotion = false;
         isAction = false;
         State = PlayerState.Idle;
+        E_AttackNum = 0;
+    }
+    public void E_Animation()
+    {
+        Bullet_Spawn_NE(E_AttackNum, "E");
+        E_AttackNum++;
     }
     #endregion
     #region R_Skill
@@ -422,31 +433,66 @@ public class Kali : MonoBehaviour
         State = PlayerState.Idle;
     }
     #endregion
+
+    void Bullet_Spawn_NE(int idx, string shape)
+    {
+        GameObject go;
+        if (idx % 2 == 0)
+        {
+            go = Instantiate(_bullet);
+            go.transform.position = _right_arm.transform.position;
+            if(_lockTarget != null)
+                go.transform.LookAt(_lockTarget.transform);
+        }
+        else
+        {
+            go = Instantiate(_bullet);
+            go.transform.position = _left_arm.transform.position;
+            if (_lockTarget != null)
+                go.transform.LookAt(_lockTarget.transform);
+        }
+        if(shape == "Normal")
+        {
+            ParticleSystem _q = Instantiate(_Basic_ps);
+            _q.transform.position = _right_arm.transform.position;
+            _q.transform.LookAt(_lockTarget.transform);
+            _q.Play();
+            StartCoroutine(Q_ParticleOff(_q));
+
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir, _stat.PD);
+        }
+        if(shape == "E")
+        {
+            ParticleSystem _q = Instantiate(_E_ps);
+            _q.transform.position = _left_arm.transform.position;
+            if (_lockTarget != null)
+                _q.transform.LookAt(_lockTarget.transform);
+            _q.Play();
+            StartCoroutine(Q_ParticleOff(_q));
+
+            go.GetComponent<Kyle_Bullet>().InitSetting(null, "E", look_dir, 40 + 0.2f *_stat.ED);
+        }
+    }
     void Basic_Attack()
     {
         if (!canNormalAttack || _lockTarget == null)
             return;
 
+
         transform.LookAt(_lockTarget.transform);
         agent.SetDestination(transform.position);
 
+        Bullet_Spawn_NE(AttackNum, "Normal");
+        animator.SetBool("Moving", false);
+
         if (AttackNum == 0)
         {
-            GameObject go = Instantiate(_bullet);
-            print(_left_arm.transform.position + " " + transform.position);
-            go.transform.position = _left_arm.transform.position;
-            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir);
             animator.CrossFade("Normal Attack 1", 0.1f);
-            animator.SetBool("Moving", false);
             AttackNum = 1;
         }
         else
         {
-            GameObject go = Instantiate(_bullet);
-            go.transform.position = _right_arm.transform.position;
-            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir);
             animator.CrossFade("Normal Attack 2", 0.1f);
-            animator.SetBool("Moving", false);
             AttackNum = 0;
         }
         audioSource[5].Play();

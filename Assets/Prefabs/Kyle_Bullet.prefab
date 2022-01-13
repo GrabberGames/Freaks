@@ -40,7 +40,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483671752291056036}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  projectile_basic: {fileID: 5474633276044552177, guid: 6d6ae0f9e31455a4e8475205f7fe8b0d, type: 3}
+  projectile_basic: {fileID: 6099185314227528646, guid: aa07a8b5721e8bd4ab6b784867d75c55, type: 3}
   projectile_skill: {fileID: 5474633276044552177, guid: 6d6ae0f9e31455a4e8475205f7fe8b0d, type: 3}
   hit_basic: {fileID: 6044794180335798499, guid: 1307981d632c0f145855aa124caf4c04, type: 3}
   hit_skill: {fileID: 6044794180335798499, guid: 1307981d632c0f145855aa124caf4c04, type: 3}

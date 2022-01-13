@@ -14,9 +14,11 @@ public class TowerBullet : MonoBehaviour
     private int State = 0;
 
     private bool isCrushed = false;
+    float _damage;
 
-    public void InitSetting()
+    public void InitSetting(float damage)
     {
+        _damage = damage;
         if (player == null)
         {
             if (GameManager.Instance.Player == null)
@@ -30,6 +32,8 @@ public class TowerBullet : MonoBehaviour
 
     private void Update()
     {
+        if (player == null)
+            return;
         playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 4f, player.transform.position.z);
 
         switch (State) 
@@ -57,6 +61,7 @@ public class TowerBullet : MonoBehaviour
             {
                 return;
             }
+            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
             fx_blackTower[0].Pause();
             fx_blackTower[0].Play(false);
             fx_blackTowerPre[0].SetActive(false);
