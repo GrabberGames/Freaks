@@ -22,10 +22,10 @@ public class LevelSelector : MonoBehaviour
             switch(EventSystem.current.currentSelectedGameObject.name)
             {
                 case "Tutorial":
-                    //SceneManager.LoadScene("Tutorial");
+                    SceneManager.LoadScene(3);
                     break;
                 case "Single":
-                    SceneManager.LoadScene("Map");
+                    SceneManager.LoadScene(3);
                     break;
                 case "Multi(LAN)":
                     //SceneManager.LoadScene("Multi");
