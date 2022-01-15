@@ -41,9 +41,29 @@ public class WorkshopController : Building
     {
         if (isSetted)
         {
-            roofRenderer.material = essenceSpot.GetNowMaterial();
+            roofRenderer.material = SetRoofMaterial();
             remainEssense = essenceSpot.GetRemainEssence();
         }
+    }
+
+    private Material SetRoofMaterial()
+    {
+        Material material = materials[(int) MaterialNum.SmallRoof];
+        Material spotMaterial = essenceSpot.GetNowMaterial();
+
+        if (spotMaterial.name == "Arrow_Small (Instance)")
+        {
+            material = materials[(int) MaterialNum.SmallRoof];
+        }
+        else if (spotMaterial.name == "Arrow_Medium (Instance)")
+        {
+            material = materials[(int)MaterialNum.MeduimRoof];
+        }else if (spotMaterial.name == "Arrow_Large (Instance)")
+        {
+            material = materials[(int)MaterialNum.LargeRoof];
+        }
+
+        return material;
     }
 
 
