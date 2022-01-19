@@ -63,6 +63,7 @@ public class Kyle_Bullet : MonoBehaviour
                 _bullet = _Bullet.WE;
                 _bullet_time = 0.44f;  //체공시간 0.44초
                 ps_tile = Instantiate(projectile_skill);
+                ps_tile.transform.SetParent(this.gameObject.transform);
                 ps_tile.Play();
                 Invoke("Destroy", _bullet_time);
                 StartCoroutine(DT());

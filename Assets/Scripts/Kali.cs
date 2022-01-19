@@ -91,7 +91,7 @@ public class Kali : MonoBehaviour
     //Particle Skill Prefab
     public ParticleSystem _Basic_ps;
     public ParticleSystem _Q_ps;
-    public ParticleSystem _W_ps;
+    public GameObject _W_ps;
     public ParticleSystem _E_ps;
 
     //Reference ParticleSystem Born Position
@@ -371,6 +371,10 @@ public class Kali : MonoBehaviour
     void Atonement()
     {
         SoundPlay("W", 1);
+        GameObject _w = Instantiate(_W_ps);
+        _w.transform.position = gameObject.transform.position + Vector3.up * 2;
+        _w.GetComponent<ParticleSystem>().Play();
+        StartCoroutine(W_ParticleOff(_w));
         agent.ResetPath();
         isAction = true;
     }
@@ -379,6 +383,15 @@ public class Kali : MonoBehaviour
         isAction = false;
         useRootMotion = false;
         State = PlayerState.Idle;
+    }
+    IEnumerator W_ParticleOff(GameObject _w)
+    {
+        yield return new WaitForSeconds(_w.GetComponent<ParticleSystem>().main.startLifetimeMultiplier * 1.4f);
+        if (_w != null)
+            Destroy(_w);
+        else
+            yield return null;
+
     }
     #endregion
     #region E_Skill
@@ -533,12 +546,12 @@ public class Kali : MonoBehaviour
         }
         IEnumerator co = MoveSound();
         //CharacterMovement();
-        if (animator.GetBool("Moving") && !MovingAudioSoungIsActive)
+        if (State == PlayerState.Moving && !MovingAudioSoungIsActive)
         {
             MovingAudioSoungIsActive = true;
             StartCoroutine(co);
         }
-        if (animator.GetBool("Moving") == false)
+        if (State != PlayerState.Moving)
         {
             MovingAudioSoungIsActive = false;
             audioSource[6].Stop();
