@@ -56,8 +56,8 @@ public class AlterController : Building, DamageService, HealthService
         busyWhiteF++;
         GameObject whiteFreaks = ObjectPooling.instance.GetObject("WhiteFreaks");
         Vector3 po = new Vector3(transform.position.x + 1, transform.position.y + 2, transform.position.z);
-        whiteFreaks.transform.position = po;
-        //GameObject whiteFreaks = Instantiate(whiteFreaksPref, transform.position, transform.rotation);
+        whiteFreaks.GetComponent<NavMeshAgent>().Warp(po);
+
         WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();
         miningFreaks.Add(whiteFreaks);
 
