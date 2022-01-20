@@ -1208,42 +1208,42 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.22831531
+      - time: 0.15835646
         functionName: E_Animation
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.28727588
+      - time: 0.2296627
         functionName: E_Animation
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.33996406
+      - time: 0.30704227
         functionName: E_Animation
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.39166063
+      - time: 0.35873884
         functionName: E_Animation
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.43378723
+      - time: 0.4132111
         functionName: E_Animation
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.47795692
+      - time: 0.46972647
         functionName: E_Animation
         data: 
         objectReferenceParameter: {instanceID: 0}

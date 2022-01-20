@@ -22,10 +22,6 @@ public class FreaksController : MonoBehaviour
     private Vector3 alterPosition;
     bool playerInRange;
     float timer;
-    Stat white_stat = new Stat();
-    Stat black_stat = new Stat();
-    Stat waron_stat = new Stat();
-    Stat kail_stat = new Stat();
     FreaksAttack freaksAttack;
     private bool isStuern = false;
     bool damaged;
@@ -37,13 +33,6 @@ public class FreaksController : MonoBehaviour
         freaksAttack = gameObject.GetComponentInChildren<FreaksAttack>();
 
         agent = GetComponent<NavMeshAgent>();
-        white_stat = ObjectPooling.instance.Get_Stat("whitefreaks");
-        black_stat = ObjectPooling.instance.Get_Stat("blackfreaks");
-        waron_stat = ObjectPooling.instance.Get_Stat("waron");
-        kail_stat = ObjectPooling.instance.Get_Stat("kail");
-
-        currentHealth = black_stat.HP;
-        enemyHealth = white_stat.HP;
         MoveSpeed = agent.speed;
 
         alterPosition = alter.transform.position;
@@ -107,11 +96,9 @@ public class FreaksController : MonoBehaviour
     {
         if (near == kail)
         {
-            kail_stat.HP -= amount;
         }
         else if (near == waron)
         {
-            waron_stat.HP -= amount;
         }
         else if (near == alter)
         {
@@ -119,7 +106,6 @@ public class FreaksController : MonoBehaviour
         }
         else
         {
-            white_stat.HP -= amount;
         }
     }
 

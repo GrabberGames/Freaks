@@ -15,7 +15,6 @@ public class AlterBullet : MonoBehaviour
     private Vector3 enemyPos;
     private float BulletSpeed = 8f;
     
-    private int State = 0;
     private bool One = false;
     // 1 = 투사체 날라가는 중
     // 2 = 블랙프릭스랑 충돌
@@ -28,7 +27,6 @@ public class AlterBullet : MonoBehaviour
     {
         if (other.transform.CompareTag("BlackFreaks")  && !One)
         {
-            State = 2;
             FX_Alter_Projectile_Pre.Play(false);
             FX_Alter_Hit = Instantiate(FX_Alter_Hit_Pre, transform);
             FX_Alter_Hit.AddComponent<Follow>().InitSetting(enemy);
@@ -45,14 +43,11 @@ public class AlterBullet : MonoBehaviour
     }
     void StartProjectile()
     {
-        State = 1;
         FX_Alter_Projectile_Pre.Play(true);
     }
     IEnumerator DeleteThis()
     {
-        //print(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
         yield return new WaitForSeconds(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
-        State = 3;
         SFXAlterBulletEx.Play();
         Destroy(this.gameObject);
     }

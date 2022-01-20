@@ -7,7 +7,11 @@ namespace WarriorAnims
 {
     public class HeroMovement : SuperStateMachine
     {
-        private enum PlayerState
+        enum Layers
+        {
+            Enemy = 7,
+        }
+        public enum PlayerState
         {
             Attack,
             Die,
@@ -18,7 +22,33 @@ namespace WarriorAnims
             E,
             R,
         }
+        PlayerState _state = PlayerState.Idle;
+        public PlayerState PState
+        {
+            get { return _state; }
+            set
+            {
+                _state = value;
+                switch (_state)
+                {
+                    case PlayerState.Idle:
+                        break;
+                    case PlayerState.Q:
+                        break;
+                    case PlayerState.W:
+                        break;
+                    case PlayerState.E:
+                        break;
+                    case PlayerState.R:
+                        break;
+                    case PlayerState.Moving:
+                        break;
+                    case PlayerState.Die:
+                        break;
+                }
 
+            }
+        }
         public Warrior warrior;
 
         [HideInInspector] public SuperCharacterController superCharacterController;
@@ -40,9 +70,7 @@ namespace WarriorAnims
         private Vector3 velocity;
         private Vector3 dir;
         private Vector3 look_dir;
-        PlayerState _state = PlayerState.Idle;
         //
-        private bool SkillStop = false;
         private bool isAction = false;
 
         //skill cooltime variable
@@ -56,6 +84,13 @@ namespace WarriorAnims
 
         //skill vfx prefabs 
         public GameObject R_particle;
+
+        //Waron Basic Attack Target Object
+        GameObject _lockTarget;
+
+        //Waron Sound Priority Variable & Far Distance Judge
+        private int _priority = 0;
+        private float _dist = 0f;
 
         void Activation(string skill)
         {
@@ -130,8 +165,10 @@ namespace WarriorAnims
             }
         }
 
-        private void Awake()
+
+        protected override void Init()
         {
+            base.Init();
 
             animator = GetComponentInChildren<Animator>();
 
@@ -161,13 +198,32 @@ namespace WarriorAnims
             warriorTiming.heroMovement = this;
             agent.updateRotation = false;
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
+        }
 
+        //Dead
+        IEnumerator DeadAnimationEnd()
+        {
+            yield return new WaitForSeconds(1f);
+            Destroy(this.gameObject);
+        }
+        public override void DeadSignal()
+        {
+            if (HP <= 0)
+            {
+                PState = PlayerState.Die;
+                Stat _stat = new Stat(PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+                ObjectPooling.instance.Set_Stat(_stat);
+            }
+        }
+        void Start()
+        {
+            Init();
         }
 
         private void Update()
         {
             ChooseAction();
-            switch (_state)
+            switch (PState)
             {
                 case PlayerState.Q:
                 case PlayerState.W:
@@ -205,23 +261,58 @@ namespace WarriorAnims
             {
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
-                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
+                    if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                        _lockTarget = hit.collider.gameObject;
+                    else
+                        _lockTarget = null;
+
+                    if (_lockTarget != null) //기본 공격 할 대상이 있다.
+                    {
+                        float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+                        if (distance <= ATTACK_RANGE)
+                        {
+                            PState = PlayerState.Attack;
+                            return;
+                        }
+                    }
+                    _dist = Vector3.Distance(transform.position, hit.point);
+                    if (_dist > 120f)
+                        SoundPlay("장거리 이동");
+                    else
+                        SoundPlay("단거리 이동");
+
+
+
                     dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                     agent.SetDestination(dir);
                     animator.SetBool("Moving", true); 
                     velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
                     animator.SetFloat("Velocity Z", velocity.magnitude);
-                    _state = PlayerState.Moving;
+                    PState = PlayerState.Moving;
                 }
             }
         }
 
         private void UpdateMoving()
         {
+            if (_lockTarget != null) //기본 공격 할 대상이 있다.
+            {
+                float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+                if (distance <= ATTACK_RANGE)
+                {
+                    PState = PlayerState.Attack;
+                    return;
+                }
+            }
+
             velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
             look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
+
             if ((dir-transform.position).magnitude < 0.1f)
             {
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
@@ -235,9 +326,22 @@ namespace WarriorAnims
             {
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
-                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
+                    if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                        _lockTarget = hit.collider.gameObject;
+                    else
+                        _lockTarget = null;
+
+
+                    _dist = Vector3.Distance(transform.position, hit.point);
+                    if (_dist > 120f)
+                        SoundPlay("장거리 이동");
+                    else
+                        SoundPlay("단거리 이동");
+
+
                     dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                     agent.SetDestination(dir);
                 }
@@ -268,7 +372,7 @@ namespace WarriorAnims
                 useRootMotion = true; ChangRotate();
                 Activation("Q");
                 ThrowingRock();
-                _state = PlayerState.Q;
+                PState = PlayerState.Q;
             }
             //W
 
@@ -279,7 +383,7 @@ namespace WarriorAnims
                 useRootMotion = true; ChangRotate();
                 Activation("W");
                 LeafOfPride();
-                _state = PlayerState.W;
+                PState = PlayerState.W;
             }
             //E
 
@@ -290,7 +394,7 @@ namespace WarriorAnims
                 useRootMotion = true; ChangRotate();
                 Activation("E");
                 BoldRush();
-                _state = PlayerState.E;
+                PState = PlayerState.E;
             }
             //R
             else if (Input.GetKeyDown(KeyCode.R))
@@ -300,7 +404,7 @@ namespace WarriorAnims
                 useRootMotion = true; ChangRotate();
                 Activation("R");
                 ShockOfLand();
-                _state = PlayerState.R;
+                PState = PlayerState.R;
             }
         }
 
@@ -308,6 +412,8 @@ namespace WarriorAnims
         #region Q_Skill
         void ThrowingRock()
         {
+            SoundPlay("Q", 0);
+
             agent.ResetPath();
             isAction = true;
             animator.SetBool("Moving", false);
@@ -332,7 +438,9 @@ namespace WarriorAnims
 
         #region W_Skill
         void LeafOfPride()
-        { 
+        {
+            SoundPlay("W", 1);
+
             agent.ResetPath();
             isAction = true;
             animator.SetBool("Moving", false); 
@@ -363,6 +471,8 @@ namespace WarriorAnims
         #region E_Skill
         void BoldRush()
         {
+            SoundPlay("E", 2);
+
             agent.ResetPath();
             isAction = true;
             animator.SetBool("Moving", false); 
@@ -378,7 +488,6 @@ namespace WarriorAnims
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
-            SkillStop = false;
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
@@ -391,6 +500,8 @@ namespace WarriorAnims
         #region R_Skill
         void ShockOfLand()
         {
+            SoundPlay("R", 3);
+
             agent.ResetPath();
             isAction = true;
             animator.SetBool("Moving", false);
@@ -428,8 +539,69 @@ namespace WarriorAnims
 
         public void Break()
         {
-            SkillStop = true;
             SetAnimatorRootMotion(false);
         }
+
+        public void SoundPlay(string _name, int idx = 0)
+        {
+            if (AudioManager.a_instance.Check() == true)
+                _priority = 0;
+            string _soundname = "";
+            switch (_name)
+            {
+                case "장거리 이동":
+                case "단거리 이동":
+                    //현재 실행중인 사운드가 없으면 실행
+                    if (_priority == 0)
+                    {
+                        _priority = 3;
+                        _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
+                    }
+                    break;
+
+                case "스위치":
+                    if (idx != 0)
+                    {
+                        if (idx == 1)
+                            _soundname = "첫번째 ";
+                        else if (idx == 2)
+                            _soundname = "두번째";
+                        else if (idx == 3)
+                            _soundname = "세번째";
+                        _soundname += $"{_name} " + UnityEngine.Random.Range(1, 3);
+                    }
+                    break;
+                case "Q":
+                case "W":
+                case "E":
+                case "R":
+                    //현재 실행중인 사운드가 없거나 우선순위 3순위인게 실행중이면 하이재킹.
+                    if (_priority == 0 || _priority > 2)
+                    {
+                        _priority = 2;
+                        if (idx == 3)
+                            _soundname = $"{_name}스킬";
+                        else
+                            _soundname = $"{_name}스킬 " + UnityEngine.Random.Range(1, 3);
+                    }
+                    break;
+
+                case "사망":
+                case "시작":
+                case "승리":
+                case "부활":
+                    //현재 실행중인 사운드가 없거나 우선순위 2, 3순위인게 실행중이면 하이재킹.
+                    if (_priority == 0 || _priority > 1)
+                    {
+                        _priority = 1;
+                        _soundname = $"{_name} " + UnityEngine.Random.Range(1, 3);
+                    }
+                    break;
+
+            }
+            //실행하기.
+            AudioManager.a_instance.Read(_soundname);
+        }
     }
+
 }

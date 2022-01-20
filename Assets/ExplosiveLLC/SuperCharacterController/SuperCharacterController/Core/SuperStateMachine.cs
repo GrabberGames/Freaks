@@ -9,7 +9,7 @@ using System.Collections.Generic;
 /// 
 
 
-public class SuperStateMachine : MonoBehaviour {
+public class SuperStateMachine : Stat {
 
     protected float timeEnteredState;
 

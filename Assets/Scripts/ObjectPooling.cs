@@ -53,6 +53,10 @@ public class ObjectPooling : MonoBehaviour
         }
         return null;
     }
+    public void Set_Stat(Stat _stat)
+    {
+        data[_stat.name] = _stat;
+    }
 
     [SerializeField]
     private int WhiteFreaksCountLimit = 100;                   

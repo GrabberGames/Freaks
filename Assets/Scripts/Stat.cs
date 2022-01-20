@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class Stat : MonoBehaviour
 {
+    public Stat(float pd=0, float ed=0, float hp=0, float mhp=0, float ats=0, float ms=0, float atr=0, float ar=0)
+    {
+        PD = pd;
+        ED = ed;
+        HP = hp;
+        MAX_HP = mhp;
+        ATTACK_SPEED = ats;
+        MOVE_SPEED = ms;
+        ATTACK_RANGE = atr;
+        ARMOR = ar;
+    }
     [SerializeField]
     public float PD { get; set; }
     [SerializeField]
     public float ED { get; set; }
     [SerializeField]
     public float HP { get; set; }
+    [SerializeField]
+    public float MAX_HP { get; set; }
     [SerializeField]
     public float ATTACK_SPEED { get; set; }
     [SerializeField]
@@ -20,14 +33,16 @@ public class Stat : MonoBehaviour
     public float ARMOR { get; set; }
     public Dictionary<string, Stat> Json { get; set; }
 
-    private void Start()
+    protected virtual void Init()
     {
         PD = ObjectPooling.instance.Get_Stat(gameObject.transform.name).PD;
         ED = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ED;
         HP = ObjectPooling.instance.Get_Stat(gameObject.transform.name).HP;
+        MAX_HP = ObjectPooling.instance.Get_Stat(gameObject.transform.name).MAX_HP;
         ATTACK_SPEED = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ATTACK_SPEED;
         MOVE_SPEED = ObjectPooling.instance.Get_Stat(gameObject.transform.name).MOVE_SPEED;
         ATTACK_RANGE = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ATTACK_RANGE;
         ARMOR = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ARMOR;
     }
+    public virtual void DeadSignal() { }
 }

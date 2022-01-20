@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class Kali : MonoBehaviour
+public class Kali : Stat
 {
     #region variables
     enum Layers 
@@ -48,13 +48,17 @@ public class Kali : MonoBehaviour
                 case PlayerState.Moving:
                     animator.CrossFade("Strafe_Run_Front", 0.1f, -1, 0);
                     break;
+                case PlayerState.Die:
+                    SoundPlay("사망");
+                    animator.Play("Dead");
+                    break;
             }
 
         }
     }
+
     private bool isAction = false;
     private bool canNormalAttack = true;
-    private float canNormalAttackTime = 2f;
     private int E_AttackNum = 0;
     private int AttackNum = 0;
     private Vector3 dir;
@@ -64,11 +68,8 @@ public class Kali : MonoBehaviour
     private Animator animator;
     private Camera mainCamera;
     private NavMeshAgent agent;
-    private Rigidbody rigid;
 
     public KailAni kailAni;
-
-    Stat _stat;
 
     WaitForSeconds seconds_2s = new WaitForSeconds(2f);
 
@@ -107,6 +108,8 @@ public class Kali : MonoBehaviour
 
     //Kyle Basic Attack Target Object
     GameObject _lockTarget;
+
+
     #endregion
 
     void Activation(string skill)
@@ -186,17 +189,18 @@ public class Kali : MonoBehaviour
             yield return seconds_01s;
         }
     }
-    private void Awake()
+
+    void Start()
     {
+        Init();
+    }
+    protected override void Init()
+    {
+        base.Init();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
-        rigid = GetComponent<Rigidbody>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-    }
-    void Start()
-    {
-        _stat = GetComponent<Stat>();
     }
     void OnAnimatorMove()
     {
@@ -275,17 +279,29 @@ public class Kali : MonoBehaviour
             _priority = 0;
         string _soundname = "";
         switch(_name)
-        {            
+        {
             case "장거리 이동":
             case "단거리 이동":
                 //현재 실행중인 사운드가 없으면 실행
                 if (_priority == 0)
                 {
                     _priority = 3;
-                       _soundname = $"{_name} " + Random.Range(1, 11);
+                       _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
                 }
                 break;
 
+            case "스위치":
+                if (idx != 0)
+                {
+                    if (idx == 1)
+                        _soundname = "첫번째 ";
+                    else if (idx == 2)
+                        _soundname = "두번째";
+                    else if (idx == 3)
+                        _soundname = "세번째";
+                    _soundname += $"{_name} " + UnityEngine.Random.Range(1, 3);
+                }
+                break;
             case "Q":
             case "W":
             case "E":
@@ -297,39 +313,43 @@ public class Kali : MonoBehaviour
                     if (idx == 3)
                         _soundname = $"{_name}스킬";
                     else
-                        _soundname = $"{_name}스킬 " + Random.Range(1, 3);
+                        _soundname = $"{_name}스킬 " + UnityEngine.Random.Range(1, 3);
                     audioSource[idx].Play();
                 }
                 break;
 
+            case "사망":
             case "시작":
             case "승리":
             case "부활":
-            case "스위치":
                 //현재 실행중인 사운드가 없거나 우선순위 2, 3순위인게 실행중이면 하이재킹.
                 if (_priority == 0 || _priority > 1)
                 {
                     _priority = 1;
-                    if(idx != 0)
-                    {
-                        if (idx == 1)
-                            _soundname = "첫번째 ";
-                        else if (idx == 2)
-                            _soundname = "두번째";
-                        else if (idx == 3)
-                            _soundname = "세번째";
-                        _soundname += $"{_name} " + Random.Range(1, 3);
-                    }
-                    else
-                        _soundname = $"{_name} " + Random.Range(1, 3);
+                    _soundname = $"{_name} " + UnityEngine.Random.Range(1, 3);
                 }
                 break;
-
 
         }
         //실행하기.
         AudioManager.a_instance.Read(_soundname);
     }
+
+    public override void DeadSignal()
+    {
+        if (HP <= 0)
+        {
+            State = PlayerState.Die;
+            Stat _stat = new Stat(PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+            ObjectPooling.instance.Set_Stat(_stat);
+        }
+    }
+    IEnumerator DeadAnimationEnd()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(this.gameObject);
+    }
+
 
     #region Q_Skill
     void Determination()
@@ -350,7 +370,7 @@ public class Kali : MonoBehaviour
         GameObject go = Instantiate(_bullet);
         go.transform.position = transform.position;
         go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", look_dir, 140+_stat.PD);
+        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", look_dir, 140+PD);
     }
     public void Q_Stop()
     {
@@ -362,7 +382,7 @@ public class Kali : MonoBehaviour
     {
         yield return new WaitForSeconds(_q.main.startLifetimeMultiplier);
         if (_q != null)
-            Destroy(_q);
+            Destroy(_q.gameObject);
         else
             yield return null;
     }
@@ -472,7 +492,7 @@ public class Kali : MonoBehaviour
             _q.Play();
             StartCoroutine(Q_ParticleOff(_q));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir, _stat.PD);
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir, PD);
         }
         if(shape == "E")
         {
@@ -480,10 +500,12 @@ public class Kali : MonoBehaviour
             _q.transform.position = _left_arm.transform.position;
             if (_lockTarget != null)
                 _q.transform.LookAt(_lockTarget.transform);
+            else
+                _q.transform.LookAt(look_dir);
             _q.Play();
             StartCoroutine(Q_ParticleOff(_q));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(null, "E", look_dir, 40 + 0.2f *_stat.ED);
+            go.GetComponent<Kyle_Bullet>().InitSetting(null, "E", look_dir, 40 + 0.2f *ED);
         }
     }
     void Basic_Attack()
@@ -519,6 +541,12 @@ public class Kali : MonoBehaviour
     }
     void Update()
     {
+        if (State == PlayerState.Die)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.P))
+            State = PlayerState.Die;
+
         ChooseAction();
 
         switch (State)
@@ -545,7 +573,7 @@ public class Kali : MonoBehaviour
 
         }
         IEnumerator co = MoveSound();
-        //CharacterMovement();
+
         if (State == PlayerState.Moving && !MovingAudioSoungIsActive)
         {
             MovingAudioSoungIsActive = true;
@@ -566,7 +594,7 @@ public class Kali : MonoBehaviour
     }
     private void UpdateDie()
     {
-
+        return;
     }
     private void UpdateIdle()
     {
@@ -586,7 +614,7 @@ public class Kali : MonoBehaviour
                 {
                     float distance = (_lockTarget.transform.position - transform.position).magnitude;
 
-                    if (distance <= _stat.ATTACK_RANGE)
+                    if (distance <= ATTACK_RANGE)
                     {
                         State = PlayerState.Attack;
                         return;
@@ -600,7 +628,6 @@ public class Kali : MonoBehaviour
                     SoundPlay("단거리 이동");
                 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 agent.SetDestination(dir);
-                animator.CrossFade("Strafe_Run_Front", 0.1f, -1, 0);
                 State = PlayerState.Moving;
             }
         }
@@ -611,7 +638,7 @@ public class Kali : MonoBehaviour
         {
             float distance = (_lockTarget.transform.position - transform.position).magnitude;
 
-            if(distance <= _stat.ATTACK_RANGE)
+            if(distance <= ATTACK_RANGE)
             {
                 State = PlayerState.Attack;
                 return;

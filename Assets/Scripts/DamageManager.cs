@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class DamageManager : MonoBehaviour
 {
     public void OnAttacked(float value, Stat defender)
-    {
+    { 
         int damage = (int)Mathf.Max(0, value - defender.ARMOR);
         defender.HP -= damage;
 
@@ -18,6 +19,7 @@ public class DamageManager : MonoBehaviour
     public void OnDead(Stat defender)
     {
         Debug.Log("Dead!" + defender.gameObject);
-        Destroy(defender.gameObject);
+
+        defender.DeadSignal();
     }
 }
