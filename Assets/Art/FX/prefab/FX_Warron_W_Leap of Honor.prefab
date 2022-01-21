@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7330536005418051272}
   - component: {fileID: 5588407046558628128}
   m_Layer: 0
-  m_Name: FX_Waron_W_Leap of Honor
+  m_Name: FX_Warron_W_Leap of Honor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204806714028071031}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.4420357, y: -0.93, z: -5.63}
-  m_LocalScale: {x: 4.0103, y: 4.0103, z: 4.0103}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7441687768789821928}
   - {fileID: 3680543637088035548}

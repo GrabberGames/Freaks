@@ -40,6 +40,15 @@ public class Waron_Skill_Stop : MonoBehaviour
         }
         hero.LeafOfPride_Stop_2();
     }
+    public void Warin_E_Particle()
+    {
+        if (hero == null)
+        {
+            hero = GetComponentInParent<WarriorAnims.HeroMovement>();
+        }
+        hero.BoldRushParticleStart();
+
+    }
     public void Waron_E_Stop()
     {
         if (hero == null)
@@ -47,6 +56,7 @@ public class Waron_Skill_Stop : MonoBehaviour
             hero = GetComponentInParent<WarriorAnims.HeroMovement>();
         }
         hero.BoldRush_Stop();
+        hero.BoldRushParticleEnd();
     }
     public void Waron_R_Stop()
     {

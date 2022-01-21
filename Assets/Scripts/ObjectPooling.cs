@@ -55,7 +55,6 @@ public class ObjectPooling : MonoBehaviour
     }
     public void Set_Stat(string name, float pd = 0, float ed = 0, float hp = 0, float mhp = 0, float ats = 0, float ms = 0, float atr = 0, float ar = 0)
     {
-        print(name);
         data[name].PD = pd;
         data[name].ED = ed;
         data[name].HP = hp;

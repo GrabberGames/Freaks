@@ -7,6 +7,18 @@ namespace WarriorAnims
 {
     public class HeroMovement : SuperStateMachine
     {
+        #region trash
+        [HideInInspector] public SuperCharacterController superCharacterController;
+        [HideInInspector] public WarriorMovementController warriorMovementController;
+        [HideInInspector] public WarriorInputController warriorInputController;
+        [HideInInspector] public WarriorInputSystemController warriorInputSystemController;
+        [HideInInspector] public WarriorTiming warriorTiming;
+        [HideInInspector] public Animator animator;
+        [HideInInspector] public IKHands ikHands;
+        [HideInInspector] public bool useRootMotion = false;
+        [HideInInspector] public bool waitingOnWeapons = true;
+        #endregion
+
         enum Layers
         {
             Enemy = 7,
@@ -53,16 +65,6 @@ namespace WarriorAnims
         }
         public Warrior warrior;
 
-        [HideInInspector] public SuperCharacterController superCharacterController;
-        [HideInInspector] public WarriorMovementController warriorMovementController;
-        [HideInInspector] public WarriorInputController warriorInputController;
-        [HideInInspector] public WarriorInputSystemController warriorInputSystemController;
-        [HideInInspector] public WarriorTiming warriorTiming;
-        [HideInInspector] public Animator animator;
-        [HideInInspector] public IKHands ikHands;
-        [HideInInspector] public bool useRootMotion = false;
-        [HideInInspector] public bool waitingOnWeapons = true;
-
         private Rigidbody rigid;
         private Camera mainCamera;
         private NavMeshAgent agent;
@@ -85,8 +87,11 @@ namespace WarriorAnims
         WaitForSeconds seconds = new WaitForSeconds(0.1f);
 
         //skill vfx prefabs 
+        GameObject go = null;
+        public GameObject Q_particle;
+        public GameObject W_particle;
+        public GameObject E_particle;
         public GameObject R_particle;
-
         //Waron Basic Attack Target Object
         GameObject _lockTarget;
 
@@ -245,7 +250,6 @@ namespace WarriorAnims
                 case PlayerState.Idle:
                     UpdateIdle();
                     break;
-
             }
         }
         private bool canNormalAttack = true;
@@ -480,6 +484,7 @@ namespace WarriorAnims
         }
         public void LeafOfPride_Stop_1()
         {
+            StartCoroutine(LeafOfPrideParticle());
             waronSkillManage.SkillOnTrigger();
         }
         public void LeafOfPride_Stop_2()
@@ -487,14 +492,26 @@ namespace WarriorAnims
             rigid.velocity = Vector3.zero;
             animator.SetBool("Dash", false);
             isAction = false;
+
             SetAnimatorRootMotion(false);
+
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
+
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         #endregion W_Skill
 
+        IEnumerator LeafOfPrideParticle()
+        {
+            go = Instantiate(W_particle, this.gameObject.transform);
+            ParticleSystem w_ps = go.GetComponent<ParticleSystem>();
+            w_ps.Play();
+            yield return new WaitForSeconds(w_ps.main.startLifetimeMultiplier);
+            Destroy(go);
+            go = null;
+        }
 
         #region E_Skill
         void BoldRush()
@@ -510,9 +527,12 @@ namespace WarriorAnims
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 11); 
         }
+
         public void BoldRush_Stop()
         {
+            BoldRushParticleEnd();
             waronSkillManage.SkillOnTrigger();
+
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
             isAction = false;
@@ -521,6 +541,17 @@ namespace WarriorAnims
             waronSkillManage.AllColliderOff();
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
+        }
+        public void BoldRushParticleStart()
+        {
+            go = Instantiate(E_particle, this.gameObject.transform);
+            ParticleSystem e_ps = go.GetComponent<ParticleSystem>();
+            e_ps.Play();
+        }
+        public void BoldRushParticleEnd()
+        {
+            Destroy(go);
+            go = null;
         }
         #endregion E_Skill
 
