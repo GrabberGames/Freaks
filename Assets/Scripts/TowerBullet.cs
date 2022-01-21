@@ -6,7 +6,7 @@ public class TowerBullet : MonoBehaviour
 {
     public ParticleSystem[] fx_blackTower;
     public GameObject[] fx_blackTowerPre;
-    private float BulletSpeed = 20f;
+    private float BulletSpeed = 30f;
 
     private Vector3 playerPos;
     private GameObject player;
@@ -55,9 +55,9 @@ public class TowerBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == player)
+        if (other.gameObject == player)
         {
-            if (isCrushed == true)
+            if (isCrushed == true || other == null)
             {
                 return;
             }
@@ -94,5 +94,6 @@ public class TowerBullet : MonoBehaviour
         fx_blackTowerPre[1].SetActive(false);
         State = 3;
         Destroy(fx_blackTower[1]);
+        Destroy(gameObject);
     }
 }

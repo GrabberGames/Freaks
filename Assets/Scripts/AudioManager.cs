@@ -22,11 +22,11 @@ public class AudioManager : MonoBehaviour
     {
         if (a_instance == null)
         {
-            GameObject ob_go = GameObject.Find("AudioManager");
+            GameObject ob_go = GameObject.Find("@AudioManager");
 
             if (ob_go == null)
             {
-                 ob_go = new GameObject { name = "AudioManager" };
+                 ob_go = new GameObject { name = "@AudioManager" };
                  ob_go.AddComponent<ObjectPooling>();
              }
              DontDestroyOnLoad(ob_go);

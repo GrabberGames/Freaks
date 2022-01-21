@@ -6,6 +6,15 @@ public class Waron_Skill_Stop : MonoBehaviour
 {
     public WarriorAnims.HeroMovement hero;
 
+    public void WaronBasicAttackStop()
+    {
+        if (hero == null)
+        {
+            hero = GetComponentInParent<WarriorAnims.HeroMovement>();
+            print(hero);
+        }
+        hero.Normal_Attack_Fun();
+    }
     public void Waron_Q_Stop()
     {
         if(hero == null)

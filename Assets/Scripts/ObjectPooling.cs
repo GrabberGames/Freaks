@@ -53,9 +53,17 @@ public class ObjectPooling : MonoBehaviour
         }
         return null;
     }
-    public void Set_Stat(Stat _stat)
+    public void Set_Stat(string name, float pd = 0, float ed = 0, float hp = 0, float mhp = 0, float ats = 0, float ms = 0, float atr = 0, float ar = 0)
     {
-        data[_stat.name] = _stat;
+        print(name);
+        data[name].PD = pd;
+        data[name].ED = ed;
+        data[name].HP = hp;
+        data[name].MAX_HP = mhp;
+        data[name].ATTACK_SPEED = ats;
+        data[name].MOVE_SPEED = ms;
+        data[name].ATTACK_RANGE = atr;
+        data[name].ARMOR = ar;
     }
 
     [SerializeField]

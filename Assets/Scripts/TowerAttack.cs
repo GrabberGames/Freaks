@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerAttack : MonoBehaviour
+public class TowerAttack : Stat
 {
     public GameObject bullet;
     public GameObject bulletpre;
@@ -17,12 +17,23 @@ public class TowerAttack : MonoBehaviour
 
 
     bool isAttack = false;
+    protected override void Init()
+    {
+        base.Init();
+
+        bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
+    }
+    public override void DeadSignal()
+    {
+        if (HP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     void Start()
     {
-        _stat = GetComponent<Stat>();
-
-        bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
+        Init();
     }
 
     private void Update()
@@ -34,7 +45,7 @@ public class TowerAttack : MonoBehaviour
             else
                 player = GameManager.Instance.Player;
         }
-        if((player.transform.position - transform.position).magnitude <=  _stat.ATTACK_RANGE)
+        if((player.transform.position - transform.position).magnitude <=  ATTACK_RANGE)
         {
             if (isAttack)
                 return;
@@ -49,7 +60,7 @@ public class TowerAttack : MonoBehaviour
     IEnumerator FindInAttackRange()
     {
         bullet = Instantiate(bulletpre, bulletSpawnPosition, Quaternion.Euler(bulletSpawnPosition - player.transform.position));
-        bullet.GetComponent<TowerBullet>().InitSetting(_stat.PD);
+        bullet.GetComponent<TowerBullet>().InitSetting(PD);
         fx_blackTower.Play(true);
 
         yield return new WaitForSeconds(fx_blackTower.main.startDelayMultiplier);

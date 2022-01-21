@@ -31,6 +31,8 @@ namespace WarriorAnims
                 _state = value;
                 switch (_state)
                 {
+                    case PlayerState.Attack:
+                        break;
                     case PlayerState.Idle:
                         break;
                     case PlayerState.Q:
@@ -210,9 +212,8 @@ namespace WarriorAnims
         {
             if (HP <= 0)
             {
+                ObjectPooling.instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
                 PState = PlayerState.Die;
-                Stat _stat = new Stat(PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
-                ObjectPooling.instance.Set_Stat(_stat);
             }
         }
         void Start()
@@ -225,6 +226,9 @@ namespace WarriorAnims
             ChooseAction();
             switch (PState)
             {
+                case PlayerState.Attack:
+                    Basic_Attack();
+                    break;
                 case PlayerState.Q:
                 case PlayerState.W:
                 case PlayerState.E:
@@ -238,14 +242,38 @@ namespace WarriorAnims
                     UpdateDie();
                     break;
 
-                case PlayerState.Attack:
-                    break;
-
                 case PlayerState.Idle:
                     UpdateIdle();
                     break;
 
             }
+        }
+        private bool canNormalAttack = true;
+        void Basic_Attack()
+        {
+            if (!canNormalAttack || _lockTarget == null)
+                return;
+
+            transform.LookAt(_lockTarget.transform);
+            agent.SetDestination(transform.position);
+
+            animator.SetBool("Moving", false);
+            animator.SetBool("Attack", true);
+            animator.SetInteger("Action", 1);
+            animator.SetInteger("TriggerNumber", 4);
+            animator.SetTrigger("Trigger");
+
+            canNormalAttack = false;
+        }
+        public void Normal_Attack_Fun()
+        {
+            animator.SetBool("Attack", false);
+            animator.SetBool("Moving", false);
+            animator.SetInteger("Action", -1);
+            animator.SetInteger("TriggerNumber", 0);
+            _lockTarget = null;
+            canNormalAttack = true;
+            PState = PlayerState.Idle;
         }
 
         private void UpdateDie()
@@ -256,7 +284,7 @@ namespace WarriorAnims
         {
             agent.velocity = Vector3.zero;
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-            animator.SetBool("Moving", false);
+            animator.SetBool("Moving", true);
             if (Input.GetMouseButtonDown(1))
             {
                 agent.velocity = Vector3.zero;
@@ -524,9 +552,6 @@ namespace WarriorAnims
         IEnumerator R_Shader_Value_Change(float _value)
         {
             yield return new WaitForSeconds(1f);
-            //Debug.Log(R_particle.transform.GetChild(0).transform.GetChild(0) + " " + gameObject);
-            //print(R_particle.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.GetFloat("Mask Clip Value"));
-
             R_particle.transform.GetChild(0).GetComponentInChildren<Renderer>().sharedMaterial.SetFloat("_Cutoff", _value);
         }
         #endregion R_Skill

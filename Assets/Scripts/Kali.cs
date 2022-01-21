@@ -30,6 +30,8 @@ public class Kali : Stat
             Animator animator = GetComponent<Animator>();
             switch (_state)
             {
+                case PlayerState.Attack:
+                    break;
                 case PlayerState.Idle:
                     animator.CrossFade("Idle", 0.1f, -1, 0);
                     break;
@@ -339,9 +341,8 @@ public class Kali : Stat
     {
         if (HP <= 0)
         {
+            ObjectPooling.instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
             State = PlayerState.Die;
-            Stat _stat = new Stat(PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
-            ObjectPooling.instance.Set_Stat(_stat);
         }
     }
     IEnumerator DeadAnimationEnd()

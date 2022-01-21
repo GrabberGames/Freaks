@@ -78,6 +78,8 @@ public class Kyle_Bullet : MonoBehaviour
     {
         if(other.transform.CompareTag("BlackFreaks") || other.transform.CompareTag("BlackTower"))
         {
+            if (other == null)
+                return;
             GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
             
             switch (_bullet)
@@ -107,12 +109,14 @@ public class Kyle_Bullet : MonoBehaviour
     }
     IEnumerator DT()
     {
-        yield return new WaitForSeconds(ps_tile.main.startLifetimeMultiplier);
+        yield return new WaitForSeconds(ps_tile.main.startLifetimeMultiplier); 
+        Destroy(ps_tile);
         Destroy();
     }
     IEnumerator DT_Hit()
     {
         yield return new WaitForSeconds(ps_hit.main.startLifetimeMultiplier);
+        Destroy(ps_hit);
         Destroy();
     }
     void Update()
