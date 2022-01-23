@@ -178,12 +178,6 @@ public class WorkshopController : Building
     }
 
 
-    public override void SetOpacity(bool isTransparent)
-    {
-        // Empty
-    }
-
-
     public override void SetMaterial(bool canBuild)
     {
         if (canBuild)

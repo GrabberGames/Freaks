@@ -121,12 +121,6 @@ public class AlterController : Building, DamageService, HealthService
     }
 
 
-    public override void SetOpacity(bool isTransparent)
-    {
-        return;
-    }
-
-
     public void DamageTaken(float damageTaken)
     {
          healthPoint -= damageTaken;
