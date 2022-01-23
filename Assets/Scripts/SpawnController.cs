@@ -23,11 +23,6 @@ public class SpawnController: MonoBehaviour
         {
             GameObject obj = ObjectPooling.instance.GetObject("BlackFreaks");
             obj.gameObject.GetComponent<NavMeshAgent>().Warp(SpawnPoint[randomSpawn].position);
-            //obj.transform.position = SpawnPoint[randomSpawn].position;
-            //obj.transform.position = new Vector3(-23.1882153f, 0.0966264457f, -6.99029636f);
-            //Vector3(-31.6000004,231.300003,101.800003)
-            // ³²ÂÊ Vector3(-59.5,0.100000001,-88.6999969) // Vector3(-17,0.0585823059,-177.800003)
-            //
             if (isRage)
             {
                 GameObject rageObj = ObjectPooling.instance.GetObject("BlackFreaks");

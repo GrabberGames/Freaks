@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class BuildingController : MonoBehaviour
 {
@@ -59,7 +55,7 @@ public class BuildingController : MonoBehaviour
         }
 
         // 건설 모드 진입 시
-        if(isPreviewActivate)
+        if (isPreviewActivate)
         {
             ViewPreview();
 
@@ -75,8 +71,8 @@ public class BuildingController : MonoBehaviour
 
                 if (buildnum == 0)      // Alter 건설 
                 {
-                    Destroy(GameObject.Find("Alter"));
-                    AlterRange.SetActive(false);
+                    GameObject.Find("Alter").transform.position = hittedPoint;
+                    //AlterRange.SetActive(false);
                 }
                 else if (buildnum == 2) // WorkShop 건설
                 {
@@ -84,7 +80,7 @@ public class BuildingController : MonoBehaviour
                     belowObejct = building.GetComponent<BuildingPreview>().GetBelowObject();
                     workshopController.Init(belowObejct);
 
-                    if(belowObejct.transform.parent.name != "SwitchController")
+                    if (belowObejct.transform.parent.name != "SwitchController")
                     {
                         belowObejct.GetComponent<MeshRenderer>().enabled = false;
                     }
@@ -127,20 +123,14 @@ public class BuildingController : MonoBehaviour
 
     private void ViewPreview()
     {
+        Plane plane = new Plane(Vector3.up, 0);
+        float distance;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
 
-        Vector3 buildPos = building.transform.position;
-
-        if (Physics.Raycast(ray, out hit))
+        if(plane.Raycast(ray, out distance))
         {
-            Vector3 _location = hit.point; _location.y = 0;
-            building.transform.position = _location;
-        }
-
-        if (buildnum == 0)
-        {
-            //AlterRange.SetActive(true);
+            building.transform.position = ray.GetPoint(distance);
         }
     }
 
@@ -153,12 +143,11 @@ public class BuildingController : MonoBehaviour
         buttens.SetActive(false);
 
         building.GetComponent<Collider>().isTrigger = false;
-        building.GetComponent<BuildingPreview>().Destroy();
 
         alterController.GoBuild(building);
         Destroy(building.GetComponent<BuildingPreview>());
 
-        if(buildnum == 0)
+        if (buildnum == 0)
         {
             whiteFreaksController = FindObjectsOfType<WhiteFreaksController>();
             freaksControllers = FindObjectsOfType<FreaksController>();
@@ -166,12 +155,13 @@ public class BuildingController : MonoBehaviour
             for (int i = 0; i < whiteFreaksController.Length; i++)
             {
                 whiteFreaksController[i].ChangeAlterPosition(hittedPoint);
-            }    
-            
+            }
+
             for (int i = 0; i < freaksControllers.Length; i++)
             {
                 freaksControllers[i].ChangeAlterPosition(hittedPoint);
-            } 
+            }
+            Destroy(building.gameObject);
         }
     }
 

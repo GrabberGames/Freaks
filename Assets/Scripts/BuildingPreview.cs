@@ -17,31 +17,17 @@ public class BuildingPreview : MonoBehaviour
     private bool areyouSure = false;
     private int distance = 0;
 
-    private List<Collider> colliders = new List<Collider>();
     private GameObject belowObject;
     private Building parentController;
-    private WorkshopController workshopController;
     private Transform parent;
 
-
-    private void Awake()
-    {
-        workshopController = GetComponentInParent<WorkshopController>();
-    }
-
+    private List<Collider> colliders = new List<Collider>();
 
     private void Update()
     {
         if (me == (int) BuildingNum.Alter)
-        { 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                Vector3 Pos = new Vector3(hit.point.x, 0, hit.point.z);
-                distance = (int)(Vector3.Distance(GameObject.Find("Alter").transform.position, hit.point));
-            }
+        {
+            SetMaterial(colliders.Count == 0);
         }
 
         if(me == (int) BuildingNum.Workshop)
@@ -66,14 +52,10 @@ public class BuildingPreview : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         parent = other.transform.parent;
-
         switch (me)
         {
             case (int)BuildingNum.Alter:
-                if (parent !=  null && parent.name == "Road")
-                {
-                    belowObject = parent.gameObject;
-                }
+                colliders.Add(other);
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
@@ -103,6 +85,7 @@ public class BuildingPreview : MonoBehaviour
         switch (me)
         {
             case (int)BuildingNum.Alter:
+                colliders.Remove(other);
                 break;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
@@ -130,14 +113,7 @@ public class BuildingPreview : MonoBehaviour
         switch (me)
         {
             case (int)BuildingNum.Alter:
-                if (belowObject != null) 
-                { 
-                    return distance <= 69 && belowObject.transform.name == "Road";
-                }       
-                else
-                {
-                    return false;
-                }
+                return colliders.Count == 0;
             case (int)BuildingNum.Tower:
             case (int)BuildingNum.Workshop:
                 if (belowObject != null)
@@ -165,7 +141,7 @@ public class BuildingPreview : MonoBehaviour
         switch (me)
         {
             case (int)BuildingNum.Alter:
-                parentController = GetComponentInParent<AlterController>();
+                parentController = GetComponentInParent<AlterPreview>();
                 break;
             case (int)BuildingNum.Tower:
                 break;
@@ -175,18 +151,11 @@ public class BuildingPreview : MonoBehaviour
             case (int)BuildingNum.Switch:
                 return;
         }
-        parentController.SetOpacity(true);
     }
 
 
     private void SetMaterial(bool isRed)
     {
         parentController.SetMaterial(isRed);
-    }
-
-
-    public void Destroy()
-    {
-        parentController.SetOpacity(false);
     }
 }
