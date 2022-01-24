@@ -341,6 +341,8 @@ public class Kali : Stat
     {
         if (HP <= 0)
         {
+            GameManager.Instance.PlayerDead();
+
             ObjectPooling.instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
             State = PlayerState.Die;
         }

@@ -12,7 +12,7 @@ public class WaronSkill : MonoBehaviour
     private int UseSkillNumber;
 
 
-    private void Awake()
+    private void Start()
     {
         waronSkillManage = GetComponentInParent<WaronSkillManage>();
         heroMovement = GetComponentInParent<WarriorAnims.HeroMovement>();
@@ -29,6 +29,7 @@ public class WaronSkill : MonoBehaviour
     {
         if (other.transform.tag == "BlackFreaks")
         {
+            //GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
             switch (UseSkillNumber)
             {
                 case 2:

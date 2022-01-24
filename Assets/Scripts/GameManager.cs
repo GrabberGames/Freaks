@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class GameManager : MonoBehaviour
 {
+    private int _deadCount = 0;
+    private int _playTime = 0;
+    private int _reviveTime = 0;
+
+    public delegate void TimerEventHandler(int time);
+
+    public event TimerEventHandler TimeChanged;
+
     [SerializeField]
     GameObject _player;
 
@@ -45,5 +52,22 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<GameManager>();
         }
+    }
+    public void PlayerDead()
+    {
+        StartCoroutine(PlayerRevive());
+    }
+    public IEnumerator PlayerRevive()
+    {
+        _reviveTime = Mathf.Min(40, (_deadCount-1) * 5 + _playTime * 5);
+        while(_reviveTime > 0)
+        {
+            _reviveTime--;
+
+            TimeChanged(_reviveTime);
+
+            yield return new WaitForSeconds(1f);
+        }
+
     }
 }
