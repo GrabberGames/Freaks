@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private int _deadCount = 0;
-    private int _playTime = 0;
+    private int _playTime = 10;
     private int _reviveTime = 0;
 
     public delegate void TimerEventHandler(int time);
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator PlayerRevive()
     {
-        _reviveTime = Mathf.Min(40, (_deadCount-1) * 5 + _playTime * 5);
+        _reviveTime = Mathf.Min(40, (_deadCount++) * 5 + _playTime * 5);
         while(_reviveTime > 0)
         {
             _reviveTime--;
