@@ -35,7 +35,11 @@ public class AudioManager : MonoBehaviour
     }
     public void Stop()
     {
-        sfxPlayer.Stop();
+        sfxPlayer.Pause();
+    }
+    public void Play() 
+    {
+        sfxPlayer.Play();
     }
     public void Load()
     {

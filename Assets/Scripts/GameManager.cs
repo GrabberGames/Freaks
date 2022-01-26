@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
 
     public event TimerEventHandler TimeChanged;
 
+    SpawnController _spawn = new SpawnController();
+    public static SpawnController Spawn { get { return Instance._spawn; } }
+
+
     [SerializeField]
     GameObject _player;
 

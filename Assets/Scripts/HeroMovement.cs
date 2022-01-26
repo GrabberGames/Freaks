@@ -120,11 +120,11 @@ namespace WarriorAnims
                     break;
             }
             t_time = Mathf.Max(q_time, w_time, e_time, r_time, t_time);
-            //ÀÌ¹Ì ½ÇÇà ÁßÀÌ¶ó¸é
+            //ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½
             if (press == true)
             {
             }
-            //ÄÚ·çÆ¾ Ã³À½ ½ÃÀÛÇÏ¸é
+            //ï¿½Ú·ï¿½Æ¾ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
             else
             {
                 press = true;
@@ -172,6 +172,22 @@ namespace WarriorAnims
             }
         }
 
+        public float getTimer(string type)
+        {
+            switch (type)
+            {
+                case "Q":
+                    return q_time;
+                case "W":
+                    return w_time;
+                case "E":
+                    return e_time;
+                case "R":
+                    return r_time;
+                default:
+                    return 0;
+            }
+        }
 
         protected override void Init()
         {
@@ -301,7 +317,7 @@ namespace WarriorAnims
                     else
                         _lockTarget = null;
 
-                    if (_lockTarget != null) //±âº» °ø°Ý ÇÒ ´ë»óÀÌ ÀÖ´Ù.
+                    if (_lockTarget != null) //ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
                     {
                         float distance = (_lockTarget.transform.position - transform.position).magnitude;
 
@@ -313,9 +329,9 @@ namespace WarriorAnims
                     }
                     _dist = Vector3.Distance(transform.position, hit.point);
                     if (_dist > 120f)
-                        SoundPlay("Àå°Å¸® ÀÌµ¿");
+                        SoundPlay("ï¿½ï¿½Å¸ï¿½ ï¿½Ìµï¿½");
                     else
-                        SoundPlay("´Ü°Å¸® ÀÌµ¿");
+                        SoundPlay("ï¿½Ü°Å¸ï¿½ ï¿½Ìµï¿½");
 
 
 
@@ -331,7 +347,7 @@ namespace WarriorAnims
 
         private void UpdateMoving()
         {
-            if (_lockTarget != null) //±âº» °ø°Ý ÇÒ ´ë»óÀÌ ÀÖ´Ù.
+            if (_lockTarget != null) //ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
             {
                 float distance = (_lockTarget.transform.position - transform.position).magnitude;
 
@@ -369,9 +385,9 @@ namespace WarriorAnims
 
                     _dist = Vector3.Distance(transform.position, hit.point);
                     if (_dist > 120f)
-                        SoundPlay("Àå°Å¸® ÀÌµ¿");
+                        SoundPlay("ï¿½ï¿½Å¸ï¿½ ï¿½Ìµï¿½");
                     else
-                        SoundPlay("´Ü°Å¸® ÀÌµ¿");
+                        SoundPlay("ï¿½Ü°Å¸ï¿½ ï¿½Ìµï¿½");
 
 
                     dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
@@ -605,9 +621,9 @@ namespace WarriorAnims
             string _soundname = "";
             switch (_name)
             {
-                case "Àå°Å¸® ÀÌµ¿":
-                case "´Ü°Å¸® ÀÌµ¿":
-                    //ÇöÀç ½ÇÇàÁßÀÎ »ç¿îµå°¡ ¾øÀ¸¸é ½ÇÇà
+                case "ï¿½ï¿½Å¸ï¿½ ï¿½Ìµï¿½":
+                case "ï¿½Ü°Å¸ï¿½ ï¿½Ìµï¿½":
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     if (_priority == 0)
                     {
                         _priority = 3;
@@ -615,15 +631,15 @@ namespace WarriorAnims
                     }
                     break;
 
-                case "½ºÀ§Ä¡":
+                case "ï¿½ï¿½ï¿½ï¿½Ä¡":
                     if (idx != 0)
                     {
                         if (idx == 1)
-                            _soundname = "Ã¹¹øÂ° ";
+                            _soundname = "Ã¹ï¿½ï¿½Â° ";
                         else if (idx == 2)
-                            _soundname = "µÎ¹øÂ°";
+                            _soundname = "ï¿½Î¹ï¿½Â°";
                         else if (idx == 3)
-                            _soundname = "¼¼¹øÂ°";
+                            _soundname = "ï¿½ï¿½ï¿½ï¿½Â°";
                         _soundname += $"{_name} " + UnityEngine.Random.Range(1, 3);
                     }
                     break;
@@ -631,22 +647,22 @@ namespace WarriorAnims
                 case "W":
                 case "E":
                 case "R":
-                    //ÇöÀç ½ÇÇàÁßÀÎ »ç¿îµå°¡ ¾ø°Å³ª ¿ì¼±¼øÀ§ 3¼øÀ§ÀÎ°Ô ½ÇÇàÁßÀÌ¸é ÇÏÀÌÀçÅ·.
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å·.
                     if (_priority == 0 || _priority > 2)
                     {
                         _priority = 2;
                         if (idx == 3)
-                            _soundname = $"{_name}½ºÅ³";
+                            _soundname = $"{_name}ï¿½ï¿½Å³";
                         else
-                            _soundname = $"{_name}½ºÅ³ " + UnityEngine.Random.Range(1, 3);
+                            _soundname = $"{_name}ï¿½ï¿½Å³ " + UnityEngine.Random.Range(1, 3);
                     }
                     break;
 
-                case "»ç¸Á":
-                case "½ÃÀÛ":
-                case "½Â¸®":
-                case "ºÎÈ°":
-                    //ÇöÀç ½ÇÇàÁßÀÎ »ç¿îµå°¡ ¾ø°Å³ª ¿ì¼±¼øÀ§ 2, 3¼øÀ§ÀÎ°Ô ½ÇÇàÁßÀÌ¸é ÇÏÀÌÀçÅ·.
+                case "ï¿½ï¿½ï¿½":
+                case "ï¿½ï¿½ï¿½ï¿½":
+                case "ï¿½Â¸ï¿½":
+                case "ï¿½ï¿½È°":
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ 2, 3ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å·.
                     if (_priority == 0 || _priority > 1)
                     {
                         _priority = 1;
@@ -655,7 +671,7 @@ namespace WarriorAnims
                     break;
 
             }
-            //½ÇÇàÇÏ±â.
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½.
             AudioManager.a_instance.Read(_soundname);
         }
     }

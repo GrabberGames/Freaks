@@ -5,30 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameMenuController : MonoBehaviour
 {
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public void LoadScene(int indx) {
+        SceneManager.LoadScene(indx);
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-    public void HeroSelect() 
-    {
-        // IF Single Btn is Clicked
-        SceneManager.LoadScene(3);
-    }
-
-
-    public void BackToMenu() {
-        // IF Back To Menu Btn is Clicked
-        SceneManager.LoadScene(1);
+    
+    public void GameQuit() {
+        Application.Quit();
     }
 }
