@@ -9,9 +9,11 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
+    public static string hero;
+
     public TextMeshProUGUI timerText;
-    public TextMeshProUGUI[] kailSkillCoolTimers;
-    public Image[] kyleCoolMasks;
+    public TextMeshProUGUI[] SkillCoolTimers;
+    public Image[] SkillCoolMasks;
     public Image mask;
     public int wave_min = 0;
     public int wave_sec = 0;
@@ -22,6 +24,7 @@ public class GameController : MonoBehaviour
     // wShot the ray to the pos. of Mouse Pointer Clicked.
     private SpawnController spawnController;
     private Kali kyle;
+    private WarriorAnims.HeroMovement waron; 
     private RaycastHit hit;
 
     private string hitColliderName;
@@ -31,17 +34,43 @@ public class GameController : MonoBehaviour
     private float value = 0;
     private float[] skillSizes = new float[4];
 
+    /*
+    private void Awake() {
+        if(GameController == null) {
+            GameController = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    */
+
+
+    public void Init() {
+        switch (GameController.hero)
+        {
+            case "kyle" :
+                kyle = GameObject.Find("kyle").GetComponent<Kali>();
+                for (int i = 0; i < 4; i++) {
+                    skillSizes[i] = SkillCoolMasks[i].rectTransform.rect.height;
+                } 
+                break;
+            
+            case "waron" :
+                waron = GameObject.Find("warron").GetComponent<WarriorAnims.HeroMovement>();
+                for (int i = 4; i < 8; i++) {
+                    skillSizes[i] = SkillCoolMasks[i].rectTransform.rect.height;
+                } 
+                break;
+
+            default:
+                break;
+
+        }
+    }
 
 
     private void Start()
     {
-        spawnController = GameObject.Find("SpawnController").GetComponent<SpawnController>();
-        kyle = GameObject.Find("kyle").GetComponent<Kali>();
         originalSize = mask.rectTransform.rect.width;
-
-        for (int i = 0; i < 4; i++) {
-            skillSizes[i] = kyleCoolMasks[i].rectTransform.rect.height;
-        } 
 
         StartCoroutine(PlayTimer());
         StartCoroutine(WaveTimer());
@@ -51,8 +80,14 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         FXmovePlayer();
-        kailSCool();
-        kailSCoolBtn();
+        if (GameController.hero == "kyle") {
+            kailSCool();
+            kailSCoolBtn();
+        }
+        else if (GameController.hero == "waron") {
+            waronSCool();
+            waronSCoolBtn();
+        }
     }
 
 
@@ -96,7 +131,7 @@ public class GameController : MonoBehaviour
         if (wave_min >= 2)
         {
             mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize);
-            spawnController.FreaksSpawn();
+            GameManager.Spawn.FreaksSpawn();
             wave_min = 0;
             wave_sec = 0;
             StartCoroutine(WaveTimer());
@@ -133,10 +168,19 @@ public class GameController : MonoBehaviour
     // Skill Cool Timer UI Controll; Kail
     public void kailSCool(){
         // CoolTime Text print
-        kailSkillCoolTimers[0].text = string.Format("{0:N1}", kyle.getTimer("Q"));
-        kailSkillCoolTimers[1].text = string.Format("{0:N1}", kyle.getTimer("W"));
-        kailSkillCoolTimers[2].text = string.Format("{0:N1}", kyle.getTimer("E"));
-        kailSkillCoolTimers[3].text = string.Format("{0:N1}", kyle.getTimer("R"));
+        SkillCoolTimers[0].text = string.Format("{0:N1}", kyle.getTimer("Q"));
+        SkillCoolTimers[1].text = string.Format("{0:N1}", kyle.getTimer("W"));
+        SkillCoolTimers[2].text = string.Format("{0:N1}", kyle.getTimer("E"));
+        SkillCoolTimers[3].text = string.Format("{0:N1}", kyle.getTimer("R"));
+    }
+
+        // Skill Cool Timer UI Controll; waron
+    public void waronSCool(){
+        // CoolTime Text print
+        SkillCoolTimers[4].text = string.Format("{0:N1}", waron.getTimer("Q"));
+        SkillCoolTimers[5].text = string.Format("{0:N1}", waron.getTimer("W"));
+        SkillCoolTimers[6].text = string.Format("{0:N1}", waron.getTimer("E"));
+        SkillCoolTimers[7].text = string.Format("{0:N1}", waron.getTimer("R"));
     }
     
 
@@ -144,35 +188,69 @@ public class GameController : MonoBehaviour
         // CoolTime Gauge(mask) handler
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            StartCoroutine(ScoolMask(0.367f, "Q", 0));
+            StartCoroutine(ScoolMask(0.367f, "Q", 0, "kyle"));
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {
-            StartCoroutine(ScoolMask(0.267f, "W", 1));
+            StartCoroutine(ScoolMask(0.267f, "W", 1, "kyle"));
 
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(ScoolMask(0.250f, "E", 2));
+            StartCoroutine(ScoolMask(0.250f, "E", 2, "kyle"));
 
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(ScoolMask(0.045f, "R", 3));
+            StartCoroutine(ScoolMask(0.045f, "R", 3, "kyle"));
+        }
+    }
+
+    public void waronSCoolBtn() {
+        // CoolTime Gauge(mask) handler
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            StartCoroutine(ScoolMask(0.367f, "Q", 0, "waron"));
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            StartCoroutine(ScoolMask(0.267f, "W", 1, "waron"));
+
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(ScoolMask(0.250f, "E", 2, "waron"));
+
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(ScoolMask(0.045f, "R", 3, "waron"));
         }
     }
 
 
-    IEnumerator ScoolMask(float val, string skill, int indx)
+    IEnumerator ScoolMask(float val, string skill, int indx, string hero)
     {
         float _val = val;
 
-        while (kyle.getTimer(skill) > 0.1f)
-        {
-            kyleCoolMasks[indx].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[indx] - val);
-            val += _val;
-            yield return new WaitForSeconds(0.1f);
+        if (hero == "kyle") {
+            while (kyle.getTimer(skill) > 0.1f)
+            {
+                SkillCoolMasks[indx].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[indx] - val);
+                val += _val;
+                yield return new WaitForSeconds(0.1f);
+            }
         }
+        else if (hero == "waron") {
+            while (waron.getTimer(skill) > 0.1f)
+            {
+                SkillCoolMasks[indx].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[indx] - val);
+                val += _val;
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+
+        
     }
 
 

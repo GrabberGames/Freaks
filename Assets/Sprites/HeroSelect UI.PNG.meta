@@ -1,0 +1,660 @@
+fileFormatVersion: 2
+guid: a06bc724594cf7a4b8ff6365339662a3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7684117140699493099
+    second: HeroSelect UI_0
+  - first:
+      213: -2585565292318474295
+    second: HeroSelect UI_1
+  - first:
+      213: -1949336909736205353
+    second: HeroSelect UI_2
+  - first:
+      213: -7759158422414626627
+    second: HeroSelect UI_3
+  - first:
+      213: 6230732251948431814
+    second: HeroSelect UI_4
+  - first:
+      213: 953697468986319025
+    second: HeroSelect UI_5
+  - first:
+      213: -3641490327734881929
+    second: HeroSelect UI_6
+  - first:
+      213: -8533635860837488402
+    second: HeroSelect UI_7
+  - first:
+      213: 1935870088875497297
+    second: HeroSelect UI_8
+  - first:
+      213: 1654209212838150432
+    second: HeroSelect UI_9
+  - first:
+      213: 3434266116783220786
+    second: HeroSelect UI_10
+  - first:
+      213: 4647044843654213133
+    second: HeroSelect UI_11
+  - first:
+      213: 5952368109146391963
+    second: HeroSelect UI_12
+  - first:
+      213: 6500177121710757857
+    second: HeroSelect UI_14
+  - first:
+      213: -1799262693955017928
+    second: HeroSelect UI_15
+  - first:
+      213: -8067012072569661242
+    second: HeroSelect UI_16
+  - first:
+      213: 3354013102770799282
+    second: HeroSelect UI_17
+  - first:
+      213: 7527484252400269546
+    second: HeroSelect UI_18
+  - first:
+      213: -301738897983708092
+    second: HeroSelect UI_19
+  - first:
+      213: 2057573351760750605
+    second: HeroSelect UI_20
+  - first:
+      213: -4735223165521414682
+    second: HeroSelect UI_21
+  - first:
+      213: 4315217143545526157
+    second: HeroSelect UI_22
+  - first:
+      213: 173771646772755865
+    second: HeroSelect UI_13
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HeroSelect UI_0
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 3496
+        width: 1505
+        height: 874
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51dcd183c288c5590800000000000000
+      internalID: -7684117140699493099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_1
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 3153
+        width: 893
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cf37c7c01a3e1cd0800000000000000
+      internalID: -2585565292318474295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_2
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 2884
+        width: 893
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d3ad9b986092f4e0800000000000000
+      internalID: -1949336909736205353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_3
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 2646
+        width: 893
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db0fefb468ee15490800000000000000
+      internalID: -7759158422414626627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_4
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 1577
+        width: 789
+        height: 886
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c9b4f7a8f1087650800000000000000
+      internalID: 6230732251948431814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_5
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 349
+        width: 789
+        height: 886
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b06e1e8bc63c3d00800000000000000
+      internalID: 953697468986319025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_6
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 1608
+        width: 734
+        height: 886
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 771775227d3d67dc0800000000000000
+      internalID: -3641490327734881929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_7
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 1117
+        width: 281
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee82f30d56f629980800000000000000
+      internalID: -8533635860837488402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_8
+      rect:
+        serializedVersion: 2
+        x: 1382
+        y: 850
+        width: 417
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1575ab2d6979dda10800000000000000
+      internalID: 1935870088875497297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_9
+      rect:
+        serializedVersion: 2
+        x: 1388
+        y: 611
+        width: 324
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0218563c38ee4f610800000000000000
+      internalID: 1654209212838150432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_10
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 379
+        width: 391
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 238260376d6f8af20800000000000000
+      internalID: 3434266116783220786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_11
+      rect:
+        serializedVersion: 2
+        x: 1993
+        y: 3967
+        width: 312
+        height: 317
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0ee1590aae9d7040800000000000000
+      internalID: 4647044843654213133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_12
+      rect:
+        serializedVersion: 2
+        x: 1993
+        y: 3472
+        width: 1376
+        height: 366
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b95c80e124f0b9250800000000000000
+      internalID: 5952368109146391963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_14
+      rect:
+        serializedVersion: 2
+        x: 4503
+        y: 3762
+        width: 623
+        height: 201
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e7d0bc17a4453a50800000000000000
+      internalID: 6500177121710757857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_15
+      rect:
+        serializedVersion: 2
+        x: 5304
+        y: 3756
+        width: 629
+        height: 201
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 833e23ddc1cb707e0800000000000000
+      internalID: -1799262693955017928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_16
+      rect:
+        serializedVersion: 2
+        x: 6285
+        y: 530
+        width: 6024
+        height: 3397
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c892b7c2473c0090800000000000000
+      internalID: -8067012072569661242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_17
+      rect:
+        serializedVersion: 2
+        x: 4491
+        y: 3413
+        width: 629
+        height: 202
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b2c8aa8529db8e20800000000000000
+      internalID: 3354013102770799282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_18
+      rect:
+        serializedVersion: 2
+        x: 5304
+        y: 3432
+        width: 629
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae83aa49b0ff67860800000000000000
+      internalID: 7527484252400269546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_19
+      rect:
+        serializedVersion: 2
+        x: 2644
+        y: 2173
+        width: 623
+        height: 959
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44463ca221200dbf0800000000000000
+      internalID: -301738897983708092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_20
+      rect:
+        serializedVersion: 2
+        x: 3757
+        y: 2209
+        width: 794
+        height: 899
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d08620bdf08fd8c10800000000000000
+      internalID: 2057573351760750605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_21
+      rect:
+        serializedVersion: 2
+        x: 2705
+        y: 651
+        width: 449
+        height: 972
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e535e68e9b194eb0800000000000000
+      internalID: -4735223165521414682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_22
+      rect:
+        serializedVersion: 2
+        x: 3769
+        y: 901
+        width: 800
+        height: 893
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d87f4b9012bb2eb30800000000000000
+      internalID: 4315217143545526157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeroSelect UI_13
+      rect:
+        serializedVersion: 2
+        x: 3295
+        y: 3966
+        width: 312
+        height: 306
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99dbced546c596200800000000000000
+      internalID: 173771646772755865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 6766ddaad361847a4b4ae4266bf075b0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
