@@ -55,7 +55,10 @@ public class PauseUIController : MonoBehaviour
 
         isMenuON = false;
         inGameWin.SetActive(false);
-        menuWins[0].SetActive(false);
+
+        for (int i = 0; i < menuWins.Length; i++) {
+            menuWins[i].SetActive(false);
+        }
     }
 
 
@@ -80,6 +83,12 @@ public class PauseUIController : MonoBehaviour
     public void DchkWin()
     {
         DcheckWin.SetActive(true);
+    }
+
+
+    public void DchkWinOff()
+    {
+        DcheckWin.SetActive(false);
     }
 
 
