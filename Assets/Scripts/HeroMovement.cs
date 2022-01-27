@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 namespace WarriorAnims
 {
     public class HeroMovement : SuperStateMachine
     {
+        public Action WaronRHitted = null;
+
         #region trash
         [HideInInspector] public SuperCharacterController superCharacterController;
         [HideInInspector] public WarriorMovementController warriorMovementController;
@@ -160,6 +164,11 @@ namespace WarriorAnims
                         {
                             R_particle.SetActive(false);
                         }
+                        else
+                        {
+                            if (r_time % 1 == 0)
+                                WaronRHitted.Invoke();
+                        }
                     }
                 }
                 if (t_time < 0.1f)
@@ -307,6 +316,9 @@ namespace WarriorAnims
             animator.SetBool("Moving", true);
             if (Input.GetMouseButtonDown(1))
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
@@ -329,9 +341,9 @@ namespace WarriorAnims
                     }
                     _dist = Vector3.Distance(transform.position, hit.point);
                     if (_dist > 120f)
-                        SoundPlay("��Ÿ� �̵�");
+                        SoundPlay("장거리 이동");
                     else
-                        SoundPlay("�ܰŸ� �̵�");
+                        SoundPlay("단거리 이동");
 
 
 
@@ -372,6 +384,9 @@ namespace WarriorAnims
 
             if (Input.GetMouseButtonDown(1))
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
@@ -385,9 +400,9 @@ namespace WarriorAnims
 
                     _dist = Vector3.Distance(transform.position, hit.point);
                     if (_dist > 120f)
-                        SoundPlay("��Ÿ� �̵�");
+                        SoundPlay("장거리 이동");
                     else
-                        SoundPlay("�ܰŸ� �̵�");
+                        SoundPlay("단거리 이동");
 
 
                     dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
@@ -517,7 +532,6 @@ namespace WarriorAnims
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
-        #endregion W_Skill
 
         IEnumerator LeafOfPrideParticle()
         {
@@ -528,6 +542,9 @@ namespace WarriorAnims
             Destroy(go);
             go = null;
         }
+
+#endregion W_Skill
+
 
         #region E_Skill
         void BoldRush()
@@ -571,7 +588,6 @@ namespace WarriorAnims
         }
         #endregion E_Skill
 
-
         #region R_Skill
         void ShockOfLand()
         {
@@ -593,6 +609,7 @@ namespace WarriorAnims
             waronSkillManage.UseSkillNumber = 0;
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             R_particle.SetActive(true);
+            R_particle.GetOrAddComponent<WaronR>().Init(30 + 0.25f * ED);
             StartCoroutine(R_Shader_Value_Change(0.1f));
             _state = PlayerState.Idle;
         }
@@ -621,9 +638,8 @@ namespace WarriorAnims
             string _soundname = "";
             switch (_name)
             {
-                case "��Ÿ� �̵�":
-                case "�ܰŸ� �̵�":
-                    //���� �������� ���尡 ������ ����
+                case "장거리 이동":
+                case "단거리 이동":
                     if (_priority == 0)
                     {
                         _priority = 3;
@@ -631,15 +647,15 @@ namespace WarriorAnims
                     }
                     break;
 
-                case "����ġ":
+                case "스위치":
                     if (idx != 0)
                     {
                         if (idx == 1)
-                            _soundname = "ù��° ";
+                            _soundname = "첫번째 ";
                         else if (idx == 2)
-                            _soundname = "�ι�°";
+                            _soundname = "두번째";
                         else if (idx == 3)
-                            _soundname = "����°";
+                            _soundname = "세번째";
                         _soundname += $"{_name} " + UnityEngine.Random.Range(1, 3);
                     }
                     break;
@@ -647,7 +663,6 @@ namespace WarriorAnims
                 case "W":
                 case "E":
                 case "R":
-                    //���� �������� ���尡 ���ų� �켱���� 3�����ΰ� �������̸� ������ŷ.
                     if (_priority == 0 || _priority > 2)
                     {
                         _priority = 2;
@@ -658,11 +673,10 @@ namespace WarriorAnims
                     }
                     break;
 
-                case "���":
-                case "����":
-                case "�¸�":
-                case "��Ȱ":
-                    //���� �������� ���尡 ���ų� �켱���� 2, 3�����ΰ� �������̸� ������ŷ.
+                case "사망":
+                case "시작":
+                case "승리":
+                case "부활":
                     if (_priority == 0 || _priority > 1)
                     {
                         _priority = 1;
@@ -671,7 +685,6 @@ namespace WarriorAnims
                     break;
 
             }
-            //�����ϱ�.
             AudioManager.a_instance.Read(_soundname);
         }
     }

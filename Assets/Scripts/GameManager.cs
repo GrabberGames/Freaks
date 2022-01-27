@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] public Transform[] SpawnPoint;
+
     private int _deadCount = 0;
     private int _playTime = 10;
     private int _reviveTime = 0;

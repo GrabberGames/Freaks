@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageManager : MonoBehaviour
+public class DamageManager
 {
     public void OnAttacked(float value, Stat defender)
     { 

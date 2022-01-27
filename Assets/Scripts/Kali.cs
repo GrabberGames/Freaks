@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
+
 public class Kali : Stat
 {
     #region variables
@@ -544,6 +546,7 @@ public class Kali : Stat
     }
     void Update()
     {
+        Debug.Log(10.1f % 1);
         if (State == PlayerState.Die)
             return;
 
@@ -608,6 +611,9 @@ public class Kali : Stat
     {
         if (Input.GetMouseButtonDown(1))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
             agent.velocity = Vector3.zero;
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
@@ -662,6 +668,9 @@ public class Kali : Stat
 
         if (Input.GetMouseButtonDown(1))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
             agent.velocity = Vector3.zero;
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
