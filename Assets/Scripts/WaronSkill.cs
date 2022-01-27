@@ -8,9 +8,9 @@ public class WaronSkill : MonoBehaviour
 
     private WaronSkillManage waronSkillManage;
     private FreaksController freaksController;
-    
     private int UseSkillNumber;
 
+    private float _damage = 0f;
 
     private void Start()
     {
@@ -19,9 +19,10 @@ public class WaronSkill : MonoBehaviour
     }
 
 
-    public void Renew()
+    public void Renew(float damage)
     {
         UseSkillNumber = waronSkillManage.UseSkillNumber;
+        _damage = damage;
     }
 
 
@@ -29,7 +30,9 @@ public class WaronSkill : MonoBehaviour
     {
         if (other.transform.tag == "BlackFreaks")
         {
-            //GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
+            if (other == null)
+                return;
+            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
             switch (UseSkillNumber)
             {
                 case 2:

@@ -24,10 +24,10 @@ public class WaronSkillManage : MonoBehaviour
     }
 
 
-    public bool SkillOnTrigger()
+    public bool SkillOnTrigger(float damage)
     {
         SkillColliderList[UseSkillNumber].GetComponent<Collider>().enabled = true;
-        SkillColliderList[UseSkillNumber].GetComponent<WaronSkill>().Renew();
+        SkillColliderList[UseSkillNumber].GetComponent<WaronSkill>().Renew(damage);
         return true;
     }
 }

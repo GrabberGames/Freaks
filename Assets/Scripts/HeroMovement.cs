@@ -98,7 +98,7 @@ namespace WarriorAnims
         //Waron Sound Priority Variable & Far Distance Judge
         private int _priority = 0;
         private float _dist = 0f;
-
+        private float _damage = 0f;
         void Activation(string skill)
         {
             switch (skill)
@@ -237,7 +237,7 @@ namespace WarriorAnims
                 PState = PlayerState.Die;
             }
         }
-        void Start()
+        private void Start()
         {
             Init();
         }
@@ -501,7 +501,7 @@ namespace WarriorAnims
         public void LeafOfPride_Stop_1()
         {
             StartCoroutine(LeafOfPrideParticle());
-            waronSkillManage.SkillOnTrigger();
+            waronSkillManage.SkillOnTrigger(110+0.6f*ED);
         }
         public void LeafOfPride_Stop_2()
         {
@@ -547,7 +547,7 @@ namespace WarriorAnims
         public void BoldRush_Stop()
         {
             BoldRushParticleEnd();
-            waronSkillManage.SkillOnTrigger();
+            waronSkillManage.SkillOnTrigger(180+0.7f*ED);
 
             rigid.velocity = Vector3.zero;
             animator.SetBool("Attack", false);
