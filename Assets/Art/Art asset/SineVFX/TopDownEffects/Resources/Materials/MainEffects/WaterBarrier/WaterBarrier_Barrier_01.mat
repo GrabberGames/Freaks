@@ -110,7 +110,7 @@ Material:
     - _AppearGradientRemapMax: 1
     - _AppearProgress: -0.125
     - _BackRampOffsetExp: 2
-    - _Cutoff: 0.4
+    - _Cutoff: 0.1
     - _DepthMaskDistance: 1
     - _DepthMaskEnabled: 0
     - _DepthMaskExp: 2

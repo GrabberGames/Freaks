@@ -4,32 +4,31 @@ using UnityEngine;
 using System;
 public class WaronR : MonoBehaviour
 {
+    public Action FreaksList = null;
+
     WarriorAnims.HeroMovement hero;
     GameObject go = null;
+
     float _damage = 0;
     private void Start()
     {
         hero = GetComponentInParent<WarriorAnims.HeroMovement>();
+        hero.WaronRHitted += FreaksInRange;
     }
     public void Init(float damage)
     {
         _damage = damage;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        hero.WaronRHitted += FreaksInRange;
-        go = other.gameObject;
-    }
-    private void OnTriggerExit(Collider other)
+    private void OnDisable()
     {
         hero.WaronRHitted -= FreaksInRange;
-        go = null;
     }
     void FreaksInRange()
     {
-        if (go == null)
-            return;
-        GameManager.Damage.OnAttacked(_damage, go.GetComponent<Stat>());
-        print(go.GetComponent<Stat>().HP);
+        LayerMask mask = LayerMask.GetMask("blackfreaks");
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, 11, mask))
+        {
+            GameManager.Damage.OnAttacked(_damage, collider.gameObject.GetComponent<Stat>());
+        }
     }
 }

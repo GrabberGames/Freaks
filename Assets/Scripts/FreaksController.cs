@@ -2,172 +2,87 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
-public class FreaksController : MonoBehaviour
+public class FreaksController : Stat
 {
-    public float startingHealth = 100;
-    public float currentHealth;
-    public float enemyHealth;
-    public float MoveSpeed;
-    public float timeBetweenAttacks = 0.5f;
-    public float attackDamage = 10;
-
-    private GameObject alter;
-    private GameObject white_freaks;
-    private GameObject black_freaks;
-    private GameObject kail;
-    private GameObject waron;
-    public GameObject near;
-    private NavMeshAgent agent;
-
-    private Vector3 alterPosition;
-    bool playerInRange;
-    float timer;
-    FreaksAttack freaksAttack;
-    private bool isStuern = false;
-    bool damaged;
-    bool isDead;
-    bool isEnemyFound = false;
-    // Start is called before the first frame update
-    void Start()
+    public enum FreaksState
     {
-        freaksAttack = gameObject.GetComponentInChildren<FreaksAttack>();
+        Attack,
+        Die,
+        Moving,
+        Stuern,
+    }
+    FreaksState state = FreaksState.Moving;
+    public FreaksState State
+    {
+        get { return state; }
+        set
+        {
+            state = value;
+            Animator animator = GetComponentInChildren<Animator>();
+            switch(state)
+            {
+                case FreaksState.Attack:
+                    break;
+                case FreaksState.Die:
+                    break;
+                case FreaksState.Moving:
+                    break;
+                case FreaksState.Stuern:
+                    break;
+            }
+        }
+    }
+
+    NavMeshAgent agent;
+
+    private bool isStuern = false;
+
+    Vector3 alterPosition;
+    protected override void Init()
+    {
+        base.Init();
 
         agent = GetComponent<NavMeshAgent>();
-        MoveSpeed = agent.speed;
 
-        alterPosition = alter.transform.position;
         agent.SetDestination(alterPosition);
+
     }
 
-    void Awake()
+    private void Awake()
     {
-        waron = GameObject.Find("Waron");
-        alter = GameObject.Find("Alter");
-        kail = GameObject.Find("Kail");
+        Init();
     }
-
-    void Update()
+    private void Update()
     {
-        if (isStuern)
+        switch (state)
         {
-            agent.isStopped = true;
-            return;
-        }
-        else
-            agent.isStopped = false;
+            case FreaksState.Attack:
 
-
-        // 공격 중 다른 오브젝트에게 공격 -> 타겟팅 변경 O
-        timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks && playerInRange)
-        {
-            Attack(near);
+                break;
+            case FreaksState.Die:
+                break;
+            case FreaksState.Moving:
+                UpdateMoving();
+                break;
+            case FreaksState.Stuern:
+                break;
         }
-        isEnemyFound = freaksAttack.isEnemyFound;
-        if (isEnemyFound){
-            agent.Move(near.transform.position);
-        }
-
     }
-
-    //이동
-    public void move(GameObject near)
+    void UpdateMoving()
     {
-        agent.SetDestination(near.transform.position);
-    }
-
-    public void Damaged(float amount)// 영웅으로부터 공격을 받았을 때의 상황
-    {
-        damaged = true;
-        currentHealth -= amount;
-        if (currentHealth <= 0 && !isDead)
+        LayerMask mask = LayerMask.GetMask("Player") | LayerMask.GetMask("WhiteFreaks");
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, 25f, mask))
         {
-            Death();
+            print(collider.gameObject.name);
+            State = FreaksState.Attack;
+            break;
         }
     }
-
-    void Death()
-    {
-        isDead = true;
-        transform.GetComponent<CapsuleCollider>().isTrigger = true;
-    }
-
-    void TakeDamage(GameObject near, float amount)//공격
-    {
-        if (near == kail)
-        {
-        }
-        else if (near == waron)
-        {
-        }
-        else if (near == alter)
-        {
-
-        }
-        else
-        {
-        }
-    }
-
-    // 공격
-    void Attack(GameObject near)
-    {
-        timer = 0f;
-
-        if (currentHealth > 0)
-        {
-            TakeDamage(near, attackDamage);
-        }
-    }
-
-    public void ChangeAlterPosition(Vector3 alterPosition)
-    {
-        this.alterPosition = alterPosition;
-    }
-
-    //영웅에게 공격받았을 때 영웅에게 튕겨져 나가는 효과를 주도록 움직이는 힘을 가함
-    public IEnumerator StartDamage(float damage, Vector3 playerPosition, float delay, float pushBack)
-    {
-        yield return new WaitForSeconds(delay);
-
-        try
-        {
-            Damaged(damage);
-
-            Vector3 diff = playerPosition - transform.position;
-            diff = diff / diff.sqrMagnitude;
-            GetComponent<Rigidbody>().AddForce((transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
-        }
-        catch (MissingReferenceException e)
-        {
-            Debug.Log(e.ToString());
-        }
-    }
-    void OnTriggerEnter(Collider other)//두 게임오브젝트의 충돌발생 경우
-    {
-        if (other.transform.name == "Alter" || other.transform.name=="Waron"|| other.transform.name == "Kail")
-        {
-            playerInRange = true;
-            near = other.gameObject;
-            agent.SetDestination(near.transform.position);
-        }
-    }
-
-    void OnTriggerExit(Collider other)//충돌이 끝난 경우
-    {
-        if (other.transform.name == "Alter" || other.transform.name == "Waron" || other.transform.name == "Kail")
-        {
-            playerInRange = false;
-            near = null;
-            agent.SetDestination(alterPosition);
-        }
-    }
-
     public IEnumerator MoveSpeedSlow(float value)
     {
-        agent.speed = MoveSpeed * value;
+        agent.speed = MOVE_SPEED * value;
         yield return new WaitForSeconds(1.5f);
-        agent.speed = MoveSpeed;
+        agent.speed = MOVE_SPEED;
     }
 
     public IEnumerator Stuern(float value)
@@ -176,10 +91,17 @@ public class FreaksController : MonoBehaviour
         yield return new WaitForSeconds(value);
         isStuern = false;
     }
+    public void CallDamaged()
+    {
 
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, 7.5f);
+    }
+    public void ChangeAlterPosition(Vector3 alterPosition)
+    {
+        this.alterPosition = alterPosition;
     }
 }

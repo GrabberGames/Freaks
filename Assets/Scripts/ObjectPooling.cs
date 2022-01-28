@@ -108,10 +108,12 @@ public class ObjectPooling : MonoBehaviour
         {
             case "WhiteFreaks":
                 newObj = Instantiate(WhiteFreaksObject, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
                 return newObj;
             case "BlackFreaks":
                 newObj = Instantiate(BlackFreaksObject, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
                 return newObj;
             default:
@@ -127,6 +129,7 @@ public class ObjectPooling : MonoBehaviour
                 if (Instance.WhiteFreaksQueue.Count > 0)                          
                 {
                     var obj = Instance.WhiteFreaksQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
                     obj.transform.position = Alter.transform.position;
                     obj.SetActive(true);
                     return obj;
@@ -139,7 +142,8 @@ public class ObjectPooling : MonoBehaviour
             case ("BlackFreaks"):
                 if (Instance.BlackFreaksQueue.Count > 0)                        
                 {
-                    var obj = Instance.BlackFreaksQueue.Dequeue();         
+                    var obj = Instance.BlackFreaksQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
                     obj.SetActive(true);
                     return obj;
                 }

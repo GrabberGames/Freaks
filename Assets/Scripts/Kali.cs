@@ -546,7 +546,6 @@ public class Kali : Stat
     }
     void Update()
     {
-        Debug.Log(10.1f % 1);
         if (State == PlayerState.Die)
             return;
 

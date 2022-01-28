@@ -124,11 +124,9 @@ namespace WarriorAnims
                     break;
             }
             t_time = Mathf.Max(q_time, w_time, e_time, r_time, t_time);
-            //�̹� ���� ���̶��
             if (press == true)
             {
             }
-            //�ڷ�ƾ ó�� �����ϸ�
             else
             {
                 press = true;
@@ -137,6 +135,7 @@ namespace WarriorAnims
         }
         IEnumerator Skill_CoolTime()
         {
+            int cnt = 0;
             while (t_time > 0)
             {
                 if (q_time > 0.1f)
@@ -154,6 +153,7 @@ namespace WarriorAnims
                 if (r_time > 0.1f)
                 {
                     r_time -= 0.1f;
+                    cnt++;
                     if(R_particle.activeInHierarchy)
                     {
                         if(r_time < 96.0f && r_time > 95.9f)
@@ -166,8 +166,10 @@ namespace WarriorAnims
                         }
                         else
                         {
-                            if (r_time % 1 == 0)
+                            if (cnt % 10 == 0)
+                            {
                                 WaronRHitted.Invoke();
+                            }
                         }
                     }
                 }

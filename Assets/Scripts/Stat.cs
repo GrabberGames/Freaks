@@ -35,6 +35,7 @@ public class Stat : MonoBehaviour
 
     protected virtual void Init()
     {
+        gameObject.transform.name = gameObject.transform.name.Replace("(Clone)", "");
         PD = ObjectPooling.instance.Get_Stat(gameObject.transform.name).PD;
         ED = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ED;
         HP = ObjectPooling.instance.Get_Stat(gameObject.transform.name).HP;
