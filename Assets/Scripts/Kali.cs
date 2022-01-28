@@ -279,7 +279,7 @@ public class Kali : Stat
     
     public void SoundPlay(string _name, int idx = 0)
     {
-        if (AudioManager.a_instance.Check() == true)
+        if (AudioManager.a_Instance.Check() == true)
             _priority = 0;
         string _soundname = "";
         switch(_name)
@@ -336,16 +336,16 @@ public class Kali : Stat
 
         }
         //실행하기.
-        AudioManager.a_instance.Read(_soundname);
+        AudioManager.a_Instance.Read(_soundname);
     }
 
     public override void DeadSignal()
     {
         if (HP <= 0)
         {
-            GameManager.Instance.PlayerDead();
-
             ObjectPooling.instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+
+            GameManager.Instance.PlayerDead();
             State = PlayerState.Die;
         }
     }

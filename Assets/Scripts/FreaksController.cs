@@ -19,11 +19,11 @@ public class FreaksController : Stat
         set
         {
             state = value;
-            Animator animator = GetComponentInChildren<Animator>();
+            Animator animator = GetComponent<Animator>();
             switch(state)
             {
                 case FreaksState.Attack:
-                    animator.Play("Attack");
+                    canNormalAttack = true;
                     break;
                 case FreaksState.Die:
 
@@ -31,8 +31,6 @@ public class FreaksController : Stat
                 case FreaksState.Moving:
                     animator.CrossFade("Moving", 0.1f, -1, 0);
                     //Moving으로 바뀌면 Attack->Moving or Stuern->Moving이므로 
-                    //alterPosition으로 destination setting.
-                    agent.SetDestination(alterPosition);
                     break;
                 case FreaksState.Stuern:
                     break;
@@ -50,13 +48,15 @@ public class FreaksController : Stat
 
         agent = GetComponent<NavMeshAgent>();
 
+        agent.speed = MOVE_SPEED;
         agent.SetDestination(alterPosition);
+
+        State = FreaksState.Moving;
     }
 
     private void Start()
     {
         Init();
-        State = FreaksState.Moving;
     }
     private void Update()
     {
@@ -78,21 +78,22 @@ public class FreaksController : Stat
     {
         if (canNormalAttack == false || target == null)
         {
-            State = FreaksState.Moving;
             return;
         }
-
+        transform.LookAt(target.transform);
+        Animator animator = GetComponent<Animator>();
+        animator.CrossFade("Attack", 0.1f);
+        agent.SetDestination(transform.position);
         GameManager.Damage.OnAttacked(PD, target.GetComponent<Stat>());
         canNormalAttack = false;
     }
     public void CanNormalAttackChange()
     {
-        canNormalAttack = true;
         State = FreaksState.Moving;
     }
     void UpdateMoving()
     {
-        print(alterPosition);
+        canNormalAttack = true;
         if (target != null) //기본 공격 할 대상이 있다.
         {
             float distance = (target.transform.position - transform.position).magnitude;
@@ -116,9 +117,9 @@ public class FreaksController : Stat
             }
         }
         //기본 공격할 대상이 없다.
+        agent.SetDestination(alterPosition);
         Vector3 look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
         transform.LookAt(look_dir);
-
         //일정 범위 내에 적이 들어올 경우 target으로 설정해준다.
         LayerMask mask = LayerMask.GetMask("player") | LayerMask.GetMask("whitefreaks");
         foreach (Collider collider in Physics.OverlapSphere(transform.position, 25f, mask))

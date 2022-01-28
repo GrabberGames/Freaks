@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class SpawnController
 {
-    [SerializeField] private int cm_num = 5; // close range
+    [SerializeField] private int cm_num = 1; // close range
     
     private int randomSpawn;
     private int wave = 0;

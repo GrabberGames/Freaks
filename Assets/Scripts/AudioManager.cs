@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager a_instance = null;
-    static AudioManager a_Instance
+    static AudioManager a_instance = null;
+    public static AudioManager a_Instance
     {
         get
         {

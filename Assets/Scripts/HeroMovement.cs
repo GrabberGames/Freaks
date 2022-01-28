@@ -635,7 +635,7 @@ namespace WarriorAnims
 
         public void SoundPlay(string _name, int idx = 0)
         {
-            if (AudioManager.a_instance.Check() == true)
+            if (AudioManager.a_Instance.Check() == true)
                 _priority = 0;
             string _soundname = "";
             switch (_name)
@@ -687,7 +687,7 @@ namespace WarriorAnims
                     break;
 
             }
-            AudioManager.a_instance.Read(_soundname);
+            AudioManager.a_Instance.Read(_soundname);
         }
     }
 
