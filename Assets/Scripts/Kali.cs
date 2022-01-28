@@ -615,7 +615,7 @@ public class Kali : Stat
 
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
                 if (hit.collider.gameObject.layer == (int)Layers.Enemy)
@@ -672,7 +672,7 @@ public class Kali : Stat
 
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("Enemy");
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
 
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
