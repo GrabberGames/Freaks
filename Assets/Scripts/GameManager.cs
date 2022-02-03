@@ -66,8 +66,12 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerDead()
     {
-        StartCoroutine(PlayerRevive());
+        //StartCoroutine(PlayerRevive());
     }
+    //--------------------------------//
+    /*      UI 작업시 구독자 구현 후 주석 해제*/
+    //--------------------------------//
+    /*
     public IEnumerator PlayerRevive()
     {
         _reviveTime = Mathf.Min(40, (_deadCount++) * 5 + _playTime * 5);
@@ -79,6 +83,6 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
         }
-
     }
+    */
 }

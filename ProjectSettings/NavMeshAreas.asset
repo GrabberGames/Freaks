@@ -16,7 +16,7 @@ NavMeshProjectSettings:
   - name: None_Freaks_Way
     cost: 1
   - name: Building
-    cost: 99999
+    cost: 1
   - name: 
     cost: 1
   - name: 
