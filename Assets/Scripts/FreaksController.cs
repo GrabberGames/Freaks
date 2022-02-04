@@ -39,7 +39,7 @@ public class FreaksController : Stat
     }
     Animator animator;
     NavMeshAgent agent;
-    Vector3 alterPosition;
+    GameObject alter;
     GameObject target = null;
     bool canNormalAttack = true;
     bool IsOnFreaksWay = true;
@@ -49,7 +49,10 @@ public class FreaksController : Stat
 
         agent = GetComponent<NavMeshAgent>();
         agent.speed = MOVE_SPEED;
-        agent.SetDestination(alterPosition);
+
+        alter = GameManager.Instance.Alter;
+
+        agent.SetDestination(alter.transform.position);
 
         animator = GetComponent<Animator>();
 
@@ -59,6 +62,15 @@ public class FreaksController : Stat
     private void Start()
     {
         Init();
+
+        /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
+        GameManager.Instance.AlterIsChange -= AlterIsChanged;
+        GameManager.Instance.AlterIsChange += AlterIsChanged;
+    }
+
+    void AlterIsChanged(GameObject go)
+    {
+        this.alter = go;
     }
     private void Update()
     {
@@ -124,13 +136,11 @@ public class FreaksController : Stat
         {
             if (Physics.Raycast(transform.position, transform.position + Vector3.down * 2f, 100f, LayerMask.GetMask("NoneFreaksWay")))
             {
-                print("!");
                 agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1<< 5;
                 IsOnFreaksWay = false;
             }
             else
             {
-                print("@");
                 agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3; 
                 IsOnFreaksWay = true;
             }
@@ -152,7 +162,7 @@ public class FreaksController : Stat
     }
     void GoToAlter()
     {
-        agent.SetDestination(alterPosition);
+        agent.SetDestination(alter.transform.position);
     }
     public IEnumerator MoveSpeedSlow(float value)
     {
@@ -167,9 +177,5 @@ public class FreaksController : Stat
         isStuern = true;
         yield return new WaitForSeconds(value);
         isStuern = false;
-    }
-    public void ChangeAlterPosition(Vector3 alterPosition)
-    {
-        this.alterPosition = alterPosition;
     }
 }

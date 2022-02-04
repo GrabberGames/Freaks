@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,27 @@ public class GameManager : MonoBehaviour
                 return;
          }
     }
+
+    [SerializeField]
+    GameObject _alter;
+    public GameObject Alter
+    {
+        get
+        {
+            if(_alter == null)
+            {
+                _alter = GameObject.Find("alter");
+            }
+            return _alter;
+        }
+        set
+        {
+            _alter = value;
+            AlterIsChange.Invoke(_alter);
+        }
+    }
+    public Action<GameObject> AlterIsChange = null;
+
 
     static GameManager s_instance;
 

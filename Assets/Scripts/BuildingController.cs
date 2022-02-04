@@ -33,7 +33,7 @@ public class BuildingController : MonoBehaviour
 
     private void Start()
     {
-        alterController = GameObject.Find("Alter").GetComponent<AlterController>();
+        alterController = GameManager.Instance.Alter.GetComponent<AlterController>();
     }
 
 
@@ -149,6 +149,7 @@ public class BuildingController : MonoBehaviour
 
         if (buildnum == 0)
         {
+            /*
             whiteFreaksController = FindObjectsOfType<WhiteFreaksController>();
             freaksControllers = FindObjectsOfType<FreaksController>();
 
@@ -162,6 +163,7 @@ public class BuildingController : MonoBehaviour
                 freaksControllers[i].ChangeAlterPosition(hittedPoint);
             }
             Destroy(building.gameObject);
+            */
         }
     }
 

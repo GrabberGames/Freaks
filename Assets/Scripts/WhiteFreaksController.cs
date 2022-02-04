@@ -23,10 +23,24 @@ public class WhiteFreaksController : MonoBehaviour
     {
         _stat = ObjectPooling.instance.Get_Stat("whitefreaks");
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-        alter = GameObject.Find("Alter");
+
+        alter = GameManager.Instance.Alter;
+
         alterController = alter.GetComponent<AlterController>();
         alterPosition = alter.transform.position;
+
+        /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
+        GameManager.Instance.AlterIsChange -= AlterIsChanged;
+        GameManager.Instance.AlterIsChange += AlterIsChanged;
     }
+    /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.>
+    void AlterIsChanged(GameObject go)
+    {
+        this.alter = go;
+    }
+    /// <-알터 위치가 변경 되었을때 사용되는 함수입니다>
+
+
     public void SetMiningWorkShop()
     {
         ChkNavMesh();
@@ -83,13 +97,6 @@ public class WhiteFreaksController : MonoBehaviour
             }
         }
     }
-
-
-    public void ChangeAlterPosition(Vector3 alterPosition)
-    {
-        this.alterPosition = alterPosition;
-    }
-
 
     private void ChkNavMesh()
     {
