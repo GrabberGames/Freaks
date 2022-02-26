@@ -10,6 +10,7 @@ public class FreaksController : Stat
         Die,
         Moving,
         Stuern,
+        Slow,
     }
 
     FreaksState state = FreaksState.Moving;
@@ -33,6 +34,11 @@ public class FreaksController : Stat
                     //Moving으로 바뀌면 Attack->Moving or Stuern->Moving이므로 
                     break;
                 case FreaksState.Stuern:
+                    agent.isStopped = true;
+                    stuernEffect.SetActive(true);
+                    break;
+                case FreaksState.Slow:
+                    slowEffect.SetActive(true);
                     break;
             }
         }
@@ -41,6 +47,12 @@ public class FreaksController : Stat
     NavMeshAgent agent;
     GameObject alter;
     GameObject target = null;
+
+    [SerializeField]
+    GameObject stuernEffect;
+    [SerializeField]
+    GameObject slowEffect;
+
     bool canNormalAttack = true;
     bool IsOnFreaksWay = true;
     protected override void Init()
@@ -70,10 +82,15 @@ public class FreaksController : Stat
 
     void AlterIsChanged(GameObject go)
     {
+        Debug.Log("AlterChanged");
         this.alter = go;
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+            StartCoroutine(MoveSpeedSlow(0.1f));
+        if (Input.GetKeyDown(KeyCode.L))
+            StartCoroutine(Stuern(10f));
         switch (state)
         {
             case FreaksState.Attack:
@@ -166,16 +183,20 @@ public class FreaksController : Stat
     }
     public IEnumerator MoveSpeedSlow(float value)
     {
+        State = FreaksState.Slow;
         agent.speed = MOVE_SPEED * value;
         yield return new WaitForSeconds(1.5f);
         agent.speed = MOVE_SPEED;
+        slowEffect.SetActive(false);
+        State = FreaksState.Moving;
     }
 
     public IEnumerator Stuern(float value)
     {
-        bool isStuern = false;
-        isStuern = true;
+        State = FreaksState.Stuern;
         yield return new WaitForSeconds(value);
-        isStuern = false;
+        agent.isStopped = false;
+        stuernEffect.SetActive(false);
+        State = FreaksState.Moving;
     }
 }

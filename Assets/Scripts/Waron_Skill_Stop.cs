@@ -6,6 +6,24 @@ public class Waron_Skill_Stop : MonoBehaviour
 {
     public WarriorAnims.HeroMovement hero;
 
+    public void Waron_Q_Rock_Spawn()
+    {
+        if(hero == null)
+        {
+            hero = GetComponentInParent<WarriorAnims.HeroMovement>();
+            print(hero);
+        }
+        hero.ThrowingRockSpawn();
+    }
+    public void Waron_Q_Rock_Throw()
+    {
+        if (hero == null)
+        {
+            hero = GetComponentInParent<WarriorAnims.HeroMovement>();
+            print(hero);
+        }
+        hero.ThrowingRockThrow();
+    }
     public void WaronBasicAttackStop()
     {
         if (hero == null)
@@ -47,7 +65,6 @@ public class Waron_Skill_Stop : MonoBehaviour
             hero = GetComponentInParent<WarriorAnims.HeroMovement>();
         }
         hero.BoldRushParticleStart();
-
     }
     public void Waron_E_Stop()
     {

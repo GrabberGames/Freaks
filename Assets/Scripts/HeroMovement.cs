@@ -91,6 +91,8 @@ namespace WarriorAnims
         WaitForSeconds seconds = new WaitForSeconds(0.1f);
 
         //skill vfx prefabs 
+        public GameObject leftArm;
+        GameObject rock = null;
         GameObject go = null;
         public GameObject Q_particle;
         public GameObject W_particle;
@@ -498,6 +500,16 @@ namespace WarriorAnims
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
+        public void ThrowingRockSpawn()
+        {
+            rock = Instantiate(Q_particle);
+            rock.transform.position = leftArm.transform.position;
+            rock.GetComponent<Waron_Q>().Init(look_dir, 10, leftArm);
+        }
+        public void ThrowingRockThrow()
+        {
+            rock.GetComponent<Waron_Q>().b = false;
+        }
         #endregion Q_Skill
 
 
@@ -602,6 +614,7 @@ namespace WarriorAnims
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 10);
+            SetAnimatorRootMotion(true);
         }
         public void ShockOfLand_Stop()
         {
@@ -613,6 +626,7 @@ namespace WarriorAnims
             R_particle.SetActive(true);
             R_particle.GetOrAddComponent<WaronR>().Init(30 + 0.25f * ED);
             StartCoroutine(R_Shader_Value_Change(0.1f));
+            SetAnimatorRootMotion(false);
             _state = PlayerState.Idle;
         }
         IEnumerator R_Shader_Value_Change(float _value)
@@ -669,9 +683,9 @@ namespace WarriorAnims
                     {
                         _priority = 2;
                         if (idx == 3)
-                            _soundname = $"{_name}��ų";
+                            _soundname = $"{_name}스킬";
                         else
-                            _soundname = $"{_name}��ų " + UnityEngine.Random.Range(1, 3);
+                            _soundname = $"{_name}스킬 " + UnityEngine.Random.Range(1, 3);
                     }
                     break;
 

@@ -47,7 +47,7 @@ public class BuildingController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.name == "Alter")
+                if (hit.transform.gameObject.name == "alter")
                 {
                     buttens.SetActive(true);
                 }
@@ -71,7 +71,7 @@ public class BuildingController : MonoBehaviour
 
                 if (buildnum == 0)      // Alter 건설 
                 {
-                    GameObject.Find("Alter").transform.position = hittedPoint;
+                    GameObject.Find("alter").transform.position = hittedPoint;
                     //AlterRange.SetActive(false);
                 }
                 else if (buildnum == 2) // WorkShop 건설
@@ -162,8 +162,8 @@ public class BuildingController : MonoBehaviour
             {
                 freaksControllers[i].ChangeAlterPosition(hittedPoint);
             }
-            Destroy(building.gameObject);
             */
+            Destroy(building.gameObject);
         }
     }
 

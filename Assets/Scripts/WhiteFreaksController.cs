@@ -36,6 +36,7 @@ public class WhiteFreaksController : MonoBehaviour
     /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.>
     void AlterIsChanged(GameObject go)
     {
+        Debug.Log("AlterChanged");
         this.alter = go;
     }
     /// <-알터 위치가 변경 되었을때 사용되는 함수입니다>
