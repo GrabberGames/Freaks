@@ -87,10 +87,6 @@ public class FreaksController : Stat
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-            StartCoroutine(MoveSpeedSlow(0.1f));
-        if (Input.GetKeyDown(KeyCode.L))
-            StartCoroutine(Stuern(10f));
         switch (state)
         {
             case FreaksState.Attack:
@@ -151,14 +147,17 @@ public class FreaksController : Stat
         }
         else if (IsOnFreaksWay == false)
         {
-            if (Physics.Raycast(transform.position, transform.position + Vector3.down * 2f, 100f, LayerMask.GetMask("NoneFreaksWay")))
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.position + Vector3.down*5, out hit, 5f, LayerMask.GetMask("NoneFreaksWay")))
             {
+                Debug.Log("TRue");
                 agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1<< 5;
                 IsOnFreaksWay = false;
             }
             else
             {
-                agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3; 
+                Debug.Log("False");
+                agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3;
                 IsOnFreaksWay = true;
             }
         }

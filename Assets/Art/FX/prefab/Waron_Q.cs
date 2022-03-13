@@ -10,15 +10,16 @@ public class Waron_Q : MonoBehaviour
     Vector3 _lookDir;
     Vector3 dir;
     float _damage = 0f;
+    Vector3 startPos;
     public void Init(Vector3 lookDir, float damage, GameObject arm)
     {
         animator = GetComponent<Animator>();
         animator.Play("Idle");
         _lookDir = lookDir;
-        _lookDir.y = -10f;
         _damage = damage; 
         this.arm = arm;
-        Invoke("DT", 3f);
+        startPos = transform.position;
+        //Invoke("DT", 2.6f);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -35,7 +36,10 @@ public class Waron_Q : MonoBehaviour
             transform.position = arm.transform.position;
         else
         {
-            dir = transform.position + _lookDir.normalized * 30f * Time.deltaTime;
+            if ((startPos - this.transform.position).magnitude > 30)
+                return;
+            else
+                dir = transform.position + _lookDir.normalized * 50f * Time.deltaTime;
             //dir.y = 0;
             transform.position = dir;
         }
