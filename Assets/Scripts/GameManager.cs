@@ -71,6 +71,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { Init();  return s_instance; } }
 
     public static DamageManager Damage { get { return Instance._damage; } }
+
+    Models _models = new Models();
+
+    public Models models { get { return Instance._models; } }
+
     static void Init()
     {
         if(s_instance == null)
