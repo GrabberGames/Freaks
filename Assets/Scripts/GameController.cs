@@ -42,7 +42,12 @@ public class GameController : MonoBehaviour
         }
     }
     */
-
+    #region Use To Spawn
+    private int randomSpawn;
+    private const int spawnFreaksNumber = 3;
+    int spawnedFreaksNumber = 0;
+    bool isRage = false;
+    #endregion
 
     public void Init() {
         switch (GameController.hero)
@@ -131,14 +136,43 @@ public class GameController : MonoBehaviour
         if (wave_min >= 2)
         {
             mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize);
-            GameManager.Spawn.FreaksSpawn();
+            FreaksSpawn();
             wave_min = 0;
             wave_sec = 0;
             StartCoroutine(WaveTimer());
             value = 0;
         }
     }
+    public void FreaksSpawn()
+    {
+        randomSpawn = Random.Range(0, 3);
 
+        if (isRage == true)
+        {
+            spawnedFreaksNumber = spawnFreaksNumber * 2;
+        }
+        else
+        {
+            spawnedFreaksNumber = spawnFreaksNumber;
+        }
+        
+        StartCoroutine(CoFreaksSpawn());
+    }
+    IEnumerator CoFreaksSpawn()
+    {
+        while (spawnedFreaksNumber > 0)
+        {
+            GameObject obj = ObjectPooling.instance.GetObject("BlackFreaks");
+            obj.gameObject.GetComponent<NavMeshAgent>().Warp(GameManager.Instance.SpawnPoint[randomSpawn].position);
+
+            spawnedFreaksNumber--;
+            yield return new WaitForSeconds(1);
+        }
+    }
+    public void SetIsRageActivate(bool isRage)
+    {
+        this.isRage = isRage;
+    }
 
     // FX Play on Mouse Click pos.
     private void FXmovePlayer()

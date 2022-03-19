@@ -18,6 +18,9 @@ public class SwitchController : MonoBehaviour
     private GameObject alter;
     private AlterController alterController;
     private BuildingPreview buildingPreview;
+
+    private GameController gameController;
+
     Vector3 pos;
     private bool isTimerON;
     private int isActivate = 3;
@@ -30,6 +33,8 @@ public class SwitchController : MonoBehaviour
 
         alter = GameObject.Find("Alter");
         alterController = alter.GetComponent<AlterController>();
+
+        gameController = GameObject.FindObjectOfType<GameController>();
         //targetRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
@@ -142,7 +147,7 @@ public class SwitchController : MonoBehaviour
 
         if(isActivate == 0)
         {
-            GameManager.Spawn.SetIsRageActivate(true);
+            gameController.SetIsRageActivate(true);
         }
     }
 }

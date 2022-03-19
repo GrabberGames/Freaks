@@ -75,15 +75,13 @@ public class Kali : Stat
 
     public KailAni kailAni;
 
-    WaitForSeconds seconds_2s = new WaitForSeconds(2f);
 
     //skill cooltime variable
     float t_time = 0.0f;
-    float q_time = 0.0f;
-    float w_time = 0.0f;
-    float e_time = 0.0f;
-    float r_time = 0.0f;
+
     bool press = false;
+
+    WaitForSeconds seconds_2s = new WaitForSeconds(2f);
     WaitForSeconds seconds_01s = new WaitForSeconds(0.1f);
 
     //sound variable
@@ -121,22 +119,22 @@ public class Kali : Stat
         switch (skill)
         {
             case "Q":
-                q_time = 11.0f;
+                GameManager.Instance.models.playerModel.qSkillCoolTime = 11.0f;
                 break;
 
             case "W":
-                w_time = 15.0f;
+                GameManager.Instance.models.playerModel.wSkillCoolTime = 15.0f;
                 break;
 
             case "E":
-                e_time = 16.0f;
+                GameManager.Instance.models.playerModel.eSkillCoolTime = 16.0f;
                 break;
 
             case "R":
-                r_time = 90.0f;
+                GameManager.Instance.models.playerModel.rSkillCoolTime = 90.0f;
                 break;
         }
-        t_time = Mathf.Max(q_time, w_time, e_time, r_time, t_time);
+        t_time = Mathf.Max(GameManager.Instance.models.playerModel.qSkillCoolTime, GameManager.Instance.models.playerModel.wSkillCoolTime, GameManager.Instance.models.playerModel.eSkillCoolTime, GameManager.Instance.models.playerModel.rSkillCoolTime, t_time);
         //이미 실행 중이라면
         if (press == true)
         {
@@ -153,13 +151,13 @@ public class Kali : Stat
         switch (type)
         {
             case "Q":
-                return q_time;
+                return GameManager.Instance.models.playerModel.qSkillCoolTime;
             case "W":
-                return w_time;
+                return GameManager.Instance.models.playerModel.wSkillCoolTime;
             case "E":
-                return e_time;
+                return GameManager.Instance.models.playerModel.eSkillCoolTime;
             case "R":
-                return r_time;
+                return GameManager.Instance.models.playerModel.rSkillCoolTime;
             default:
                 return 0;
         }
@@ -168,21 +166,21 @@ public class Kali : Stat
     {
         while (t_time > 0)
         {
-            if (q_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.qSkillCoolTime > 0.1f)
             {
-                q_time -= 0.1f;
+                GameManager.Instance.models.playerModel.qSkillCoolTime -= 0.1f;
             }
-            if (w_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.wSkillCoolTime > 0.1f)
             {
-                w_time -= 0.1f;
+                GameManager.Instance.models.playerModel.wSkillCoolTime -= 0.1f;
             }
-            if (e_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.eSkillCoolTime > 0.1f)
             {
-                e_time -= 0.1f;
+                GameManager.Instance.models.playerModel.eSkillCoolTime -= 0.1f;
             }
-            if (r_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
             {
-                r_time -= 0.1f;
+                GameManager.Instance.models.playerModel.rSkillCoolTime -= 0.1f;
             }
             if (t_time < 0.1f)
             {
@@ -223,7 +221,7 @@ public class Kali : Stat
         //Q
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (q_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.qSkillCoolTime > 0.1f)
                 return;
             //useRootMotion = true; 
             State = PlayerState.Q;
@@ -235,7 +233,7 @@ public class Kali : Stat
 
         else if (Input.GetKeyDown(KeyCode.W))
         {
-            if (w_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.wSkillCoolTime > 0.1f)
                 return;
             State = PlayerState.W;
             useRootMotion = true; ChangRotate();
@@ -246,7 +244,7 @@ public class Kali : Stat
 
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            if (e_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.eSkillCoolTime > 0.1f)
                 return;
             State = PlayerState.E;
             useRootMotion = true; ChangRotate();
@@ -256,7 +254,7 @@ public class Kali : Stat
         //R
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            if (r_time > 0.1f)
+            if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
                 return;
             State = PlayerState.R;
             useRootMotion = true; ChangRotate();
@@ -349,7 +347,7 @@ public class Kali : Stat
             State = PlayerState.Die;
         }
     }
-    IEnumerator DeadAnimationEnd()
+    public IEnumerator DeadAnimationEnd()
     {
         yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
