@@ -51,7 +51,7 @@ public class HUDManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         activeSkillSlotArray[0].SetActiveSkillSlotUI(activeSkillSlotQ);
         activeSkillSlotArray[1].SetActiveSkillSlotUI(activeSkillSlotW);
@@ -65,22 +65,19 @@ public class HUDManager : MonoBehaviour
     }
 
 
-    private void Update()
+    public void SetSkillIcon(eSkillSlotKey key, Sprite skillIcon)
     {
-        
-    }
-
-
-
-    public void UseSkill(eSkillSlotKey key)
-    {
-        activeSkillSlotArray[(int)key].activeSkillSlotUI.UseSkill();
-        activeSkillSlotArray[(int)key].activeSkillSlotUI.Visualization(0.0f, 3);
+        activeSkillSlotArray[(int)key].activeSkillSlotUI.SetSkillIcon(skillIcon);
     }
 
     public void CoolTimeVisualization(eSkillSlotKey key, float elapsedtime, float cooltime)
     {
-        activeSkillSlotArray[(int)key].activeSkillSlotUI.Visualization(elapsedtime - cooltime, elapsedtime / cooltime);
+        activeSkillSlotArray[(int)key].activeSkillSlotUI.Visualization(elapsedtime, elapsedtime / cooltime);
+    }
+
+    public void HPVisualization(float nowHP, float maxHP)
+    {
+        hpUI.Visualization(nowHP, nowHP / maxHP);
     }
 
 
@@ -91,8 +88,7 @@ public class HUDManager : MonoBehaviour
             yield return null;
             //플레이어에게 받아옴
 
-        }
-        
+        }        
     }
 
 

@@ -14,14 +14,14 @@ public class ActiveSkillSlotUI : MonoBehaviour
     private Color cooldownSkillIconColor;
 
 
-    public void SetSkillIcon(Sprite _skillIcon)
+    public void SetSkillIcon(Sprite skillIcon)
     {
-        skillIcon.sprite = _skillIcon;
+        this.skillIcon.sprite = skillIcon;
     }
 
-    public void SetCooldownSkillIconColor(Color _color)
+    public void SetCooldownSkillIconColor(Color color)
     {
-        cooldownSkillIconColor = _color;
+        cooldownSkillIconColor = color;
     }
 
     public void UseSkill()
@@ -29,24 +29,25 @@ public class ActiveSkillSlotUI : MonoBehaviour
         skillIcon.color = cooldownSkillIconColor;
     }
        
-    public void Visualization(float _remainingTime, float _fill)
+    public void Visualization(float remainingTime, float fill)
     {
-        if(_fill < 0.0f || _fill > 1.0f)
+        if(fill < 0.0f || fill > 1.0f)
         {
             Debug.Log("input fill amount over value");
             return;
         }
 
-        coolTimeCover.fillAmount = _fill;
+        coolTimeCover.fillAmount = fill;
 
-        if(_remainingTime.Equals(0.0f))
+        if(remainingTime.Equals(0.0f))
         {
             skillIcon.color = Color.white;
             coolTimeText.text = "";
         }
         else
         {
-            coolTimeText.text = string.Format("{0:N1}", _remainingTime);
+            skillIcon.color = cooldownSkillIconColor;
+            coolTimeText.text = string.Format("{0:N1}", remainingTime);
         }
     }    
 }

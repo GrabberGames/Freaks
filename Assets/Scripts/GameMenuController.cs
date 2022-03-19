@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct HeroInfomation
 {
+    public string heroName;
+    public Sprite heroStandImage;
     [Range(1, 3)]
     public int hp;
     [Range(1, 3)]
@@ -24,12 +27,13 @@ public enum eHeroType { Waron, Kyle }
 
 public class GameMenuController : MonoBehaviour
 {
-    public enum eCanvasList { Main, Play, HeroSelect }
+    public enum eCanvasList { Main, Play, HeroSelect, Creadit }
 
     [Header("UI Canvas List")]
     [SerializeField] private GameObject main;
     [SerializeField] private GameObject play;
     [SerializeField] private GameObject heroSelect;
+    [SerializeField] private GameObject creadit;
     //[SerializeField] private GameObject heroSelect;
 
     [Header("Hero Info")]
@@ -39,8 +43,10 @@ public class GameMenuController : MonoBehaviour
     [Header("Hero Select UI Setting")]
     [SerializeField] private HeroAbilitiesUI heroAbilitiesUI;
     [SerializeField] private HeroSelectUI heroSelectUI;
+    [SerializeField] private CreditUI creditUI;
 
-    GameObject[] uiCanvasArray = new GameObject[3];
+
+    GameObject[] uiCanvasArray = new GameObject[4];
 
     eHeroType nowSelectHero;
 
@@ -49,6 +55,7 @@ public class GameMenuController : MonoBehaviour
         uiCanvasArray[(int)eCanvasList.Main] = main;
         uiCanvasArray[(int)eCanvasList.Play] = play;
         uiCanvasArray[(int)eCanvasList.HeroSelect] = heroSelect;
+        uiCanvasArray[(int)eCanvasList.Creadit] = creadit;
 
         OnEnableMainMenu();        
     }
@@ -65,6 +72,11 @@ public class GameMenuController : MonoBehaviour
     public void OnEnableHeroSelectMenu()
     {
         ActiveCanvas(eCanvasList.HeroSelect);
+    }
+
+    public void OnEnableCreditMenu()
+    {
+        uiCanvasArray[(int)eCanvasList.Creadit].SetActive(true);
     }
 
     public void ActiveCanvas(eCanvasList canvas)
@@ -91,6 +103,11 @@ public class GameMenuController : MonoBehaviour
         nowSelectHero = eHeroType.Kyle;
     }
     #endregion
+
+    public void DisableCreditMenu()
+    {
+        creditUI.Disable();
+    }
 
 
     public void LoadScene(int indx) {

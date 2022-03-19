@@ -8,6 +8,10 @@ public class HeroAbilitiesUI : MonoBehaviour
     [Header("Gauge Image(1, 2, 3 순서대로)")]
     [SerializeField] private Sprite[] gaugeSprite = new Sprite[3];
 
+    [Header("Hero Image Setting")]
+    [SerializeField] private Text heroName;
+    [SerializeField] private Image standImage;    
+
     [Header("Gauge Setting")]
     [SerializeField] private Image hpGauge;
     [SerializeField] private Image damageGauge;
@@ -20,10 +24,18 @@ public class HeroAbilitiesUI : MonoBehaviour
     [SerializeField] private Image skillIconE;
     [SerializeField] private Image skillIconR;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void SetAbilitiesUI(HeroInfomation heroInfomation)
     {
         if (!gameObject.activeSelf)
             gameObject.SetActive(true);
+
+        heroName.text = heroInfomation.heroName;
+        standImage.sprite = heroInfomation.heroStandImage;
 
         hpGauge.sprite = gaugeSprite[heroInfomation.hp - 1];
         damageGauge.sprite = gaugeSprite[heroInfomation.damage - 1];
