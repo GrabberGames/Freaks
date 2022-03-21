@@ -87,7 +87,7 @@ Material:
     - Vector1_28841e7d0ebd4071b8fa3060c8a958c7: 0
     - Vector1_a3dd8d74c0454d11969d1122cf037119: 0
     - Vector1_d1e57147e88a4ac8b6a9391eed06ff3d: 0
-    - _BumpScale: 1
+    - _BumpScale: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -108,11 +108,11 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - Vector2_aefc51803626468d93e187720b33beb1: {r: 1, g: 0.15, b: 0, a: 0}
+    - Vector2_aefc51803626468d93e187720b33beb1: {r: 1, g: 0.1, b: 0, a: 0}
     - Vector2_d4d5b53cc35d40cb9d72579261570939: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.013375282, g: 0, b: 1, a: 1}
-    - _Color0: {r: 0, g: 0.17391205, b: 1, a: 0}
-    - _Color1: {r: 0, g: 0.043581236, b: 0.2924528, a: 0}
+    - _Color: {r: 0, g: 0.96835494, b: 1, a: 1}
+    - _Color0: {r: 0, g: 1, b: 0.9098039, a: 0}
+    - _Color1: {r: 0, g: 0.14901961, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _speed: {r: 1, g: 0.25, b: 0, a: 0}
   m_BuildTextureStacks: []
