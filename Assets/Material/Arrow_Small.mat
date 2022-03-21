@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Arrow_Small
-  m_Shader: {fileID: 4800000, guid: e17754d7559a70f4985b817f48d2fdfa, type: 3}
+  m_Shader: {fileID: 4800000, guid: 33af8a2df74556c4fac9d600bb464718, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -108,11 +108,11 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - Vector2_aefc51803626468d93e187720b33beb1: {r: 1, g: 0.1, b: 0, a: 0}
+    - Vector2_aefc51803626468d93e187720b33beb1: {r: 1, g: 0.15, b: 0, a: 0}
     - Vector2_d4d5b53cc35d40cb9d72579261570939: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0, g: 0.96835494, b: 1, a: 1}
-    - _Color0: {r: 0, g: 0.990309, b: 1, a: 0}
-    - _Color1: {r: 0, g: 0.1481996, b: 1, a: 0}
+    - _Color: {r: 0.013375282, g: 0, b: 1, a: 1}
+    - _Color0: {r: 1, g: 1, b: 1, a: 0}
+    - _Color1: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _speed: {r: 1, g: 0.25, b: 0, a: 0}
   m_BuildTextureStacks: []

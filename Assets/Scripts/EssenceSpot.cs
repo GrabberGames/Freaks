@@ -8,7 +8,7 @@ public class EssenceSpot : MonoBehaviour
 
     [SerializeField] private int GetEssencePerOnce = 50;
     
-    private Material navy, blue, sky_blue;
+    private Material navy, white, sky_blue;
     private Material material;
 
 
@@ -16,8 +16,8 @@ public class EssenceSpot : MonoBehaviour
     {
         material = this.gameObject.GetComponent<Renderer>().material;
         navy = GetComponentInParent<EssenceManager>().materials[0];
-        blue = GetComponentInParent<EssenceManager>().materials[1];
-        sky_blue = GetComponentInParent<EssenceManager>().materials[2];
+        sky_blue = GetComponentInParent<EssenceManager>().materials[1];
+        white = GetComponentInParent<EssenceManager>().materials[2];
     }
 
 
@@ -54,17 +54,17 @@ public class EssenceSpot : MonoBehaviour
 
     void SetColor()
     {
-        if(RemainEssence >= 801)
+        if(RemainEssence >= 501)
         {
             gameObject.GetComponent<Renderer>().material = navy;
         }
-        else if(RemainEssence >= 401)
+        else if(RemainEssence >= 201)
         {
-            gameObject.GetComponent<Renderer>().material = blue;
+            gameObject.GetComponent<Renderer>().material = sky_blue;
         }
         else if(RemainEssence >= 1)
         {
-            gameObject.GetComponent<Renderer>().material = sky_blue;
+            gameObject.GetComponent<Renderer>().material = white;
         }
         else
         {
