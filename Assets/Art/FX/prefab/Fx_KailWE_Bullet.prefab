@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3539363563026044846
 Transform:
   m_ObjectHideFlags: 0
@@ -4875,7 +4875,7 @@ GameObject:
   - component: {fileID: 3539363563099781631}
   - component: {fileID: 4721016219473425509}
   m_Layer: 0
-  m_Name: Fx_KailW_Bullet
+  m_Name: Fx_KailWE_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4888,7 +4888,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3539363563099781624}
-  m_LocalRotation: {x: -1.3920947e-15, y: 0.7071068, z: 0.7071068, w: 1.3920947e-15}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 103.4, y: 12.2, z: 17.5}
   m_LocalScale: {x: 1.1241, y: 1.1241, z: 1.1241}
   m_Children:
@@ -4904,7 +4904,7 @@ Transform:
   - {fileID: 3539363563994762316}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &3539363563099781630
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4913,7 +4913,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3539363563099781624}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -5473,7 +5473,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 1
     size3D: 1
     rotation3D: 0
     gravityModifier:
@@ -5733,7 +5733,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2

@@ -106,7 +106,7 @@ namespace WarriorAnims
             switch (skill)
             {
                 case "Q":
-                    GameManager.Instance.models.playerModel.rSkillCoolTime = 6.0f;
+                    GameManager.Instance.models.playerModel.qSkillCoolTime = 6.0f;
                     break;
 
                 case "W":
@@ -121,7 +121,7 @@ namespace WarriorAnims
                     GameManager.Instance.models.playerModel.rSkillCoolTime = 120.0f;
                     break;
             }
-            t_time = Mathf.Max(GameManager.Instance.models.playerModel.rSkillCoolTime, GameManager.Instance.models.playerModel.wSkillCoolTime, GameManager.Instance.models.playerModel.eSkillCoolTime, GameManager.Instance.models.playerModel.rSkillCoolTime, t_time);
+            t_time = Mathf.Max(GameManager.Instance.models.playerModel.qSkillCoolTime, GameManager.Instance.models.playerModel.wSkillCoolTime, GameManager.Instance.models.playerModel.eSkillCoolTime, GameManager.Instance.models.playerModel.rSkillCoolTime, t_time);
             if (press == true)
             {
             }
@@ -136,19 +136,19 @@ namespace WarriorAnims
             int cnt = 0;
             while (t_time > 0)
             {
-                if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
+                if (GameManager.Instance.models.playerModel.qSkillCoolTime >= 0.1f)
                 {
-                    GameManager.Instance.models.playerModel.rSkillCoolTime -= 0.1f;
+                    GameManager.Instance.models.playerModel.qSkillCoolTime -= 0.1f;
                 }
-                if (GameManager.Instance.models.playerModel.wSkillCoolTime > 0.1f)
+                if (GameManager.Instance.models.playerModel.wSkillCoolTime >= 0.1f)
                 {
                     GameManager.Instance.models.playerModel.wSkillCoolTime -= 0.1f;
                 }
-                if (GameManager.Instance.models.playerModel.eSkillCoolTime > 0.1f)
+                if (GameManager.Instance.models.playerModel.eSkillCoolTime >= 0.1f)
                 {
                     GameManager.Instance.models.playerModel.eSkillCoolTime -= 0.1f;
                 }
-                if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
+                if (GameManager.Instance.models.playerModel.rSkillCoolTime >= 0.1f)
                 {
                     GameManager.Instance.models.playerModel.rSkillCoolTime -= 0.1f;
                     cnt++;
@@ -186,7 +186,7 @@ namespace WarriorAnims
             switch (type)
             {
                 case "Q":
-                    return GameManager.Instance.models.playerModel.rSkillCoolTime;
+                    return GameManager.Instance.models.playerModel.qSkillCoolTime;
                 case "W":
                     return GameManager.Instance.models.playerModel.wSkillCoolTime;
                 case "E":
@@ -430,10 +430,11 @@ namespace WarriorAnims
             //Q
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
+                if (GameManager.Instance.models.playerModel.qSkillCoolTime > 0.1f)
                     return;
                 useRootMotion = true; ChangRotate();
                 Activation("Q");
+                ChangRotate();
                 ThrowingRock();
                 PState = PlayerState.Q;
             }
@@ -476,6 +477,7 @@ namespace WarriorAnims
         void ThrowingRock()
         {
             SoundPlay("Q", 0);
+            ChangRotate();
 
             agent.ResetPath();
             isAction = true;

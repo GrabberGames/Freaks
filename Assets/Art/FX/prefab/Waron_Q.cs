@@ -19,7 +19,7 @@ public class Waron_Q : MonoBehaviour
         _damage = damage; 
         this.arm = arm;
         startPos = transform.position;
-        //Invoke("DT", 2.6f);
+        Invoke("P", 2.6f);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -43,6 +43,10 @@ public class Waron_Q : MonoBehaviour
             //dir.y = 0;
             transform.position = dir;
         }
+    }
+    void P()
+    {
+        animator.Play("Broke");
     }
     void DT()
     {
