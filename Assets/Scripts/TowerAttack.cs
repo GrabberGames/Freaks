@@ -25,12 +25,13 @@ public class TowerAttack : Stat
 
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
 
-       // StartCoroutine("FadeOut"); //fadeout할때 쓸 코드
+     
     }
     public override void DeadSignal()
     {
         if (HP <= 0)
         {
+            //StartCoroutine("FadeOut"); //fadeout할때 쓸 코드
             Destroy(this.gameObject);
         }
     }
@@ -89,11 +90,11 @@ public class TowerAttack : Stat
         MeshRenderer mr_c2 = transform.GetChild(1).gameObject.GetComponent<MeshRenderer>();
         mr_c2.material.shader = Shader.Find("UI/Unlit/Transparent");
 
-        for (int i = 30; i >= 0; i--)
+        for (int i = 25; i >= 0; i--)
             {
          
 
-            float f = i /30.0f ;
+            float f = i /25.0f ;
         
                 float c1_r = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color.r;
                 float c1_g = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color.g;
@@ -115,7 +116,7 @@ public class TowerAttack : Stat
             transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color = c1;
             transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.color = c2;
             
-            yield return new WaitForSeconds(0.04f);
+            yield return new WaitForSeconds(0.03f);
             }
         Destroy(transform.GetChild(0).gameObject.transform.GetChild(0).gameObject); //파티클 시스템 제거
         Destroy(transform.GetChild(2).gameObject);
