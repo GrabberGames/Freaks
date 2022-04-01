@@ -613,6 +613,10 @@ namespace WarriorAnims
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 10);
             SetAnimatorRootMotion(true);
+
+            StartCoroutine(BuffMoveSpeed(20));
+            StartCoroutine(BuffHp(20));
+
         }
         public void ShockOfLand_Stop()
         {
@@ -701,6 +705,21 @@ namespace WarriorAnims
             }
             AudioManager.a_Instance.Read(_soundname);
         }
-    }
 
+
+        IEnumerator BuffMoveSpeed(float amount)
+        {
+            float ms = MOVE_SPEED;
+            MOVE_SPEED *= amount;
+            yield return new WaitForSeconds(25f);
+            MOVE_SPEED = ms;
+        }
+        IEnumerator BuffHp(float amount)
+        {
+            float hp = HP;
+            HP *= amount;
+            yield return new WaitForSeconds(25f);
+            HP = hp;
+        }
+    }
 }

@@ -14,6 +14,7 @@ public class Stat : MonoBehaviour
         MOVE_SPEED = ms;
         ATTACK_RANGE = atr;
         ARMOR = ar;
+        DECREASE_DAMAGE = 0;
     }
     [SerializeField]
     public float PD { get; set; }
@@ -29,6 +30,9 @@ public class Stat : MonoBehaviour
     public float MOVE_SPEED { get; set; }
     [SerializeField]
     public float ATTACK_RANGE { get; set; }
+    [SerializeField]
+    public float DECREASE_DAMAGE { get; set; }
+
     [SerializeField]
     public float ARMOR { get; set; }
     public Dictionary<string, Stat> Json { get; set; }

@@ -110,7 +110,7 @@ public class Kali : Stat
 
     //Kyle Basic Attack Target Object
     GameObject _lockTarget;
-
+    
 
     #endregion
 
@@ -262,6 +262,7 @@ public class Kali : Stat
             HorizonofMemory();
         }
     }
+
     void ChangRotate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -353,7 +354,6 @@ public class Kali : Stat
         Destroy(this.gameObject);
     }
 
-
     #region Q_Skill
     void Determination()
     {
@@ -390,6 +390,7 @@ public class Kali : Stat
             yield return null;
     }
     #endregion
+
     #region W_Skill
     void Atonement()
     {
@@ -400,6 +401,11 @@ public class Kali : Stat
         StartCoroutine(W_ParticleOff(_w));
         agent.ResetPath();
         isAction = true;
+
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, 15f, LayerMask.GetMask("blackfreaks")))
+        {
+            GameManager.Damage.OnAttacked(150 + 0.5f * PD, collider.GetComponent<Stat>());
+        }
     }
     public void W_Stop()
     {
@@ -417,6 +423,7 @@ public class Kali : Stat
 
     }
     #endregion
+
     #region E_Skill
     void Evation()
     {
@@ -425,6 +432,7 @@ public class Kali : Stat
         useRootMotion = true;
         isAction = true;
         audioSource[2].Play();
+        StartCoroutine(BuffDecreaseDamage(0.5f));
     }
     public void E_Stop()
     {
@@ -439,6 +447,7 @@ public class Kali : Stat
         E_AttackNum++;
     }
     #endregion
+
     #region R_Skill
     void HorizonofMemory()
     {
@@ -688,5 +697,14 @@ public class Kali : Stat
                 agent.SetDestination(dir);
             }
         }
+    }
+
+    IEnumerator BuffDecreaseDamage(float amount)
+    {
+        DECREASE_DAMAGE = amount;
+
+        yield return new WaitForSeconds(2);
+
+        DECREASE_DAMAGE = 0;
     }
 }

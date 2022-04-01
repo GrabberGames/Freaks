@@ -7,7 +7,7 @@ public class DamageManager
 {
     public void OnAttacked(float value, Stat defender)
     { 
-        int damage = (int)Mathf.Max(0, value - defender.ARMOR);
+        float damage = Mathf.Max(0, value - defender.ARMOR) * (1 - defender.DECREASE_DAMAGE);
         defender.HP -= damage;
 
         if(defender.HP <= 0)
