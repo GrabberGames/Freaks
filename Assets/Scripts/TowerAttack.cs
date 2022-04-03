@@ -31,7 +31,7 @@ public class TowerAttack : Stat
     {
         if (HP <= 0)
         {
-            //StartCoroutine("FadeOut"); //fadeout할때 쓸 코드
+            StartCoroutine("FadeOut"); //fadeout할때 쓸 코드
             Destroy(this.gameObject);
         }
     }
