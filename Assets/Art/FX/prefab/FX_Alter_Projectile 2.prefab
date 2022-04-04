@@ -1,34 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!135 &5699477368527405062
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7560077816265688551}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5382355672059549234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7560077816265688551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 261be94945ba7d64f8c90c99aa29242b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FX_Alter_Projectile_Pre: {fileID: 7560077816265688549}
-  FX_Alter_Hit: {fileID: 0}
-  FX_Alter_Hit_Pre: {fileID: 3630178053069705049, guid: e02c9c93873aabb4dae90d3e827cb0e6, type: 3}
-  enemy: {fileID: 0}
 --- !u!1001 &8958061000011393835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66,7 +37,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493972129667247820, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_Name
-      value: FX_Alter_Projectile2
+      value: FX_Alter_Projectile 2
       objectReference: {fileID: 0}
     - target: {fileID: 1493972129667247823, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_RootOrder
@@ -74,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493972129667247823, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -82.085
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1493972129667247823, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
       propertyPath: m_LocalPosition.y
@@ -174,13 +145,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
---- !u!1 &7560077816265688551 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1493972129667247820, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-  m_PrefabInstance: {fileID: 8958061000011393835}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &7560077816265688549 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1493972129667247822, guid: 0c29da631e400f5488983a8aeb268c02, type: 3}
-  m_PrefabInstance: {fileID: 8958061000011393835}
-  m_PrefabAsset: {fileID: 0}

@@ -8,9 +8,7 @@ public class WorkshopStat : Stat
 
     protected override void Init()
     {
-        base.Init();
-        Debug.Log("workshop HP = " + HP);
-    
+        base.Init();   
        
     }
     void Start()

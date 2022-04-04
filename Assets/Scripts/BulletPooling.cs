@@ -9,10 +9,22 @@ public class BulletPooling : MonoBehaviour
 
 
     [SerializeField]
+    private int AlterBulletCountLimit = 100;
+    [SerializeField]
     private int WhiteTowerBulletCountLimit = 100;
     [SerializeField]
+    private int BlackTowerBulletCountLimit = 100;
+
+    [SerializeField]
+    private GameObject AlterBullet;
+    [SerializeField]
     private GameObject WhiteTowerBullet;
+    [SerializeField]
+    private GameObject BlackTowerBullet;
+
+    Queue<GameObject> AlterBulletQueue = new Queue<GameObject>();
     Queue<GameObject> WhiteBulletQueue = new Queue<GameObject>();
+    Queue<GameObject> BlackBulletQueue = new Queue<GameObject>();
     static BulletPooling Instance
     {
         get
@@ -30,7 +42,7 @@ public class BulletPooling : MonoBehaviour
             if (ob_go == null)
             {
                 ob_go = new GameObject { name = "@BulletPooling" };
-                ob_go.AddComponent<ObjectPooling>();
+                ob_go.AddComponent<BulletPooling>();
             }
             DontDestroyOnLoad(ob_go);
             instance = ob_go.GetComponent<BulletPooling>();
@@ -47,9 +59,13 @@ public class BulletPooling : MonoBehaviour
     private void Initialize()
     {
         for (int i = 0; i < WhiteTowerBulletCountLimit; i++)
+            AlterBulletQueue.Enqueue(CreateNewObject("AlterBullet"));
+        for (int i = 0; i < WhiteTowerBulletCountLimit; i++)
             WhiteBulletQueue.Enqueue(CreateNewObject("WhiteTowerBullet"));
-        
-      
+        for (int i = 0; i < WhiteTowerBulletCountLimit; i++)
+            BlackBulletQueue.Enqueue(CreateNewObject("BlackTowerBullet"));
+
+
     }
 
     private GameObject CreateNewObject(string Obj)
@@ -57,30 +73,50 @@ public class BulletPooling : MonoBehaviour
         GameObject newObj;
         switch (Obj)
         {
+            case "AlterBullet":
+                newObj = Instantiate(AlterBullet, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj;
+
             case "WhiteTowerBullet":
                 newObj = Instantiate(WhiteTowerBullet, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
-                return newObj;/* 
-                blackTowerBullet도 추가할까 생각중..
-            case "BlackFreaks":
-                newObj = Instantiate(BlackFreaksObject, gameObject.transform);
+                return newObj;
+             
+            case "BlackTowerBullet":
+                newObj = Instantiate(BlackTowerBullet, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
-                return newObj;*/
+                return newObj;
             default:
                 break;
         }
         return null;
     }
 
+
+
     public  static GameObject GetObject(string objectName)
     {
         switch (objectName) {
+            case ("AlterBullet"):
+                if (Instance.AlterBulletQueue.Count > 0)
+                {
+                    var obj = instance.AlterBulletQueue.Dequeue();
+                    obj.transform.SetParent(null);
+                    obj.gameObject.SetActive(true);
+                    return obj;
+                }
+                else
+                {
+                    return null;
+                }
+
             case ("WhiteTowerBullet"):
                 if (Instance.WhiteBulletQueue.Count > 0)
                 {
-                    Debug.Log("여기까지 들어왔나???");
                     var obj = instance.WhiteBulletQueue.Dequeue();
                     obj.transform.SetParent(null);
                     obj.gameObject.SetActive(true);
@@ -88,9 +124,22 @@ public class BulletPooling : MonoBehaviour
                 }
                 else
                  {
-                    Debug.Log("안들어왔나...");
                     return null;
                  }
+
+            case ("BlackTowerBullet"):
+                if (Instance.AlterBulletQueue.Count > 0)
+                {
+                    var obj = instance.BlackBulletQueue.Dequeue();
+                    obj.transform.SetParent(null);
+                    obj.gameObject.SetActive(true);
+                    return obj;
+                }
+                else
+                {
+                    return null;
+                }
+
             default:
                 return null;
         }
@@ -102,14 +151,18 @@ public class BulletPooling : MonoBehaviour
 
         switch (obj.name)
         {
+            case ("AlterBullet"):
+                Instance.AlterBulletQueue.Enqueue(obj);
+                break;
+
             case ("WhiteTowerBullet"):
                 Instance.WhiteBulletQueue.Enqueue(obj);
                 break;
-                /*
-            case ("BlackFreaks"):
-                Instance.BlackFreaksQueue.Enqueue(obj);
+            
+            case ("BlackTowerBullet"):
+                Instance.BlackBulletQueue.Enqueue(obj);
                 break;
-                */
+            
             default:
                 break;
         }

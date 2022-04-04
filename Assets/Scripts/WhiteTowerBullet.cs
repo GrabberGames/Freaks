@@ -15,25 +15,11 @@ public class WhiteTowerBullet : MonoBehaviour
 
     private bool isCrushed = false;
     float _damage;
-    /*
-  private Vector3 direction;
 
-  public void Shoot(Vector3 direction)
-  {   this.direction = direction;
-      Invoke("DestroyBullet", 5f);
-  }
-  */
     public void InitSetting(float damage, GameObject blackFreaks, Vector3 bulletSpawnPosition)
     {
         _damage = damage;
-        /*
-        if (blackfreaks == null)
-        {
-            if (GameManager.Instance.Player == null)
-                return;
-            else
-                blackfreaks = GameManager.Instance.Player;
-        }*/
+   
         BlackFreaks = blackFreaks;
         StartCoroutine(StartProjectile(0.5f));
         this.transform.position = bulletSpawnPosition;
@@ -45,7 +31,7 @@ public class WhiteTowerBullet : MonoBehaviour
     private void Update()
     {
 
-        //transform.Translate(blackFreaksPos);
+  
  
         if (BlackFreaks == null)
             return;
@@ -76,7 +62,7 @@ public class WhiteTowerBullet : MonoBehaviour
         
         if (other.gameObject == BlackFreaks)
         {
-            //Debug.Log("blackÀÌ¶û ´ê¾Ò½À´Ï´Ù~");
+          
             if (isCrushed == true || other == null)
             {
                 return;
@@ -85,7 +71,7 @@ public class WhiteTowerBullet : MonoBehaviour
             fx_whiteTower[0].Pause();
             fx_whiteTower[0].Play(false);
             fx_whiteTowerPre[0].SetActive(false);
-            //Destroy(fx_whiteTowerPre[0]);
+  
 
             fx_whiteTowerPre[1].SetActive(true);
             fx_whiteTower[1] = fx_whiteTowerPre[1].GetComponent<ParticleSystem>();
@@ -115,8 +101,7 @@ public class WhiteTowerBullet : MonoBehaviour
         yield return new WaitForSeconds(fx_whiteTower[1].main.startLifetimeMultiplier);
         fx_whiteTowerPre[1].SetActive(false);
         State = 3;
-        //Destroy(fx_whiteTower[1]);
-        //Destroy(gameObject);
+    
         BulletPooling.ReturnObject(this.gameObject);
     }
 }
