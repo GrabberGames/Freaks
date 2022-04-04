@@ -13,10 +13,12 @@ public class TowerBullet : MonoBehaviour
 
     private int State = 0;
 
+
+
     private bool isCrushed = false;
     float _damage;
 
-    public void InitSetting(float damage)
+    public void InitSetting(float damage, Vector3 bulletSpawnPosition)
     {
         _damage = damage;
         if (player == null)
@@ -27,6 +29,8 @@ public class TowerBullet : MonoBehaviour
                 player = GameManager.Instance.Player;
         }
         StartCoroutine(StartProjectile(0.5f));
+        this.transform.position = bulletSpawnPosition;
+
     }
 
 
@@ -34,7 +38,7 @@ public class TowerBullet : MonoBehaviour
     {
         if (player == null)
             return;
-        playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 4f, player.transform.position.z);
+        playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
 
         switch (State) 
         {
@@ -65,7 +69,7 @@ public class TowerBullet : MonoBehaviour
             fx_blackTower[0].Pause();
             fx_blackTower[0].Play(false);
             fx_blackTowerPre[0].SetActive(false);
-            Destroy(fx_blackTowerPre[0]);
+            //Destroy(fx_blackTowerPre[0]);
 
             fx_blackTowerPre[1].SetActive(true);
             fx_blackTower[1] = fx_blackTowerPre[1].GetComponent<ParticleSystem>();
@@ -93,7 +97,9 @@ public class TowerBullet : MonoBehaviour
         yield return new WaitForSeconds(fx_blackTower[1].main.startLifetimeMultiplier); 
         fx_blackTowerPre[1].SetActive(false);
         State = 3;
+        /*
         Destroy(fx_blackTower[1]);
-        Destroy(gameObject);
+        Destroy(gameObject);*/
+        BulletPooling.ReturnObject(this.gameObject);
     }
 }

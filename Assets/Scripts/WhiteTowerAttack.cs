@@ -84,7 +84,7 @@ public class WhiteTowerAttack : Stat
 
         GameObject bullet = BulletPooling.GetObject("WhiteTowerBullet");
         bullet.GetComponent<WhiteTowerBullet>().InitSetting(PD, blackFreaks, bulletSpawnPosition);
-     
+        bullet.SetActive(true);
         fx_whiteTower.Play(true);
 
         yield return new WaitForSeconds(fx_whiteTower.main.startDelayMultiplier);

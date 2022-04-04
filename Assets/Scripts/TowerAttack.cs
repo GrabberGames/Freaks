@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TowerAttack : Stat
 {
-    public GameObject bullet;
-    public GameObject bulletpre;
+
     public GameObject player;
     public ParticleSystem fx_blackTower;
     public ParticleSystem fx_hit;
@@ -66,8 +65,8 @@ public class TowerAttack : Stat
 
     IEnumerator FindInAttackRange()
     {
-        bullet = Instantiate(bulletpre, bulletSpawnPosition, Quaternion.Euler(bulletSpawnPosition - player.transform.position));
-        bullet.GetComponent<TowerBullet>().InitSetting(PD);
+        GameObject bullet = BulletPooling.GetObject("BlackTowerBullet");
+        bullet.GetComponent<TowerBullet>().InitSetting(PD, bulletSpawnPosition);
         fx_blackTower.Play(true);
 
         yield return new WaitForSeconds(fx_blackTower.main.startDelayMultiplier);

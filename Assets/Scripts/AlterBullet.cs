@@ -4,51 +4,97 @@ using UnityEngine;
 
 public class AlterBullet : MonoBehaviour
 {
-    public ParticleSystem FX_Alter_Projectile_Pre;
-    public GameObject FX_Alter_Hit;
-    public GameObject FX_Alter_Hit_Pre;
-    public AudioSource SFXAlterBulletEx;
-
+    public ParticleSystem[] fx_Alter;
+    public GameObject[] fx_AlterPre;
+    /*
     [HideInInspector]
     public GameObject enemy;
+    */
+    private GameObject enemy;
 
     private Vector3 enemyPos;
-    private float BulletSpeed = 8f;
-    
-    private bool One = false;
-    // 1 = 투사체 날라가는 중
-    // 2 = 블랙프릭스랑 충돌
-    public void InitSetting(GameObject enemy)
+    private float BulletSpeed = 20f;
+
+    private int State = 0;
+    private bool isCrushed = false;
+    float _damage;
+
+    public void InitSetting(float damage , GameObject enemy, Vector3 bulletSpawnPosition)
     {
+        _damage = damage;
+
         this.enemy = enemy;
-        StartProjectile();
+        this.transform.position = bulletSpawnPosition;
+        StartCoroutine(StartProjectile(0.4f));
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("BlackFreaks")  && !One)
+        if (other.gameObject == enemy)
         {
-            FX_Alter_Projectile_Pre.Play(false);
-            FX_Alter_Hit = Instantiate(FX_Alter_Hit_Pre, transform);
-            FX_Alter_Hit.AddComponent<Follow>().InitSetting(enemy);
-            One = !One;
+
+            if (isCrushed == true || other == null)
+            {
+                return;
+            }
+            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
+            fx_Alter[0].Pause();
+            fx_Alter[0].Play(false);
+            fx_AlterPre[0].SetActive(false);
+
+
+            fx_AlterPre[1].SetActive(true);
+            fx_Alter[1] = fx_AlterPre[1].GetComponent<ParticleSystem>();
+            fx_Alter[1].Play(true);
+
+            State = 2;
             StartCoroutine(DeleteThis());
+            isCrushed = true;
         }
+
     }
     // Update is called once per frame
     void Update()
     {
-        enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y , enemy.transform.position.z);
-        transform.position -= (transform.position - enemyPos) * BulletSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.LookRotation(enemyPos - transform.position);
+        if (enemy == null)
+            return;
+        enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.transform.position.z);
+
+
+        switch (State)
+        {
+            case 1:
+                fx_Alter[0].transform.LookAt(enemyPos);
+                transform.position += (enemyPos - transform.position).normalized * BulletSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.identity;
+                break;
+            case 2:
+                transform.position += (enemyPos - transform.position).normalized * BulletSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.identity;
+                break;
+            default:
+                break;
+        }
     }
-    void StartProjectile()
+
+
+
+
+    IEnumerator StartProjectile(float waitTime)
     {
-        FX_Alter_Projectile_Pre.Play(true);
+        this.gameObject.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        fx_AlterPre[0].SetActive(true);
+        fx_Alter[0] = fx_AlterPre[0].GetComponent<ParticleSystem>();
+        fx_Alter[0].Play(true);
+        State = 1;
     }
     IEnumerator DeleteThis()
     {
-        yield return new WaitForSeconds(FX_Alter_Hit_Pre.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
-        SFXAlterBulletEx.Play();
-        Destroy(this.gameObject);
+        yield return new WaitForSeconds(fx_Alter[1].main.startLifetimeMultiplier);
+        fx_AlterPre[1].SetActive(false);
+        State = 3;
+
+        // SFXAlterBulletEx.Play();
+        BulletPooling.ReturnObject(this.gameObject);
     }
 }
