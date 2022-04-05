@@ -123,7 +123,6 @@ public class FreaksController : Stat
         canNormalAttack = true;
         if (target != null) //기본 공격 할 대상이 있다.
         {
-            IsOnFreaksWay = false;
             float distance = (target.transform.position - transform.position).magnitude;
             agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1<< 5;
             //시야 밖으로 나가면 target을 초기화해줌.
@@ -145,20 +144,22 @@ public class FreaksController : Stat
                 return; 
             }
         }
-        else if (IsOnFreaksWay == false)
+
+        if(target == null)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.position + Vector3.down*5, out hit, 5f, LayerMask.GetMask("NoneFreaksWay")))
+            if(agent.areaMask == (1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1 << 5))
             {
-                Debug.Log("TRue");
-                agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1<< 5;
-                IsOnFreaksWay = false;
-            }
-            else
-            {
-                Debug.Log("False");
-                agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3;
-                IsOnFreaksWay = true;
+                LayerMask Lmask = LayerMask.GetMask("NoneFreaksWay");
+                if (Physics.Raycast(transform.position, Vector3.up, 5000f, Lmask))
+                {
+                    agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1 << 5;
+                    agent.SetDestination(alter.transform.position);
+                }
+                else
+                {
+                    agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3;
+                    agent.SetDestination(alter.transform.position);
+                }
             }
         }
         //기본 공격할 대상이 없다.

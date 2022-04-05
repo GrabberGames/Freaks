@@ -27,6 +27,7 @@ namespace WarriorAnims
         {
             Enemy = 7,
         }
+
         public enum PlayerState
         {
             Attack,
@@ -38,7 +39,9 @@ namespace WarriorAnims
             E,
             R,
         }
+
         PlayerState _state = PlayerState.Idle;
+
         public PlayerState PState
         {
             get { return _state; }
@@ -67,6 +70,7 @@ namespace WarriorAnims
 
             }
         }
+
         public Warrior warrior;
 
         private Rigidbody rigid;
