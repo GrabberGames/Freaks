@@ -56,3 +56,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BuildRange
+    uniqueID: 4008467451
+    locked: 0
+  - name: NoBuildRange
+    uniqueID: 4146621473
+    locked: 0
