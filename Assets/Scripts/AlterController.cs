@@ -28,8 +28,11 @@ public class AlterController : Building, DamageService, HealthService
         if(ObjectPooling.instance.Alter == null)
             ObjectPooling.instance.Alter_Setting(this.gameObject);
 
+      
         this.gameObject.transform.GetChild(3).gameObject.SetActive(false); //건설가능범위 비활성화
         this.gameObject.transform.GetChild(4).gameObject.SetActive(false);//건설불가능범위 비활성화
+
+       
 
     }
     // Update is called once per frame
