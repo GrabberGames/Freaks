@@ -27,6 +27,10 @@ public class AlterController : Building, DamageService, HealthService
     {
         if(ObjectPooling.instance.Alter == null)
             ObjectPooling.instance.Alter_Setting(this.gameObject);
+
+        this.gameObject.transform.GetChild(3).gameObject.SetActive(false); //건설가능범위 비활성화
+        this.gameObject.transform.GetChild(4).gameObject.SetActive(false);//건설불가능범위 비활성화
+
     }
     // Update is called once per frame
     void Update()
@@ -144,4 +148,15 @@ public class AlterController : Building, DamageService, HealthService
         Instantiate(VFXAlterDestroy);
         Destroy(transform.GetChild(0).gameObject);
     }
+
+    public Vector3 getAlterPosition()
+    {
+        return this.gameObject.transform.position;
+    }
+
+    public float getAlterRange()
+    {
+        return this.gameObject.GetComponent<SphereCollider>().radius;
+    }
+
 }

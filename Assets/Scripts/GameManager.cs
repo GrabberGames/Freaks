@@ -44,7 +44,8 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField]
-    GameObject _alter;
+     GameObject _alter;
+
     public GameObject Alter
     {
         get
@@ -52,16 +53,36 @@ public class GameManager : MonoBehaviour
             if(_alter == null)
             {
                 _alter = GameObject.Find("alter");
+               // _alter = GameObject.FindGameObjectWithTag("alter");
             }
             return _alter;
         }
         set
-        {
-            _alter = value;
-            AlterIsChange.Invoke(_alter);
-        }
+        {     
+                _alter = value;
+                AlterIsChange.Invoke(_alter);
+       
+                return;
+        
+              
+         }
     }
     public Action<GameObject> AlterIsChange = null;
+
+
+    
+    public static Vector3 getAlterPosition() //Alter 위치 전달
+    {
+        return Instance.Alter.gameObject.transform.position;
+    }
+
+    public static float getAlterRadius() //건설가능범위 radius 전달
+    {
+        float radius = (Instance.Alter.gameObject.transform.GetChild(3).gameObject.transform.localScale.z)/2;
+        return radius;
+    }
+    
+
 
 
     static GameManager s_instance;
