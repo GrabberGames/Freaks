@@ -170,22 +170,39 @@ public class Kali : Stat
             {
                 GameManager.Instance.models.playerModel.qSkillCoolTime -= 0.1f;
             }
+            else
+            {
+                GameManager.Instance.models.playerModel.qSkillCoolTime = 0f;
+            }
             if (GameManager.Instance.models.playerModel.wSkillCoolTime > 0.1f)
             {
                 GameManager.Instance.models.playerModel.wSkillCoolTime -= 0.1f;
+            }
+            else
+            {
+                GameManager.Instance.models.playerModel.wSkillCoolTime = 0f;
             }
             if (GameManager.Instance.models.playerModel.eSkillCoolTime > 0.1f)
             {
                 GameManager.Instance.models.playerModel.eSkillCoolTime -= 0.1f;
             }
+            else
+            {
+                GameManager.Instance.models.playerModel.eSkillCoolTime = 0f;
+            }
             if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
             {
                 GameManager.Instance.models.playerModel.rSkillCoolTime -= 0.1f;
+            }
+            else
+            {
+                GameManager.Instance.models.playerModel.rSkillCoolTime = 0f;
             }
             if (t_time < 0.1f)
             {
                 t_time = 0.1f;
                 press = false;
+                yield break;
             }
             t_time -= 0.1f;
             yield return seconds_01s;
@@ -230,7 +247,6 @@ public class Kali : Stat
             Determination();
         }
         //W
-
         else if (Input.GetKeyDown(KeyCode.W))
         {
             if (GameManager.Instance.models.playerModel.wSkillCoolTime > 0.1f)
@@ -241,7 +257,6 @@ public class Kali : Stat
             Activation("W");
         }
         //E
-
         else if (Input.GetKeyDown(KeyCode.E))
         {
             if (GameManager.Instance.models.playerModel.eSkillCoolTime > 0.1f)
@@ -262,7 +277,6 @@ public class Kali : Stat
             HorizonofMemory();
         }
     }
-
     void ChangRotate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -275,7 +289,6 @@ public class Kali : Stat
             transform.LookAt(look_dir);
         }
     }
-    
     public void SoundPlay(string _name, int idx = 0)
     {
         if (AudioManager.a_Instance.Check() == true)

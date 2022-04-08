@@ -144,13 +144,25 @@ namespace WarriorAnims
                 {
                     GameManager.Instance.models.playerModel.qSkillCoolTime -= 0.1f;
                 }
+                else
+                {
+                    GameManager.Instance.models.playerModel.qSkillCoolTime = 0f;
+                }
                 if (GameManager.Instance.models.playerModel.wSkillCoolTime >= 0.1f)
                 {
                     GameManager.Instance.models.playerModel.wSkillCoolTime -= 0.1f;
                 }
+                else
+                {
+                    GameManager.Instance.models.playerModel.wSkillCoolTime = 0f;
+                }
                 if (GameManager.Instance.models.playerModel.eSkillCoolTime >= 0.1f)
                 {
                     GameManager.Instance.models.playerModel.eSkillCoolTime -= 0.1f;
+                }
+                else
+                {
+                    GameManager.Instance.models.playerModel.eSkillCoolTime = 0f;
                 }
                 if (GameManager.Instance.models.playerModel.rSkillCoolTime >= 0.1f)
                 {
@@ -174,6 +186,10 @@ namespace WarriorAnims
                             }
                         }
                     }
+                }
+                else
+                {
+                    GameManager.Instance.models.playerModel.rSkillCoolTime = 0f;
                 }
                 if (t_time < 0.1f)
                 {
