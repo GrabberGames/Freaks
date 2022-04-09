@@ -216,6 +216,8 @@ public class Kali : Stat
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance.models.playerModel.playerNowHp = HP;
+        GameManager.Instance.models.playerModel.playerMaxHp = MAX_HP;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 

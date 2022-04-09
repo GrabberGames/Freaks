@@ -250,6 +250,9 @@ namespace WarriorAnims
             warriorTiming.heroMovement = this;
             agent.updateRotation = false;
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
+
+            GameManager.Instance.models.playerModel.playerNowHp = HP;
+            GameManager.Instance.models.playerModel.playerMaxHp = MAX_HP;
         }
 
         //Dead

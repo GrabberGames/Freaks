@@ -37,7 +37,7 @@ public class Stat : MonoBehaviour
     public float ARMOR { get; set; }
     public Dictionary<string, Stat> Json { get; set; }
 
-    protected virtual void Init()
+    protected virtual void Init() 
     {
         gameObject.transform.name = gameObject.transform.name.Replace("(Clone)", "");
         PD = ObjectPooling.instance.Get_Stat(gameObject.transform.name).PD;
