@@ -33,8 +33,8 @@ TagManager:
   - player
   - whitefreaks
   - NoneFreaksWay
-  - 
-  - 
+  - Ground
+  - Essence
   - 
   - 
   - 
@@ -51,7 +51,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Preview
   m_SortingLayers:
   - name: Default
     uniqueID: 0
