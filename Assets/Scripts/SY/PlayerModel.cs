@@ -11,6 +11,8 @@ public class PlayerModel
     private float _rSkillCoolTime = 0f;
     private float _playerNowHp = 0f;
     private float _playerMaxHp = 0f;
+    private float _playerPD = 0f;
+    private float _playerED = 0f;
     #endregion
     public float qSkillCoolTime
     {
@@ -41,5 +43,15 @@ public class PlayerModel
     {
         get => _playerMaxHp;
         set => _playerMaxHp = value;
+    }
+    public float playerED
+    {
+        get => _playerED;   
+        set => _playerED = value;
+    }
+    public float playerPD
+    {
+        get => _playerPD;
+        set => _playerPD = value;
     }
 }

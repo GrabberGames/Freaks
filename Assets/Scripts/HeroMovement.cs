@@ -253,6 +253,8 @@ namespace WarriorAnims
 
             GameManager.Instance.models.playerModel.playerNowHp = HP;
             GameManager.Instance.models.playerModel.playerMaxHp = MAX_HP;
+            GameManager.Instance.models.playerModel.playerPD = PD;
+            GameManager.Instance.models.playerModel.playerED = ED;
         }
 
         //Dead
