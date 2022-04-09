@@ -29,10 +29,7 @@ public class WhiteTowerBullet : MonoBehaviour
    
     
     private void Update()
-    {
-
-  
- 
+    { 
         if (BlackFreaks == null)
             return;
         blackFreaksPos = new Vector3(BlackFreaks.transform.position.x, BlackFreaks.transform.position.y +1f , BlackFreaks.transform.position.z);
@@ -51,9 +48,7 @@ public class WhiteTowerBullet : MonoBehaviour
                 break;
             default:
                 break;
-        }
-       
-
+        }       
     }
 
 

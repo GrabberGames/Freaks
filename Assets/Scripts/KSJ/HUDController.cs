@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class HUDController : MonoBehaviour
 {
-    [Header ("Waron Skill Icon(Q/W/E/R)")]
-    [SerializeField] private Sprite[] waronSkillIcon = new Sprite[4];
+    [Header ("Waron Skill Icon(Passive/Q/W/E/R)")]
+    [SerializeField] private Sprite[] waronSkillIcon = new Sprite[5];
 
-    [Header("Kyle Skill Icon(Q/W/E/R)")]
-    [SerializeField] private Sprite[] kyleSkillIcon = new Sprite[4];
+    [Header("Kyle Skill Icon(Passive/Q/W/E/R)")]
+    [SerializeField] private Sprite[] kyleSkillIcon = new Sprite[5];
 
     public eHeroType settingTest;
     

@@ -6,11 +6,11 @@ public class HUDManager : MonoBehaviour
 {   
     public struct ActiveSkillSlot
     {
-        private ActiveSkillSlotUI _activeSkillSlotUI;
-        public ActiveSkillSlotUI activeSkillSlotUI { get => _activeSkillSlotUI; }
+        private SkillSlotUI _activeSkillSlotUI;
+        public SkillSlotUI activeSkillSlotUI { get => _activeSkillSlotUI; }
         public bool canUse;
 
-        public void SetActiveSkillSlotUI(ActiveSkillSlotUI activeSkillSlotUI)
+        public void SetActiveSkillSlotUI(SkillSlotUI activeSkillSlotUI)
         {
             _activeSkillSlotUI = activeSkillSlotUI;
         }
@@ -18,22 +18,23 @@ public class HUDManager : MonoBehaviour
 
 
 
-    public enum eSkillSlotKey { Q, W, E, R };
+    public enum eSkillSlotKey { Passive, Q, W, E, R };
 
     [Header("HP Bar")]
     [SerializeField] private HpUI hpUI;
 
     [Header("Skill Slot")]
-    [SerializeField] private ActiveSkillSlotUI activeSkillSlotQ;
-    [SerializeField] private ActiveSkillSlotUI activeSkillSlotW;
-    [SerializeField] private ActiveSkillSlotUI activeSkillSlotE;
-    [SerializeField] private ActiveSkillSlotUI activeSkillSlotR;
+    [SerializeField] private SkillSlotUI passiveSkillSlot;
+    [SerializeField] private SkillSlotUI activeSkillSlotQ;
+    [SerializeField] private SkillSlotUI activeSkillSlotW;
+    [SerializeField] private SkillSlotUI activeSkillSlotE;
+    [SerializeField] private SkillSlotUI activeSkillSlotR;
 
     [Header("Cooldown Skill Icon Color")]
     [SerializeField] private Color coolDownSkillColor;
 
 
-    private ActiveSkillSlot[] activeSkillSlotArray = new ActiveSkillSlot[4];
+    private ActiveSkillSlot[] activeSkillSlotArray = new ActiveSkillSlot[5];
 
 
     //singleton
@@ -53,12 +54,13 @@ public class HUDManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        activeSkillSlotArray[0].SetActiveSkillSlotUI(activeSkillSlotQ);
-        activeSkillSlotArray[1].SetActiveSkillSlotUI(activeSkillSlotW);
-        activeSkillSlotArray[2].SetActiveSkillSlotUI(activeSkillSlotE);
-        activeSkillSlotArray[3].SetActiveSkillSlotUI(activeSkillSlotR);
+        activeSkillSlotArray[(int)eSkillSlotKey.Passive].SetActiveSkillSlotUI(passiveSkillSlot);
+        activeSkillSlotArray[(int)eSkillSlotKey.Q].SetActiveSkillSlotUI(activeSkillSlotQ);
+        activeSkillSlotArray[(int)eSkillSlotKey.W].SetActiveSkillSlotUI(activeSkillSlotW);
+        activeSkillSlotArray[(int)eSkillSlotKey.E].SetActiveSkillSlotUI(activeSkillSlotE);
+        activeSkillSlotArray[(int)eSkillSlotKey.R].SetActiveSkillSlotUI(activeSkillSlotR);
 
-        for (int i = 0; i < activeSkillSlotArray.Length; i++)
+        for (int i = 1; i < activeSkillSlotArray.Length; i++)
         {
             activeSkillSlotArray[i].activeSkillSlotUI.SetCooldownSkillIconColor(coolDownSkillColor);
         }
