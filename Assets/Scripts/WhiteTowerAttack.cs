@@ -12,7 +12,7 @@ public class WhiteTowerAttack : Stat
     private float AttackPerSeconds = 4f;
 
     private Vector3 bulletSpawnPosition;
-    
+    private GameObject NoBuildRange ;
 
     bool isAttack = false;
     Vector3 getPos;
@@ -30,7 +30,9 @@ public class WhiteTowerAttack : Stat
         base.Init();
 
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
-    
+        NoBuildRange = transform.GetChild(2).gameObject;
+        NoBuildRange.SetActive(false);
+
     }
     public override void DeadSignal()
     {
@@ -47,23 +49,23 @@ public class WhiteTowerAttack : Stat
 
     }
 
-   
+
 
     private void OnTriggerEnter(Collider other) //사거리범위 내에 블랙freaks가 들어올 경우
     {
-        if (other.gameObject.CompareTag ("BlackFreaks"))
+        if (other.gameObject.CompareTag("BlackFreaks"))
         {
             if (isAttack)
                 return;
             else
             {
                 StartCoroutine(FindInAttackRange(other.gameObject));
-       
+
                 isAttack = true;
-            }        
+            }
         }
     }
-    
+
     private void OnTriggerStay(Collider other) //사거리범위 내에 블랙freaks가 들어와있을 경우
     {
         if (other.gameObject.CompareTag("BlackFreaks"))
@@ -72,13 +74,13 @@ public class WhiteTowerAttack : Stat
                 return;
             else
             {
-                StartCoroutine(FindInAttackRange(other.gameObject));               
+                StartCoroutine(FindInAttackRange(other.gameObject));
                 isAttack = true;
             }
         }
     }
 
-    
+
     IEnumerator FindInAttackRange(GameObject blackFreaks)
     {
 
@@ -94,7 +96,7 @@ public class WhiteTowerAttack : Stat
         yield return new WaitForSeconds(AttackPerSeconds - fx_whiteTower.main.startDelayMultiplier);
         isAttack = false;
     }
-    
+
     IEnumerator FadeOut()
     {
         Debug.Log("2초후에 fadeout ");
@@ -104,7 +106,7 @@ public class WhiteTowerAttack : Stat
         MeshRenderer mr = transform.gameObject.GetComponent<MeshRenderer>();
         mr.material.shader = Shader.Find("UI/Unlit/Transparent");
 
-    
+
         for (int i = 25; i >= 0; i--)
         {
 
@@ -120,13 +122,25 @@ public class WhiteTowerAttack : Stat
 
 
             transform.gameObject.GetComponent<MeshRenderer>().material.color = c;
-          
+
 
             yield return new WaitForSeconds(0.03f);
         }
         Destroy(this.gameObject);
 
-       
+
     }
+
+
+    public void WhiteTowerRangeON()
+        {
+        NoBuildRange.SetActive(true);
+        }
+
+    public void WhiteTowerRangeOFF()
+    {
+        NoBuildRange.SetActive(false);
+    }
+
 
 }

@@ -23,16 +23,19 @@ public class AlterController : Building, DamageService, HealthService
 
     private int busyWhiteF = 0;
 
+    private GameObject BuildRange;
+
     private void Start() //오브젝트 풀링에서 알터를 설정해주는 함수입니다.
     {
-        if(ObjectPooling.instance.Alter == null)
+        if (ObjectPooling.instance.Alter == null)
             ObjectPooling.instance.Alter_Setting(this.gameObject);
 
-      
-        this.gameObject.transform.GetChild(3).gameObject.SetActive(false); //건설가능범위 비활성화
+
+        BuildRange = this.gameObject.transform.GetChild(3).gameObject;
+        BuildRange.SetActive(false); //건설가능범위 비활성화
         this.gameObject.transform.GetChild(4).gameObject.SetActive(false);//건설불가능범위 비활성화
 
-       
+ 
 
     }
     // Update is called once per frame
@@ -45,9 +48,10 @@ public class AlterController : Building, DamageService, HealthService
             wFreaksCount.text = string.Format("{0:D2} / {1:D2}", busyWhiteF, whiteFreaks);
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            AlterDestroy();
+            StartCoroutine("AlterDestroy");
+           // AlterDestroy();
         }
     }
 
@@ -68,12 +72,12 @@ public class AlterController : Building, DamageService, HealthService
         WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();
         miningFreaks.Add(whiteFreaks);
 
-        if(building.GetComponent<SwitchTimer>())
+        if (building.GetComponent<SwitchTimer>())
         {
             Vector3 pos = GameObject.Find("SwitchController").GetComponent<SwitchController>().Getpos();
             whiteFreaksController.SetSwitch(pos);
         }
-        else if(building.GetComponent<WorkshopController>())
+        else if (building.GetComponent<WorkshopController>())
         {
             whiteFreaksController.miningWorkshop = building;
             whiteFreaksController.SetMiningWorkShop();
@@ -104,7 +108,7 @@ public class AlterController : Building, DamageService, HealthService
             }
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -130,8 +134,8 @@ public class AlterController : Building, DamageService, HealthService
 
     public void DamageTaken(float damageTaken)
     {
-         healthPoint -= damageTaken;
-    } 
+        healthPoint -= damageTaken;
+    }
 
 
     public float GetCurrentHP()
@@ -145,10 +149,11 @@ public class AlterController : Building, DamageService, HealthService
         busyWhiteF--;
     }
 
-    private void AlterDestroy()
+    IEnumerator AlterDestroy()
     {
-        SFXAlterDestroy.Play();
-        Instantiate(VFXAlterDestroy);
+        // SFXAlterDestroy.Play();
+         Instantiate(VFXAlterDestroy);
+        yield return new WaitForSeconds(2.5f);
         Destroy(transform.GetChild(0).gameObject);
     }
 
@@ -161,5 +166,16 @@ public class AlterController : Building, DamageService, HealthService
     {
         return this.gameObject.GetComponent<SphereCollider>().radius;
     }
+
+    public void AlterRangeON()
+    {
+        BuildRange.SetActive(true);
+    }
+
+    public void AlterRangeOFF()
+    {
+        BuildRange.SetActive(false);
+    }
+
 
 }
