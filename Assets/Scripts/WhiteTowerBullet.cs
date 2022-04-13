@@ -6,7 +6,7 @@ public class WhiteTowerBullet : MonoBehaviour
 {
     public ParticleSystem[] fx_whiteTower;
     public GameObject[] fx_whiteTowerPre;
-    private float BulletSpeed = 30f;
+    private float BulletSpeed = 50f;
 
     private Vector3 blackFreaksPos;
     private GameObject BlackFreaks;
