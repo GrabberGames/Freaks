@@ -17,6 +17,9 @@ public class WhiteTowerAttack : Stat
     bool isAttack = false;
     Vector3 getPos;
 
+    public AudioSource SFXWhiteTowerDestroy;
+    public AudioSource SFXWhiteTowerAttack;
+
     public void SetPosition(Vector3 pos) //좌표 받아오는 함수
     {
 
@@ -49,7 +52,15 @@ public class WhiteTowerAttack : Stat
 
     }
 
+    //소리 확인하기위한 update문
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            StartCoroutine("FadeOut");
 
+        }
+    }
 
     private void OnTriggerEnter(Collider other) //사거리범위 내에 블랙freaks가 들어올 경우
     {
@@ -59,6 +70,7 @@ public class WhiteTowerAttack : Stat
                 return;
             else
             {
+                SFXWhiteTowerAttack.Play();
                 StartCoroutine(FindInAttackRange(other.gameObject));
 
                 isAttack = true;
@@ -74,6 +86,7 @@ public class WhiteTowerAttack : Stat
                 return;
             else
             {
+                SFXWhiteTowerAttack.Play();
                 StartCoroutine(FindInAttackRange(other.gameObject));
                 isAttack = true;
             }
@@ -99,9 +112,9 @@ public class WhiteTowerAttack : Stat
 
     IEnumerator FadeOut()
     {
-        Debug.Log("2초후에 fadeout ");
-        yield return new WaitForSeconds(2f);
-        Debug.Log(" fadeout !! ");
+
+        SFXWhiteTowerDestroy.Play();
+
 
         MeshRenderer mr = transform.gameObject.GetComponent<MeshRenderer>();
         mr.material.shader = Shader.Find("UI/Unlit/Transparent");

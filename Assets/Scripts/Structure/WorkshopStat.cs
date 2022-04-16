@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorkshopStat : Stat
 {
-    
+    public AudioSource SFXworkshopDestroy;
 
     protected override void Init()
     {
@@ -19,20 +19,26 @@ public class WorkshopStat : Stat
     {
         if (HP <= 0)
         { 
-            // StartCoroutine("FadeOut"); //fadeout할때 쓸 코드
+            StartCoroutine("FadeOut"); //fadeout할때 쓸 코드
             Destroy(this.gameObject);
         }
     }
-  
 
 
+    //소리 확인하기위한 update문
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            StartCoroutine("FadeOut");
+
+        }
+    }
 
 
     IEnumerator FadeOut()
     {
-        Debug.Log("2초후에 fadeout ");
-        yield return new WaitForSeconds(2f);
-        Debug.Log(" fadeout !! ");
+        SFXworkshopDestroy.Play();
 
         Material[] materials = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials;
 

@@ -47,12 +47,12 @@ public class AlterController : Building, DamageService, HealthService
         {
             wFreaksCount.text = string.Format("{0:D2} / {1:D2}", busyWhiteF, whiteFreaks);
         }
-
+        /*
         if (Input.GetKeyDown(KeyCode.A))
         {
             StartCoroutine("AlterDestroy");
-           // AlterDestroy();
-        }
+      
+        }*/
     }
 
 
@@ -151,7 +151,7 @@ public class AlterController : Building, DamageService, HealthService
 
     IEnumerator AlterDestroy()
     {
-        // SFXAlterDestroy.Play();
+        SFXAlterDestroy.Play();
          Instantiate(VFXAlterDestroy);
         yield return new WaitForSeconds(2.5f);
         Destroy(transform.GetChild(0).gameObject);

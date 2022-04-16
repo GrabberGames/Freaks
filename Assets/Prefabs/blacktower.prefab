@@ -43499,7 +43499,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4756211466368601530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4, y: 0.0000076293945, z: 165.7}
+  m_LocalPosition: {x: -1.4, y: 0, z: 165.7}
   m_LocalScale: {x: 0.50334394, y: 0.50334394, z: 0.50334394}
   m_Children:
   - {fileID: 3807975350000304664}
@@ -43554,6 +43554,8 @@ MonoBehaviour:
   player: {fileID: 0}
   fx_blackTower: {fileID: 4549875714047665954}
   fx_hit: {fileID: 1890042663343123345, guid: 6031199c8b298b34f84154acbcc5bf72, type: 3}
+  SFXBlackTowerDestroy: {fileID: 0}
+  SFXBlackTowerAttack: {fileID: 0}
 --- !u!1 &4771094772310574078
 GameObject:
   m_ObjectHideFlags: 0
