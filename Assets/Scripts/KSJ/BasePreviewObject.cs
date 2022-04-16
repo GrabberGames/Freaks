@@ -14,7 +14,6 @@ abstract public class BasePreviewObject : MonoBehaviour
 
     public bool canBuild { get => _canBuild; }
     public bool activeSelf { get => gameObject.activeSelf; }
-    public Vector3 previewPosition { get => tr.position; }
     public eConditionConstructionPreview conditionConstructionPreview { get => _conditionConstructionPreview; }
 
 
@@ -24,6 +23,8 @@ abstract public class BasePreviewObject : MonoBehaviour
     IEnumerator updatePreviewObject;
     protected bool isPreviewMode;
 
+    RaycastHit hit;
+    Ray ray;
 
     protected void Awake()
     {
@@ -51,6 +52,12 @@ abstract public class BasePreviewObject : MonoBehaviour
     {
         while (true)
         {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 5000.0f, (int)eLayerMask.Ground))
+            {
+                MovePreviewObject(ConstructionPreviewManager.Instance.SnapPosition(tr.position, hit.point));
+            }
+
             if (!_canBuild.Equals(ChkConstructionArea()))
             {
                 _canBuild = !canBuild;
