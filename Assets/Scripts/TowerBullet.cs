@@ -13,6 +13,7 @@ public class TowerBullet : MonoBehaviour
 
     private int State = 0;
 
+    public AudioSource SFXBlackTowerBullet;
 
 
     private bool isCrushed = false;
@@ -65,11 +66,17 @@ public class TowerBullet : MonoBehaviour
             {
                 return;
             }
+
+     
+            SFXBlackTowerBullet.Play();
+
             GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
             fx_blackTower[0].Pause();
             fx_blackTower[0].Play(false);
             fx_blackTowerPre[0].SetActive(false);
             //Destroy(fx_blackTowerPre[0]);
+
+           
 
             fx_blackTowerPre[1].SetActive(true);
             fx_blackTower[1] = fx_blackTowerPre[1].GetComponent<ParticleSystem>();
@@ -81,6 +88,7 @@ public class TowerBullet : MonoBehaviour
         }
     }
 
+    
 
     IEnumerator StartProjectile(float waitTime)
     {

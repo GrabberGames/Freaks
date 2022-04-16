@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class AlterAttack : Stat
 {
-    //public GameObject bullet;
-    //public GameObject bulletpre;
-   // public GameObject enemy;
+
     public ParticleSystem FX_Alter_Emit;
     public ParticleSystem FX_Alter_Smoke;
-    public AudioSource SFXAttackStart;
+  
+    public AudioSource SFXAlterAttack;
+    //
+
 
     private float AttackPerSeconds = 4f;
 
@@ -25,7 +26,7 @@ public class AlterAttack : Stat
     {
         base.Init();
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
-
+   
     }
 
     private void OnTriggerEnter(Collider other)
@@ -92,7 +93,9 @@ public class AlterAttack : Stat
         FX_Alter_Smoke.Play(true);
         FX_Alter_Smoke.transform.position = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
         FX_Alter_Smoke.transform.rotation = Quaternion.Euler(FX_Alter_Smoke.transform.position - enemy.transform.position);
-   
+
+
+        SFXAlterAttack.Play();
 
         GameObject bullet = BulletPooling.GetObject("AlterBullet");
         bullet.GetComponent<AlterBullet>().InitSetting(PD, enemy, bulletSpawnPosition);
@@ -105,4 +108,6 @@ public class AlterAttack : Stat
         isAttack = false;
       
     }
+
+   
 }
