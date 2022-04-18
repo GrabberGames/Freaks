@@ -154,8 +154,7 @@ public class ConstructionPreviewManager : MonoBehaviour
             case true:
                 if(!isPreviewMode)
                 {
-                    previewPositioning = PreviewPositioning();
-                    StartCoroutine(previewPositioning);
+                    GameManager.Instance.Alter.GetComponent<AlterController>().AlterRangeON();
 
                     _isPreviewMode = true;
                     previewObjectArray[(int)nowPreviewBuilding].SetActive(true);
@@ -165,30 +164,12 @@ public class ConstructionPreviewManager : MonoBehaviour
             case false:
                 if (isPreviewMode)
                 {
-                    StopCoroutine(previewPositioning);
-                    previewPositioning = null;
+                    GameManager.Instance.Alter.GetComponent<AlterController>().AlterRangeOFF();
 
                     _isPreviewMode = false;
                     previewObjectArray[(int)nowPreviewBuilding].SetActive(false);
                 }
                 break;
-        }
-    }
-
-    IEnumerator PreviewPositioning()
-    {
-        while(true)
-        {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 5000.0f, (int)eLayerMask.Ground))
-            {
-                if (!previewObjectArray[(int)nowPreviewBuilding].activeSelf)
-                    previewObjectArray[(int)nowPreviewBuilding].SetActive(true);
-
-                previewObjectArray[(int)nowPreviewBuilding].MovePreviewObject(SnapPosition(previewObjectArray[(int)nowPreviewBuilding].previewPosition, hit.point));
-            }
-
-            yield return null;
         }
     }
 
