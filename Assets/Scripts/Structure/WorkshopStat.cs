@@ -48,20 +48,22 @@ public class WorkshopStat : Stat
         mr.materials[1].shader = Shader.Find("UI/Unlit/Transparent");
         mr.materials[2].shader = Shader.Find("UI/Unlit/Transparent");
 
+        float c_r, c_g, c_b, c_a,f;
+        Color c;
         // materials[0] : 况农讥 瘤贺 , materials[1],[2] : 况农讥 扁嫡
         for (int i = 30; i >= 0; i--)
         {
 
 
-            float f = i / 30.0f;
+             f = i / 30.0f;
 
             for (int j = 0; j < 3; j++)
             {
-                float c_r = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.r;
-                float c_g = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.g;
-                float c_b = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.b;
-                float c_a = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.a;
-                Color c = new Color(c_r, c_g, c_b);
+                 c_r = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.r;
+                 c_g = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.g;
+                 c_b = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.b;
+                 c_a = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color.a;
+                c = new Color(c_r, c_g, c_b);
                 c.a = f;
 
                 transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[j].color = c;
