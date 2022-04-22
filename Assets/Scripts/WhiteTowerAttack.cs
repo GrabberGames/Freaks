@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhiteTowerAttack : Stat
+public class WhiteTowerAttack : Stat,InterfaceRange
 {
 
     public ParticleSystem fx_whiteTower;
 
-    Stat _stat;
+   // Stat _stat;
 
     private float AttackPerSeconds = 4f;
 
@@ -15,23 +15,17 @@ public class WhiteTowerAttack : Stat
     private GameObject NoBuildRange ;
 
     bool isAttack = false;
-    Vector3 getPos;
+  
 
     public AudioSource SFXWhiteTowerDestroy;
     public AudioSource SFXWhiteTowerAttack;
 
-    public void SetPosition(Vector3 pos) //좌표 받아오는 함수
-    {
-
-        getPos = pos;
-        //this.gameObject.SetActive(true);
-    }
-
+ 
 
     protected override void Init()
     {
         base.Init();
-
+       // Debug.Log("base.HP : " + base.HP);
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
         NoBuildRange = transform.GetChild(2).gameObject;
         NoBuildRange.SetActive(false);
@@ -53,6 +47,7 @@ public class WhiteTowerAttack : Stat
     }
 
     //소리 확인하기위한 update문
+    /*
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
@@ -61,7 +56,7 @@ public class WhiteTowerAttack : Stat
 
         }
     }
-
+    */
     private void OnTriggerEnter(Collider other) //사거리범위 내에 블랙freaks가 들어올 경우
     {
         if (other.gameObject.CompareTag("BlackFreaks"))
@@ -155,5 +150,11 @@ public class WhiteTowerAttack : Stat
         NoBuildRange.SetActive(false);
     }
 
-
+    public void BuildingRangeON(bool check)
+    {
+        if (check)
+            NoBuildRange.SetActive(true);
+        else
+            NoBuildRange.SetActive(false);
+    }
 }

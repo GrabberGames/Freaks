@@ -141,7 +141,7 @@ public class BuildingPreview : MonoBehaviour
         switch (me)
         {
             case (int)BuildingNum.Alter:
-                parentController = GetComponentInParent<AlterPreview>();
+               // parentController = GetComponentInParent<AlterPreview>();
                 break;
             case (int)BuildingNum.Tower:
                 break;
@@ -156,6 +156,6 @@ public class BuildingPreview : MonoBehaviour
 
     private void SetMaterial(bool isRed)
     {
-        parentController.SetMaterial(isRed);
+        //parentController.SetMaterial(isRed);
     }
 }

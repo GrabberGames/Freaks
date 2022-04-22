@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,7 +37,7 @@ public class WorkshopController : Building
         currentRoofNum = GetRoofNum();
         roofRenderer = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
 
-     
+
     }
 
 
@@ -52,17 +52,18 @@ public class WorkshopController : Building
 
     private Material SetRoofMaterial()
     {
-        Material material = materials[(int) MaterialNum.SmallRoof];
+        Material material = materials[(int)MaterialNum.SmallRoof];
         Material spotMaterial = essenceSpot.GetNowMaterial();
 
         if (spotMaterial.name == "Arrow_Small (Instance)")
         {
-            material = materials[(int) MaterialNum.SmallRoof];
+            material = materials[(int)MaterialNum.SmallRoof];
         }
         else if (spotMaterial.name == "Arrow_Medium (Instance)")
         {
             material = materials[(int)MaterialNum.MeduimRoof];
-        }else if (spotMaterial.name == "Arrow_Large (Instance)")
+        }
+        else if (spotMaterial.name == "Arrow_Large (Instance)")
         {
             material = materials[(int)MaterialNum.LargeRoof];
         }
@@ -79,11 +80,11 @@ public class WorkshopController : Building
 
     private void OnCollisionEnter(Collision collision)
     {
-        // ��ũ�� �Ǽ�
+        // ¿öÅ©¼¥ °Ç¼³
         if (!isFreeksEnter && collision.transform.gameObject == whiteFreeks)
         {
             isFreeksEnter = true;
-            
+
             whiteFreeks.SetActive(false);
             StartCoroutine(SetActive());
             StartCoroutine(EnterFreeks());
@@ -97,7 +98,7 @@ public class WorkshopController : Building
 
     private void OnCollisionExit(Collision collision)
     {
-        if(isSwitch && collision.transform.gameObject == whiteFreeks)
+        if (isSwitch && collision.transform.gameObject == whiteFreeks)
         {
             GameObject.Find("SwitchController").GetComponent<SwitchController>().SwitchFX(gameObject.transform.position, "ON");
             Destroy(this.gameObject);
@@ -107,7 +108,7 @@ public class WorkshopController : Building
 
     public void Init(GameObject mark)
     {
-        if(mark.GetComponent<EssenceSpot>())
+        if (mark.GetComponent<EssenceSpot>())
         {
             essenceSpot = mark.GetComponent<EssenceSpot>();
             this.transform.position = mark.transform.position;
@@ -122,7 +123,7 @@ public class WorkshopController : Building
     #region MiningCoroutine
     IEnumerator SetActive()
     {
-        if(isSwitch)
+        if (isSwitch)
         {
             yield return new WaitForSeconds(5.0f);
             whiteFreeks.SetActive(true);
@@ -138,12 +139,12 @@ public class WorkshopController : Building
 
     IEnumerator EnterFreeks()
     {
-        if(isSwitch)
+        if (isSwitch)
         {
             yield return new WaitForSeconds(5.5f);
         }
-        else 
-        { 
+        else
+        {
             yield return new WaitForSeconds(freeksActiveDelay + 1.5f);
         }
         isFreeksEnter = false;

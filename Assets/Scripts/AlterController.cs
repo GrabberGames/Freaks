@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 
-public class AlterController : Building, DamageService, HealthService
+public class AlterController : Building, DamageService, HealthService, InterfaceRange
 {
     public GameObject whiteFreaksPref;
     public TextMeshProUGUI wFreaksCount;
@@ -31,11 +31,8 @@ public class AlterController : Building, DamageService, HealthService
             ObjectPooling.instance.Alter_Setting(this.gameObject);
 
 
-        BuildRange = this.gameObject.transform.GetChild(3).gameObject;
+        BuildRange = this.gameObject.transform.GetChild(2).gameObject;
         BuildRange.SetActive(false); //건설가능범위 비활성화
-        this.gameObject.transform.GetChild(4).gameObject.SetActive(false);//건설불가능범위 비활성화
-
- 
 
     }
     // Update is called once per frame
@@ -152,7 +149,7 @@ public class AlterController : Building, DamageService, HealthService
     IEnumerator AlterDestroy()
     {
         SFXAlterDestroy.Play();
-         Instantiate(VFXAlterDestroy);
+        Instantiate(VFXAlterDestroy);
         yield return new WaitForSeconds(2.5f);
         Destroy(transform.GetChild(0).gameObject);
     }
@@ -177,5 +174,12 @@ public class AlterController : Building, DamageService, HealthService
         BuildRange.SetActive(false);
     }
 
+    public void BuildingRangeON(bool check)
+    {
+        if(check)
+            BuildRange.SetActive(true);
+        else
+            BuildRange.SetActive(false);
+    }
 
 }

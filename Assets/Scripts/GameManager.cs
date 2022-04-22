@@ -78,13 +78,13 @@ public class GameManager : MonoBehaviour
 
     public static float getAlterBuildRadius() //알터 건설가능범위 radius 전달
     {
-        float radius = (Instance.Alter.gameObject.transform.GetChild(3).gameObject.transform.localScale.z)/2;
+        float radius = (Instance.Alter.gameObject.transform.GetChild(2).gameObject.transform.localScale.x)/2;
         return radius;
     }
 
     public static float getAlterNoBuildRadius() //알터 건설 불가능범위 radius 전달
     {
-        float radius = (Instance.Alter.gameObject.transform.GetChild(4).gameObject.transform.localScale.z) / 2;
+        float radius = ((Instance.Alter.gameObject.transform.GetChild(3).gameObject.transform.localScale.x)*(float)0.3) / 2;
         return radius;
     }
 
