@@ -4,13 +4,32 @@ using UnityEngine;
 
 public class WorkshopConstructionPreview : BasePreviewObject
 {
+    Vector3 essencePosition;
+
+    protected override void MovePreviewObject(Vector3 position)
+    {
+        if (!_canBuild.Equals(ChkConstructionArea(position)))
+        {
+            _canBuild = !canBuild;
+            ChangePriviewObjectColor(canBuild);
+        }
+
+        if(_canBuild)
+            transform.position = essencePosition;
+        else
+            transform.position = position;
+    }
+
     protected override bool ChkConstructionArea()
     {
         if (Vector3.Distance(GameManager.getAlterPosition(), tr.position) < GameManager.getAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
             Vector3.Distance(GameManager.getAlterPosition(), tr.position) > GameManager.getAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
         {
-            if (!Physics.OverlapSphere(transform.position, constructionAreaSize * 0.5f, (int)eLayerMask.Essence).Length.Equals(0))
+            var essenceObj = Physics.OverlapSphere(transform.position, constructionAreaSize * 0.5f, (int)eLayerMask.Essence);
+
+            if (!essenceObj.Length.Equals(0))
             {
+                essencePosition = essenceObj[0].GetComponent<Transform>().position;
                 _conditionConstructionPreview = eConditionConstructionPreview.Buildable;
                 return true;
             }
@@ -31,8 +50,11 @@ public class WorkshopConstructionPreview : BasePreviewObject
         if (Vector3.Distance(GameManager.getAlterPosition(), position) < GameManager.getAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
             Vector3.Distance(GameManager.getAlterPosition(), position) > GameManager.getAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
         {
-            if (!Physics.OverlapSphere(transform.position, constructionAreaSize * 0.5f, (int)eLayerMask.Essence).Length.Equals(0))
+            var essenceObj = Physics.OverlapSphere(position, constructionAreaSize * 0.5f, (int)eLayerMask.Essence);
+
+            if (!essenceObj.Length.Equals(0))
             {
+                essencePosition = essenceObj[0].GetComponent<Transform>().position;
                 _conditionConstructionPreview = eConditionConstructionPreview.Buildable;
                 return true;
             }
@@ -47,4 +69,6 @@ public class WorkshopConstructionPreview : BasePreviewObject
         }
         return false;
     }
+
+
 }

@@ -47,7 +47,7 @@ public class StageManager : MonoBehaviour
     void Update()
     {
         _nowTime = _nowTime + Time.deltaTime;
-        Debug.Log(_nowTime);
+        //Debug.Log(_nowTime);
 
         if(_nowTime >= (_beforeFreakRespawnTime + _respawnInterval))
         {

@@ -13,26 +13,34 @@ public class PauseUIController : MonoBehaviour
     private bool isHome;
     public bool isMenuON;
 
+    private bool canActiveMenu;
 
 
     private void Update()
-    {
+    {               
         // IF Menu Window is OFF && IF Player KeyDown the Escape; Menu Window ON
-        if (Input.GetKeyDown(KeyCode.Escape) && !isMenuON)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            AudioManager.a_Instance.Stop();
-            Time.timeScale = 0; // Game Pause
+            if(!isMenuON)
+            {
+                if(canActiveMenu)
+                {
+                    AudioManager.a_Instance.Stop();
+                    Time.timeScale = 0; // Game Pause
 
-            isMenuON = true;
-            inGameWin.SetActive(true);   // Pause Window ON
-            menuWins[0].SetActive(true);
+                    isMenuON = true;
+                    inGameWin.SetActive(true);   // Pause Window ON
+                    menuWins[0].SetActive(true);
+                }                
+            }
+            else
+            {
+                MenuWinOFF();
+                AudioManager.a_Instance.Play();
+            }
         }
-        // IF Menu Window is On && IF Player KeyDown the Escape; Menu Window OFF
-        else if (Input.GetKeyDown(KeyCode.Escape) && isMenuON)
-        {
-            MenuWinOFF();
-            AudioManager.a_Instance.Play();
-        }
+
+        canActiveMenu = !ConstructionPreviewManager.Instance.isPreviewMode;
     }
 
 
