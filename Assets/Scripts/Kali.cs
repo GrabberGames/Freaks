@@ -9,6 +9,7 @@ public class Kali : Stat
     #region variables
     enum Layers 
     { 
+        blackfreaks = 6,
         Enemy = 7,
     }
     public enum PlayerState
@@ -643,11 +644,10 @@ public class Kali : Stat
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
-                if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                if (hit.collider.gameObject.layer == (int)Layers.blackfreaks || hit.collider.gameObject.layer == (int)Layers.Enemy)
                     _lockTarget = hit.collider.gameObject;
                 else
                     _lockTarget = null;
-
                 if (_lockTarget != null) //기본 공격 할 대상이 있다.
                 {
                     float distance = (_lockTarget.transform.position - transform.position).magnitude;

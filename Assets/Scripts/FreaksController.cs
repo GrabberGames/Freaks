@@ -168,7 +168,7 @@ public class FreaksController : Stat
         Vector3 look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
         transform.LookAt(look_dir);
         //일정 범위 내에 적이 들어올 경우 target으로 설정해준다.
-        LayerMask mask = LayerMask.GetMask("player") | LayerMask.GetMask("whitefreaks");
+        LayerMask mask = LayerMask.GetMask("player") | LayerMask.GetMask("whitefreaks") | LayerMask.GetMask("Alter");
         foreach (Collider collider in Physics.OverlapSphere(transform.position, 25f, mask))
         {
             target = collider.gameObject;
@@ -198,5 +198,11 @@ public class FreaksController : Stat
         agent.isStopped = false;
         stuernEffect.SetActive(false);
         State = FreaksState.Moving;
+    }
+    public override void DeadSignal()
+    {
+        base.DeadSignal();
+
+        ObjectPooling.instance.ReturnObject(this.gameObject);
     }
 }

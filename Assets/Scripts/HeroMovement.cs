@@ -25,6 +25,7 @@ namespace WarriorAnims
 
         enum Layers
         {
+            blackfreaks= 6,
             Enemy = 7,
         }
 
@@ -349,12 +350,12 @@ namespace WarriorAnims
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
-                    if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                    if (hit.collider.gameObject.layer == (int)Layers.Enemy || hit.collider.gameObject.layer == (int)Layers.blackfreaks)
                         _lockTarget = hit.collider.gameObject;
                     else
                         _lockTarget = null;
 
-                    if (_lockTarget != null) //�⺻ ���� �� ����� �ִ�.
+                    if (_lockTarget != null)
                     {
                         float distance = (_lockTarget.transform.position - transform.position).magnitude;
 
@@ -417,7 +418,7 @@ namespace WarriorAnims
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
-                    if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                    if (hit.collider.gameObject.layer == (int)Layers.Enemy || hit.collider.gameObject.layer == (int)Layers.blackfreaks)
                         _lockTarget = hit.collider.gameObject;
                     else
                         _lockTarget = null;

@@ -75,6 +75,7 @@ public class Kyle_Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("@");
         if(other.transform.CompareTag("BlackFreaks") || other.transform.CompareTag("BlackTower"))
         {
             if (other == null)
@@ -108,13 +109,13 @@ public class Kyle_Bullet : MonoBehaviour
     }
     IEnumerator DT()
     {
-        yield return new WaitForSeconds(ps_tile.main.startLifetimeMultiplier); 
+        yield return new WaitForSeconds(ps_tile.main.duration); 
         Destroy(ps_tile);
         Destroy();
     }
     IEnumerator DT_Hit()
     {
-        yield return new WaitForSeconds(ps_hit.main.startLifetimeMultiplier);
+        yield return new WaitForSeconds(ps_hit.main.duration);
         Destroy(ps_hit);
         Destroy();
     }
