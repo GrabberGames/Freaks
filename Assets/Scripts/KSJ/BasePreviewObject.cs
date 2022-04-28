@@ -68,19 +68,6 @@ abstract public class BasePreviewObject : MonoBehaviour
         }
     }
 
-
-    public void MovePreviewObject(Vector3 position)
-    {
-        if (!_canBuild.Equals(ChkConstructionArea(position)))
-        {
-            _canBuild = !canBuild;
-            ChangePriviewObjectColor(canBuild);
-        }
-
-        transform.position = position;
-    }
-
-
     public void SetActive(bool value)
     {
         go.SetActive(value);
@@ -123,7 +110,12 @@ abstract public class BasePreviewObject : MonoBehaviour
             }
         }
     }
-    
+    public Vector3 PreviewPosition()
+    {
+        return tr.position;
+    }
+
+    abstract protected void MovePreviewObject(Vector3 position);
     abstract protected bool ChkConstructionArea();
     abstract protected bool ChkConstructionArea(Vector3 position);
 

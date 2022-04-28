@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WhiteTowerConstructionPreview : BasePreviewObject
-{  
+{
+    protected override void MovePreviewObject(Vector3 position)
+    {
+        if (!_canBuild.Equals(ChkConstructionArea(position)))
+        {
+            _canBuild = !canBuild;
+            ChangePriviewObjectColor(canBuild);
+        }
+
+        transform.position = position;
+    }
+
     protected override bool ChkConstructionArea()
     {
-        //
-        if (Vector3.Distance(GameManager.getAlterPosition(), tr.position) < GameManager.getAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
-            Vector3.Distance(GameManager.getAlterPosition(), tr.position) > GameManager.getAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
+        if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), tr.position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
+            Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), tr.position) > BuildingManager.Instance.GetAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
         {
             if (Physics.OverlapSphere(transform.position, constructionAreaSize * 0.5f, (int)eLayerMask.Building).Length.Equals(0))
             {
@@ -29,8 +39,8 @@ public class WhiteTowerConstructionPreview : BasePreviewObject
 
     protected override bool ChkConstructionArea(Vector3 position)
     {
-        if (Vector3.Distance(GameManager.getAlterPosition(), position) < GameManager.getAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
-            Vector3.Distance(GameManager.getAlterPosition(), position) > GameManager.getAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
+        if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
+            Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), position) > BuildingManager.Instance.GetAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
         {
             if (Physics.OverlapSphere(position, constructionAreaSize * 0.5f, (int)eLayerMask.Building).Length.Equals(0))
             {

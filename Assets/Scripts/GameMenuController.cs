@@ -27,13 +27,14 @@ public enum eHeroType { Waron, Kyle }
 
 public class GameMenuController : MonoBehaviour
 {
-    public enum eCanvasList { Main, Play, HeroSelect, Creadit }
+    public enum eCanvasList { Main, Play, HeroSelect, Creadit, Setting, MaxCount }
 
     [Header("UI Canvas List")]
     [SerializeField] private GameObject main;
     [SerializeField] private GameObject play;
     [SerializeField] private GameObject heroSelect;
     [SerializeField] private GameObject creadit;
+    [SerializeField] private GameObject setting;
     //[SerializeField] private GameObject heroSelect;
 
     [Header("Hero Info")]
@@ -46,7 +47,7 @@ public class GameMenuController : MonoBehaviour
     [SerializeField] private CreditUI creditUI;
 
 
-    GameObject[] uiCanvasArray = new GameObject[4];
+    GameObject[] uiCanvasArray = new GameObject[(int)eCanvasList.MaxCount];
 
     eHeroType nowSelectHero;
 
@@ -56,6 +57,7 @@ public class GameMenuController : MonoBehaviour
         uiCanvasArray[(int)eCanvasList.Play] = play;
         uiCanvasArray[(int)eCanvasList.HeroSelect] = heroSelect;
         uiCanvasArray[(int)eCanvasList.Creadit] = creadit;
+        uiCanvasArray[(int)eCanvasList.Setting] = setting;
 
         OnEnableMainMenu();        
     }
@@ -77,6 +79,11 @@ public class GameMenuController : MonoBehaviour
     public void OnEnableCreditMenu()
     {
         uiCanvasArray[(int)eCanvasList.Creadit].SetActive(true);
+    }
+
+    public void OnEnableSettingMenu()
+    {
+        uiCanvasArray[(int)eCanvasList.Setting].SetActive(true);
     }
 
     public void ActiveCanvas(eCanvasList canvas)

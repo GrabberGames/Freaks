@@ -40,6 +40,13 @@ public class ConstructionPreviewController : MonoBehaviour
             ConstructionPreviewManager.Instance.OnWorkshopConstructionPreview();
         }
 
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ConstructionPreviewManager.Instance.ConstructionPreview(false);
+        }
+
+
         if (ConstructionPreviewManager.Instance.isPreviewMode)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -57,7 +64,10 @@ public class ConstructionPreviewController : MonoBehaviour
                 else if(resultsPreview.Count.Equals(0))
                 {
                     if (ConstructionPreviewManager.Instance.ChkConstructionArea())
-                        Debug.Log("건설위치 건설기능 구현 완료 시 연결 예정");
+                    {
+                        BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
+                        ConstructionPreviewManager.Instance.ConstructionPreview(false);
+                    }
                     else
                         ConstructionPreviewManager.Instance.PrintMessage();
                 }
@@ -65,10 +75,7 @@ public class ConstructionPreviewController : MonoBehaviour
                 resultsHUD.Clear();
                 resultsPreview.Clear();
             }
-
         }
-
-
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {

@@ -17,7 +17,7 @@ public enum eConditionConstructionPreview
 
 public enum eBuilding
 {
-    Alter, WhiteTower, Workshop
+    Alter, WhiteTower, Workshop, MaxCount
 }
 
 public class ConstructionPreviewManager : MonoBehaviour
@@ -41,8 +41,8 @@ public class ConstructionPreviewManager : MonoBehaviour
 
 
 
-    private BasePreviewObject[] previewObjectArray = new BasePreviewObject[3];
-    private eBuilding nowPreviewBuilding;
+    private BasePreviewObject[] previewObjectArray = new BasePreviewObject[(int)eBuilding.MaxCount];
+    private eBuilding _nowPreviewBuilding;
 
     private bool _isPreviewMode;
 
@@ -50,6 +50,7 @@ public class ConstructionPreviewManager : MonoBehaviour
     public Color buildableColor { get => _buildableColor; }
     public Color nonBuildableColor { get => _nonBuildableColor; }
     public bool isPreviewMode { get => _isPreviewMode; }
+    public eBuilding nowPreviewBuilding { get => _nowPreviewBuilding; }
 
     private Vector3 snapPosition;
 
@@ -77,56 +78,30 @@ public class ConstructionPreviewManager : MonoBehaviour
         previewObjectArray[(int)eBuilding.Alter] = alter;
         previewObjectArray[(int)eBuilding.WhiteTower] = whiteTower;
         previewObjectArray[(int)eBuilding.Workshop] = workshop;
+
+        _isPreviewMode = false;
     }
 
 
     #region 버튼 조작용 함수 제작
     public void OnAlterConstructionPreview()
     {
-        Debug.Log("나 시도한다");
-        if(nowPreviewBuilding.Equals(eBuilding.Alter))
-        {
-            if(!isPreviewMode)
-            {
-                ConstructionPreview(true);
-            }
-        }
-        else
-        {
-            if (isPreviewMode)
-            {
-                ConstructionPreview(false);
-
-                nowPreviewBuilding = eBuilding.Alter;
-                ConstructionPreview(true);
-            }
-        }
+        OnConstructionPreview(eBuilding.Alter);
     }
 
     public void OnWhiteTowerConstructionPreview()
     {
-        if (nowPreviewBuilding.Equals(eBuilding.WhiteTower))
-        {
-            if (!isPreviewMode)
-            {
-                ConstructionPreview(true);
-            }
-        }
-        else
-        {
-            if (isPreviewMode)
-            {
-                ConstructionPreview(false);
-
-                nowPreviewBuilding = eBuilding.WhiteTower;
-                ConstructionPreview(true);
-            }
-        }
+        OnConstructionPreview(eBuilding.WhiteTower);
     }
 
     public void OnWorkshopConstructionPreview()
     {
-        if (nowPreviewBuilding.Equals(eBuilding.Workshop))
+        OnConstructionPreview(eBuilding.Workshop);
+    }
+
+    public void OnConstructionPreview(eBuilding buildingType)
+    {
+        if (_nowPreviewBuilding.Equals(buildingType))
         {
             if (!isPreviewMode)
             {
@@ -138,10 +113,10 @@ public class ConstructionPreviewManager : MonoBehaviour
             if (isPreviewMode)
             {
                 ConstructionPreview(false);
-
-                nowPreviewBuilding = eBuilding.Workshop;
-                ConstructionPreview(true);
             }
+
+            _nowPreviewBuilding = buildingType;
+            ConstructionPreview(true);
         }
     }
     #endregion
@@ -157,7 +132,7 @@ public class ConstructionPreviewManager : MonoBehaviour
                     GameManager.Instance.Alter.GetComponent<AlterController>().AlterRangeON();
 
                     _isPreviewMode = true;
-                    previewObjectArray[(int)nowPreviewBuilding].SetActive(true);
+                    previewObjectArray[(int)_nowPreviewBuilding].SetActive(true);
                 }                
                 break;
 
@@ -167,20 +142,25 @@ public class ConstructionPreviewManager : MonoBehaviour
                     GameManager.Instance.Alter.GetComponent<AlterController>().AlterRangeOFF();
 
                     _isPreviewMode = false;
-                    previewObjectArray[(int)nowPreviewBuilding].SetActive(false);
+                    previewObjectArray[(int)_nowPreviewBuilding].SetActive(false);
                 }
                 break;
         }
     }
 
+    public Vector3 PreviewPosition()
+    {
+        return previewObjectArray[(int)_nowPreviewBuilding].PreviewPosition();
+    }
+
     public bool ChkConstructionArea()
     {
-        return previewObjectArray[(int)nowPreviewBuilding].canBuild;
+        return previewObjectArray[(int)_nowPreviewBuilding].canBuild;
     }
 
     public void PrintMessage()
     {
-        PrintMessage(previewObjectArray[(int)nowPreviewBuilding].conditionConstructionPreview);
+        PrintMessage(previewObjectArray[(int)_nowPreviewBuilding].conditionConstructionPreview);
     }
 
     private void PrintMessage(eConditionConstructionPreview condition)
