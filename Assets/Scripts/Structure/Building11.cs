@@ -8,6 +8,8 @@ public class Building11 : MonoBehaviour
     [SerializeField] private int timer = 10;
      public bool isTimerON = false;
     bool First = true;
+
+    private GameObject alter;
     public void Init()
     {
         switch (this.gameObject.name)
@@ -98,7 +100,12 @@ public class Building11 : MonoBehaviour
                 switch (objectName)
                 {
                     case "Alter":
-                        GameObject.Find("alter").transform.position = this.transform.position;
+                        alter = GameObject.Find("alter").gameObject;
+                        alter.transform.position = this.transform.position;
+
+                        AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
+                        alterAttack.bulletSpawnNewSetting();
+
                         GameManager.Instance.AlterIsChange.Invoke(this.gameObject);
                         Destroy(this.gameObject);
                         break;
