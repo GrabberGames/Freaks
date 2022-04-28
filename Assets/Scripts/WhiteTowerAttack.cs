@@ -2,30 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhiteTowerAttack : Stat,InterfaceRange
+public class WhiteTowerAttack : Stat, InterfaceRange
 {
 
     public ParticleSystem fx_whiteTower;
 
-   // Stat _stat;
+    // Stat _stat;
 
     private float AttackPerSeconds = 4f;
 
     private Vector3 bulletSpawnPosition;
-    private GameObject NoBuildRange ;
+    private GameObject NoBuildRange;
 
     bool isAttack = false;
-  
+
 
     public AudioSource SFXWhiteTowerDestroy;
     public AudioSource SFXWhiteTowerAttack;
 
- 
+
 
     protected override void Init()
     {
         base.Init();
-       // Debug.Log("base.HP : " + base.HP);
+        // Debug.Log("base.HP : " + base.HP);
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
         NoBuildRange = transform.GetChild(2).gameObject;
         NoBuildRange.SetActive(false);
@@ -139,7 +139,7 @@ public class WhiteTowerAttack : Stat,InterfaceRange
 
     }
 
-
+    /*
     public void WhiteTowerRangeON()
         {
         NoBuildRange.SetActive(true);
@@ -149,12 +149,15 @@ public class WhiteTowerAttack : Stat,InterfaceRange
     {
         NoBuildRange.SetActive(false);
     }
-
+    */
     public void BuildingRangeON(bool check)
     {
-        if (check)
-            NoBuildRange.SetActive(true);
-        else
-            NoBuildRange.SetActive(false);
+        if (NoBuildRange != null)
+        {
+            if (check)
+                NoBuildRange.SetActive(true);
+            else
+                NoBuildRange.SetActive(false);
+        }
     }
 }

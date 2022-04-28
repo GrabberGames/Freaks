@@ -16,6 +16,7 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private GameObject alter;
 
     private List<WhiteTowerAttack> whiteTowerList = new List<WhiteTowerAttack>();
+    private List<BuildingRange> buildingRangeList = new List<BuildingRange>();
 
     private GameObject go;
 
@@ -48,15 +49,20 @@ public class BuildingManager : MonoBehaviour
         {
             SetBuildPosition("Workshop", new Vector3(0, 0, 0));
         }
-        
-        if (Input.GetKeyDown(KeyCode.Z))
+       
+        if (Input.GetKeyDown(KeyCode.B))
         {
            BuildingRangeON(true);
         }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            BuildingRangeON(false);
+        }
 
-    }
-    */
-    private void Start()
+
+    } */
+
+        private void Start()
     {
         build_alter.SetActive(false);
         build_whitetower.SetActive(false);
@@ -76,7 +82,9 @@ public class BuildingManager : MonoBehaviour
             case eBuilding.WhiteTower:
                 go = Instantiate(build_whitetower, pos, transform.rotation);
                 whiteTowerList.Add(go.transform.GetChild(1).gameObject.GetComponent<WhiteTowerAttack>());
+                buildingRangeList.Add(go.transform.GetChild(0).gameObject.GetComponent<BuildingRange>());
                 go.SetActive(true);
+
                 go.GetComponent<Building11>().Init();
 
                 break;
@@ -94,9 +102,9 @@ public class BuildingManager : MonoBehaviour
     public void BuildingRangeON(bool check) //건물들 rangeON
     {
         InterfaceRange interfaceRange;
-     
-            interfaceRange = altercontroller.GetComponent<InterfaceRange>();
-            interfaceRange.BuildingRangeON(check);
+
+        interfaceRange = altercontroller.GetComponent<InterfaceRange>();
+        interfaceRange.BuildingRangeON(check);
 
         for (int i = 0; i < whiteTowerList.Count; i++)
         {
@@ -110,20 +118,35 @@ public class BuildingManager : MonoBehaviour
                 whiteTowerList.RemoveAt(i); //whitetower 소멸되었을 경우
             }
         }
+
+
+        for (int i = 0; i < buildingRangeList.Count; i++)
+        {
+            if (buildingRangeList[i] != null)
+            {
+                interfaceRange = buildingRangeList[i].GetComponent<InterfaceRange>();
+                interfaceRange.BuildingRangeON(check);
+            }
+            else
+            {
+                buildingRangeList.RemoveAt(i); //buildingRange 소멸되었을 경우
+            }
+        }
+
     }
 
-    public  Vector3 GetAlterPosition() //Alter 위치 전달
+    public Vector3 GetAlterPosition() //Alter 위치 전달
     {
         return alter.gameObject.transform.position;
     }
 
-    public  float GetAlterBuildRadius() //알터 건설가능범위 radius 전달
+    public float GetAlterBuildRadius() //알터 건설가능범위 radius 전달
     {
         float radius = (alter.gameObject.transform.GetChild(2).gameObject.transform.localScale.x) / 2;
         return radius;
     }
 
-    public  float GetAlterNoBuildRadius() //알터 건설 불가능범위 radius 전달
+    public float GetAlterNoBuildRadius() //알터 건설 불가능범위 radius 전달
     {
         float radius = ((alter.gameObject.transform.GetChild(2).gameObject.transform.localScale.x) * (float)0.3) / 2;
         return radius;

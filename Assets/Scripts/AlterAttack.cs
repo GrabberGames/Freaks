@@ -13,7 +13,7 @@ public class AlterAttack : Stat
 
     private float AttackPerSeconds = 4f;
 
-    private Vector3 bulletSpawnPosition;
+    private  Vector3 bulletSpawnPosition;
     bool isAttack = false;
 
     void Start()
@@ -109,5 +109,12 @@ public class AlterAttack : Stat
       
     }
 
-   
+    public void bulletSpawnNewSetting()
+    {
+        bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
+
+    }
+
+
+
 }
