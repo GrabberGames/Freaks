@@ -60,15 +60,12 @@ public class GameController : MonoBehaviour
         beforeSpawnTime = nowPlayTime;
         tempSpawnPointNumber = Random.Range(0, GameManager.Instance.SpawnPoint.Length);
 
-        if (isRage)
+        for (int i = 0; i < GameManager.Instance.SpawnPoint.Length; i++)
         {
-            for (int i = 0; i < GameManager.Instance.SpawnPoint.Length; i++)
-            {
-                if (isRage.Equals(i.Equals(tempSpawnPointNumber)))
-                    continue;
+            if (isRage.Equals(i.Equals(tempSpawnPointNumber)))
+                continue;
 
-                StartCoroutine(CoFreaksSpawn(i));
-            }
+            StartCoroutine(CoFreaksSpawn(i));
         }
        
     }
