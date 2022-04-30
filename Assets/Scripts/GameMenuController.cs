@@ -23,7 +23,7 @@ public struct HeroInfomation
     public Sprite skillIconR;
 }
 
-public enum eHeroType { Waron, Kyle }
+public enum eHeroType { None, Waron, Kyle }
 
 public class GameMenuController : MonoBehaviour
 {
@@ -73,6 +73,7 @@ public class GameMenuController : MonoBehaviour
     }
     public void OnEnableHeroSelectMenu()
     {
+        GameManager.Instance.SetSelectHero(eHeroType.None);
         ActiveCanvas(eCanvasList.HeroSelect);
     }
 
@@ -101,13 +102,13 @@ public class GameMenuController : MonoBehaviour
     {
         heroAbilitiesUI.SetAbilitiesUI(waronInformation);
         heroSelectUI.SelectHero(eHeroType.Waron);
-        nowSelectHero = eHeroType.Waron;
+        GameManager.Instance.SetSelectHero(eHeroType.Waron);
     }
     public void SelectKyle()
     {
         heroAbilitiesUI.SetAbilitiesUI(kyleInformation);
         heroSelectUI.SelectHero(eHeroType.Kyle);
-        nowSelectHero = eHeroType.Kyle;
+        GameManager.Instance.SetSelectHero(eHeroType.Kyle);
     }
     #endregion
 
@@ -117,12 +118,21 @@ public class GameMenuController : MonoBehaviour
     }
 
 
-    public void LoadScene(int indx) {
-        SceneManager.LoadScene(indx);
+    public void LoadPlayScene() 
+    {
+        if(!GameManager.Instance.selectHero.Equals(eHeroType.None))
+        {
+            SceneManager.LoadScene("Map");
+        }
+        else
+        {
+            Debug.Log("error : Hero selection is required.");
+        }
     }
 
     
-    public void GameQuit() {
+    public void GameQuit() 
+    {
         Application.Quit();
     }
 }

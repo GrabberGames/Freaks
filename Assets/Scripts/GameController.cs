@@ -9,90 +9,33 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    public static string hero;
-
     public TextMeshProUGUI timerText;
-    public TextMeshProUGUI[] SkillCoolTimers;
-    public Image[] SkillCoolMasks;
-    public Image mask;
-    public int wave_min = 0;
-    public int wave_sec = 0;
 
     // FX
     [SerializeField] private ParticleSystem fx_Move;
 
-    // wShot the ray to the pos. of Mouse Pointer Clicked.
-    private SpawnController spawnController;
-    private Kali kyle;
-    private WarriorAnims.HeroMovement waron; 
-    private RaycastHit hit;
+    private bool isRage;
 
-    private string hitColliderName;
-    private int min = 0;
-    private int sec = 0;
-    private float originalSize;
-    private float value = 0;
-    private float[] skillSizes = new float[4];
+    private int nowPlayTime;
+    private int beforeSpawnTime;
 
-    /*
-    private void Awake() {
-        if(GameController == null) {
-            GameController = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-    */
-    #region Use To Spawn
-    private int randomSpawn;
-    private const int spawnFreaksNumber = 3;
-    int spawnedFreaksNumber = 0;
-    bool isRage = false;
-    #endregion
+    private int spawnIntervalTime = 120;
+    private int spawnBlackfreaksCount = 3;
+    private int spawnedBlackfreaksCount;
 
-    public void Init() {
-        switch (GameController.hero)
-        {
-            case "kyle" :
-                kyle = GameObject.Find("kyle").GetComponent<Kali>();
-                for (int i = 0; i < 4; i++) {
-                    skillSizes[i] = SkillCoolMasks[i].rectTransform.rect.height;
-                } 
-                break;
-            
-            case "waron" :
-                waron = GameObject.Find("warron").GetComponent<WarriorAnims.HeroMovement>();
-                for (int i = 4; i < 8; i++) {
-                    skillSizes[i] = SkillCoolMasks[i].rectTransform.rect.height;
-                } 
-                break;
-
-            default:
-                break;
-
-        }
-    }
-
+    private int tempSpawnPointNumber;
 
     private void Start()
     {
-        originalSize = mask.rectTransform.rect.width;
+        beforeSpawnTime = 0;
 
         StartCoroutine(PlayTimer());
-        StartCoroutine(WaveTimer());
     }
-
 
     private void Update()
     {
-        FXmovePlayer();
-        if (GameController.hero == "kyle") {
-            kailSCool();
-            kailSCoolBtn();
-        }
-        else if (GameController.hero == "waron") {
-            waronSCool();
-            waronSCoolBtn();
-        }
+        if (Input.GetKeyDown(KeyCode.M))
+             FreaksSpawn();
     }
 
 
@@ -100,78 +43,52 @@ public class GameController : MonoBehaviour
     {
         while(true)
         {
-            timerText.text = string.Format("{0:D1}:{1:D2}", min, sec);
-            
-            sec++;
-            
-            if (sec > 59)
+            nowPlayTime = (int)Time.time;
+            timerText.text = string.Format("{0:D1}:{1:D2}", (int)(nowPlayTime / 60), (int)(nowPlayTime % 60));
+
+            if (nowPlayTime >= beforeSpawnTime + spawnIntervalTime)
             {
-                sec = 0;
-                min++;
+                FreaksSpawn();
             }
-            
-            yield return new WaitForSeconds(1);
+
+            yield return null;
         } 
     }
 
-
-    IEnumerator WaveTimer()
+    private void FreaksSpawn()
     {
-        // 2mins Timer
-        while(wave_min < 2)
+        beforeSpawnTime = nowPlayTime;
+        tempSpawnPointNumber = Random.Range(0, GameManager.Instance.SpawnPoint.Length);
+
+        if (isRage)
         {
-            wave_sec++;
-            value += 0.825f;
-
-            mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize - value);
-
-            if (wave_sec > 59)
+            for (int i = 0; i < GameManager.Instance.SpawnPoint.Length; i++)
             {
-                wave_sec = 0;
-                wave_min++;
+                if (isRage.Equals(i.Equals(tempSpawnPointNumber)))
+                    continue;
+
+                StartCoroutine(CoFreaksSpawn(i));
             }
-            yield return new WaitForSeconds(1);
         }
-
-        if (wave_min >= 2)
-        {
-            mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize);
-            FreaksSpawn();
-            wave_min = 0;
-            wave_sec = 0;
-            StartCoroutine(WaveTimer());
-            value = 0;
-        }
+       
     }
-    public void FreaksSpawn()
-    {
-        randomSpawn = Random.Range(0, 3);
 
-        if (isRage == true)
-        {
-            spawnedFreaksNumber = spawnFreaksNumber * 2;
-        }
-        else
-        {
-            spawnedFreaksNumber = spawnFreaksNumber;
-        }
-        
-        StartCoroutine(CoFreaksSpawn());
-    }
-    IEnumerator CoFreaksSpawn()
+    IEnumerator CoFreaksSpawn(int point)
     {
-        while (spawnedFreaksNumber > 0)
+        spawnedBlackfreaksCount = 0;
+
+        while (spawnedBlackfreaksCount < spawnBlackfreaksCount)
         {
             GameObject obj = ObjectPooling.instance.GetObject("BlackFreaks");
-            obj.gameObject.GetComponent<NavMeshAgent>().Warp(GameManager.Instance.SpawnPoint[randomSpawn].position);
+            obj.gameObject.GetComponent<NavMeshAgent>().Warp(GameManager.Instance.SpawnPoint[point].position);
 
-            spawnedFreaksNumber--;
+            spawnedBlackfreaksCount++;
             yield return new WaitForSeconds(1);
         }
     }
-    public void SetIsRageActivate(bool isRage)
+    public void SetActiveIsRage(bool value)
     {
-        this.isRage = isRage;
+        this.isRage = value;
     }
 
     // FX Play on Mouse Click pos.
@@ -196,98 +113,5 @@ public class GameController : MonoBehaviour
         {
             fx_Move.Stop();
         }
-    }
-
-
-    // Skill Cool Timer UI Controll; Kail
-    public void kailSCool(){
-        // CoolTime Text print
-        SkillCoolTimers[0].text = string.Format("{0:N1}", kyle.getTimer("Q"));
-        SkillCoolTimers[1].text = string.Format("{0:N1}", kyle.getTimer("W"));
-        SkillCoolTimers[2].text = string.Format("{0:N1}", kyle.getTimer("E"));
-        SkillCoolTimers[3].text = string.Format("{0:N1}", kyle.getTimer("R"));
-    }
-
-        // Skill Cool Timer UI Controll; waron
-    public void waronSCool(){
-        // CoolTime Text print
-        SkillCoolTimers[4].text = string.Format("{0:N1}", waron.getTimer("Q"));
-        SkillCoolTimers[5].text = string.Format("{0:N1}", waron.getTimer("W"));
-        SkillCoolTimers[6].text = string.Format("{0:N1}", waron.getTimer("E"));
-        SkillCoolTimers[7].text = string.Format("{0:N1}", waron.getTimer("R"));
-    }
-    
-
-    public void kailSCoolBtn() {
-        // CoolTime Gauge(mask) handler
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StartCoroutine(ScoolMask(0.367f, "Q", 0, "kyle"));
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            StartCoroutine(ScoolMask(0.267f, "W", 1, "kyle"));
-
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(ScoolMask(0.250f, "E", 2, "kyle"));
-
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(ScoolMask(0.045f, "R", 3, "kyle"));
-        }
-    }
-
-    public void waronSCoolBtn() {
-        // CoolTime Gauge(mask) handler
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StartCoroutine(ScoolMask(0.367f, "Q", 0, "waron"));
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            StartCoroutine(ScoolMask(0.267f, "W", 1, "waron"));
-
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(ScoolMask(0.250f, "E", 2, "waron"));
-
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(ScoolMask(0.045f, "R", 3, "waron"));
-        }
-    }
-
-
-    IEnumerator ScoolMask(float val, string skill, int indx, string hero)
-    {
-        float _val = val;
-
-        if (hero == "kyle") {
-            while (kyle.getTimer(skill) > 0.1f)
-            {
-                SkillCoolMasks[indx].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[indx] - val);
-                val += _val;
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-        else if (hero == "waron") {
-            while (waron.getTimer(skill) > 0.1f)
-            {
-                SkillCoolMasks[indx].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, skillSizes[indx] - val);
-                val += _val;
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-
-        
-    }
-
-
-
-
+    }    
 }

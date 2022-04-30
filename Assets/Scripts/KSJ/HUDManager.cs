@@ -18,7 +18,7 @@ public class HUDManager : MonoBehaviour
 
 
 
-    public enum eSkillSlotKey { Passive, Q, W, E, R };
+    public enum eSkillSlotKey { Passive, Q, W, E, R, MaxCount };
 
     [Header("HP Bar")]
     [SerializeField] private HpUI hpUI;

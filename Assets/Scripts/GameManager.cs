@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject _player;
 
+    private eHeroType _selectHero = eHeroType.Kyle;
+    public eHeroType selectHero { get => _selectHero; }
+
+
     public GameObject Player
     {
         get { 
@@ -69,28 +73,7 @@ public class GameManager : MonoBehaviour
     }
     public Action<GameObject> AlterIsChange = null;
 
-
-    
-    public static Vector3 getAlterPosition() //Alter 위치 전달
-    {
-        return Instance.Alter.gameObject.transform.position;
-    }
-
-    public static float getAlterBuildRadius() //알터 건설가능범위 radius 전달
-    {
-        float radius = (Instance.Alter.gameObject.transform.GetChild(2).gameObject.transform.localScale.x)/2;
-        return radius;
-    }
-
-    public static float getAlterNoBuildRadius() //알터 건설 불가능범위 radius 전달
-    {
-        float radius = ((Instance.Alter.gameObject.transform.GetChild(3).gameObject.transform.localScale.x)*(float)0.3) / 2;
-        return radius;
-    }
-
-
-
-
+       
     static GameManager s_instance;
 
     DamageManager _damage = new DamageManager();
@@ -109,7 +92,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject go = GameObject.Find("@GameManager");
 
-            if(go== null)
+            if(go == null)
             {
                 go = new GameObject { name = "@GameManager" };
                 go.AddComponent<GameManager>();
@@ -139,4 +122,6 @@ public class GameManager : MonoBehaviour
         }
     }
     */
+
+    public void SetSelectHero(eHeroType value) { _selectHero = value; }
 }
