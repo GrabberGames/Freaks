@@ -162,10 +162,12 @@ public class ObjectPooling : MonoBehaviour
         switch (obj.name)
         {
             case ("WhiteFreaks"):
+                obj.SetActive(false);
                 Instance.WhiteFreaksQueue.Enqueue(obj);         
                 break;
 
             case ("BlackFreaks"):
+                obj.SetActive(false);
                 Instance.BlackFreaksQueue.Enqueue(obj);         
                 break;
 

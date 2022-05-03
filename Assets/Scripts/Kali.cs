@@ -23,51 +23,11 @@ public class Kali : Stat
         E,
         R,
     }
-    PlayerState _state= PlayerState.Idle;
-    public PlayerState State
-    {
-        get { return _state; }
-        set
-        {
-            _state = value;
-            Animator animator = GetComponent<Animator>();
-            switch (_state)
-            {
-                case PlayerState.Attack:
-                    break;
-                case PlayerState.Idle:
-                    animator.CrossFade("Idle", 0.1f, -1, 0);
-                    break;
-                case PlayerState.Q:
-                    animator.Play("Gun attack3");
-                    break;
-                case PlayerState.W:
-                    animator.Play("TwoGun Attack 05");
-                    break;
-                case PlayerState.E:
-                    animator.Play("Jumbo Back Attack");
-                    break;
-                case PlayerState.R:
-                    animator.Play("Gun Air Attack");
-                    break;
-                case PlayerState.Moving:
-                    animator.CrossFade("Strafe_Run_Front", 0.1f, -1, 0);
-                    break;
-                case PlayerState.Die:
-                    SoundPlay("사망");
-                    animator.Play("Dead");
-                    break;
-            }
-
-        }
-    }
-
-    private bool isAction = false;
-    private bool canNormalAttack = true;
     private int E_AttackNum = 0;
     private int AttackNum = 0;
     private Vector3 dir;
     private Vector3 look_dir;
+    private Vector3 _mouseHitPosition;
 
     private bool useRootMotion = false;
     private Animator animator;
@@ -76,18 +36,8 @@ public class Kali : Stat
 
     public KailAni kailAni;
 
-
-    //skill cooltime variable
-    float t_time = 0.0f;
-
-    bool press = false;
-
-    WaitForSeconds seconds_2s = new WaitForSeconds(2f);
-    WaitForSeconds seconds_01s = new WaitForSeconds(0.1f);
-
     //sound variable
     public AudioSource[] audioSource;
-    private bool MovingAudioSoungIsActive = false;
 
     private GameObject R_Skill;
     public GameObject R_Skill_Prefab;
@@ -111,105 +61,167 @@ public class Kali : Stat
 
     //Kyle Basic Attack Target Object
     GameObject _lockTarget;
-    
 
+    PlayerState _state = PlayerState.Idle;
+
+    PlayerModel playerModel => GameManager.Instance.models.playerModel;
+    public PlayerState State
+    {
+        get { return _state; }
+        set
+        {
+            if (CheckIsValidToChangePresentPlayerState(_state, value))
+                return;
+
+            _state = value;
+            SetAnimationAndStartAction();
+        }
+    }
+    private void SetAnimationAndStartAction()
+    {
+        animator = GetComponent<Animator>();
+        switch(State)
+        {
+            case PlayerState.Idle:
+                animator.CrossFade("Idle", 0.1f, -1, 0);
+                break;
+
+            case PlayerState.Attack:
+                Basic_Attack();
+                break;
+
+            case PlayerState.Q:
+                useRootMotion = true;
+                ChangeRotate();
+                Determination();
+                animator.Play("Gun attack3");
+                StartCoroutine(coCoolTimer(PlayerState.Q));
+                break;
+            case PlayerState.W:
+                useRootMotion = true;
+                ChangeRotate();
+                Atonement();
+                animator.Play("TwoGun Attack 05");
+                StartCoroutine(coCoolTimer(PlayerState.W));
+                break;
+            case PlayerState.E:
+                useRootMotion = true;
+                ChangeRotate();
+                Evation();
+                animator.Play("Jumbo Back Attack");
+                StartCoroutine(coCoolTimer(PlayerState.E));
+                break;
+            case PlayerState.R:
+                useRootMotion = true;
+                ChangeRotate();
+                HorizonofMemory();
+                animator.Play("Gun Air Attack");
+                StartCoroutine(coCoolTimer(PlayerState.R));
+                break;
+
+            case PlayerState.Moving:
+                audioSource[6].Play();
+                animator.CrossFade("Strafe_Run_Front", 0.1f, -1, 0);
+                break;
+
+            case PlayerState.Die:
+                SoundPlay("사망");
+                animator.Play("Dead");
+                break;
+        }
+    }
+    private bool CheckIsValidToChangePresentPlayerState(PlayerState nowState, PlayerState nextState)
+    {
+        switch (nextState)
+        {
+            case PlayerState.Attack:
+                break;
+
+            case PlayerState.Q:
+                if (playerModel.qSkillCoolTime > 0.1f)
+                    return true;
+                if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
+                    return true;
+                break;
+            case PlayerState.W:
+                if (playerModel.wSkillCoolTime > 0.1f)
+                    return true;
+                if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
+                    return true;
+                break;
+            case PlayerState.E:
+                if (playerModel.eSkillCoolTime > 0.1f)
+                    return true;
+                if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
+                    return true;
+                break;
+            case PlayerState.R:
+                if (playerModel.rSkillCoolTime > 0.1f)
+                    return true;
+                if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
+                    return true;
+                break;
+
+            case PlayerState.Moving:
+                break;
+        }
+
+        return false;
+    }
+    IEnumerator coCoolTimer(PlayerState playerState)
+    {
+        switch (playerState)
+        {
+            case PlayerState.Q:
+                playerModel.qSkillCoolTime = 11;
+                var qStart = Time.time;
+
+                while (playerModel.qSkillCoolTime > 0)
+                {
+                    playerModel.qSkillCoolTime = 11 - (Time.time - qStart);
+                    yield return null;
+                }
+                playerModel.qSkillCoolTime = 0;
+                break;
+
+            case PlayerState.W:
+                playerModel.wSkillCoolTime = 15;
+                var wStart = Time.time;
+
+                while (playerModel.wSkillCoolTime > 0.0f)
+                {
+                    playerModel.wSkillCoolTime = 15 - (Time.time - wStart);
+                    yield return null;
+                }
+                playerModel.wSkillCoolTime = 0;
+                break;
+            case PlayerState.E:
+                playerModel.eSkillCoolTime = 16;
+                var eStart = Time.time;
+                while (playerModel.eSkillCoolTime > 0.0f)
+                {
+                    playerModel.eSkillCoolTime = 16- (Time.time - eStart);
+                    yield return null;
+                }
+                playerModel.eSkillCoolTime = 0;
+                break;
+            case PlayerState.R :
+                playerModel.rSkillCoolTime = 90;
+                var rStart = 0;
+                while (playerModel.rSkillCoolTime > 0.0f)
+                {
+                    playerModel.rSkillCoolTime = 90 - (Time.time - rStart);
+                    yield return null;
+                }
+                playerModel.rSkillCoolTime = 0;
+                break;
+        }
+    }
     #endregion
-
-    void Activation(string skill)
+    private void Awake()
     {
-        switch (skill)
-        {
-            case "Q":
-                GameManager.Instance.models.playerModel.qSkillCoolTime = 11.0f;
-                break;
-
-            case "W":
-                GameManager.Instance.models.playerModel.wSkillCoolTime = 15.0f;
-                break;
-
-            case "E":
-                GameManager.Instance.models.playerModel.eSkillCoolTime = 16.0f;
-                break;
-
-            case "R":
-                GameManager.Instance.models.playerModel.rSkillCoolTime = 90.0f;
-                break;
-        }
-        t_time = Mathf.Max(GameManager.Instance.models.playerModel.qSkillCoolTime, GameManager.Instance.models.playerModel.wSkillCoolTime, GameManager.Instance.models.playerModel.eSkillCoolTime, GameManager.Instance.models.playerModel.rSkillCoolTime, t_time);
-        //이미 실행 중이라면
-        if (press == true)
-        {
-        }
-        //코루틴 처음 시작하면
-        else
-        {
-            press = true;
-            StartCoroutine(Skill_CoolTime());
-        }
+        animator = GetComponent<Animator>();    
     }
-    public float getTimer(string type)
-    {
-        switch (type)
-        {
-            case "Q":
-                return GameManager.Instance.models.playerModel.qSkillCoolTime;
-            case "W":
-                return GameManager.Instance.models.playerModel.wSkillCoolTime;
-            case "E":
-                return GameManager.Instance.models.playerModel.eSkillCoolTime;
-            case "R":
-                return GameManager.Instance.models.playerModel.rSkillCoolTime;
-            default:
-                return 0;
-        }
-    }
-    IEnumerator Skill_CoolTime()
-    {
-        while (t_time > 0)
-        {
-            if (GameManager.Instance.models.playerModel.qSkillCoolTime > 0.1f)
-            {
-                GameManager.Instance.models.playerModel.qSkillCoolTime -= 0.1f;
-            }
-            else
-            {
-                GameManager.Instance.models.playerModel.qSkillCoolTime = 0f;
-            }
-            if (GameManager.Instance.models.playerModel.wSkillCoolTime > 0.1f)
-            {
-                GameManager.Instance.models.playerModel.wSkillCoolTime -= 0.1f;
-            }
-            else
-            {
-                GameManager.Instance.models.playerModel.wSkillCoolTime = 0f;
-            }
-            if (GameManager.Instance.models.playerModel.eSkillCoolTime > 0.1f)
-            {
-                GameManager.Instance.models.playerModel.eSkillCoolTime -= 0.1f;
-            }
-            else
-            {
-                GameManager.Instance.models.playerModel.eSkillCoolTime = 0f;
-            }
-            if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
-            {
-                GameManager.Instance.models.playerModel.rSkillCoolTime -= 0.1f;
-            }
-            else
-            {
-                GameManager.Instance.models.playerModel.rSkillCoolTime = 0f;
-            }
-            if (t_time < 0.1f)
-            {
-                t_time = 0.1f;
-                press = false;
-                yield break;
-            }
-            t_time -= 0.1f;
-            yield return seconds_01s;
-        }
-    }
-
     void Start()
     {
         Init();
@@ -236,64 +248,19 @@ public class Kali : Stat
             //dir = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         }
     }
-    void ChooseAction()
-    {
-        if (isAction)
-            return;
-
-        //Q
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (GameManager.Instance.models.playerModel.qSkillCoolTime > 0.1f)
-                return;
-            //useRootMotion = true; 
-            State = PlayerState.Q;
-            ChangRotate();
-            Activation("Q");
-            Determination();
-        }
-        //W
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            if (GameManager.Instance.models.playerModel.wSkillCoolTime > 0.1f)
-                return;
-            State = PlayerState.W;
-            useRootMotion = true; ChangRotate();
-            Atonement();
-            Activation("W");
-        }
-        //E
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (GameManager.Instance.models.playerModel.eSkillCoolTime > 0.1f)
-                return;
-            State = PlayerState.E;
-            useRootMotion = true; ChangRotate();
-            Activation("E");
-            Evation();
-        }
-        //R
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (GameManager.Instance.models.playerModel.rSkillCoolTime > 0.1f)
-                return;
-            State = PlayerState.R;
-            useRootMotion = true; ChangRotate();
-            Activation("R");
-            HorizonofMemory();
-        }
-    }
-    void ChangRotate()
+    void ChangeRotate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
+        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) 
         {
-            look_dir = hit.point;
-            look_dir.y = transform.position.y;
-            transform.LookAt(look_dir);
+            Debug.Log(hit.transform.name);
+            _mouseHitPosition = hit.point;
+            Vector3 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z) - transform.position;
+            transform.forward = dir;
         }
+
     }
     public void SoundPlay(string _name, int idx = 0)
     {
@@ -379,24 +346,22 @@ public class Kali : Stat
         SoundPlay("Q", 0);
 
         agent.ResetPath();
-        isAction = true;
     }
     public void Q_Bullet_Spawn()
     {
         ParticleSystem _q = Instantiate(_Q_ps);
         _q.transform.position = _left_arm.transform.position;
-        _q.transform.LookAt(look_dir);
+        _q.transform.rotation = transform.rotation;
         _q.Play();
         StartCoroutine(Q_ParticleOff(_q));
 
         GameObject go = Instantiate(_bullet);
         go.transform.position = transform.position;
         go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", look_dir, 140+PD);
+        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", transform.rotation, _mouseHitPosition, 140 +PD);
     }
     public void Q_Stop()
     {
-        isAction = false;
         useRootMotion = false;
         State = PlayerState.Idle;
     }
@@ -419,7 +384,6 @@ public class Kali : Stat
         _w.GetComponent<ParticleSystem>().Play();
         StartCoroutine(W_ParticleOff(_w));
         agent.ResetPath();
-        isAction = true;
 
         foreach (Collider collider in Physics.OverlapSphere(transform.position, 15f, LayerMask.GetMask("blackfreaks")))
         {
@@ -428,7 +392,6 @@ public class Kali : Stat
     }
     public void W_Stop()
     {
-        isAction = false;
         useRootMotion = false;
         State = PlayerState.Idle;
     }
@@ -449,20 +412,18 @@ public class Kali : Stat
         SoundPlay("E", 2);
         agent.ResetPath();
         useRootMotion = true;
-        isAction = true;
         audioSource[2].Play();
         StartCoroutine(BuffDecreaseDamage(0.5f));
     }
     public void E_Stop()
     {
         useRootMotion = false;
-        isAction = false;
         State = PlayerState.Idle;
         E_AttackNum = 0;
     }
     public void E_Animation()
     {
-        Bullet_Spawn_NE(E_AttackNum, "E");
+        Bullet_Spawn_NormalAndESkill(E_AttackNum, "E");
         E_AttackNum++;
     }
     #endregion
@@ -472,7 +433,6 @@ public class Kali : Stat
     {
         SoundPlay("R", 3);
         agent.ResetPath();
-        isAction = true;
     }
     public void R_Sound()
     {
@@ -492,63 +452,55 @@ public class Kali : Stat
     }
     public void R_Stop()
     {
-        isAction = false;
         useRootMotion = false;
         State = PlayerState.Idle;
     }
     #endregion
 
-    void Bullet_Spawn_NE(int idx, string shape)
+    void Bullet_Spawn_NormalAndESkill(int idx, string shape)
     {
         GameObject go;
         if (idx % 2 == 0)
         {
             go = Instantiate(_bullet);
-            go.transform.position = _right_arm.transform.position;
+            go.transform.position = transform.position;
             if(_lockTarget != null)
                 go.transform.LookAt(_lockTarget.transform);
         }
         else
         {
             go = Instantiate(_bullet);
-            go.transform.position = _left_arm.transform.position;
+            go.transform.position = transform.position;
             if (_lockTarget != null)
                 go.transform.LookAt(_lockTarget.transform);
         }
         if(shape == "Normal")
         {
             ParticleSystem _q = Instantiate(_Basic_ps);
-            _q.transform.position = _right_arm.transform.position;
-            _q.transform.LookAt(_lockTarget.transform);
+            _q.transform.position = transform.position;
+            _q.transform.LookAt(transform.forward);
             _q.Play();
             StartCoroutine(Q_ParticleOff(_q));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", look_dir, PD);
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", transform.rotation, _mouseHitPosition,  PD);
         }
         if(shape == "E")
         {
             ParticleSystem _q = Instantiate(_E_ps);
-            _q.transform.position = _left_arm.transform.position;
-            if (_lockTarget != null)
-                _q.transform.LookAt(_lockTarget.transform);
-            else
-                _q.transform.LookAt(look_dir);
+            _q.transform.position = transform.position;
+            _q.transform.rotation = transform.rotation;
             _q.Play();
             StartCoroutine(Q_ParticleOff(_q));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(null, "E", look_dir, 40 + 0.2f *ED);
+            go.GetComponent<Kyle_Bullet>().InitSetting(null, "E", transform.rotation, _mouseHitPosition, 40 + 0.2f *ED);
         }
     }
     void Basic_Attack()
     {
-        if (!canNormalAttack || _lockTarget == null)
-            return;
-
-
-        transform.LookAt(_lockTarget.transform);
+        transform.LookAt(transform.forward);
         agent.SetDestination(transform.position);
 
-        Bullet_Spawn_NE(AttackNum, "Normal");
+        Bullet_Spawn_NormalAndESkill(AttackNum, "Normal");
         animator.SetBool("Moving", false);
 
         if (AttackNum == 0)
@@ -562,12 +514,10 @@ public class Kali : Stat
             AttackNum = 0;
         }
         audioSource[5].Play();
-        canNormalAttack = false;
     }
     public void Normal_Attack_Fun()
     {
         _lockTarget = null;
-        canNormalAttack = true;
         State = PlayerState.Idle;
     }
     void Update()
@@ -583,12 +533,9 @@ public class Kali : Stat
             State = PlayerState.Die;
         }
 
-        ChooseAction();
-
-        switch (State)
+         switch (State)
         {
             case PlayerState.Attack:
-                Basic_Attack();
                 break;
             case PlayerState.Q:
             case PlayerState.W:
@@ -596,7 +543,7 @@ public class Kali : Stat
             case PlayerState.R:
                 break;
             case PlayerState.Moving:
-                UpdateMoving();
+                UpdateMoving(); MoveToSkillState();
                 break;
 
             case PlayerState.Die:
@@ -604,29 +551,29 @@ public class Kali : Stat
                 break;
 
             case PlayerState.Idle:
-                UpdateIdle();
+                UpdateIdle(); MoveToSkillState();
                 break;
-
-        }
-        IEnumerator co = MoveSound();
-
-        if (State == PlayerState.Moving && !MovingAudioSoungIsActive)
-        {
-            MovingAudioSoungIsActive = true;
-            StartCoroutine(co);
-        }
-        if (State != PlayerState.Moving)
-        {
-            MovingAudioSoungIsActive = false;
-            audioSource[6].Stop();
-            StopCoroutine(co);
         }
     }
-    IEnumerator MoveSound()
+    private void MoveToSkillState()
     {
-        audioSource[6].Play();
-        yield return seconds_2s;
-        MovingAudioSoungIsActive = false;
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            State = PlayerState.Q;
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            State = PlayerState.W;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("##");
+            State = PlayerState.E;
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            State = PlayerState.R;
+        }
     }
     private void UpdateDie()
     {
@@ -658,7 +605,6 @@ public class Kali : Stat
                         return;
                     }
                 }
-
                 _dist = Vector3.Distance(transform.position, hit.point);
                 if (_dist > 120f)
                     SoundPlay("장거리 이동");
@@ -685,7 +631,7 @@ public class Kali : Stat
         animator.SetBool("Moving", true);
 
         look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
-        if ((dir - transform.position).magnitude < 0.1f)
+        if ((dir - transform.position).sqrMagnitude < 0.5f)
             State = PlayerState.Idle;
 
         transform.LookAt(look_dir);
@@ -701,10 +647,21 @@ public class Kali : Stat
 
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
-                if (hit.collider.gameObject.layer == (int)Layers.Enemy)
+                if (hit.collider.gameObject.layer == (int)Layers.blackfreaks || hit.collider.gameObject.layer == (int)Layers.Enemy)
                     _lockTarget = hit.collider.gameObject;
                 else
                     _lockTarget = null;
+
+                if (_lockTarget != null) //기본 공격 할 대상이 있다.
+                {
+                    float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+                    if (distance <= ATTACK_RANGE)
+                    {
+                        State = PlayerState.Attack;
+                        return;
+                    }
+                }
 
                 _dist = Vector3.Distance(transform.position, hit.point);
                 if(_dist > 120f)

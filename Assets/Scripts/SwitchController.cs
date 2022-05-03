@@ -147,7 +147,7 @@ public class SwitchController : MonoBehaviour
 
         if(isActivate == 0)
         {
-            gameController.SetIsRageActivate(true);
+            //gameController.SetIsRageActivate(true);
         }
     }
 }

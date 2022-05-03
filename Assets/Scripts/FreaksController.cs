@@ -110,7 +110,7 @@ public class FreaksController : Stat
         transform.LookAt(target.transform);
         Animator animator = GetComponent<Animator>();
         animator.CrossFade("Attack", 0.1f);
-        agent.SetDestination(transform.position);
+        //agent.Stop();
         GameManager.Damage.OnAttacked(PD, target.GetComponent<Stat>());
         canNormalAttack = false;
     }
@@ -202,7 +202,7 @@ public class FreaksController : Stat
     public override void DeadSignal()
     {
         base.DeadSignal();
-
+        Debug.Log("#");
         ObjectPooling.instance.ReturnObject(this.gameObject);
     }
 }

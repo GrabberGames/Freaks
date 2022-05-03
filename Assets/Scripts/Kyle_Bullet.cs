@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Kyle_Bullet : MonoBehaviour
 {
-    private float _bullet_speed = 40;
+    private float _bullet_speed = 60;
     private float _bullet_time = 0f;
 
     public GameObject enemy;
@@ -20,6 +20,7 @@ public class Kyle_Bullet : MonoBehaviour
 
     private float _damage;
 
+    private bool _isAttack = false;
     enum _Bullet
     {
         Basic,  //평타
@@ -27,11 +28,11 @@ public class Kyle_Bullet : MonoBehaviour
         WE      //WE
     }
     _Bullet _bullet = _Bullet.Basic;
-    public void InitSetting(GameObject enemy, string _state, Vector3 dir, float damage)
+    public void InitSetting(GameObject enemy, string _state, Quaternion p_ldir, Vector3 p_hdir, float damage)
     {
         this.enemy = enemy;
-        look_dir = dir;
-        this.dir = (transform.position - dir).normalized;
+        transform.rotation = p_ldir;
+        dir = new Vector3(p_hdir.x - transform.position.x, 0, p_hdir.z - transform.position.z).normalized;
         _damage = damage;
         StartProjectile(enemy, _state);
     }
@@ -51,8 +52,9 @@ public class Kyle_Bullet : MonoBehaviour
             case "Q":
                 _bullet = _Bullet.Q; 
                 _bullet_time = 0.75f;  //체공시간 0.75초
-                ps_tile =  Instantiate(projectile_skill, transform);
-                ps_tile.transform.LookAt(look_dir);
+                ps_tile =  Instantiate(projectile_skill);
+                ps_tile.transform.SetParent(transform);
+                ps_tile.transform.localEulerAngles = Vector3.zero;
                 ps_tile.Play();
                 Invoke("Destroy", _bullet_time);
                 StartCoroutine(DT());
@@ -62,8 +64,9 @@ public class Kyle_Bullet : MonoBehaviour
             case "E":
                 _bullet = _Bullet.WE;
                 _bullet_time = 0.44f;  //체공시간 0.44초
-                ps_tile = Instantiate(projectile_skill, transform);
-                ps_tile.transform.LookAt(look_dir);
+                ps_tile = Instantiate(projectile_skill);
+                ps_tile.transform.SetParent(transform);
+                ps_tile.transform.localEulerAngles = Vector3.zero;
                 ps_tile.Play();
                 Invoke("Destroy", _bullet_time);
                 StartCoroutine(DT());
@@ -78,8 +81,12 @@ public class Kyle_Bullet : MonoBehaviour
         Debug.Log("@");
         if(other.transform.CompareTag("BlackFreaks") || other.transform.CompareTag("BlackTower"))
         {
+            if (_isAttack)
+                return;
+
             if (other == null)
                 return;
+
             GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
             
             switch (_bullet)
@@ -87,7 +94,6 @@ public class Kyle_Bullet : MonoBehaviour
                 case _Bullet.Basic:
                     ps_hit = Instantiate(hit_basic);
                     ps_hit.transform.position = transform.position;
-                    //ps_hit.transform.rotation = transform.rotation;
                     ps_hit.Play();
                     StartCoroutine(DT_Hit());
                     break;
@@ -101,6 +107,7 @@ public class Kyle_Bullet : MonoBehaviour
                 default:
                     break;
             }
+            _isAttack = true;
         }
     }
     void Destroy()
@@ -109,13 +116,13 @@ public class Kyle_Bullet : MonoBehaviour
     }
     IEnumerator DT()
     {
-        yield return new WaitForSeconds(ps_tile.main.duration); 
+        yield return new WaitForSeconds(0.5f); 
         Destroy(ps_tile);
         Destroy();
     }
     IEnumerator DT_Hit()
     {
-        yield return new WaitForSeconds(ps_hit.main.duration);
+        yield return new WaitForSeconds(0.5f);
         Destroy(ps_hit);
         Destroy();
     }
@@ -136,7 +143,7 @@ public class Kyle_Bullet : MonoBehaviour
                 break;
             case _Bullet.Q:
             case _Bullet.WE:
-                transform.position -= dir * _bullet_speed * Time.deltaTime;
+                transform.position += dir * _bullet_speed * Time.deltaTime;
                 break;
             default:
                 break;
