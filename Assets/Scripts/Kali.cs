@@ -48,6 +48,8 @@ public class Kali : Stat
     public GameObject _W_ps;
     public ParticleSystem _E_ps;
 
+    private GameController gameController;
+
     //Reference ParticleSystem Born Position
     public GameObject _left_arm;
     public GameObject _right_arm;
@@ -65,6 +67,8 @@ public class Kali : Stat
     PlayerState _state = PlayerState.Idle;
 
     PlayerModel playerModel => GameManager.Instance.models.playerModel;
+
+
     public PlayerState State
     {
         get { return _state; }
@@ -220,7 +224,8 @@ public class Kali : Stat
     #endregion
     private void Awake()
     {
-        animator = GetComponent<Animator>();    
+        animator = GetComponent<Animator>();
+        gameController = FindObjectOfType<GameController>();    
     }
     void Start()
     {
@@ -385,9 +390,15 @@ public class Kali : Stat
         StartCoroutine(W_ParticleOff(_w));
         agent.ResetPath();
 
-        foreach (Collider collider in Physics.OverlapSphere(transform.position, 15f, LayerMask.GetMask("blackfreaks")))
+
+        List <FreaksController> _freaks = new List <FreaksController>();
+        _freaks = gameController.GetAliveBlackFreaksList();
+        for (int i = 0; i < _freaks.Count; i++)
         {
-            GameManager.Damage.OnAttacked(150 + 0.5f * PD, collider.GetComponent<Stat>());
+            if ((_freaks[i].gameObject.transform.position - transform.position).magnitude < 15f)
+            {
+                GameManager.Damage.OnAttacked(150 + 0.5f * PD, _freaks[i].GetComponent<Stat>());
+            }
         }
     }
     public void W_Stop()
@@ -567,7 +578,6 @@ public class Kali : Stat
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("##");
             State = PlayerState.E;
         }
         if (Input.GetKeyDown(KeyCode.R))

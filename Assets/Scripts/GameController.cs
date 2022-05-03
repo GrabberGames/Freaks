@@ -25,6 +25,8 @@ public class GameController : MonoBehaviour
 
     private int tempSpawnPointNumber;
 
+    private List<FreaksController> _blackFreaksList = new List<FreaksController>();
+
     private void Start()
     {
         beforeSpawnTime = 0;
@@ -67,7 +69,6 @@ public class GameController : MonoBehaviour
 
             StartCoroutine(CoFreaksSpawn(i));
         }
-       
     }
 
     IEnumerator CoFreaksSpawn(int point)
@@ -80,7 +81,24 @@ public class GameController : MonoBehaviour
             obj.gameObject.GetComponent<NavMeshAgent>().Warp(GameManager.Instance.SpawnPoint[point].position);
 
             spawnedBlackfreaksCount++;
+            var script = obj.GetComponent<FreaksController>();
+            script.Spawned();
+            _blackFreaksList.Add(script);
             yield return new WaitForSeconds(1);
+        }
+    }
+    public List<FreaksController> GetAliveBlackFreaksList()
+    {
+        return _blackFreaksList;
+    }
+    public void SignOfFreaksDead()
+    {
+        for (int i = 0; i < _blackFreaksList.Count; i++)
+        {
+            if(_blackFreaksList[i].HP <= 0)
+            {
+                _blackFreaksList.RemoveAt(i);
+            }
         }
     }
     public void SetActiveIsRage(bool value)

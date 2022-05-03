@@ -55,6 +55,8 @@ public class FreaksController : Stat
 
     bool canNormalAttack = true;
     bool IsOnFreaksWay = true;
+
+    GameController _gameController;
     protected override void Init()
     {
         base.Init();
@@ -71,15 +73,18 @@ public class FreaksController : Stat
         State = FreaksState.Moving;
     }
 
-    private void Start()
+    private void Awake()
     {
+        _gameController = FindObjectOfType<GameController>();
+
         Init();
 
         /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
         GameManager.Instance.AlterIsChange -= AlterIsChanged;
         GameManager.Instance.AlterIsChange += AlterIsChanged;
     }
-
+    public void Spawned() 
+    { Init(); }
     void AlterIsChanged(GameObject go)
     {
         Debug.Log("AlterChanged");
@@ -87,6 +92,7 @@ public class FreaksController : Stat
     }
     private void Update()
     {
+        Debug.Log("UP");
         switch (state)
         {
             case FreaksState.Attack:
@@ -203,6 +209,7 @@ public class FreaksController : Stat
     {
         base.DeadSignal();
         Debug.Log("#");
+        _gameController.SignOfFreaksDead();
         ObjectPooling.instance.ReturnObject(this.gameObject);
     }
 }
