@@ -124,27 +124,11 @@ public class ConstructionPreviewManager : MonoBehaviour
 
     public void ConstructionPreview(bool value)
     {
-        switch(value)
+        if(!isPreviewMode.Equals(value))
         {
-            case true:
-                if(!isPreviewMode)
-                {
-                    GameManager.Instance.Alter.GetComponent<AlterController>().AlterRangeON();
-
-                    _isPreviewMode = true;
-                    previewObjectArray[(int)_nowPreviewBuilding].SetActive(true);
-                }                
-                break;
-
-            case false:
-                if (isPreviewMode)
-                {
-                    GameManager.Instance.Alter.GetComponent<AlterController>().AlterRangeOFF();
-
-                    _isPreviewMode = false;
-                    previewObjectArray[(int)_nowPreviewBuilding].SetActive(false);
-                }
-                break;
+            _isPreviewMode = value;
+            BuildingManager.Instance.BuildingRangeON(value);
+            previewObjectArray[(int)_nowPreviewBuilding].SetActive(value);
         }
     }
 

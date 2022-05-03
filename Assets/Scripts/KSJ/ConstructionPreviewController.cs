@@ -65,8 +65,8 @@ public class ConstructionPreviewController : MonoBehaviour
                 {
                     if (ConstructionPreviewManager.Instance.ChkConstructionArea())
                     {
-                        BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
                         ConstructionPreviewManager.Instance.ConstructionPreview(false);
+                        BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
                     }
                     else
                         ConstructionPreviewManager.Instance.PrintMessage();
