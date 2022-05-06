@@ -20,6 +20,9 @@ public class HUDManager : MonoBehaviour
 
     public enum eSkillSlotKey { Passive, Q, W, E, R, MaxCount };
 
+    [Header("TimeInfo")]
+    [SerializeField] private TimeInfoUI timeInfoUI;
+
     [Header("HP Bar")]
     [SerializeField] private HpUI hpUI;
 
@@ -80,6 +83,12 @@ public class HUDManager : MonoBehaviour
     public void HPVisualization(float nowHP, float maxHP)
     {
         hpUI.Visualization(nowHP, nowHP / maxHP);
+    }
+
+    public void TimeInfoVisualization(int nowPlayTime, int beforeSpawnTime, int spawnIntervalTime)
+    {
+        timeInfoUI.WaveGaugeVisualization((float)beforeSpawnTime, (float)nowPlayTime, (float)spawnIntervalTime);
+        timeInfoUI.PlayTimeTextVisualization(nowPlayTime);
     }
 
 
