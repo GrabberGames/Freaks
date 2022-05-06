@@ -40,32 +40,13 @@ public class AlterBullet : MonoBehaviour
         enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y , enemy.transform.position.z);
 
 
-        switch (State)
+        if ((enemyPos - transform.position).magnitude < 10f)
         {
-            case 1:
-                fx_Alter[0].transform.LookAt(enemyPos);
-                transform.position += (enemyPos - transform.position).normalized * BulletSpeed * Time.deltaTime;
-                transform.rotation = Quaternion.identity;
-                break;
-            case 2:
-                transform.position += (enemyPos - transform.position).normalized * BulletSpeed * Time.deltaTime;
-                transform.rotation = Quaternion.identity;
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == enemy)
-        {
-
-            if (isCrushed == true || other == null)
+            if (isCrushed == true || enemy == null)
             {
                 return;
             }
-            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
+            GameManager.Damage.OnAttacked(_damage, enemy.GetComponent<Stat>());
             fx_Alter[0].Pause();
             fx_Alter[0].Play(false);
             fx_AlterPre[0].SetActive(false);
@@ -80,6 +61,21 @@ public class AlterBullet : MonoBehaviour
             isCrushed = true;
         }
 
+
+        switch (State)
+        {
+            case 1:
+                fx_Alter[0].transform.LookAt(enemyPos);
+                transform.position += (enemyPos - transform.position).normalized * BulletSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.identity;
+                break;
+            case 2:
+                transform.position += (enemyPos - transform.position).normalized * BulletSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.identity;
+                break;
+            default:
+                break;
+        }
     }
 
 

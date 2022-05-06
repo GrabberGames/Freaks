@@ -105,7 +105,6 @@ public class BulletPooling : MonoBehaviour
                 if (Instance.AlterBulletQueue.Count > 0)
                 {
                     var obj = instance.AlterBulletQueue.Dequeue();
-                    obj.transform.SetParent(null);
                     obj.gameObject.SetActive(true);
                     return obj;
                 }
@@ -118,7 +117,6 @@ public class BulletPooling : MonoBehaviour
                 if (Instance.WhiteBulletQueue.Count > 0)
                 {
                     var obj = instance.WhiteBulletQueue.Dequeue();
-                    obj.transform.SetParent(null);
                     obj.gameObject.SetActive(true);
                     return obj;
                 }
@@ -131,7 +129,6 @@ public class BulletPooling : MonoBehaviour
                 if (Instance.AlterBulletQueue.Count > 0)
                 {
                     var obj = instance.BlackBulletQueue.Dequeue();
-                    obj.transform.SetParent(null);
                     obj.gameObject.SetActive(true);
                     return obj;
                 }

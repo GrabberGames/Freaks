@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,36 @@ public class BuildingManager : MonoBehaviour
     [Header("Alter")]
     [SerializeField] private AlterController altercontroller;
     [SerializeField] private GameObject alter;
+
+
+    public GameObject Alter
+    {
+        get
+        {
+            if (alter == null)
+            {
+                alter = GameObject.Find("alter");
+                // _alter = GameObject.FindGameObjectWithTag("alter");
+            }
+            return alter;
+        }
+        set
+        {
+            alter = value;
+            AlterIsChange.Invoke(alter);
+
+            return;
+
+
+        }
+    }
+
+
+
+
+    public Action<GameObject> AlterIsChange = null;
+
+
 
     private List<WhiteTowerAttack> whiteTowerList = new List<WhiteTowerAttack>();
     private List<BuildingRange> buildingRangeList = new List<BuildingRange>();
@@ -62,7 +93,7 @@ public class BuildingManager : MonoBehaviour
 
     } */
 
-        private void Start()
+    private void Start()
     {
         build_alter.SetActive(false);
         build_whitetower.SetActive(false);
@@ -151,6 +182,7 @@ public class BuildingManager : MonoBehaviour
         float radius = ((alter.gameObject.transform.GetChild(2).gameObject.transform.localScale.x) * (float)0.3) / 2;
         return radius;
     }
+
 
 
 }

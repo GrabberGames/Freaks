@@ -89,6 +89,7 @@ public class FreaksController : Stat
     {
         Debug.Log("AlterChanged");
         this.alter = go;
+        GoToAlter();
     }
     private void Update()
     {

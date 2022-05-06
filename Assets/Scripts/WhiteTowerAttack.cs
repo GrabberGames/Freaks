@@ -14,6 +14,8 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     private Vector3 bulletSpawnPosition;
     private GameObject NoBuildRange;
 
+    private GameController gameController;
+    private List<FreaksController> blackFreaks = new List<FreaksController>();
     bool isAttack = false;
 
 
@@ -21,10 +23,10 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     public AudioSource SFXWhiteTowerAttack;
 
 
-
     protected override void Init()
     {
         base.Init();
+        blackFreaks = gameController.GetAliveBlackFreaksList();
         // Debug.Log("base.HP : " + base.HP);
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
         NoBuildRange = transform.GetChild(2).gameObject;
@@ -42,21 +44,48 @@ public class WhiteTowerAttack : Stat, InterfaceRange
 
     void Start()
     {
+        gameController = FindObjectOfType<GameController>();
         Init();
 
     }
 
     //소리 확인하기위한 update문
-    /*
+
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.A))
         {
             StartCoroutine("FadeOut");
+            
+        }*/
+
+        if (ConstructionPreviewManager.Instance.isPreviewMode)
+        {
+            BuildingRangeON(true);
+        }
+
+        for (int i = 0; i < blackFreaks.Count; i++)
+        {
+
+
+            if ((blackFreaks[i].gameObject.transform.position - transform.position).magnitude < 45f)
+            {
+                if (isAttack)
+                    return;
+                else
+                {
+                    StartCoroutine(FindInAttackRange(blackFreaks[i].gameObject));
+                    isAttack = true;
+                }
+            }
 
         }
+
+
+
     }
-    */
+    /*
     private void OnTriggerEnter(Collider other) //사거리범위 내에 블랙freaks가 들어올 경우
     {
         if (other.gameObject.CompareTag("BlackFreaks"))
@@ -87,7 +116,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
             }
         }
     }
-
+    */
 
     IEnumerator FindInAttackRange(GameObject blackFreaks)
     {
