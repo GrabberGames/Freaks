@@ -25,6 +25,8 @@ public class HUDController : MonoBehaviour
         HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.W, GameManager.Instance.models.playerModel.wSkillCoolTime, 15.0f);
         HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.E, GameManager.Instance.models.playerModel.eSkillCoolTime, 16.0f);
         HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.R, GameManager.Instance.models.playerModel.rSkillCoolTime, 120.0f);
+
+        HUDManager.Instance.TimeInfoVisualization(StageManager.Instance.nowPlayTime, StageManager.Instance.beforeSpawnTime, StageManager.Instance.spawnIntervalTime);
     }
 
     public void SetActiveSkillSlot(eHeroType heroType)
