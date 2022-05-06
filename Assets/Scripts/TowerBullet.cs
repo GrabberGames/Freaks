@@ -41,6 +41,33 @@ public class TowerBullet : MonoBehaviour
             return;
         playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
 
+        if ((playerPos - transform.position).magnitude < 10f)
+        {
+            if (isCrushed == true || player == null)
+            {
+                return;
+            }
+            SFXBlackTowerBullet.Play();
+
+            GameManager.Damage.OnAttacked(_damage, player.GetComponent<Stat>());
+            fx_blackTower[0].Pause();
+            fx_blackTower[0].Play(false);
+            fx_blackTowerPre[0].SetActive(false);
+            //Destroy(fx_blackTowerPre[0]);
+
+
+
+            fx_blackTowerPre[1].SetActive(true);
+            fx_blackTower[1] = fx_blackTowerPre[1].GetComponent<ParticleSystem>();
+            fx_blackTower[1].Play(true);
+
+            State = 2;
+            StartCoroutine(DeleteThis());
+            isCrushed = true;
+        }
+
+
+
         switch (State) 
         {
             case 1:
@@ -57,37 +84,7 @@ public class TowerBullet : MonoBehaviour
         }
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            if (isCrushed == true || other == null)
-            {
-                return;
-            }
-
-     
-            SFXBlackTowerBullet.Play();
-
-            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
-            fx_blackTower[0].Pause();
-            fx_blackTower[0].Play(false);
-            fx_blackTowerPre[0].SetActive(false);
-            //Destroy(fx_blackTowerPre[0]);
-
-           
-
-            fx_blackTowerPre[1].SetActive(true);
-            fx_blackTower[1] = fx_blackTowerPre[1].GetComponent<ParticleSystem>();
-            fx_blackTower[1].Play(true);
-
-            State = 2;
-            StartCoroutine(DeleteThis());
-            isCrushed = true;
-        }
-    }
-
+  
     
 
     IEnumerator StartProjectile(float waitTime)

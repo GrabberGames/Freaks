@@ -33,7 +33,29 @@ public class WhiteTowerBullet : MonoBehaviour
         if (BlackFreaks == null)
             return;
         blackFreaksPos = new Vector3(BlackFreaks.transform.position.x, BlackFreaks.transform.position.y +1f , BlackFreaks.transform.position.z);
-      
+
+
+        if ((blackFreaksPos - transform.position).magnitude < 10f)
+        {
+            if (isCrushed == true || BlackFreaks == null)
+            {
+                return;
+            }
+            GameManager.Damage.OnAttacked(_damage, BlackFreaks.GetComponent<Stat>());
+            fx_whiteTower[0].Pause();
+            fx_whiteTower[0].Play(false);
+            fx_whiteTowerPre[0].SetActive(false);
+
+
+            fx_whiteTowerPre[1].SetActive(true);
+            fx_whiteTower[1] = fx_whiteTowerPre[1].GetComponent<ParticleSystem>();
+            fx_whiteTower[1].Play(true);
+
+            State = 2;
+            StartCoroutine(DeleteThis());
+            isCrushed = true;
+        }
+
 
         switch (State)
         {
@@ -51,33 +73,7 @@ public class WhiteTowerBullet : MonoBehaviour
         }       
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        
-        if (other.gameObject == BlackFreaks)
-        {
-          
-            if (isCrushed == true || other == null)
-            {
-                return;
-            }
-            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
-            fx_whiteTower[0].Pause();
-            fx_whiteTower[0].Play(false);
-            fx_whiteTowerPre[0].SetActive(false);
   
-
-            fx_whiteTowerPre[1].SetActive(true);
-            fx_whiteTower[1] = fx_whiteTowerPre[1].GetComponent<ParticleSystem>();
-            fx_whiteTower[1].Play(true);
-
-            State = 2;
-            StartCoroutine(DeleteThis());
-            isCrushed = true;
-        }
-    }
-
 
     IEnumerator StartProjectile(float waitTime)
     {

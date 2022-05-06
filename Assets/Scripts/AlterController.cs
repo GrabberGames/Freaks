@@ -50,6 +50,11 @@ public class AlterController : Building, DamageService, HealthService, Interface
             StartCoroutine("AlterDestroy");
       
         }*/
+
+        if (ConstructionPreviewManager.Instance.isPreviewMode)
+        {
+            BuildingRangeON(true);
+        }
     }
 
 
@@ -176,7 +181,7 @@ public class AlterController : Building, DamageService, HealthService, Interface
 
     public void BuildingRangeON(bool check)
     {
-        if(check)
+        if (check)
             BuildRange.SetActive(true);
         else
             BuildRange.SetActive(false);

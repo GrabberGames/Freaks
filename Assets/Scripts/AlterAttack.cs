@@ -1,23 +1,30 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 public class AlterAttack : Stat
 {
 
     public ParticleSystem FX_Alter_Emit;
     public ParticleSystem FX_Alter_Smoke;
-  
+
     public AudioSource SFXAlterAttack;
     //
-
+    private GameController gameController;
 
     private float AttackPerSeconds = 4f;
 
-    private  Vector3 bulletSpawnPosition;
+    private Vector3 bulletSpawnPosition;
     bool isAttack = false;
+
+
+    private List<FreaksController> blackFreaks = new List<FreaksController>();
+
 
     void Start()
     {
+        gameController = FindObjectOfType<GameController>();
         Init();
     }
 
@@ -26,63 +33,36 @@ public class AlterAttack : Stat
     {
         base.Init();
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
-   
+        blackFreaks = gameController.GetAliveBlackFreaksList();
     }
 
-    private void OnTriggerEnter(Collider other)
+
+
+
+    void Update()
     {
 
 
-        if (other.transform.CompareTag("BlackFreaks"))
+        for (int i = 0; i < blackFreaks.Count; i++)
         {
-            if (isAttack)
-                return;
 
-            else
+
+            if ((blackFreaks[i].gameObject.transform.position - transform.position).magnitude < 30f)
             {
-             /*
-            if (!SFXAttackStart.isPlaying)
-            {
-                SFXAttackStart.Play();
-            }*/
-                StartCoroutine(FindInAttackRange(other.gameObject));
-                isAttack = true;
+                if (isAttack)
+                    return;
+                else
+                {
+                    StartCoroutine(FindInAttackRange(blackFreaks[i].gameObject));
+                    isAttack = true;
+                }
             }
 
         }
+
+
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.transform.CompareTag("BlackFreaks"))
-        {
-
-            if (isAttack)
-                return;
-
-            else
-            {
-          /*
-            if (!SFXAttackStart.isPlaying)
-            {
-                SFXAttackStart.Play();
-            }*/
-                StartCoroutine(FindInAttackRange(other.gameObject));
-                isAttack = true;
-            }
-        }
-    }
-
-
-    /*
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.CompareTag("BlackFreaks"))
-        {
-            StopAllCoroutines();
-        }
-    }
-    */
 
     IEnumerator FindInAttackRange(GameObject enemy)
     {
@@ -106,7 +86,7 @@ public class AlterAttack : Stat
         yield return new WaitForSeconds(AttackPerSeconds - FX_Alter_Emit.main.startDelayMultiplier);
 
         isAttack = false;
-      
+
     }
 
     public void bulletSpawnNewSetting()
