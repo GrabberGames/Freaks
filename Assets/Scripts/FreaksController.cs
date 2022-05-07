@@ -80,20 +80,20 @@ public class FreaksController : Stat
         Init();
 
         /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
-        GameManager.Instance.AlterIsChange -= AlterIsChanged;
-        GameManager.Instance.AlterIsChange += AlterIsChanged;
+        BuildingManager.Instance.AlterIsChange -= AlterIsChanged;
+        BuildingManager.Instance.AlterIsChange += AlterIsChanged;
     }
     public void Spawned() 
-    { Init(); }
+    {
+        Init(); 
+    }
     void AlterIsChanged(GameObject go)
     {
-        Debug.Log("AlterChanged");
         this.alter = go;
         GoToAlter();
     }
     private void Update()
     {
-        Debug.Log("UP");
         switch (state)
         {
             case FreaksState.Attack:

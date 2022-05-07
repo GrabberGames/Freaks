@@ -30,8 +30,8 @@ public class WhiteFreaksController : MonoBehaviour
         alterPosition = alter.transform.position;
 
         /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
-        GameManager.Instance.AlterIsChange -= AlterIsChanged;
-        GameManager.Instance.AlterIsChange += AlterIsChanged;
+        BuildingManager.Instance.AlterIsChange -= AlterIsChanged;
+        BuildingManager.Instance.AlterIsChange += AlterIsChanged;
     }
     /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.>
     void AlterIsChanged(GameObject go)
