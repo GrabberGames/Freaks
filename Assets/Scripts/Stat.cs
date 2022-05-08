@@ -50,4 +50,9 @@ public class Stat : MonoBehaviour
         ARMOR = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ARMOR;
     }
     public virtual void DeadSignal() { }
+
+    protected virtual bool GetInAttackRange(Vector3 myPosition, Vector3 targetPosition, float range)
+    {
+        return Mathf.Abs((myPosition - targetPosition).sqrMagnitude) <= range;
+    }
 }

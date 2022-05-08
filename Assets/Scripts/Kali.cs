@@ -50,6 +50,9 @@ public class Kali : Stat
 
     private GameController gameController;
 
+    //Skill Range
+    float _wSkillAttackRange = 15;
+
     //Reference ParticleSystem Born Position
     public GameObject _left_arm;
     public GameObject _right_arm;
@@ -99,28 +102,28 @@ public class Kali : Stat
                 ChangeRotate();
                 Determination();
                 animator.Play("Gun attack3");
-                StartCoroutine(coCoolTimer(PlayerState.Q));
+                StartCoroutine(CoCoolTimer(PlayerState.Q));
                 break;
             case PlayerState.W:
                 useRootMotion = true;
                 ChangeRotate();
                 Atonement();
                 animator.Play("TwoGun Attack 05");
-                StartCoroutine(coCoolTimer(PlayerState.W));
+                StartCoroutine(CoCoolTimer(PlayerState.W));
                 break;
             case PlayerState.E:
                 useRootMotion = true;
                 ChangeRotate();
                 Evation();
                 animator.Play("Jumbo Back Attack");
-                StartCoroutine(coCoolTimer(PlayerState.E));
+                StartCoroutine(CoCoolTimer(PlayerState.E));
                 break;
             case PlayerState.R:
                 useRootMotion = true;
                 ChangeRotate();
                 HorizonofMemory();
                 animator.Play("Gun Air Attack");
-                StartCoroutine(coCoolTimer(PlayerState.R));
+                StartCoroutine(CoCoolTimer(PlayerState.R));
                 break;
 
             case PlayerState.Moving:
@@ -172,7 +175,7 @@ public class Kali : Stat
 
         return false;
     }
-    IEnumerator coCoolTimer(PlayerState playerState)
+    IEnumerator CoCoolTimer(PlayerState playerState)
     {
         switch (playerState)
         {
@@ -211,7 +214,7 @@ public class Kali : Stat
                 break;
             case PlayerState.R :
                 playerModel.rSkillCoolTime = 90;
-                var rStart = 0;
+                var rStart = Time.time;
                 while (playerModel.rSkillCoolTime > 0.0f)
                 {
                     playerModel.rSkillCoolTime = 90 - (Time.time - rStart);
@@ -225,7 +228,9 @@ public class Kali : Stat
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        gameController = FindObjectOfType<GameController>();    
+        gameController = FindObjectOfType<GameController>();
+
+        _wSkillAttackRange = Mathf.Sqrt(_wSkillAttackRange);
     }
     void Start()
     {
@@ -234,6 +239,7 @@ public class Kali : Stat
     protected override void Init()
     {
         base.Init();
+        ATTACK_RANGE *= ATTACK_RANGE;
         GameManager.Instance.models.playerModel.playerNowHp = HP;
         GameManager.Instance.models.playerModel.playerMaxHp = MAX_HP; 
         GameManager.Instance.models.playerModel.playerPD = PD;
@@ -260,7 +266,6 @@ public class Kali : Stat
         LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) 
         {
-            Debug.Log(hit.transform.name);
             _mouseHitPosition = hit.point;
             Vector3 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z) - transform.position;
             transform.forward = dir;
@@ -395,7 +400,7 @@ public class Kali : Stat
         _freaks = gameController.GetAliveBlackFreaksList();
         for (int i = 0; i < _freaks.Count; i++)
         {
-            if ((_freaks[i].gameObject.transform.position - transform.position).magnitude < 15f)
+            if (GetInAttackRange(transform.position, _freaks[i].gameObject.transform.position, _wSkillAttackRange))
             {
                 GameManager.Damage.OnAttacked(150 + 0.5f * PD, _freaks[i].GetComponent<Stat>());
             }
@@ -416,7 +421,6 @@ public class Kali : Stat
 
     }
     #endregion
-
     #region E_Skill
     void Evation()
     {
@@ -508,7 +512,7 @@ public class Kali : Stat
     }
     void Basic_Attack()
     {
-        transform.LookAt(transform.forward);
+        transform.LookAt(_lockTarget.transform);
         agent.SetDestination(transform.position);
 
         Bullet_Spawn_NormalAndESkill(AttackNum, "Normal");
@@ -607,7 +611,7 @@ public class Kali : Stat
                     _lockTarget = null;
                 if (_lockTarget != null) //기본 공격 할 대상이 있다.
                 {
-                    float distance = (_lockTarget.transform.position - transform.position).magnitude;
+                    float distance = (_lockTarget.transform.position - transform.position).sqrMagnitude;
 
                     if (distance <= ATTACK_RANGE)
                     {
@@ -630,7 +634,7 @@ public class Kali : Stat
     {
         if (_lockTarget != null) //기본 공격 할 대상이 있다.
         {
-            float distance = (_lockTarget.transform.position - transform.position).magnitude;
+            float distance = (_lockTarget.transform.position - transform.position).sqrMagnitude;
 
             if(distance <= ATTACK_RANGE)
             {
@@ -664,7 +668,7 @@ public class Kali : Stat
 
                 if (_lockTarget != null) //기본 공격 할 대상이 있다.
                 {
-                    float distance = (_lockTarget.transform.position - transform.position).magnitude;
+                    float distance = (_lockTarget.transform.position - transform.position).sqrMagnitude;
 
                     if (distance <= ATTACK_RANGE)
                     {

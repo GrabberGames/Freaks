@@ -40,7 +40,7 @@ public class AlterBullet : MonoBehaviour
         enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y , enemy.transform.position.z);
 
 
-        if ((enemyPos - transform.position).magnitude < 10f)
+        if ((enemyPos - transform.position).sqrMagnitude < 50f)
         {
             if (isCrushed == true || enemy == null)
             {
