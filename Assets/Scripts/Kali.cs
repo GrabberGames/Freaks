@@ -285,7 +285,9 @@ public class Kali : Stat
                 if (_priority == 0)
                 {
                     _priority = 3;
-                       _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
+                    {
+                        _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
+                    }
                 }
                 break;
 
