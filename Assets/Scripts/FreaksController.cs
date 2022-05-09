@@ -64,7 +64,7 @@ public class FreaksController : Stat
         agent = GetComponent<NavMeshAgent>();
         agent.speed = MOVE_SPEED;
 
-        alter = GameManager.Instance.Alter;
+        alter = BuildingManager.Instance.Alter;
 
         agent.SetDestination(alter.transform.position);
 

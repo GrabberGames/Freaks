@@ -31,7 +31,7 @@ public class SwitchController : MonoBehaviour
     {
         switchObjects = new GameObject[] { transform.GetChild(0).gameObject, transform.GetChild(1).gameObject, transform.GetChild(2).gameObject};
 
-        alter = GameObject.Find("Alter");
+        alter = GameObject.Find("alter");
         alterController = alter.GetComponent<AlterController>();
 
         gameController = GameObject.FindObjectOfType<GameController>();
