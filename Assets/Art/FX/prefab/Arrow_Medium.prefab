@@ -11,12 +11,14 @@ GameObject:
   - component: {fileID: 5498303088427075652}
   - component: {fileID: 6576817506870038233}
   - component: {fileID: 8236442372187352471}
-  m_Layer: 0
+  - component: {fileID: 1313516833712757635}
+  - component: {fileID: 2123319412}
+  m_Layer: 14
   m_Name: Arrow_Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5498303088427075652
 Transform:
@@ -25,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543005233363481029}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 3.83, y: 24.755798, z: -3.3300323}
-  m_LocalScale: {x: 4.242285, y: 2.674664, z: 3.556355}
+  m_LocalScale: {x: 4.242285, y: 2.210466, z: 3.556355}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4029fff94e0149d49ae0ead3a0744d44, type: 2}
+  - {fileID: 2100000, guid: 3004c7a968555ce48b868da52cf5e39b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,3 +83,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1313516833712757635
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543005233363481029}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.97153103, y: 0.07360099, z: 0.81667095}
+  m_Center: {x: 0, y: 0, z: -0.2662305}
+--- !u!114 &2123319412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543005233363481029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1a648175537bc4dbf09052f6991b96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RemainEssence: 500
+  GetEssencePerOnce: 20
