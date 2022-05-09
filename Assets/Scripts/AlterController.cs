@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 
-public class AlterController : Building, DamageService, HealthService, InterfaceRange
+public class AlterController :  MonoBehaviour,DamageService, HealthService, InterfaceRange
 {
     public GameObject whiteFreaksPref;
     public TextMeshProUGUI wFreaksCount;
@@ -35,103 +35,15 @@ public class AlterController : Building, DamageService, HealthService, Interface
         BuildRange.SetActive(false); //건설가능범위 비활성화
 
     }
-    // Update is called once per frame
-    void Update()
-    {
-        newMiningWorkshopChk();
-
-        if (whiteFreaks - busyWhiteF >= 0)
-        {
-            wFreaksCount.text = string.Format("{0:D2} / {1:D2}", busyWhiteF, whiteFreaks);
-        }
-        /*
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartCoroutine("AlterDestroy");
-      
-        }*/
-
-        if (ConstructionPreviewManager.Instance.isPreviewMode)
-        {
-            BuildingRangeON(true);
-        }
-    }
+    
 
 
-    public bool CanBuild()
-    {
-        return whiteFreaks - busyWhiteF > 0;
-    }
 
 
-    public void GoBuild(GameObject building)
-    {
-        busyWhiteF++;
-        GameObject whiteFreaks = ObjectPooling.instance.GetObject("WhiteFreaks");
-        Vector3 po = new Vector3(transform.position.x + 1, transform.position.y + 2, transform.position.z);
-        whiteFreaks.GetComponent<NavMeshAgent>().Warp(po);
-
-        WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();
-        miningFreaks.Add(whiteFreaks);
-
-        if (building.GetComponent<SwitchTimer>())
-        {
-            Vector3 pos = GameObject.Find("SwitchController").GetComponent<SwitchController>().Getpos();
-            whiteFreaksController.SetSwitch(pos);
-        }
-        else if (building.GetComponent<WorkshopController>())
-        {
-            whiteFreaksController.miningWorkshop = building;
-            whiteFreaksController.SetMiningWorkShop();
-            building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreaks);
-        }
-    }
 
 
-    private void newMiningWorkshopChk()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                GameObject hitGameObject = hit.transform.gameObject;
-
-                if (hitGameObject == gameObject)
-                {
-                    isAlterClicked = true;
-                }
-                else
-                {
-                    isAlterClicked = false;
-                }
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                GameObject hitGameObject = hit.transform.gameObject;
-
-                if (isAlterClicked && hitGameObject.GetComponent<WorkshopController>() != null)
-                {
-                    GoBuild(hitGameObject);
-                }
-            }
-        }
-    }
 
 
-    public override void SetMaterial(bool isRed)
-    {
-        return;
-    }
 
 
     public void DamageTaken(float damageTaken)

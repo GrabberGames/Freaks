@@ -30,7 +30,12 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         // Debug.Log("base.HP : " + base.HP);
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
         NoBuildRange = transform.GetChild(2).gameObject;
-        NoBuildRange.SetActive(false);
+
+        if (ConstructionPreviewManager.Instance.isPreviewMode)
+            NoBuildRange.SetActive(true);
+        else
+            NoBuildRange.SetActive(false);
+
 
     }
     public override void DeadSignal()
@@ -60,10 +65,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
             
         }*/
 
-        if (ConstructionPreviewManager.Instance.isPreviewMode)
-        {
-            BuildingRangeON(true);
-        }
+    
 
         for (int i = 0; i < blackFreaks.Count; i++)
         {

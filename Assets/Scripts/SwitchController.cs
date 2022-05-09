@@ -17,7 +17,7 @@ public class SwitchController : MonoBehaviour
 
     private GameObject alter;
     private AlterController alterController;
-    private BuildingPreview buildingPreview;
+
 
     private GameController gameController;
 
@@ -38,58 +38,8 @@ public class SwitchController : MonoBehaviour
         //targetRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
-   
-    // If button Clicked
-    public void CreateNewSwitch()
-    {
-        isSwitchBtnActivate = true;
-    }
 
-
-    public void viewPreview()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            Vector3 mousePos = hit.point;
-            mousePos.y = -0.5f;
-            switchObject.transform.position = mousePos;
-        }
-    }
-
-
-    void SwitchControl()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))  
-        {
-            // BuildingPreview delete
-            Destroy(switchObject.GetComponent<BuildingPreview>());
-
-            // SwitchTimer enable
-            switchObject.GetComponent<SwitchTimer>().enabled = true;
-
-            // Switch Creating position Set.
-            pos = hit.point; pos.y = -0.5f;
-
-            // switch ON FX
-            SwitchFX(pos, "ON");
-
-            // switch Timer ON
-            isSwitchBtnActivate = false;
-
-            // switchFreaks Spawn 
-            if (alterController.CanBuild())
-            {
-                alterController.GoBuild(switchObject);
-            }
-        }
-    }
-
+    
     public Vector3 Getpos()
     {
         pos.y = 0f;
@@ -97,57 +47,7 @@ public class SwitchController : MonoBehaviour
     }
 
 
-    public void SwitchFX(Vector3 workshopPos, string onOff)
-    {
-        // Vector3(-8.8653307,0,156.667099) 0 
-        // Vector3(-28.9882011,0,-172.248169) 1 
-        // Vector3(285.082642,0,-16.6710186) 2 
-        if (workshopPos.x > 280f)
-        {
-            pos = switchObjects[2].transform.position;
-        }
-        else if (workshopPos.z > 0)
-        {
-            pos = switchObjects[0].transform.position;
-        }
-        else
-        {
-            pos = switchObjects[1].transform.position;
-        }
-        isActivate--;
-
-        // switch ON FX
-        pos.y = 0.5f; pos.x += 1.0f; // FX Pos. calibration
-
-        if (onOff.Equals("ON"))
-        {
-            Instantiate(fx_Switch[0], pos, Quaternion.Euler(-90f, 0, 0));
-            fx_Switch[0].Play(true);
-        }
-        else if (onOff.Equals("OFF"))
-        {
-            Instantiate(fx_Switch[1], pos, Quaternion.Euler(-90f, 0, 0));
-            fx_Switch[1].Play(true);
-        }
-    }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (isSwitchBtnActivate)
-        {
-            viewPreview();
 
-            if (Input.GetMouseButtonDown(0) && buildingPreview.IsBuildable())
-            {
-                SwitchControl();
-            }
-        }
-
-        if(isActivate == 0)
-        {
-            //gameController.SetIsRageActivate(true);
-        }
-    }
 }
