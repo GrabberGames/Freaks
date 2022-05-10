@@ -7,7 +7,7 @@ public class BuildingRange : MonoBehaviour, InterfaceRange
     private GameObject NoBuildRange;
     private void Start()
     {
-        NoBuildRange = transform.GetChild(0).gameObject;
+        NoBuildRange = transform.GetChild(2).gameObject;
         NoBuildRange.SetActive(false);
     }
 

@@ -23,19 +23,38 @@ public class Building : MonoBehaviour
             case "build_whitetower(Clone)":             
                 objectName = "Whitetower";
                 timer = 30;
+
+
+                MeshRenderer mr = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
+                mr.material.shader = Shader.Find("UI/Unlit/Transparent");
+
+
+                Color c = new Color(255 / 255f, 255 / 255f, 255 / 255f, 100 / 255f);
+
+
+                transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color = c;
+
+
+                transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetChild(1).gameObject.SetActive(false);
-              
-          
-                StartCoroutine("BuildingTimer");
-                
+                transform.GetChild(2).gameObject.SetActive(false);
+
+        
+
+                StartCoroutine("Test");
+
+
+
                 break;
             case "build_workshop(Clone)":
                 objectName = "Workshop";
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(1).gameObject.SetActive(true);
                 
-                transform.GetChild(1).gameObject.GetComponent<WorkshopController>().SetEssenceSpot(BuildingManager.Instance.GetEssenceSpot());
+               // transform.GetChild(1).gameObject.GetComponent<WorkshopController>().SetEssenceSpot(BuildingManager.Instance.GetEssenceSpot());
                 break;
             default:
                 break;
@@ -84,7 +103,17 @@ public class Building : MonoBehaviour
         }
     }
     */
-    IEnumerator BuildingTimer()
+
+
+    IEnumerator Test()
+    {
+        yield return new WaitForSeconds(10f);
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(2).gameObject.SetActive(true);
+    }
+
+
+        IEnumerator BuildingTimer()
     {
 
         while (true)

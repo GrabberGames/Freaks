@@ -20,14 +20,7 @@ public class EssenceSpot : MonoBehaviour
         white = GetComponentInParent<EssenceManager>().materials[2];
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        SetColor();
-    }
-
-
+    
     public int GetRemainEssence()
     {
         return RemainEssence;
@@ -43,6 +36,7 @@ public class EssenceSpot : MonoBehaviour
     public void SetRemainEssence(int variance)
     {
         RemainEssence -= variance;
+        SetColor();
     }
 
 
