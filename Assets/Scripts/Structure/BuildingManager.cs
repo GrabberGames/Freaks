@@ -17,6 +17,8 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private GameObject alter;
 
 
+    private GameObject essenceSpot;
+
     public GameObject Alter
     {
         get
@@ -185,6 +187,16 @@ public class BuildingManager : MonoBehaviour
         return radius;
     }
 
+    
+    public void SetEssenceSpot(GameObject go) //자원지 오브젝트 받아옴
+    {
+        essenceSpot = go;
+    }
+
+    public GameObject GetEssenceSpot() //자원지 오브젝트 설정
+    {
+        return essenceSpot;
+    }
 
 
 }

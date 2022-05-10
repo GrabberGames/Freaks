@@ -6,8 +6,7 @@ public class Building : MonoBehaviour
 {
     private string objectName = null;
     [SerializeField] private int timer = 10;
-     public bool isTimerON = false;
-    bool First = true;
+ 
 
     private GameObject alter;
     public void Init()
@@ -33,9 +32,10 @@ public class Building : MonoBehaviour
                 break;
             case "build_workshop(Clone)":
                 objectName = "Workshop";
-                transform.GetChild(0).gameObject.SetActive(true);
-                transform.GetChild(1).gameObject.SetActive(false);
-
+                transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(1).gameObject.SetActive(true);
+                
+                transform.GetChild(1).gameObject.GetComponent<WorkshopController>().SetEssenceSpot(BuildingManager.Instance.GetEssenceSpot());
                 break;
             default:
                 break;
@@ -111,7 +111,6 @@ public class Building : MonoBehaviour
 
                         if (ConstructionPreviewManager.Instance.isPreviewMode)
                             alter.transform.GetChild(2).gameObject.SetActive(true);
-                        else;
 
                             break;
                     case "Whitetower":

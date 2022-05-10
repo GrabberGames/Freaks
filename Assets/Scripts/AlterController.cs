@@ -16,8 +16,6 @@ public class AlterController :  MonoBehaviour,DamageService, HealthService, Inte
     public float healthPoint = 2000.0f;
     public int essence = 1000;
 
-    [SerializeField] private int whiteFreaks = 5;
-    [SerializeField] private bool isAlterClicked = false;
 
     private List<GameObject> miningFreaks = new List<GameObject>();
 

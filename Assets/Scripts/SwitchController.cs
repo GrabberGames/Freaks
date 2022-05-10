@@ -39,12 +39,7 @@ public class SwitchController : MonoBehaviour
     }
 
 
-    
-    public Vector3 Getpos()
-    {
-        pos.y = 0f;
-        return pos;
-    }
+
 
 
 

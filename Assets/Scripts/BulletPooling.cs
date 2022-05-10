@@ -58,11 +58,11 @@ public class BulletPooling : MonoBehaviour
 
     private void Initialize()
     {
-        for (int i = 0; i < WhiteTowerBulletCountLimit; i++)
+        for (int i = 0; i < AlterBulletCountLimit; i++)
             AlterBulletQueue.Enqueue(CreateNewObject("AlterBullet"));
         for (int i = 0; i < WhiteTowerBulletCountLimit; i++)
             WhiteBulletQueue.Enqueue(CreateNewObject("WhiteTowerBullet"));
-        for (int i = 0; i < WhiteTowerBulletCountLimit; i++)
+        for (int i = 0; i < BlackTowerBulletCountLimit; i++)
             BlackBulletQueue.Enqueue(CreateNewObject("BlackTowerBullet"));
 
 
