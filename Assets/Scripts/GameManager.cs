@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject _player;
 
-    private eHeroType _selectHero = eHeroType.Kyle;
+    private eHeroType _selectHero = eHeroType.KYLE;
     public eHeroType selectHero { get => _selectHero; }
 
 
