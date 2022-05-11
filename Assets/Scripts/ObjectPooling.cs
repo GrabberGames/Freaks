@@ -6,8 +6,8 @@ using System.IO;
 
 public class ObjectPooling : MonoBehaviour
 {
-    public static ObjectPooling instance = null;
-    static ObjectPooling Instance
+    static ObjectPooling instance = null;
+    public static ObjectPooling Instance
     {
         get
         {
@@ -32,7 +32,7 @@ public class ObjectPooling : MonoBehaviour
     }
 
     Dictionary<string, Stat> data = new Dictionary<string, Stat>();
-    public void _load()
+    public void Load()
     {
         string jdata = File.ReadAllText(Application.dataPath + "/JsonDotNet/StatusInfo.Json");
         data = JsonConvert.DeserializeObject<Stat>(jdata).Json;
@@ -40,7 +40,7 @@ public class ObjectPooling : MonoBehaviour
     public Stat Get_Stat(string _objName)
     {
         if (data.Count == 0)
-            _load();
+            Load();
 
         var enumData = data.GetEnumerator();
 
@@ -66,56 +66,172 @@ public class ObjectPooling : MonoBehaviour
     }
 
     [SerializeField]
-    private int WhiteFreaksCountLimit = 100;                   
+    private int _whiteFreaksCountLimit = 100;                   
     [SerializeField]
-    private GameObject WhiteFreaksObject;       
-    private Queue<GameObject> WhiteFreaksQueue = new Queue<GameObject>();    
+    private GameObject _whiteFreaksObject = null;       
+    private Queue<GameObject> _whiteFreaksQueue = new Queue<GameObject>();    
 
     [SerializeField]
-    private int BlackFreaksCountLimit = 100;                       
+    private int _blackFreaksCountLimit = 100;                       
     [SerializeField]
-    private GameObject BlackFreaksObject;       
-    private Queue<GameObject> BlackFreaksQueue = new Queue<GameObject>();
+    private GameObject _blackFreaksObject = null;       
+    private Queue<GameObject> _blackFreaksQueue = new Queue<GameObject>();
 
-    public GameObject Alter = null;
+    [SerializeField]
+    private int _kyleNormalAttackEmitCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleNormalAttackEmit = null;
+    private Queue<GameObject> _kyleNormalAttackEmitQueue = new Queue<GameObject>();
 
-    public void Alter_Setting(GameObject Alter)
-    {
-        this.Alter = Alter;
-    }
+    [SerializeField]
+    private int _kyleQSkillObjectCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleQSkillObject = null;
+    private Queue<GameObject> _kyleQSkillObjectQueue = new Queue<GameObject>();
 
+    [SerializeField]
+    private int _kyleWSkillObjectCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleWSkillObject = null;
+    private Queue<GameObject> _kyleWSkillObjectQueue = new Queue<GameObject>();
+
+    [SerializeField]
+    private int _kyleESkillObjectCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleESkillObject = null;
+    private Queue<GameObject> _kyleESkillObjectQueue = new Queue<GameObject>();
+
+    [SerializeField]
+    private int _kyleBulletObjectCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleBulletObject = null;
+    private Queue<GameObject> _kyleBulletObjectQueue = new Queue<GameObject>();
+
+    [SerializeField]
+    private int _kyleNormalBulletEffectCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleNormalBulletEffect = null;
+    private Queue<GameObject> _kyleNormalBulletEffectQueue = new Queue<GameObject>();
+
+    [SerializeField]
+    private int _kyleSkillEffectCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleSkillEffect = null;
+    private Queue<GameObject> _kyleSkillEffectQueue = new Queue<GameObject>();
+
+    [SerializeField]
+    private int _kyleHitEffectCountLimit = 100;
+    [SerializeField]
+    private GameObject _kyleHitEffect = null;
+    private Queue<GameObject> _kyleHitEffectQueue = new Queue<GameObject>();
+
+    //KyleNormalBulletEffect
+    //KyleSkillEffect
+    //KyleHit
     private void Awake()
     {
         Init();
-        _load();
+        Load();
         Initialize();
     }
     private void Initialize()                                             
     {
-        for (int i = 0; i < WhiteFreaksCountLimit; i++)     
+        for (int i = 0; i < _whiteFreaksCountLimit; i++)     
         {
-            WhiteFreaksQueue.Enqueue(CreateNewObject("WhiteFreaks"));
+            _whiteFreaksQueue.Enqueue(CreateNewObject<GameObject>("WhiteFreaks"));
         }
-        for (int i = 0; i < BlackFreaksCountLimit; i++)     
+        for (int i = 0; i < _blackFreaksCountLimit; i++)     
         {
-            BlackFreaksQueue.Enqueue(CreateNewObject("BlackFreaks"));
+            _blackFreaksQueue.Enqueue(CreateNewObject<GameObject>("BlackFreaks"));
+        }        
+        for (int i = 0; i < _kyleNormalAttackEmitCountLimit; i++)     
+        {
+            _kyleNormalAttackEmitQueue.Enqueue(CreateNewObject<GameObject>("KyleNormalEmit"));
+        }        
+        for (int i = 0; i < _kyleQSkillObjectCountLimit; i++)     
+        {
+            _kyleQSkillObjectQueue.Enqueue(CreateNewObject<GameObject>("KyleQSkillEmit"));
+        }        
+        for (int i = 0; i < _kyleWSkillObjectCountLimit; i++)     
+        {
+            _kyleWSkillObjectQueue.Enqueue(CreateNewObject<GameObject>("KyleWSkillEmit"));
+        }        
+        for (int i = 0; i < _kyleESkillObjectCountLimit; i++)     
+        {
+            _kyleESkillObjectQueue.Enqueue(CreateNewObject<GameObject>("KyleESkillEmit"));
+        }        
+        for (int i = 0; i < _kyleBulletObjectCountLimit; i++)     
+        {
+            _kyleBulletObjectQueue.Enqueue(CreateNewObject<GameObject>("KyleBullet"));
+        }        
+        for (int i = 0; i < _kyleNormalBulletEffectCountLimit; i++)     
+        {
+            _kyleNormalBulletEffectQueue.Enqueue(CreateNewObject<GameObject>("KyleNormalBulletEffect"));
+        }        
+        for (int i = 0; i < _kyleSkillEffectCountLimit; i++)     
+        {
+            _kyleSkillEffectQueue.Enqueue(CreateNewObject<GameObject>("KyleSkillEffect"));
+        }        
+        for (int i = 0; i < _kyleHitEffectCountLimit; i++)     
+        {
+            _kyleHitEffectQueue.Enqueue(CreateNewObject<GameObject>("KyleHitEffect"));
         }
     }
-    private GameObject CreateNewObject(string Obj)  
+    private T CreateNewObject<T>(string Obj) where T : UnityEngine.Object
     {
         GameObject newObj;
         switch (Obj)
         {
             case "WhiteFreaks":
-                newObj = Instantiate(WhiteFreaksObject, gameObject.transform);
+                newObj = Instantiate(_whiteFreaksObject, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
-                return newObj;
+                return newObj as T;
             case "BlackFreaks":
-                newObj = Instantiate(BlackFreaksObject, gameObject.transform);
+                newObj = Instantiate(_blackFreaksObject, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
-                return newObj;
+                return newObj as T;
+            case "KyleNormalEmit":
+                newObj = Instantiate(_kyleNormalAttackEmit, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;
+            case "KyleQSkillEmit":
+                newObj = Instantiate(_kyleQSkillObject, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;
+            case "KyleWSkillEmit":
+                newObj = Instantiate(_kyleWSkillObject, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;
+            case "KyleESkillEmit":
+                newObj = Instantiate(_kyleESkillObject, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;
+            case "KyleBullet":
+                newObj = Instantiate(_kyleBulletObject, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;            
+            case "KyleNormalBulletEffect":
+                newObj = Instantiate(_kyleNormalBulletEffect, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;            
+            case "KyleSkillEffect":
+                newObj = Instantiate(_kyleSkillEffect, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;           
+            case "KyleHitEffect":
+                newObj = Instantiate(_kyleHitEffect, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj as T;
             default:
                 break;
         }
@@ -126,31 +242,116 @@ public class ObjectPooling : MonoBehaviour
         switch (objectName)
         {
             case ("WhiteFreaks"):
-                if (Instance.WhiteFreaksQueue.Count > 0)                          
+                if (Instance._whiteFreaksQueue.Count > 0)                          
                 {
-                    var obj = Instance.WhiteFreaksQueue.Dequeue();
+                    var obj = Instance._whiteFreaksQueue.Dequeue();
                     obj.transform.name = obj.name.Replace("(Clone)", "");
-                    obj.transform.position = Alter.transform.position;
                     obj.SetActive(true);
                     return obj;
                 }
                 else
-                {
                     return null;
-                }
 
             case ("BlackFreaks"):
-                if (Instance.BlackFreaksQueue.Count > 0)                        
+                if (Instance._blackFreaksQueue.Count > 0)                        
                 {
-                    var obj = Instance.BlackFreaksQueue.Dequeue();
+                    var obj = Instance._blackFreaksQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else 
+                    return null;
+
+            case ("KyleNormalEmit"):
+                if (Instance._kyleNormalAttackEmitQueue.Count > 0)
+                {
+                    var obj = Instance._kyleNormalAttackEmitQueue.Dequeue();
                     obj.transform.name = obj.name.Replace("(Clone)", "");
                     obj.SetActive(true);
                     return obj;
                 }
                 else
-                {
                     return null;
+
+            case ("KyleQSkillEmit"):
+                if (Instance._kyleQSkillObjectQueue.Count > 0)
+                {
+                    var obj = Instance._kyleQSkillObjectQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
                 }
+                else
+                    return null;
+
+            case ("KyleWSkillEmit"):
+                if (Instance._kyleWSkillObjectQueue.Count > 0)
+                {
+                    var obj = Instance._kyleWSkillObjectQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else
+                    return null;
+
+            case ("KyleESkillEmit"):
+                if (Instance._kyleESkillObjectQueue.Count > 0)
+                {
+                    var obj = Instance._kyleESkillObjectQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else
+                    return null;
+
+            case ("KyleBullet"):
+                if (Instance._kyleBulletObjectQueue.Count > 0)
+                {
+                    var obj = Instance._kyleBulletObjectQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else
+                    return null;
+
+            case ("KyleNormalBulletEffect"):
+                if (Instance._kyleNormalBulletEffectQueue.Count > 0)
+                {
+                    var obj = Instance._kyleNormalBulletEffectQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else
+                    return null;
+
+            case ("KyleSkillEffect"):
+                if (Instance._kyleSkillEffectQueue.Count > 0)
+                {
+                    var obj = Instance._kyleSkillEffectQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else
+                    return null;
+                
+
+            case ("KyleHitEffect"):
+                if (Instance._kyleHitEffectQueue.Count > 0)
+                {
+                    var obj = Instance._kyleHitEffectQueue.Dequeue();
+                    obj.transform.name = obj.name.Replace("(Clone)", "");
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else
+                    return null;
+
             default:
                 return null;
         }
@@ -163,12 +364,52 @@ public class ObjectPooling : MonoBehaviour
         {
             case ("WhiteFreaks"):
                 obj.SetActive(false);
-                Instance.WhiteFreaksQueue.Enqueue(obj);         
+                Instance._whiteFreaksQueue.Enqueue(obj);         
                 break;
 
             case ("BlackFreaks"):
                 obj.SetActive(false);
-                Instance.BlackFreaksQueue.Enqueue(obj);         
+                Instance._blackFreaksQueue.Enqueue(obj);
+                break;
+
+            case ("KyleNormalEmit"):
+                obj.SetActive(false);
+                Instance._kyleNormalAttackEmitQueue.Enqueue(obj);
+                break;
+
+            case ("KyleQEmit"):
+                obj.SetActive(false);
+                Instance._kyleQSkillObjectQueue.Enqueue(obj);
+                break;
+
+            case ("KyleWEmit"):
+                obj.SetActive(false);
+                Instance._kyleWSkillObjectQueue.Enqueue(obj);
+                break;
+
+            case ("KyleEEmit"):
+                obj.SetActive(false);
+                Instance._kyleESkillObjectQueue.Enqueue(obj);
+                break;
+
+            case ("KyleBullet"):
+                obj.SetActive(false);
+                Instance._kyleBulletObjectQueue.Enqueue(obj);
+                break;            
+            
+            case ("KyleNormalBulletEffect"):
+                obj.SetActive(false);
+                Instance._kyleNormalBulletEffectQueue.Enqueue(obj);
+                break;
+                            
+            case ("KyleSkillEffect"):
+                obj.SetActive(false);
+                Instance._kyleSkillEffectQueue.Enqueue(obj);
+                break;
+                            
+            case ("KyleHitEffect"):
+                obj.SetActive(false);
+                Instance._kyleHitEffectQueue.Enqueue(obj);
                 break;
 
             default:

@@ -267,7 +267,7 @@ namespace WarriorAnims
         {
             if (HP <= 0)
             {
-                ObjectPooling.instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+                ObjectPooling.Instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
                 PState = PlayerState.Die;
             }
         }

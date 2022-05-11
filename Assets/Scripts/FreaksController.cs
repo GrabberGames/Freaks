@@ -209,6 +209,6 @@ public class FreaksController : Stat
         base.DeadSignal();
         Debug.Log("#");
         _gameController.SignOfFreaksDead();
-        ObjectPooling.instance.ReturnObject(this.gameObject);
+        ObjectPooling.Instance.ReturnObject(this.gameObject);
     }
 }

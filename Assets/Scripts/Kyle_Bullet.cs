@@ -1,75 +1,82 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum Bullet
+{
+    Basic,  //평타
+    Q,        //Q
+    E      //E
+}
 public class Kyle_Bullet : MonoBehaviour
 {
     private float _bullet_speed = 60;
     private float _bullet_time = 0f;
 
     public GameObject enemy;
-    public ParticleSystem projectile_basic;
-    public ParticleSystem projectile_skill;
-    public ParticleSystem hit_basic;
-    public ParticleSystem hit_skill;
+    public GameObject projectile_basic;
+    public GameObject projectile_skill;
+    public GameObject hit_basic;
+    public GameObject hit_skill;
 
-    private ParticleSystem ps_tile;  // <- use particle
-    private ParticleSystem ps_hit; // <- use hit particle
+    private GameObject ps_tile;  // <- use particle
+    private GameObject ps_hit; // <- use hit particle
     private Vector3 dir;
-    private Vector3 look_dir;
 
     private float _damage;
 
     private bool _isAttack = false;
-    enum _Bullet
-    {
-        Basic,  //평타
-        Q,        //Q
-        WE      //WE
-    }
-    _Bullet _bullet = _Bullet.Basic;
-    public void InitSetting(GameObject enemy, string _state, Quaternion p_ldir, Vector3 p_hdir, float damage)
+
+    Bullet _bullet = Bullet.Basic;
+    public void InitSetting(GameObject enemy, Bullet _state, Quaternion p_ldir, Vector3 p_hdir, float damage)
     {
         this.enemy = enemy;
-        transform.rotation = p_ldir;
+        transform.LookAt(p_hdir);
         dir = new Vector3(p_hdir.x - transform.position.x, 0, p_hdir.z - transform.position.z).normalized;
         _damage = damage;
-        StartProjectile(enemy, _state);
+        StartProjectile(_state);
     }
 
-    void StartProjectile(GameObject enemy, string _state)
+    void StartProjectile(Bullet _state)
     {
-        switch(_state)
+        switch (_state)
         {
-            case "Basic":
-                _bullet = _Bullet.Basic;
-                ps_tile = Instantiate(projectile_basic, transform);
-                ps_tile.transform.SetParent(this.gameObject.transform);
-                ps_tile.Play();
-                StartCoroutine(DT());
+            case Bullet.Basic:
+                _bullet = Bullet.Basic;
+                ps_tile = ObjectPooling.Instance.GetObject("KyleNormalBulletEffect");
+                ps_tile.transform.position = transform.position;
+
+                ps_tile.transform.SetParent(gameObject.transform);
+                var particleSystem = ps_tile.GetComponent<ParticleSystem>();
+
+                particleSystem.Play();
                 break;
 
-            case "Q":
-                _bullet = _Bullet.Q; 
+            case Bullet.Q:
+                _bullet = Bullet.Q; 
                 _bullet_time = 0.75f;  //체공시간 0.75초
-                ps_tile =  Instantiate(projectile_skill);
+                ps_tile = ObjectPooling.Instance.GetObject("KyleSkillEffect");
+                ps_tile.transform.position = transform.position;
                 ps_tile.transform.SetParent(transform);
                 ps_tile.transform.localEulerAngles = Vector3.zero;
-                ps_tile.Play();
+
+                var particle = ps_tile.GetComponent<ParticleSystem>();
+                particle.Play();
+
                 Invoke("Destroy", _bullet_time);
-                StartCoroutine(DT());
                 break;
 
-            case "W":
-            case "E":
-                _bullet = _Bullet.WE;
+            case Bullet.E:
+                _bullet = Bullet.E;
                 _bullet_time = 0.44f;  //체공시간 0.44초
-                ps_tile = Instantiate(projectile_skill);
+                ps_tile = ObjectPooling.Instance.GetObject("KyleSkillEffect");
+                ps_tile.transform.position = transform.position;
                 ps_tile.transform.SetParent(transform);
                 ps_tile.transform.localEulerAngles = Vector3.zero;
-                ps_tile.Play();
+
+                var particleS = ps_tile.GetComponent<ParticleSystem>();
+                particleS.Play();
+
                 Invoke("Destroy", _bullet_time);
-                StartCoroutine(DT());
                 break;
 
             default:
@@ -78,7 +85,6 @@ public class Kyle_Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("@");
         if(other.transform.CompareTag("BlackFreaks") || other.transform.CompareTag("BlackTower"))
         {
             if (_isAttack)
@@ -91,18 +97,23 @@ public class Kyle_Bullet : MonoBehaviour
             
             switch (_bullet)
             {
-                case _Bullet.Basic:
-                    ps_hit = Instantiate(hit_basic);
+                case Bullet.Basic:
+                    ps_hit = ObjectPooling.Instance.GetObject("KyleHitEffect");
                     ps_hit.transform.position = transform.position;
-                    ps_hit.Play();
-                    StartCoroutine(DT_Hit());
+                    var particle = ps_hit.GetComponent<ParticleSystem>();
+                    particle.Play();
+                    StartCoroutine(Destroy_Hit());
                     break;
-                case _Bullet.Q :
-                case _Bullet.WE:
-                    ps_hit = Instantiate(hit_skill);
+                case Bullet.Q :
+                case Bullet.E:
+                    ps_hit = ObjectPooling.Instance.GetObject("KyleHitEffect");
                     ps_hit.transform.position = transform.position;
-                    ps_hit.Play();
-                    StartCoroutine(DT_Hit());
+
+
+                    var particleSystem = ps_hit.GetComponent<ParticleSystem>();
+                    particleSystem.Play();
+
+                    StartCoroutine(Destroy_Hit());
                     break;
                 default:
                     break;
@@ -112,18 +123,12 @@ public class Kyle_Bullet : MonoBehaviour
     }
     void Destroy()
     {
-        Destroy(this.gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject);
     }
-    IEnumerator DT()
-    {
-        yield return new WaitForSeconds(0.5f); 
-        Destroy(ps_tile);
-        Destroy();
-    }
-    IEnumerator DT_Hit()
+    IEnumerator Destroy_Hit()
     {
         yield return new WaitForSeconds(0.5f);
-        Destroy(ps_hit);
+        ObjectPooling.Instance.ReturnObject(ps_hit);
         Destroy();
     }
     void Update()
@@ -134,30 +139,21 @@ public class Kyle_Bullet : MonoBehaviour
         }
         switch (_bullet)
         {
-            case _Bullet.Basic:
+            case Bullet.Basic:
                 if (enemy == null)
                     return;
                 Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.transform.position.z);
                 transform.position += (enemyPos - transform.position).normalized * _bullet_speed * Time.deltaTime;
                 transform.LookAt(enemyPos);
                 break;
-            case _Bullet.Q:
-            case _Bullet.WE:
+            case Bullet.Q:
+                transform.position += dir * _bullet_speed * Time.deltaTime;
+                break;
+            case Bullet.E:
                 transform.position += dir * _bullet_speed * Time.deltaTime;
                 break;
             default:
                 break;
         }
     }
-    //Q는 타겟팅이 아니잖아.
-    //enemy를 만들어 둘 필요가 없다.
-    //기본 공격에서도 사용하려면? 
-    //여러개로 분기시켜놓는다?
-    //기본 공격과 스킬 이펙트가 다름 -> 매개변수로 받아서 어떤 파티클을 쓸지 선택한다.
-    //Q와 WE 이펙트는 같지만 체공시간? 이 다름. 
-    //이 역시 매개변수로 받아온다. 
-
-    //그런데 평타 공격같은 경우는 정해진 대상에게 공격한다.
-    //스킬은 아닌데?
-    //이것도 분기? 가능?
 }

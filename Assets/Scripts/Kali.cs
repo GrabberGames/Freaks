@@ -43,10 +43,10 @@ public class Kali : Stat
     public GameObject R_Skill_Prefab;
 
     //Particle Skill Prefab
-    public ParticleSystem _Basic_ps;
-    public ParticleSystem _Q_ps;
+    public GameObject _Basic_ps;
+    public GameObject _Q_ps;
     public GameObject _W_ps;
-    public ParticleSystem _E_ps;
+    public GameObject _E_ps;
 
     private GameController gameController;
 
@@ -256,9 +256,8 @@ public class Kali : Stat
     void ChangeRotate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
         LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) 
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask)) 
         {
             Debug.Log(hit.transform.name);
             _mouseHitPosition = hit.point;
@@ -333,7 +332,7 @@ public class Kali : Stat
     {
         if (HP <= 0)
         {
-            ObjectPooling.instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+            ObjectPooling.Instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
 
             GameManager.Instance.PlayerDead();
             State = PlayerState.Die;
@@ -354,16 +353,16 @@ public class Kali : Stat
     }
     public void Q_Bullet_Spawn()
     {
-        ParticleSystem _q = Instantiate(_Q_ps);
+        GameObject _q = ObjectPooling.Instance.GetObject("KyleQSkillEmit");
         _q.transform.position = _left_arm.transform.position;
         _q.transform.rotation = transform.rotation;
-        _q.Play();
-        StartCoroutine(Q_ParticleOff(_q));
+        var particleSystem = _q.GetComponent<ParticleSystem>();
+        particleSystem.Play();
+        StartCoroutine(Q_ParticleOff(particleSystem));
 
-        GameObject go = Instantiate(_bullet);
+        GameObject go = ObjectPooling.Instance.GetObject("KyleBullet");
         go.transform.position = transform.position;
-        go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        go.GetComponent<Kyle_Bullet>().InitSetting(null, "Q", transform.rotation, _mouseHitPosition, 140 +PD);
+        go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.Q, transform.rotation, _mouseHitPosition, 140 +PD);
     }
     public void Q_Stop()
     {
@@ -374,7 +373,7 @@ public class Kali : Stat
     {
         yield return new WaitForSeconds(_q.main.startLifetimeMultiplier);
         if (_q != null)
-            Destroy(_q.gameObject);
+            ObjectPooling.Instance.ReturnObject(_q.gameObject);
         else
             yield return null;
     }
@@ -384,7 +383,7 @@ public class Kali : Stat
     void Atonement()
     {
         SoundPlay("W", 1);
-        GameObject _w = Instantiate(_W_ps);
+        GameObject _w = ObjectPooling.Instance.GetObject("KyleWSkillEmit");
         _w.transform.position = gameObject.transform.position + Vector3.up * 2;
         _w.GetComponent<ParticleSystem>().Play();
         StartCoroutine(W_ParticleOff(_w));
@@ -434,7 +433,7 @@ public class Kali : Stat
     }
     public void E_Animation()
     {
-        Bullet_Spawn_NormalAndESkill(E_AttackNum, "E");
+        Bullet_Spawn_NormalAndESkill(Bullet.E);
         E_AttackNum++;
     }
     #endregion
@@ -468,42 +467,39 @@ public class Kali : Stat
     }
     #endregion
 
-    void Bullet_Spawn_NormalAndESkill(int idx, string shape)
+    void Bullet_Spawn_NormalAndESkill(Bullet shape)
     {
         GameObject go;
-        if (idx % 2 == 0)
+        if(shape.Equals(Bullet.Basic))
         {
-            go = Instantiate(_bullet);
+            go = ObjectPooling.Instance.GetObject("KyleBullet");
             go.transform.position = transform.position;
-            if(_lockTarget != null)
-                go.transform.LookAt(_lockTarget.transform);
-        }
-        else
-        {
-            go = Instantiate(_bullet);
-            go.transform.position = transform.position;
+
             if (_lockTarget != null)
                 go.transform.LookAt(_lockTarget.transform);
-        }
-        if(shape == "Normal")
-        {
-            ParticleSystem _q = Instantiate(_Basic_ps);
+
+            GameObject _q = ObjectPooling.Instance.GetObject("KyleNormalEmit");
             _q.transform.position = transform.position;
             _q.transform.LookAt(transform.forward);
-            _q.Play();
-            StartCoroutine(Q_ParticleOff(_q));
+            var particleSystem = _q.GetComponent<ParticleSystem>();
+            particleSystem.Play();
+            StartCoroutine(Q_ParticleOff(particleSystem));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, "Basic", transform.rotation, _mouseHitPosition,  PD);
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, Bullet.Basic, transform.rotation, _mouseHitPosition,  PD);
         }
-        if(shape == "E")
+        if (shape.Equals(Bullet.E))
         {
-            ParticleSystem _q = Instantiate(_E_ps);
+            GameObject _q = ObjectPooling.Instance.GetObject("KyleESkillEmit");
             _q.transform.position = transform.position;
             _q.transform.rotation = transform.rotation;
-            _q.Play();
-            StartCoroutine(Q_ParticleOff(_q));
+            var particleSystem = _q.GetComponent<ParticleSystem>();
+            particleSystem.Play();
+            StartCoroutine(Q_ParticleOff(particleSystem));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(null, "E", transform.rotation, _mouseHitPosition, 40 + 0.2f *ED);
+            go = ObjectPooling.Instance.GetObject("KyleBullet");
+            go.transform.position = transform.position;
+            go.transform.rotation = Quaternion.identity;
+            go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.E, transform.rotation, _mouseHitPosition, 40 + 0.2f * ED);
         }
     }
     void Basic_Attack()
@@ -511,7 +507,7 @@ public class Kali : Stat
         transform.LookAt(transform.forward);
         agent.SetDestination(transform.position);
 
-        Bullet_Spawn_NormalAndESkill(AttackNum, "Normal");
+        Bullet_Spawn_NormalAndESkill(Bullet.Basic);
         animator.SetBool("Moving", false);
 
         if (AttackNum == 0)
@@ -540,7 +536,7 @@ public class Kali : Stat
         {
             GameManager.Instance.PlayerDead();
 
-            ObjectPooling.instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+            ObjectPooling.Instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
             State = PlayerState.Die;
         }
 

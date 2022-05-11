@@ -40,14 +40,14 @@ public class Stat : MonoBehaviour
     protected virtual void Init() 
     {
         gameObject.transform.name = gameObject.transform.name.Replace("(Clone)", "");
-        PD = ObjectPooling.instance.Get_Stat(gameObject.transform.name).PD;
-        ED = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ED;
-        HP = ObjectPooling.instance.Get_Stat(gameObject.transform.name).HP;
-        MAX_HP = ObjectPooling.instance.Get_Stat(gameObject.transform.name).MAX_HP;
-        ATTACK_SPEED = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ATTACK_SPEED;
-        MOVE_SPEED = ObjectPooling.instance.Get_Stat(gameObject.transform.name).MOVE_SPEED;
-        ATTACK_RANGE = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ATTACK_RANGE;
-        ARMOR = ObjectPooling.instance.Get_Stat(gameObject.transform.name).ARMOR;
+        PD = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).PD;
+        ED = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).ED;
+        HP = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).HP;
+        MAX_HP = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).MAX_HP;
+        ATTACK_SPEED = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).ATTACK_SPEED;
+        MOVE_SPEED = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).MOVE_SPEED;
+        ATTACK_RANGE = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).ATTACK_RANGE;
+        ARMOR = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).ARMOR;
     }
     public virtual void DeadSignal() { }
 }

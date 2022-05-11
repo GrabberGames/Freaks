@@ -25,11 +25,8 @@ public class AlterController : Building, DamageService, HealthService, Interface
 
     private GameObject BuildRange;
 
-    private void Start() //오브젝트 풀링에서 알터를 설정해주는 함수입니다.
+    private void Start() 
     {
-        if (ObjectPooling.instance.Alter == null)
-            ObjectPooling.instance.Alter_Setting(this.gameObject);
-
 
         BuildRange = this.gameObject.transform.GetChild(2).gameObject;
         BuildRange.SetActive(false); //건설가능범위 비활성화
@@ -67,7 +64,7 @@ public class AlterController : Building, DamageService, HealthService, Interface
     public void GoBuild(GameObject building)
     {
         busyWhiteF++;
-        GameObject whiteFreaks = ObjectPooling.instance.GetObject("WhiteFreaks");
+        GameObject whiteFreaks = ObjectPooling.Instance.GetObject("WhiteFreaks");
         Vector3 po = new Vector3(transform.position.x + 1, transform.position.y + 2, transform.position.z);
         whiteFreaks.GetComponent<NavMeshAgent>().Warp(po);
 

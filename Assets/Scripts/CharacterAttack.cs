@@ -4,11 +4,11 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 public class CharacterAttack : MonoBehaviour
 {
-    Stat white_stat = ObjectPooling.instance.Get_Stat("whitefreaks");
-    Stat black_stat = ObjectPooling.instance.Get_Stat("blackfreaks");
-    Stat waron_stat = ObjectPooling.instance.Get_Stat("waron");
-    Stat kail_stat = ObjectPooling.instance.Get_Stat("kail");
-    Stat alter_stat = ObjectPooling.instance.Get_Stat("alter");
+    Stat white_stat = ObjectPooling.Instance.Get_Stat("whitefreaks");
+    Stat black_stat = ObjectPooling.Instance.Get_Stat("blackfreaks");
+    Stat waron_stat = ObjectPooling.Instance.Get_Stat("waron");
+    Stat kail_stat = ObjectPooling.Instance.Get_Stat("kail");
+    Stat alter_stat = ObjectPooling.Instance.Get_Stat("alter");
 
     private GameObject alter = GameObject.Find("Alter");
     private GameObject white_freaks = GameObject.Find("White Freaks");

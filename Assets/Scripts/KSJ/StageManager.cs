@@ -135,7 +135,7 @@ public class StageManager : MonoBehaviour
         for (int i = 0; i < spawnBlackfreaksCount; i++)
         {
             Debug.Log($"½ºÆùÁß {i} max {spawnBlackfreaksCount}");
-            GameObject obj = ObjectPooling.instance.GetObject("BlackFreaks");
+            GameObject obj = ObjectPooling.Instance.GetObject("BlackFreaks");
             obj.gameObject.GetComponent<NavMeshAgent>().Warp(GameManager.Instance.SpawnPoint[point].position);
 
             var script = obj.GetComponent<FreaksController>();
