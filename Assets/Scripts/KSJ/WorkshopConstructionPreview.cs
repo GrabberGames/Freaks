@@ -22,8 +22,7 @@ public class WorkshopConstructionPreview : BasePreviewObject
 
     protected override bool ChkConstructionArea()
     {
-        if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), tr.position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
-           Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), tr.position) > BuildingManager.Instance.GetAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
+        if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), tr.position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f)) 
         {
             var essenceObj = Physics.OverlapSphere(transform.position, constructionAreaSize * 0.5f, (int)eLayerMask.Essence);
 
@@ -47,8 +46,7 @@ public class WorkshopConstructionPreview : BasePreviewObject
 
     protected override bool ChkConstructionArea(Vector3 position)
     {
-        if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
-            Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), position) > BuildingManager.Instance.GetAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
+        if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f))
         {
             var essenceObj = Physics.OverlapSphere(position, constructionAreaSize * 0.5f, (int)eLayerMask.Essence);
 

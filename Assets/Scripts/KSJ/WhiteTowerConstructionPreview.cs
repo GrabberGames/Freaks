@@ -20,7 +20,7 @@ public class WhiteTowerConstructionPreview : BasePreviewObject
         if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), tr.position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
             Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), tr.position) > BuildingManager.Instance.GetAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
         {
-            if (Physics.OverlapSphere(transform.position, constructionAreaSize * 0.5f, (int)eLayerMask.Building).Length.Equals(0))
+            if (Physics.OverlapSphere(transform.position, constructionAreaSize * 0.5f, (int)eLayerMask.ConstructionChk).Length.Equals(0))
             {
                 _conditionConstructionPreview = eConditionConstructionPreview.Buildable;
                 return true;
@@ -42,7 +42,7 @@ public class WhiteTowerConstructionPreview : BasePreviewObject
         if (Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), position) < BuildingManager.Instance.GetAlterBuildRadius() - (constructionAreaSize * 0.5f) &&
             Vector3.Distance(BuildingManager.Instance.GetAlterPosition(), position) > BuildingManager.Instance.GetAlterNoBuildRadius() + (constructionAreaSize * 0.5f))
         {
-            if (Physics.OverlapSphere(position, constructionAreaSize * 0.5f, (int)eLayerMask.Building).Length.Equals(0))
+            if (Physics.OverlapSphere(position, constructionAreaSize * 0.5f, (int)eLayerMask.ConstructionChk).Length.Equals(0))
             {
                 _conditionConstructionPreview = eConditionConstructionPreview.Buildable;
                 return true;
