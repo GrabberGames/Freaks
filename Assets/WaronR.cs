@@ -7,8 +7,6 @@ public class WaronR : MonoBehaviour
     public Action FreaksList = null;
 
     WarriorAnims.HeroMovement hero;
-    GameObject go = null;
-
     float _damage = 0;
     private void Start()
     {

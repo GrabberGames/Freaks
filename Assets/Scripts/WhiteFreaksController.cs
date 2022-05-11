@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WhiteFreaksController : MonoBehaviour
+public class WhiteFreaksController : Stat
 {
     public GameObject miningWorkshop;
     public NavMeshAgent navMeshAgent;
@@ -17,11 +17,11 @@ public class WhiteFreaksController : MonoBehaviour
 
     private Vector3 alterPosition;
 
-    Stat _stat = new Stat();
     // Start is called before the first frame update
     void Start()
     {
-        _stat = ObjectPooling.instance.Get_Stat("whitefreaks");
+        Init();
+
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
 
         alter = GameManager.Instance.Alter;
@@ -32,6 +32,10 @@ public class WhiteFreaksController : MonoBehaviour
         /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
         BuildingManager.Instance.AlterIsChange -= AlterIsChanged;
         BuildingManager.Instance.AlterIsChange += AlterIsChanged;
+    }
+    protected override void Init()
+    {
+        base.Init();
     }
     /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.>
     void AlterIsChanged(GameObject go)

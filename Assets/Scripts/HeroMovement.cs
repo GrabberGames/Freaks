@@ -105,7 +105,6 @@ namespace WarriorAnims
         //Waron Sound Priority Variable & Far Distance Judge
         private int _priority = 0;
         private float _dist = 0f;
-        private float _damage = 0f;
         void Activation(string skill)
         {
             switch (skill)

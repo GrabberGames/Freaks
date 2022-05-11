@@ -6,18 +6,12 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] public Transform[] SpawnPoint;
 
-    private int _deadCount = 0;
-    private int _reviveTime = 0;
-
     //영웅 부활 타이머 event
     public delegate void TimerEventHandler(int time);
 
     /// < 알터 이동 event or 싱글톤 구현해야함 >
     /// 
     /// </알터 이동 event or 싱글톤 구현해야함>
-
-    SpawnController _spawn = new SpawnController();
-    public static SpawnController Spawn { get { return Instance._spawn; } }
 
 
     [SerializeField]

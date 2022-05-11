@@ -29,7 +29,6 @@ public class FreaksController : Stat
 
                     break;
                 case FreaksState.Moving:
-                    IsOnFreaksWay = false;
                     animator.CrossFade("Moving", 0.1f, -1, 0);
                     //Moving으로 바뀌면 Attack->Moving or Stuern->Moving이므로 
                     break;
@@ -54,7 +53,6 @@ public class FreaksController : Stat
     GameObject slowEffect;
 
     bool canNormalAttack = true;
-    bool IsOnFreaksWay = true;
 
     GameController _gameController;
     protected override void Init()
