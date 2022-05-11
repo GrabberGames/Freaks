@@ -5,9 +5,9 @@ using UnityEngine;
 public class EssenceSpot : MonoBehaviour
 {
     public int RemainEssence;
-
+    public GameObject connectWorkshop;
     [SerializeField] private int GetEssencePerOnce = 50;
-    
+
     private Material navy, white, sky_blue;
     private Material material;
 
@@ -18,13 +18,6 @@ public class EssenceSpot : MonoBehaviour
         navy = GetComponentInParent<EssenceManager>().materials[0];
         sky_blue = GetComponentInParent<EssenceManager>().materials[1];
         white = GetComponentInParent<EssenceManager>().materials[2];
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        SetColor();
     }
 
 
@@ -43,6 +36,7 @@ public class EssenceSpot : MonoBehaviour
     public void SetRemainEssence(int variance)
     {
         RemainEssence -= variance;
+        SetColor();
     }
 
 
@@ -54,15 +48,15 @@ public class EssenceSpot : MonoBehaviour
 
     void SetColor()
     {
-        if(RemainEssence >= 501)
+        if (RemainEssence >= 501)
         {
             gameObject.GetComponent<Renderer>().material = navy;
         }
-        else if(RemainEssence >= 201)
+        else if (RemainEssence >= 201)
         {
             gameObject.GetComponent<Renderer>().material = sky_blue;
         }
-        else if(RemainEssence >= 1)
+        else if (RemainEssence >= 1)
         {
             gameObject.GetComponent<Renderer>().material = white;
         }
