@@ -8,7 +8,7 @@ public class SwitchTimer : MonoBehaviour
     Material switchMaterial;
     [SerializeField] private int timer = 90;
 
-    float c_r, c_g, c_b, c_a,f;
+    float c_r, c_g, c_b, c_a, f;
     Color c;
 
 
@@ -46,20 +46,20 @@ public class SwitchTimer : MonoBehaviour
 
                     f = i / 30.0f;
 
-                        c_r = switchMaterial.color.r;
-                        c_g = switchMaterial.color.g;
-                        c_b = switchMaterial.color.b;
-                        c_a = switchMaterial.color.a;
-                        c = new Color(c_r, c_g, c_b);
-                        c.a = f;
+                    c_r = switchMaterial.color.r;
+                    c_g = switchMaterial.color.g;
+                    c_b = switchMaterial.color.b;
+                    c_a = switchMaterial.color.a;
+                    c = new Color(c_r, c_g, c_b);
+                    c.a = f;
 
-                        switchMaterial.color = c;
-                  
+                    switchMaterial.color = c;
+
 
                     yield return new WaitForSeconds(0.03f);
                 }
 
-               
+
                 break;
             }
         }
