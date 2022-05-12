@@ -7,7 +7,9 @@ public enum eLayerMask
 {
     Building = 1 << 9,
     Ground = 1 << 13,
-    Essence = 1 << 14
+    Essence = 1 << 14,
+
+    ConstructionChk = Building | Essence
 }
 
 public enum eConditionConstructionPreview
@@ -158,14 +160,17 @@ public class ConstructionPreviewManager : MonoBehaviour
                 break;
 
             case eConditionConstructionPreview.NearbyBuilding:
+                SystemMassage.Instance.PrintSystemMassage("해당 위치에는 건설이 불가합니다.");
                 Debug.Log("다른 건물 인근에 건설할 수 없습니다.");
                 break;
 
             case eConditionConstructionPreview.NonBuildable:
+                SystemMassage.Instance.PrintSystemMassage("해당 위치에는 건설이 불가합니다.");
                 Debug.Log("건설 가능한 위치가 아닙니다.");
                 break;
 
             case eConditionConstructionPreview.NearbyNoEssence:
+                SystemMassage.Instance.PrintSystemMassage("해당 위치에는 건설이 불가합니다.");
                 Debug.Log("인근에 자원이 없습니다.");
                 break;
 

@@ -19,12 +19,12 @@ public class HeroSelectUI : MonoBehaviour
     {
         switch(hero)
         {
-            case eHeroType.Waron:
+            case eHeroType.WARON:
                 waronButtonFrame.sprite = selectFrame;
                 kyleButtonFrame.sprite = normalFrame;
                 break;
 
-            case eHeroType.Kyle:
+            case eHeroType.KYLE:
                 kyleButtonFrame.sprite = selectFrame;
                 waronButtonFrame.sprite = normalFrame;
                 break;

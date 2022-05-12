@@ -33,6 +33,9 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private SkillSlotUI activeSkillSlotE;
     [SerializeField] private SkillSlotUI activeSkillSlotR;
 
+    [Header("Hero Profile")]
+    [SerializeField] private HeroProfileUI heroProfileUI;
+
     [Header("Cooldown Skill Icon Color")]
     [SerializeField] private Color coolDownSkillColor;
 
@@ -69,6 +72,10 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    public void SetHeroProfile(eHeroType hero)
+    {
+        heroProfileUI.SetProfile(hero);
+    }
 
     public void SetSkillIcon(eSkillSlotKey key, Sprite skillIcon)
     {
@@ -90,8 +97,7 @@ public class HUDManager : MonoBehaviour
         timeInfoUI.WaveGaugeVisualization((float)beforeSpawnTime, (float)nowPlayTime, (float)spawnIntervalTime);
         timeInfoUI.PlayTimeTextVisualization(nowPlayTime);
     }
-
-
+    
     IEnumerator CoolTimeVisualization()
     {
         while(true)

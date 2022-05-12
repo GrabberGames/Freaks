@@ -6,10 +6,15 @@ using TMPro;
 
 public class SkillSlotUI : MonoBehaviour
 {
-    [SerializeField] private Image skillIcon;
-    [SerializeField] private Image coolTimeCover;
+    [SerializeField] private bool isPassive;
 
-    [SerializeField] private TextMeshProUGUI coolTimeText;
+    [SerializeField] private GameObject canUseEffect;
+    [SerializeField] private Image skillIcon;
+    [SerializeField] private Image coolTimeCover;    
+
+    [SerializeField] private Text coolTimeText;
+
+    private bool _skillReady;
 
     private Color cooldownSkillIconColor;
 
@@ -17,12 +22,16 @@ public class SkillSlotUI : MonoBehaviour
     public void SetSkillIcon(Sprite skillIcon)
     {
         this.skillIcon.sprite = skillIcon;
+        if (isPassive)
+            this.skillIcon.color = new Color(0.8f, 0.8f, 0.8f);
     }
 
     public void SetCooldownSkillIconColor(Color color)
     {
         cooldownSkillIconColor = color;
     }
+
+
 
     public void UseSkill()
     {
@@ -43,11 +52,22 @@ public class SkillSlotUI : MonoBehaviour
         {
             skillIcon.color = Color.white;
             coolTimeText.text = "";
+            ChangeSkillFrame(true);
         }
         else
         {
             skillIcon.color = cooldownSkillIconColor;
             coolTimeText.text = string.Format("{0:N1}", remainingTime);
+            ChangeSkillFrame(false);
         }
-    }    
+    }
+    
+    private void ChangeSkillFrame(bool value)
+    {
+        if (!_skillReady.Equals(value))
+        {
+            canUseEffect.SetActive(value);
+            _skillReady = value;
+        }
+    }
 }

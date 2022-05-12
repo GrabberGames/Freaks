@@ -13,7 +13,8 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetActiveSkillSlot(GameManager.Instance.selectHero);
+        HUDManager.Instance.SetHeroProfile(GameManager.Instance.selectHero);
+        SetActiveSkillSlot(GameManager.Instance.selectHero);        
     }
 
     // Update is called once per frame
@@ -33,14 +34,14 @@ public class HUDController : MonoBehaviour
     {
         switch(heroType)
         {
-            case eHeroType.Waron:
+            case eHeroType.WARON:
                 for (int i = 0; i < waronSkillIcon.Length; i++)
                 {
                     HUDManager.Instance.SetSkillIcon((HUDManager.eSkillSlotKey)i, waronSkillIcon[i]);
                 }
                 break;
 
-            case eHeroType.Kyle:
+            case eHeroType.KYLE:
                 for (int i = 0; i < waronSkillIcon.Length; i++)
                 {
                     HUDManager.Instance.SetSkillIcon((HUDManager.eSkillSlotKey)i, kyleSkillIcon[i]);
