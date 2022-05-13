@@ -107,7 +107,7 @@ public class BuildingManager : MonoBehaviour
             case eBuilding.Alter:
                 go = Instantiate(build_alter, pos, transform.rotation);
                 go.SetActive(true);
-                go.GetComponent<Building11>().Init();
+                go.GetComponent<Building>().Init();
 
                 break;
             case eBuilding.WhiteTower:
@@ -116,13 +116,13 @@ public class BuildingManager : MonoBehaviour
                 buildingRangeList.Add(go.transform.GetChild(0).gameObject.GetComponent<BuildingRange>());
                 go.SetActive(true);
 
-                go.GetComponent<Building11>().Init();
+                go.GetComponent<Building>().Init();
 
                 break;
             case eBuilding.Workshop:
                 go = Instantiate(build_workshop, pos, transform.rotation);
                 go.SetActive(true);
-                go.GetComponent<Building11>().Init();
+                go.GetComponent<Building>().Init();
 
                 break;
             default:
