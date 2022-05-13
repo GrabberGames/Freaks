@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class BuildingRange : MonoBehaviour, InterfaceRange
 {
-    private GameObject NoBuildRange;
+    public GameObject NoBuildRange;
     private void Start()
     {
-        NoBuildRange = transform.GetChild(0).gameObject;
-        NoBuildRange.SetActive(false);
+
+
+   
+        if (ConstructionPreviewManager.Instance.isPreviewMode)
+            NoBuildRange.SetActive(true);
+        else
+            NoBuildRange.SetActive(false);
+          
+
+
     }
+
 
     public void BuildingRangeON(bool check)
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EssenceSpot : MonoBehaviour
 {
     public int RemainEssence;
-    public GameObject connectWorkshop;
+    private GameObject connectWorkshop;
     [SerializeField] private int GetEssencePerOnce = 50;
 
     private Material navy, white, sky_blue;
@@ -51,18 +51,27 @@ public class EssenceSpot : MonoBehaviour
         if (RemainEssence >= 501)
         {
             gameObject.GetComponent<Renderer>().material = navy;
+            connectWorkshop.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 0.01f, 0.12f, 1f);
         }
         else if (RemainEssence >= 201)
         {
             gameObject.GetComponent<Renderer>().material = sky_blue;
+            connectWorkshop.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 1f, 0.9f, 1f);
         }
         else if (RemainEssence >= 1)
         {
             gameObject.GetComponent<Renderer>().material = white;
+            connectWorkshop.gameObject.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
         }
         else
         {
             gameObject.SetActive(false);
+            connectWorkshop.gameObject.GetComponent<WorkshopStat>().Disappear();
         }
+    }
+
+   public  void SetConnectWorkshop(GameObject go)
+    {
+        connectWorkshop = go;
     }
 }

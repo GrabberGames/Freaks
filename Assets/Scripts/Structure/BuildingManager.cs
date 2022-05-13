@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +16,8 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private AlterController altercontroller;
     [SerializeField] private GameObject alter;
 
+
+    private GameObject essenceSpot;
 
     public GameObject Alter
     {
@@ -64,7 +66,7 @@ public class BuildingManager : MonoBehaviour
             return mInstance;
         }
     }
-    // test¿ëµµ
+    // testï¿½ëµµ
     /*
     private void Update()
     {
@@ -100,6 +102,8 @@ public class BuildingManager : MonoBehaviour
         build_workshop.SetActive(false);
     }
 
+
+
     public void SetBuildPosition(eBuilding buildingType, Vector3 pos)
     {
         switch (buildingType)
@@ -113,7 +117,7 @@ public class BuildingManager : MonoBehaviour
             case eBuilding.WhiteTower:
                 go = Instantiate(build_whitetower, pos, transform.rotation);
                 whiteTowerList.Add(go.transform.GetChild(1).gameObject.GetComponent<WhiteTowerAttack>());
-                buildingRangeList.Add(go.transform.GetChild(0).gameObject.GetComponent<BuildingRange>());
+                buildingRangeList.Add(go.transform.GetChild(3).gameObject.GetComponent<BuildingRange>());
                 go.SetActive(true);
 
                 go.GetComponent<Building>().Init();
@@ -130,7 +134,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    public void BuildingRangeON(bool check) //°Ç¹°µé rangeON
+    public void BuildingRangeON(bool check) //ê±´ë¬¼ë“¤ rangeON
     {
         InterfaceRange interfaceRange;
 
@@ -146,7 +150,7 @@ public class BuildingManager : MonoBehaviour
             }
             else
             {
-                whiteTowerList.RemoveAt(i); //whitetower ¼Ò¸êµÇ¾úÀ» °æ¿ì
+                whiteTowerList.RemoveAt(i); //whitetower ì†Œë©¸ë˜ì—ˆì„ ê²½ìš°
             }
         }
 
@@ -160,29 +164,39 @@ public class BuildingManager : MonoBehaviour
             }
             else
             {
-                buildingRangeList.RemoveAt(i); //buildingRange ¼Ò¸êµÇ¾úÀ» °æ¿ì
+                buildingRangeList.RemoveAt(i); //buildingRange ì†Œë©¸ë˜ì—ˆì„ ê²½ìš°
             }
         }
 
     }
 
-    public Vector3 GetAlterPosition() //Alter À§Ä¡ Àü´Ş
+    public Vector3 GetAlterPosition() //Alter ìœ„ì¹˜ ì „ë‹¬
     {
         return alter.gameObject.transform.position;
     }
 
-    public float GetAlterBuildRadius() //¾ËÅÍ °Ç¼³°¡´É¹üÀ§ radius Àü´Ş
+    public float GetAlterBuildRadius() //ì•Œí„° ê±´ì„¤ê°€ëŠ¥ë²”ìœ„ radius ì „ë‹¬
     {
         float radius = (alter.gameObject.transform.GetChild(2).gameObject.transform.localScale.x) / 2;
         return radius;
     }
 
-    public float GetAlterNoBuildRadius() //¾ËÅÍ °Ç¼³ ºÒ°¡´É¹üÀ§ radius Àü´Ş
+    public float GetAlterNoBuildRadius() //ì•Œí„° ê±´ì„¤ ë¶ˆê°€ëŠ¥ë²”ìœ„ radius ì „ë‹¬
     {
         float radius = ((alter.gameObject.transform.GetChild(2).gameObject.transform.localScale.x) * (float)0.3) / 2;
         return radius;
     }
 
+
+    public void SetEssenceSpot(GameObject go) //ìì›ì§€ ì˜¤ë¸Œì íŠ¸ ë°›ì•„ì˜´
+    {
+        essenceSpot = go;
+    }
+
+    public GameObject GetEssenceSpot() //ìì›ì§€ ì˜¤ë¸Œì íŠ¸ ì„¤ì •
+    {
+        return essenceSpot;
+    }
 
 
 }
