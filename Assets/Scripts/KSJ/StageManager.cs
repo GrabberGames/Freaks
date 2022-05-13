@@ -72,14 +72,17 @@ public class StageManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
             ActiveRageMode(!isRagemode);
+
+        if (Input.GetKeyDown(KeyCode.P))
+            AddEssence(100);
     }
 
-    public bool ChkEssence (float value)
+    public bool ChkEssence (int value)
     {
         return _essence >= value;
     }
 
-    public bool UseEssence(float value)
+    public bool UseEssence(int value)
     {
         if(_essence >= value)
         {
