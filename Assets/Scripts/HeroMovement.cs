@@ -346,7 +346,7 @@ namespace WarriorAnims
 
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
-                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
                     if (hit.collider.gameObject.layer == (int)Layers.Enemy || hit.collider.gameObject.layer == (int)Layers.blackfreaks)
@@ -414,7 +414,7 @@ namespace WarriorAnims
 
                 agent.velocity = Vector3.zero;
                 RaycastHit hit;
-                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
+                LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
                     if (hit.collider.gameObject.layer == (int)Layers.Enemy || hit.collider.gameObject.layer == (int)Layers.blackfreaks)
