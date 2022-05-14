@@ -48695,8 +48695,6 @@ MonoBehaviour:
   SFXAlterDestroy: {fileID: 0}
   healthPoint: 2000
   essence: 1000
-  whiteFreaks: 5
-  isAlterClicked: 0
 --- !u!65 &828544849935024820
 BoxCollider:
   m_ObjectHideFlags: 0

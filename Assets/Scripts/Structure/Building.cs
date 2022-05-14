@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Building : MonoBehaviour
 {
     private string objectName = null;
     [SerializeField] private int timer = 10;
-     public bool isTimerON = false;
 
+
+    MeshRenderer mr;
+    Color c;
 
     private GameObject alter;
     public void Init()
@@ -17,29 +20,99 @@ public class Building : MonoBehaviour
             case "build_alter(Clone)":
                 objectName = "Alter";
                 timer = 10;
-                //this.gameObject.SetActive(true);
-           
-                StartCoroutine("BuildingTimer");                
+
+
+
+                mr = transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>();
+                mr.material.shader = Shader.Find("UI/Lit/Transparent");
+
+                c = new Color(1f, 1f, 1f, 0.1f);
+                mr.material.color = c;
+
+
+                transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                // transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false);
+
+                transform.GetChild(1).gameObject.SetActive(false);
+                StartCoroutine("Test");
                 break;
             case "build_whitetower(Clone)":             
                 objectName = "Whitetower";
-                timer = 30;
+                timer = 10;
+                /*
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetChild(1).gameObject.SetActive(false);
               
           
-                StartCoroutine("BuildingTimer");
-                
+                StartCoroutine("BuildingTimer");*/
+
+
+                mr = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
+                mr.material.shader = Shader.Find("UI/Unlit/Transparent");
+
+                c = new Color(1f, 1f, 1f, 0.5f);
+                mr.material.color = c;
+
+
+                mr = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
+                mr.material.shader = Shader.Find("UI/Unlit/Transparent");
+                mr.material.color = c;
+
+
+                transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false);
+
+                transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(1).gameObject.SetActive(false);
+                transform.GetChild(2).gameObject.SetActive(false);
+
+                StartCoroutine("Test");
+                // StartCoroutine("BuildingTimer");
+                //GoBuild(this.gameObject);
+
+
+
                 break;
             case "build_workshop(Clone)":
                 objectName = "Workshop";
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetChild(1).gameObject.SetActive(false);
+                BuildingManager.Instance.GetEssenceSpot().GetComponent<EssenceSpot>().SetConnectWorkshop(transform.GetChild(1).gameObject);
 
+                StartCoroutine("Test");
                 break;
             default:
                 break;
         }
+
+    }
+    public void GoBuild(GameObject building)
+    {
+        //busyWhiteF++;
+        GameObject whiteFreaks = ObjectPooling.Instance.GetObject("WhiteFreaks");
+        Vector3 po = new Vector3(transform.position.x + 1, transform.position.y + 2, transform.position.z);
+        whiteFreaks.GetComponent<NavMeshAgent>().Warp(po);
+
+        WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();
+        //miningFreaks.Add(whiteFreaks);
+        /*
+        if (building.GetComponent<SwitchTimer>())
+        {
+            Vector3 pos = GameObject.Find("SwitchController").GetComponent<SwitchController>().Getpos();
+            whiteFreaksController.SetSwitch(pos);
+        }
+        else if (building.GetComponent<WorkshopController>())
+        {
+            whiteFreaksController.miningWorkshop = building;
+            whiteFreaksController.SetMiningWorkShop();
+            //building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreaks);
+        }*/
+
+        whiteFreaksController.miningWorkshop = building;
+        whiteFreaksController.SetMiningWorkShop();
 
     }
 
@@ -69,10 +142,14 @@ public class Building : MonoBehaviour
             switch (objectName)
             {
                 case "Alter":
+                    transform.GetChild(0).gameObject.SetActive(false);
+                    transform.GetChild(1).gameObject.SetActive(true);
                     StartCoroutine("BuildingTimer");
                     break;
                 case "Whitetower":
-                    StartCoroutine("BuildingTimer");
+                transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(2).gameObject.SetActive(true);
+                StartCoroutine("BuildingTimer");
                     break;
                 case "Workshop": //바로 건설
                     transform.GetChild(0).gameObject.SetActive(false);
@@ -84,41 +161,56 @@ public class Building : MonoBehaviour
         }
     }
     */
+
+
+    IEnumerator Test()
+    {
+        yield return new WaitForSeconds(10f);
+
+        switch (objectName)
+        {
+            case "Alter":
+                transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(1).gameObject.SetActive(true);
+                break;
+            case "Whitetower":
+                transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(2).gameObject.SetActive(true);
+                break;
+            case "Workshop":
+                 transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(1).gameObject.SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+
     IEnumerator BuildingTimer()
     {
 
-        while (true)
+        yield return new WaitForSeconds(timer);
+
+        switch (objectName)
         {
-            if (timer > 0)
-            {
-                timer--;
-                yield return new WaitForSeconds(1f);
-            }
-            else
-            {
+            case "Alter":
+                alter = GameObject.Find("alter").gameObject;
+                alter.transform.position = this.transform.position;
 
-                switch (objectName)
-                {
-                    case "Alter":
-                        alter = GameObject.Find("alter").gameObject;
-                        alter.transform.position = this.transform.position;
+                AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
+                alterAttack.bulletSpawnNewSetting();
 
-                        AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
-                        alterAttack.bulletSpawnNewSetting();
-
-                        GameManager.Instance.AlterIsChange.Invoke(this.gameObject);
-                        Destroy(this.gameObject);
-                        break;
-                    case "Whitetower":
-                        transform.GetChild(0).gameObject.SetActive(false);
-                        transform.GetChild(1).gameObject.SetActive(true);
-                        break;              
-                    default:
-                        break;
-                }
-
+                GameManager.Instance.AlterIsChange.Invoke(this.gameObject);
+                Destroy(this.gameObject);
                 break;
-            }
+            case "Whitetower":
+                transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(1).gameObject.SetActive(true);
+                break;
+            default:
+                break;
+
         }
     }
 }
