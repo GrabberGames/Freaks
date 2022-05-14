@@ -88,17 +88,26 @@ public class ConstructionPreviewManager : MonoBehaviour
     #region 버튼 조작용 함수 제작
     public void OnAlterConstructionPreview()
     {
-        OnConstructionPreview(eBuilding.Alter);
+        if (StageManager.Instance.ChkEssence(600))
+            OnConstructionPreview(eBuilding.Alter);
+        else
+            SystemMassage.Instance.PrintSystemMassage("필요한 정수가 부족합니다.");
     }
 
     public void OnWhiteTowerConstructionPreview()
     {
-        OnConstructionPreview(eBuilding.WhiteTower);
+        if (StageManager.Instance.ChkEssence(600))
+            OnConstructionPreview(eBuilding.WhiteTower);
+        else
+            SystemMassage.Instance.PrintSystemMassage("필요한 정수가 부족합니다.");
     }
 
     public void OnWorkshopConstructionPreview()
     {
-        OnConstructionPreview(eBuilding.Workshop);
+        if (StageManager.Instance.ChkEssence(0))
+            OnConstructionPreview(eBuilding.Workshop);
+        else
+            SystemMassage.Instance.PrintSystemMassage("필요한 정수가 부족합니다.");
     }
 
     public void OnConstructionPreview(eBuilding buildingType)
