@@ -14,10 +14,10 @@ public class StageManager : MonoBehaviour
 
     PostProcess _postProcess;
 
-    float _essence;
+    int _essence;
     bool _isRageMode;
 
-    public float essence { get => _essence; }
+    public int essence { get => _essence; }
     public bool isRagemode { get => _isRageMode; }
     
     // FX
@@ -59,6 +59,9 @@ public class StageManager : MonoBehaviour
     void Start()
     {
         _beforeSpawnTime = 0;
+        _essence = 0;
+        AddEssence(200);
+
         StartCoroutine(PlayTimer());
     }
 
@@ -87,6 +90,7 @@ public class StageManager : MonoBehaviour
         if(_essence >= value)
         {
             _essence -= value;
+            HUDManager.Instance.EssenceVisualization(_essence);
             return true;
         }
         else
@@ -98,6 +102,7 @@ public class StageManager : MonoBehaviour
     public void AddEssence(int value)
     {
         _essence += value;
+        HUDManager.Instance.EssenceVisualization(_essence);
     }
 
 

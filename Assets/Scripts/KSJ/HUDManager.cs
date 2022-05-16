@@ -25,6 +25,9 @@ public class HUDManager : MonoBehaviour
 
     [Header("HP Bar")]
     [SerializeField] private HpUI hpUI;
+    
+    [Header("Essence")]
+    [SerializeField] private EssenceUI essenceUI;
 
     [Header("Skill Slot")]
     [SerializeField] private SkillSlotUI passiveSkillSlot;
@@ -97,7 +100,12 @@ public class HUDManager : MonoBehaviour
         timeInfoUI.WaveGaugeVisualization((float)beforeSpawnTime, (float)nowPlayTime, (float)spawnIntervalTime);
         timeInfoUI.PlayTimeTextVisualization(nowPlayTime);
     }
-    
+
+    public void EssenceVisualization(int value)
+    {
+        essenceUI.Visualization(value);
+    }
+
     IEnumerator CoolTimeVisualization()
     {
         while(true)
