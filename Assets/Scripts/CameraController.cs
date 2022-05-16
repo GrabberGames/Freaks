@@ -16,6 +16,10 @@ public class CameraController : MonoBehaviour
 
     public bool _fixListenerPosition;
 
+    private bool _isHold;
+
+
+
     private void Awake()
     {
         audioListener = GetComponentInChildren<ListenPositioner>();
@@ -23,33 +27,42 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 pos = transform.position;
-
-        if (Input.GetKey("up") || Input.mousePosition.y >= Screen.height - panBorderThickness)
+        if(Input.GetKeyDown(KeyCode.Alpha0))
         {
-            pos.z += panSpeed * Time.deltaTime;
+            _isHold = !_isHold;
         }
 
-        if (Input.GetKey("down") || Input.mousePosition.y <= panBorderThickness)
+        if(!_isHold)
         {
-            pos.z -= panSpeed * Time.deltaTime;
+            Vector3 pos = transform.position;
+
+            if (Input.GetKey("up") || Input.mousePosition.y >= Screen.height - panBorderThickness)
+            {
+                pos.z += panSpeed * Time.deltaTime;
+            }
+
+            if (Input.GetKey("down") || Input.mousePosition.y <= panBorderThickness)
+            {
+                pos.z -= panSpeed * Time.deltaTime;
+            }
+
+            if (Input.GetKey("right") || Input.mousePosition.x >= Screen.width - panBorderThickness)
+            {
+                pos.x += panSpeed * Time.deltaTime;
+            }
+
+            if (Input.GetKey("left") || Input.mousePosition.x <= panBorderThickness)
+            {
+                pos.x -= panSpeed * Time.deltaTime;
+            }
+
+            pos.x = Mathf.Clamp(pos.x, -210, 175);
+            pos.y = Mathf.Clamp(pos.y, minY, maxY);
+            pos.z = Mathf.Clamp(pos.z, -200, 20);
+
+            transform.position = pos;
         }
 
-        if (Input.GetKey("right") || Input.mousePosition.x >= Screen.width - panBorderThickness)
-        {
-            pos.x += panSpeed * Time.deltaTime;
-        }
-
-        if (Input.GetKey("left") || Input.mousePosition.x <= panBorderThickness)
-        {
-            pos.x -= panSpeed * Time.deltaTime;
-        }
-
-        pos.x = Mathf.Clamp(pos.x, -210, 175);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        pos.z = Mathf.Clamp(pos.z, -200, 20);
-
-        transform.position = pos;
 
         if(!_fixListenerPosition)
         {

@@ -98,6 +98,7 @@ public class StageManager : MonoBehaviour
     public void AddEssence(int value)
     {
         _essence += value;
+        Debug.Log($"현재정수{_essence}");
     }
 
 

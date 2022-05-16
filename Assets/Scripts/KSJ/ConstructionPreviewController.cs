@@ -66,16 +66,11 @@ public class ConstructionPreviewController : MonoBehaviour
                     if (ConstructionPreviewManager.Instance.ChkConstructionArea())
                     {
                         ConstructionPreviewManager.Instance.ConstructionPreview(false);
-                        if(StageManager.Instance.UseEssence(200))
-                        {
+                        if (StageManager.Instance.UseEssence(200))
                             BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
-                        }
                         else
-                        {
-                            SystemMassage.Instance.PrintSystemMassage("error : Impossible resource situation(10001)");
-                            Debug.Log("error : Impossible resource situation(10001)");
-                        }
-                        
+                            SystemMassage.Instance.PrintSystemMassage("error : Impossible resource situation(1001)");
+
                     }
                     else
                         ConstructionPreviewManager.Instance.PrintMessage();
