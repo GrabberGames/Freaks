@@ -66,16 +66,39 @@ public class ConstructionPreviewController : MonoBehaviour
                     if (ConstructionPreviewManager.Instance.ChkConstructionArea())
                     {
                         ConstructionPreviewManager.Instance.ConstructionPreview(false);
-                        if(StageManager.Instance.UseEssence(200))
+
+                        switch(ConstructionPreviewManager.Instance.nowPreviewBuilding)
                         {
-                            BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
-                        }
-                        else
-                        {
-                            SystemMassage.Instance.PrintSystemMassage("error : Impossible resource situation(10001)");
-                            Debug.Log("error : Impossible resource situation(10001)");
-                        }
-                        
+                            case eBuilding.Alter:
+                                if (StageManager.Instance.UseEssence(600))
+                                {
+                                    BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
+                                }
+                                else
+                                {
+                                    SystemMassage.Instance.PrintSystemMassage("error : Impossible resource situation(10001)");
+                                }
+                                break;
+
+                            case eBuilding.WhiteTower:
+                                if (StageManager.Instance.UseEssence(600))
+                                {
+                                    BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
+                                }
+                                else
+                                {
+                                    SystemMassage.Instance.PrintSystemMassage("error : Impossible resource situation(10001)");
+                                }
+                                break;
+
+                            case eBuilding.Workshop:
+                                BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
+                                BuildingManager.Instance.SetEssenceSpot(Physics.OverlapSphere(ConstructionPreviewManager.Instance.PreviewPosition(), 1.0f)[0].gameObject);
+                                break;
+
+                            default:
+                                break;
+                        }                        
                     }
                     else
                         ConstructionPreviewManager.Instance.PrintMessage();

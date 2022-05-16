@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 public class Kali : Stat
 {
     #region variables
-    enum Layers 
-    { 
+    enum Layers
+    {
         blackfreaks = 6,
         Enemy = 7,
     }
@@ -82,7 +82,7 @@ public class Kali : Stat
     private void SetAnimationAndStartAction()
     {
         animator = GetComponent<Animator>();
-        switch(State)
+        switch (State)
         {
             case PlayerState.Idle:
                 animator.CrossFade("Idle", 0.1f, -1, 0);
@@ -176,6 +176,21 @@ public class Kali : Stat
     }
     void CoolTimer()
     {
+<<<<<<< HEAD
+        if (playerModel.qSkillCoolTime > 0)
+        {
+            playerModel.qSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime), 0, 11);
+        }
+        if (playerModel.wSkillCoolTime > 0)
+        {
+            playerModel.wSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
+        }
+        if (playerModel.eSkillCoolTime > 0)
+        {
+            playerModel.eSkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
+        }
+        if (playerModel.rSkillCoolTime > 0)
+=======
         if(playerModel.qSkillCoolTime > 0)
         {
             playerModel.qSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime) , 0, 11);
@@ -189,6 +204,7 @@ public class Kali : Stat
             playerModel.eSkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
         }        
         if(playerModel.rSkillCoolTime > 0)
+>>>>>>> grabber/main
         {
             playerModel.rSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90);
         }
@@ -197,7 +213,7 @@ public class Kali : Stat
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        gameController = FindObjectOfType<GameController>();    
+        gameController = FindObjectOfType<GameController>();
     }
     void Start()
     {
@@ -207,7 +223,7 @@ public class Kali : Stat
     {
         base.Init();
         GameManager.Instance.models.playerModel.playerNowHp = HP;
-        GameManager.Instance.models.playerModel.playerMaxHp = MAX_HP; 
+        GameManager.Instance.models.playerModel.playerMaxHp = MAX_HP;
         GameManager.Instance.models.playerModel.playerPD = PD;
         GameManager.Instance.models.playerModel.playerED = ED;
 
@@ -229,7 +245,7 @@ public class Kali : Stat
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask)) 
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask))
         {
             Debug.Log(hit.transform.name);
             _mouseHitPosition = hit.point;
@@ -243,7 +259,7 @@ public class Kali : Stat
         if (AudioManager.a_Instance.Check() == true)
             _priority = 0;
         string _soundname = "";
-        switch(_name)
+        switch (_name)
         {
             case "장거리 이동":
             case "단거리 이동":
@@ -251,7 +267,7 @@ public class Kali : Stat
                 if (_priority == 0)
                 {
                     _priority = 3;
-                       _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
+                    _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
                 }
                 break;
 
@@ -334,7 +350,7 @@ public class Kali : Stat
 
         GameObject go = ObjectPooling.Instance.GetObject("KyleBullet");
         go.transform.position = transform.position;
-        go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.Q, transform.rotation, _mouseHitPosition, 140 +PD);
+        go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.Q, transform.rotation, _mouseHitPosition, 140 + PD);
     }
     public void Q_Stop()
     {
@@ -362,7 +378,7 @@ public class Kali : Stat
         agent.ResetPath();
 
 
-        List <FreaksController> _freaks = new List <FreaksController>();
+        List<FreaksController> _freaks = new List<FreaksController>();
         _freaks = gameController.GetAliveBlackFreaksList();
         for (int i = 0; i < _freaks.Count; i++)
         {
@@ -428,7 +444,7 @@ public class Kali : Stat
         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
         {
             R_Skill = Instantiate(R_Skill_Prefab);
-            R_Skill.transform.position = new Vector3(hit.point.x, hit.point.y +0.2f, hit.point.z);
+            R_Skill.transform.position = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
             R_Skill.GetComponent<Kail_R>().Trigger();
         }
     }
@@ -442,7 +458,7 @@ public class Kali : Stat
     void Bullet_Spawn_NormalAndESkill(Bullet shape)
     {
         GameObject go;
-        if(shape.Equals(Bullet.Basic))
+        if (shape.Equals(Bullet.Basic))
         {
             go = ObjectPooling.Instance.GetObject("KyleBullet");
             go.transform.position = transform.position;
@@ -457,7 +473,7 @@ public class Kali : Stat
             particleSystem.Play();
             StartCoroutine(Q_ParticleOff(particleSystem));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, Bullet.Basic, transform.rotation, _mouseHitPosition,  PD);
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, Bullet.Basic, transform.rotation, _mouseHitPosition, PD);
         }
         if (shape.Equals(Bullet.E))
         {
@@ -512,7 +528,7 @@ public class Kali : Stat
             State = PlayerState.Die;
         }
 
-         switch (State)
+        switch (State)
         {
             case PlayerState.Attack:
                 break;
@@ -601,7 +617,7 @@ public class Kali : Stat
         {
             float distance = (_lockTarget.transform.position - transform.position).magnitude;
 
-            if(distance <= ATTACK_RANGE)
+            if (distance <= ATTACK_RANGE)
             {
                 State = PlayerState.Attack;
                 return;
@@ -643,7 +659,7 @@ public class Kali : Stat
                 }
 
                 _dist = Vector3.Distance(transform.position, hit.point);
-                if(_dist > 120f)
+                if (_dist > 120f)
                     SoundPlay("장거리 이동");
                 else
                     SoundPlay("단거리 이동");
