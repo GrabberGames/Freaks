@@ -63,7 +63,10 @@ public class Kali : Stat
 
     PlayerModel playerModel => GameManager.Instance.models.playerModel;
 
-
+    float qTime = .0f;
+    float wTime = .0f;
+    float eTime = .0f;
+    float rTime = .0f;
     public PlayerState State
     {
         get { return _state; }
@@ -94,28 +97,32 @@ public class Kali : Stat
                 ChangeRotate();
                 Determination();
                 animator.Play("Gun attack3");
-                StartCoroutine(coCoolTimer(PlayerState.Q));
+                playerModel.qSkillCoolTime = 11;
+                qTime = Time.time;
                 break;
             case PlayerState.W:
                 useRootMotion = true;
                 ChangeRotate();
                 Atonement();
                 animator.Play("TwoGun Attack 05");
-                StartCoroutine(coCoolTimer(PlayerState.W));
+                playerModel.wSkillCoolTime = 15;
+                wTime = Time.time;
                 break;
             case PlayerState.E:
                 useRootMotion = true;
                 ChangeRotate();
                 Evation();
                 animator.Play("Jumbo Back Attack");
-                StartCoroutine(coCoolTimer(PlayerState.E));
+                playerModel.eSkillCoolTime = 16;
+                eTime = Time.time;
                 break;
             case PlayerState.R:
                 useRootMotion = true;
                 ChangeRotate();
                 HorizonofMemory();
                 animator.Play("Gun Air Attack");
-                StartCoroutine(coCoolTimer(PlayerState.R));
+                playerModel.rSkillCoolTime = 90;
+                rTime = Time.time;
                 break;
 
             case PlayerState.Moving:
@@ -167,53 +174,23 @@ public class Kali : Stat
 
         return false;
     }
-    IEnumerator coCoolTimer(PlayerState playerState)
+    void CoolTimer()
     {
-        switch (playerState)
+        if(playerModel.qSkillCoolTime > 0)
         {
-            case PlayerState.Q:
-                playerModel.qSkillCoolTime = 11;
-                var qStart = Time.time;
-
-                while (playerModel.qSkillCoolTime > 0)
-                {
-                    playerModel.qSkillCoolTime = 11 - (Time.time - qStart);
-                    yield return null;
-                }
-                playerModel.qSkillCoolTime = 0;
-                break;
-
-            case PlayerState.W:
-                playerModel.wSkillCoolTime = 15;
-                var wStart = Time.time;
-
-                while (playerModel.wSkillCoolTime > 0.0f)
-                {
-                    playerModel.wSkillCoolTime = 15 - (Time.time - wStart);
-                    yield return null;
-                }
-                playerModel.wSkillCoolTime = 0;
-                break;
-            case PlayerState.E:
-                playerModel.eSkillCoolTime = 16;
-                var eStart = Time.time;
-                while (playerModel.eSkillCoolTime > 0.0f)
-                {
-                    playerModel.eSkillCoolTime = 16- (Time.time - eStart);
-                    yield return null;
-                }
-                playerModel.eSkillCoolTime = 0;
-                break;
-            case PlayerState.R :
-                playerModel.rSkillCoolTime = 90;
-                var rStart = 0;
-                while (playerModel.rSkillCoolTime > 0.0f)
-                {
-                    playerModel.rSkillCoolTime = 90 - (Time.time - rStart);
-                    yield return null;
-                }
-                playerModel.rSkillCoolTime = 0;
-                break;
+            playerModel.qSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime) , 0, 11);
+        }        
+        if(playerModel.wSkillCoolTime > 0)
+        {
+            playerModel.wSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
+        }        
+        if(playerModel.eSkillCoolTime > 0)
+        {
+            playerModel.eSkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
+        }        
+        if(playerModel.rSkillCoolTime > 0)
+        {
+            playerModel.rSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90);
         }
     }
     #endregion
@@ -556,6 +533,7 @@ public class Kali : Stat
                 UpdateIdle(); MoveToSkillState();
                 break;
         }
+        CoolTimer();
     }
     private void MoveToSkillState()
     {
