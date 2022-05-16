@@ -92,8 +92,8 @@ public class ConstructionPreviewController : MonoBehaviour
                                 break;
 
                             case eBuilding.Workshop:
-                                BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
-                                BuildingManager.Instance.SetEssenceSpot(Physics.OverlapSphere(ConstructionPreviewManager.Instance.PreviewPosition(), 1.0f)[0].gameObject);
+                                BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition()
+                                    ,Physics.OverlapSphere(ConstructionPreviewManager.Instance.PreviewPosition(), 1.0f,(int)eLayerMask.Essence)[0].gameObject);
                                 break;
 
                             default:

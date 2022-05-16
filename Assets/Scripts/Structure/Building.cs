@@ -78,11 +78,13 @@ public class Building : MonoBehaviour
                 break;
             case "build_workshop(Clone)":
                 objectName = "Workshop";
+                
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetChild(1).gameObject.SetActive(false);
-                BuildingManager.Instance.GetEssenceSpot().GetComponent<EssenceSpot>().SetConnectWorkshop(transform.GetChild(1).gameObject);
+                transform.GetChild(1).gameObject.GetComponent<WorkshopController>().SetConnectEssence(BuildingManager.Instance.GetEssenceSpot());
 
-                StartCoroutine("Test");
+
+                StartCoroutine(Test());
                 break;
             default:
                 break;
@@ -180,6 +182,8 @@ public class Building : MonoBehaviour
             case "Workshop":
                  transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(1).gameObject.SetActive(true);
+
+                transform.GetChild(1).gameObject.GetComponent<WorkshopController>().StartDigging();
                 break;
             default:
                 break;

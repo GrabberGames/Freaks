@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class EssenceSpot : MonoBehaviour
 {
-    public int RemainEssence;
-    private GameObject connectWorkshop;
-    [SerializeField] private int GetEssencePerOnce = 50;
-
-    private Material navy, white, sky_blue;
-    private Material material;
-
+    [SerializeField] private int RemainEssence;
+    Renderer renderer;
+    MaterialPropertyBlock propertyBlock ;
 
     void Start()
     {
-        material = this.gameObject.GetComponent<Renderer>().material;
-        navy = GetComponentInParent<EssenceManager>().materials[0];
-        sky_blue = GetComponentInParent<EssenceManager>().materials[1];
-        white = GetComponentInParent<EssenceManager>().materials[2];
+        renderer = this.gameObject.GetComponent<Renderer>();
+        propertyBlock = new MaterialPropertyBlock();
+        SetColor();
     }
 
 
@@ -26,52 +21,39 @@ public class EssenceSpot : MonoBehaviour
         return RemainEssence;
     }
 
-
-    public Material GetNowMaterial()
+    public void SetRemainEssence(int essence)
     {
-        return gameObject.GetComponent<Renderer>().material;
-    }
-
-
-    public void SetRemainEssence(int variance)
-    {
-        RemainEssence -= variance;
+        this.RemainEssence = essence;
         SetColor();
     }
-
-
-    public void Digging()
-    {
-        RemainEssence -= GetEssencePerOnce;
-    }
-
 
     void SetColor()
     {
         if (RemainEssence >= 501)
         {
-            gameObject.GetComponent<Renderer>().material = navy;
-            connectWorkshop.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 0.01f, 0.12f, 1f);
+            propertyBlock.SetColor("_Color0", GetComponentInParent<EssenceManager>().colors[2, 0]);
+            propertyBlock.SetColor("_Color1", GetComponentInParent<EssenceManager>().colors[2, 1]);
+            renderer.SetPropertyBlock(propertyBlock);
         }
         else if (RemainEssence >= 201)
         {
-            gameObject.GetComponent<Renderer>().material = sky_blue;
-            connectWorkshop.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 1f, 0.9f, 1f);
+            propertyBlock.SetColor("_Color0", GetComponentInParent<EssenceManager>().colors[1, 0]);
+            propertyBlock.SetColor("_Color1", GetComponentInParent<EssenceManager>().colors[1, 1]);
+            renderer.SetPropertyBlock(propertyBlock);
         }
         else if (RemainEssence >= 1)
         {
-            gameObject.GetComponent<Renderer>().material = white;
-            connectWorkshop.gameObject.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
+            propertyBlock.SetColor("_Color0", GetComponentInParent<EssenceManager>().colors[0, 0]);
+            propertyBlock.SetColor("_Color1", GetComponentInParent<EssenceManager>().colors[0, 1]);
+            renderer.SetPropertyBlock(propertyBlock);
         }
         else
         {
             gameObject.SetActive(false);
-            connectWorkshop.gameObject.GetComponent<WorkshopStat>().Disappear();
         }
     }
 
-   public  void SetConnectWorkshop(GameObject go)
-    {
-        connectWorkshop = go;
-    }
+    
+
+
 }

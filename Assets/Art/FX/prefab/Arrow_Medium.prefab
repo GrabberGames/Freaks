@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 5498303088427075652}
   - component: {fileID: 6576817506870038233}
   - component: {fileID: 8236442372187352471}
-  m_Layer: 0
+  - component: {fileID: 833602609}
+  - component: {fileID: 214282822}
+  m_Layer: 14
   m_Name: Arrow_Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543005233363481029}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 3.83, y: 24.755798, z: -3.3300323}
-  m_LocalScale: {x: 4.242285, y: 2.674664, z: 3.556355}
+  m_LocalScale: {x: 4.242285, y: 2.210466, z: 3.556355}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4029fff94e0149d49ae0ead3a0744d44, type: 2}
+  - {fileID: 2100000, guid: 10c69dc8e0b07364188c9e2bcc0aaf44, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,3 +83,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &833602609
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543005233363481029}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7629811779324647873, guid: bbbd67695e8fb2c44b748cc6b00c0b6a, type: 3}
+--- !u!114 &214282822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543005233363481029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1a648175537bc4dbf09052f6991b96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RemainEssence: 500
