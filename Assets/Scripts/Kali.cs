@@ -43,10 +43,6 @@ public class Kali : Stat
     public GameObject R_Skill_Prefab;
 
     //Particle Skill Prefab
-    public GameObject _Basic_ps;
-    public GameObject _Q_ps;
-    public GameObject _W_ps;
-    public GameObject _E_ps;
 
     private GameController gameController;
 
@@ -55,7 +51,6 @@ public class Kali : Stat
     public GameObject _right_arm;
 
     //Kyle Bullet Prefab 
-    public GameObject _bullet;
 
     //Kyle Sound Priority Variable & Far Distance Judge
     private int _priority = 0;
@@ -256,7 +251,7 @@ public class Kali : Stat
     void ChangeRotate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
+        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask)) 
         {
             Debug.Log(hit.transform.name);
@@ -451,7 +446,7 @@ public class Kali : Stat
     public void R_Instantiate()
     {
         RaycastHit hit;
-        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building");
+        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
 
         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
         {
@@ -594,7 +589,7 @@ public class Kali : Stat
 
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Walkable") | LayerMask.GetMask("Ground");
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
                 if (hit.collider.gameObject.layer == (int)Layers.blackfreaks || hit.collider.gameObject.layer == (int)Layers.Enemy)
@@ -649,7 +644,7 @@ public class Kali : Stat
 
             agent.velocity = Vector3.zero;
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks");
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
 
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
