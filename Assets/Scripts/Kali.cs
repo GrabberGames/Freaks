@@ -176,6 +176,7 @@ public class Kali : Stat
     }
     void CoolTimer()
     {
+<<<<<<< HEAD
         if (playerModel.qSkillCoolTime > 0)
         {
             playerModel.qSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime), 0, 11);
@@ -189,6 +190,21 @@ public class Kali : Stat
             playerModel.eSkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
         }
         if (playerModel.rSkillCoolTime > 0)
+=======
+        if(playerModel.qSkillCoolTime > 0)
+        {
+            playerModel.qSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime) , 0, 11);
+        }        
+        if(playerModel.wSkillCoolTime > 0)
+        {
+            playerModel.wSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
+        }        
+        if(playerModel.eSkillCoolTime > 0)
+        {
+            playerModel.eSkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
+        }        
+        if(playerModel.rSkillCoolTime > 0)
+>>>>>>> grabber/main
         {
             playerModel.rSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90);
         }
