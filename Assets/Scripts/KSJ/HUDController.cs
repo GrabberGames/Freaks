@@ -20,6 +20,8 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log($"{GameManager.Instance.models.playerModel.playerNowHp}, {GameManager.Instance.models.playerModel.playerMaxHp}");
         HUDManager.Instance.HPVisualization(GameManager.Instance.models.playerModel.playerNowHp, GameManager.Instance.models.playerModel.playerMaxHp);
 
         HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.Q, GameManager.Instance.models.playerModel.qSkillCoolTime, 11.0f);
