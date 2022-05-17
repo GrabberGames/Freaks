@@ -103,6 +103,11 @@ public class BuildingManager : MonoBehaviour
     }
 
 
+    public void SetBuildPosition(eBuilding buildingType, Vector3 pos, GameObject essence)
+    {
+        SetEssenceSpot(essence);
+        SetBuildPosition(buildingType, pos);
+    }
 
     public void SetBuildPosition(eBuilding buildingType, Vector3 pos)
     {
@@ -127,7 +132,8 @@ public class BuildingManager : MonoBehaviour
                 go = Instantiate(build_workshop, pos, transform.rotation);
                 go.SetActive(true);
                 go.GetComponent<Building>().Init();
-
+               
+      
                 break;
             default:
                 break;
@@ -188,7 +194,7 @@ public class BuildingManager : MonoBehaviour
     }
 
 
-    public void SetEssenceSpot(GameObject go) //자원지 오브젝트 받아옴
+    private void SetEssenceSpot(GameObject go) //자원지 오브젝트 받아옴
     {
         essenceSpot = go;
     }
