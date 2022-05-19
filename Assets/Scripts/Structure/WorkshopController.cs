@@ -42,6 +42,27 @@ public class WorkshopController : MonoBehaviour
         SetColor();
     }
 
+    public Color GetColor()
+    {
+
+        if (RemainEssence >= 501)
+        {
+            return large;
+        }
+        else if (RemainEssence >= 201)
+        {
+            return medium;
+        }
+        else if (RemainEssence >= 1)
+        {
+            return small;
+        }
+        else
+        {
+            return small;
+        }
+    }
+
    
     public void SetColor()
     {

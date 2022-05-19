@@ -63,7 +63,7 @@ public class AlterAttack : Stat
 
     }
 
-
+    GameObject bullet;
     IEnumerator FindInAttackRange(GameObject enemy)
     {
 
@@ -77,7 +77,7 @@ public class AlterAttack : Stat
 
         SFXAlterAttack.Play();
 
-        GameObject bullet = BulletPooling.GetObject("AlterBullet");
+        bullet= BulletPooling.GetObject("AlterBullet");
         bullet.GetComponent<AlterBullet>().InitSetting(PD, enemy, bulletSpawnPosition);
         bullet.SetActive(true);
 
