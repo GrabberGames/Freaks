@@ -535,6 +535,15 @@ public class Kali : Stat
         }
         CoolTimer();
     }
+    public override void SetModel()
+    {
+        base.SetModel();
+
+        playerModel.playerNowHp = HP;
+        playerModel.playerMaxHp = MAX_HP;
+        playerModel.playerPD = PD;
+        playerModel.playerED = ED;
+    }
     private void MoveToSkillState()
     {
         if (Input.GetKeyDown(KeyCode.Q))

@@ -54,6 +54,8 @@ public class FreaksController : Stat
 
     bool canNormalAttack = true;
 
+    const int GetEssenceByKilling = 10;
+
     GameController _gameController;
     protected override void Init()
     {
@@ -207,8 +209,8 @@ public class FreaksController : Stat
     public override void DeadSignal()
     {
         base.DeadSignal();
-        Debug.Log("#");
+        StageManager.Instance.AddEssence(GetEssenceByKilling);
         _gameController.SignOfFreaksDead();
-        ObjectPooling.Instance.ReturnObject(this.gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject);
     }
 }

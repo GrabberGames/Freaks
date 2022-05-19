@@ -50,4 +50,5 @@ public class Stat : MonoBehaviour
         ARMOR = ObjectPooling.Instance.Get_Stat(gameObject.transform.name).ARMOR;
     }
     public virtual void DeadSignal() { }
+    public virtual void SetModel() { }
 }

@@ -9,6 +9,7 @@ public class DamageManager
     { 
         float damage = Mathf.Max(0, value - defender.ARMOR) * (1 - defender.DECREASE_DAMAGE);
         defender.HP -= damage;
+        defender.SetModel();
 
         if(defender.HP <= 0)
         {
