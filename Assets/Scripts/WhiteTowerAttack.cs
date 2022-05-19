@@ -120,10 +120,12 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     }
     */
 
+
+    GameObject bullet;
     IEnumerator FindInAttackRange(GameObject blackFreaks)
     {
 
-        GameObject bullet = BulletPooling.GetObject("WhiteTowerBullet");
+        bullet = BulletPooling.GetObject("WhiteTowerBullet");
         bullet.GetComponent<WhiteTowerBullet>().InitSetting(PD, blackFreaks, bulletSpawnPosition);
         bullet.SetActive(true);
         fx_whiteTower.Play(true);
@@ -165,7 +167,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
 
             yield return new WaitForSeconds(0.03f);
         }
-        Destroy(this.gameObject);
+        this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();
 
 
     }

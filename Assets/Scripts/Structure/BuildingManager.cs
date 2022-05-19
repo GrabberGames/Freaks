@@ -6,12 +6,6 @@ using UnityEngine;
 public class BuildingManager : MonoBehaviour
 {
 
-
-    [Header("Building Setting")]
-    [SerializeField] private GameObject build_alter;
-    [SerializeField] private GameObject build_whitetower;
-    [SerializeField] private GameObject build_workshop;
-
     [Header("Alter")]
     [SerializeField] private AlterController altercontroller;
     [SerializeField] private GameObject alter;
@@ -51,7 +45,7 @@ public class BuildingManager : MonoBehaviour
     private List<WhiteTowerAttack> whiteTowerList = new List<WhiteTowerAttack>();
     private List<BuildingRange> buildingRangeList = new List<BuildingRange>();
 
-    private GameObject go;
+
 
 
     private static BuildingManager mInstance;
@@ -95,12 +89,6 @@ public class BuildingManager : MonoBehaviour
 
     } */
 
-    private void Start()
-    {
-        build_alter.SetActive(false);
-        build_whitetower.SetActive(false);
-        build_workshop.SetActive(false);
-    }
 
 
     public void SetBuildPosition(eBuilding buildingType, Vector3 pos, GameObject essence)
@@ -111,16 +99,19 @@ public class BuildingManager : MonoBehaviour
 
     public void SetBuildPosition(eBuilding buildingType, Vector3 pos)
     {
+        GameObject go;
         switch (buildingType)
         {
             case eBuilding.Alter:
-                go = Instantiate(build_alter, pos, transform.rotation);
+                go = BuildingPooling.GetObject("Building_alter");
+                go.transform.position = pos;
                 go.SetActive(true);
                 go.GetComponent<Building>().Init();
 
                 break;
             case eBuilding.WhiteTower:
-                go = Instantiate(build_whitetower, pos, transform.rotation);
+                go = BuildingPooling.GetObject("Building_whitetower");
+                go.transform.position = pos;
                 whiteTowerList.Add(go.transform.GetChild(1).gameObject.GetComponent<WhiteTowerAttack>());
                 buildingRangeList.Add(go.transform.GetChild(3).gameObject.GetComponent<BuildingRange>());
                 go.SetActive(true);
@@ -129,7 +120,8 @@ public class BuildingManager : MonoBehaviour
 
                 break;
             case eBuilding.Workshop:
-                go = Instantiate(build_workshop, pos, transform.rotation);
+                go = BuildingPooling.GetObject("Building_workshop");
+                go.transform.position = pos;
                 go.SetActive(true);
                 go.GetComponent<Building>().Init();
                

@@ -65,9 +65,11 @@ public class TowerAttack : Stat
         }
     }
 
+
+    GameObject bullet;
     IEnumerator FindInAttackRange()
     {
-        GameObject bullet = BulletPooling.GetObject("BlackTowerBullet");
+        bullet = BulletPooling.GetObject("BlackTowerBullet");
         bullet.GetComponent<TowerBullet>().InitSetting(PD, bulletSpawnPosition);
         fx_blackTower.Play(true);
         SFXBlackTowerAttack.Play();

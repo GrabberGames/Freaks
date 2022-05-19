@@ -31,7 +31,6 @@ public class WorkshopState : Stat
     public void Disappear()
     {
         StartCoroutine(FadeOut()); //fadeout할때 쓸 코드
-
     }
 
 
@@ -41,7 +40,6 @@ public class WorkshopState : Stat
         if (Input.GetKeyDown(KeyCode.A))
         {
             Disappear();
-
         }
     }
 
@@ -52,34 +50,29 @@ public class WorkshopState : Stat
         renderer = this.gameObject.GetComponent<Renderer>();
         propertyBlock = new MaterialPropertyBlock();
 
-        SFXworkshopDestroy.Play();
-
-
+       // SFXworkshopDestroy.Play();
 
         MeshRenderer mr = this.gameObject.GetComponent<MeshRenderer>();
+        mr.material.shader = Shader.Find("UI/Unlit/Transparent");
 
-
-        float c_r, c_g, c_b, c_a, f;
+        float  f;
         Color c;
 
         for (int i = 50; i >= 0; i--)
         {
-
-
             f = i / 50.0f;
 
-            c_r = this.gameObject.GetComponent<MeshRenderer>().material.color.r;
-            c_g = this.gameObject.GetComponent<MeshRenderer>().material.color.g;
-            c_b = this.gameObject.GetComponent<MeshRenderer>().material.color.b;
-            c_a = this.gameObject.GetComponent<MeshRenderer>().material.color.a;
-            c = new Color(c_r, c_g, c_b);
+
+            c = this.gameObject.GetComponent<WorkshopController>().GetColor();
             c.a = f;
             propertyBlock.SetColor("_Color", c);
-            //this.gameObject.GetComponent<MeshRenderer>().material.color = c;
+            renderer.SetPropertyBlock(propertyBlock);
+
 
             yield return new WaitForSeconds(0.05f);
         }
-        Destroy(this.gameObject);
+
+        this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();
     }
 
 

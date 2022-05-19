@@ -17,7 +17,7 @@ public class Building : MonoBehaviour
     {
         switch (this.gameObject.name)
         {
-            case "build_alter(Clone)":
+            case "build_alter":
                 objectName = "Alter";
                 timer = 10;
 
@@ -36,7 +36,7 @@ public class Building : MonoBehaviour
                 transform.GetChild(1).gameObject.SetActive(false);
                 StartCoroutine("Test");
                 break;
-            case "build_whitetower(Clone)":             
+            case "build_whitetower":             
                 objectName = "Whitetower";
                 timer = 10;
                 /*
@@ -76,7 +76,7 @@ public class Building : MonoBehaviour
 
 
                 break;
-            case "build_workshop(Clone)":
+            case "build_workshop":
                 objectName = "Workshop";
                 
                 transform.GetChild(0).gameObject.SetActive(true);
@@ -217,4 +217,10 @@ public class Building : MonoBehaviour
 
         }
     }
+
+    public void ReturnBuildingPool()
+    {
+        BuildingPooling.ReturnObject(this.gameObject);
+    }
+
 }
