@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class Building : MonoBehaviour
 {
     private string objectName = null;
     [SerializeField] private int timer = 10;
-
+    private GameObject whiteFreaks;
 
     MeshRenderer mr;
     Color c;
@@ -39,13 +40,7 @@ public class Building : MonoBehaviour
             case "build_whitetower":             
                 objectName = "Whitetower";
                 timer = 10;
-                /*
-                transform.GetChild(0).gameObject.SetActive(true);
-                transform.GetChild(1).gameObject.SetActive(false);
-              
-          
-                StartCoroutine("BuildingTimer");*/
-
+         
 
                 mr = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
                 mr.material.shader = Shader.Find("UI/Unlit/Transparent");
@@ -69,9 +64,11 @@ public class Building : MonoBehaviour
                 transform.GetChild(1).gameObject.SetActive(false);
                 transform.GetChild(2).gameObject.SetActive(false);
 
-                StartCoroutine("Test");
+                GoBuild(this.gameObject);
+
+                //StartCoroutine("Test");
                 // StartCoroutine("BuildingTimer");
-                //GoBuild(this.gameObject);
+            
 
 
 
@@ -93,30 +90,19 @@ public class Building : MonoBehaviour
     }
     public void GoBuild(GameObject building)
     {
-        //busyWhiteF++;
-        GameObject whiteFreaks = ObjectPooling.Instance.GetObject("WhiteFreaks");
+        alter = GameManager.Instance.Alter;
+        whiteFreaks = WhiteFreaksManager.Instance.GetWhiteFreaks();
+        whiteFreaks.transform.position = alter.transform.position;
         Vector3 po = new Vector3(transform.position.x + 1, transform.position.y + 2, transform.position.z);
-        whiteFreaks.GetComponent<NavMeshAgent>().Warp(po);
+        whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(po);
 
-        WhiteFreaksController whiteFreaksController = whiteFreaks.GetComponent<WhiteFreaksController>();
-        //miningFreaks.Add(whiteFreaks);
-        /*
-        if (building.GetComponent<SwitchTimer>())
-        {
-            Vector3 pos = GameObject.Find("SwitchController").GetComponent<SwitchController>().Getpos();
-            whiteFreaksController.SetSwitch(pos);
-        }
-        else if (building.GetComponent<WorkshopController>())
-        {
-            whiteFreaksController.miningWorkshop = building;
-            whiteFreaksController.SetMiningWorkShop();
-            //building.GetComponent<WorkshopController>().SetMiningFreeks(whiteFreaks);
-        }*/
-
-        whiteFreaksController.miningWorkshop = building;
-        whiteFreaksController.SetMiningWorkShop();
 
     }
+    private IDisposable arriveStream =
+    default;
+    private Action onArriveCallback =
+      default;
+
 
 
     /*
@@ -205,8 +191,8 @@ public class Building : MonoBehaviour
                 AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
                 alterAttack.bulletSpawnNewSetting();
 
-                GameManager.Instance.AlterIsChange.Invoke(this.gameObject);
-                Destroy(this.gameObject);
+                BuildingManager.Instance.AlterIsChange.Invoke(this.gameObject);
+                ReturnBuildingPool();
                 break;
             case "Whitetower":
                 transform.GetChild(0).gameObject.SetActive(false);

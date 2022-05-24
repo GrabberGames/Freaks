@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 7193091554652229264}
   - component: {fileID: 2582054018953277980}
   m_Layer: 0
-  m_Name: White Freaks
+  m_Name: whitefreaks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652b48e7f44b75a4da2ed581c5a5ff7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miningWorkshop: {fileID: 0}
+  targetBuilding: {fileID: 0}
   navMeshAgent: {fileID: 0}
+  alter: {fileID: 1862213974341087658, guid: 7b0d352e3db023d43b4a08eace09f729, type: 3}
 --- !u!1 &7950743611179996798
 GameObject:
   m_ObjectHideFlags: 0
