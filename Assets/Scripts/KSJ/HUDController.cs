@@ -20,12 +20,12 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HUDManager.Instance.HPVisualization(GameManager.Instance.models.playerModel.playerNowHp, GameManager.Instance.models.playerModel.playerMaxHp);
+        HUDManager.Instance.HPVisualization(GameManager.Instance.models.playerModel.PlayerNowHp, GameManager.Instance.models.playerModel.PlayerMaxHp);
 
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.Q, GameManager.Instance.models.playerModel.qSkillCoolTime, 11.0f);
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.W, GameManager.Instance.models.playerModel.wSkillCoolTime, 15.0f);
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.E, GameManager.Instance.models.playerModel.eSkillCoolTime, 16.0f);
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.R, GameManager.Instance.models.playerModel.rSkillCoolTime, 120.0f);
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.Q, GameManager.Instance.models.playerModel.QSkillCoolTime, 11.0f);
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.W, GameManager.Instance.models.playerModel.WSkillCoolTime, 15.0f);
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.E, GameManager.Instance.models.playerModel.ESkillCoolTime, 16.0f);
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.R, GameManager.Instance.models.playerModel.RSkillCoolTime, 120.0f);
 
         HUDManager.Instance.TimeInfoVisualization(StageManager.Instance.nowPlayTime, StageManager.Instance.beforeSpawnTime, StageManager.Instance.spawnIntervalTime);
     }

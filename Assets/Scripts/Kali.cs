@@ -97,7 +97,7 @@ public class Kali : Stat
                 ChangeRotate();
                 Determination();
                 animator.Play("Gun attack3");
-                playerModel.qSkillCoolTime = 11;
+                playerModel.QSkillCoolTime = 11;
                 qTime = Time.time;
                 break;
             case PlayerState.W:
@@ -105,7 +105,7 @@ public class Kali : Stat
                 ChangeRotate();
                 Atonement();
                 animator.Play("TwoGun Attack 05");
-                playerModel.wSkillCoolTime = 15;
+                playerModel.WSkillCoolTime = 15;
                 wTime = Time.time;
                 break;
             case PlayerState.E:
@@ -113,7 +113,7 @@ public class Kali : Stat
                 ChangeRotate();
                 Evation();
                 animator.Play("Jumbo Back Attack");
-                playerModel.eSkillCoolTime = 16;
+                playerModel.ESkillCoolTime = 16;
                 eTime = Time.time;
                 break;
             case PlayerState.R:
@@ -121,7 +121,7 @@ public class Kali : Stat
                 ChangeRotate();
                 HorizonofMemory();
                 animator.Play("Gun Air Attack");
-                playerModel.rSkillCoolTime = 90;
+                playerModel.RSkillCoolTime = 90;
                 rTime = Time.time;
                 break;
 
@@ -144,25 +144,25 @@ public class Kali : Stat
                 break;
 
             case PlayerState.Q:
-                if (playerModel.qSkillCoolTime > 0.1f)
+                if (playerModel.QSkillCoolTime > 0.1f)
                     return true;
                 if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
                     return true;
                 break;
             case PlayerState.W:
-                if (playerModel.wSkillCoolTime > 0.1f)
+                if (playerModel.WSkillCoolTime > 0.1f)
                     return true;
                 if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
                     return true;
                 break;
             case PlayerState.E:
-                if (playerModel.eSkillCoolTime > 0.1f)
+                if (playerModel.ESkillCoolTime > 0.1f)
                     return true;
                 if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
                     return true;
                 break;
             case PlayerState.R:
-                if (playerModel.rSkillCoolTime > 0.1f)
+                if (playerModel.RSkillCoolTime > 0.1f)
                     return true;
                 if (!(nowState == PlayerState.Moving || nowState == PlayerState.Idle))
                     return true;
@@ -176,21 +176,21 @@ public class Kali : Stat
     }
     void CoolTimer()
     {
-        if (playerModel.qSkillCoolTime > 0)
+        if (playerModel.QSkillCoolTime > 0)
         {
-            playerModel.qSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime), 0, 11);
+            playerModel.QSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime), 0, 11);
         }
-        if (playerModel.wSkillCoolTime > 0)
+        if (playerModel.WSkillCoolTime > 0)
         {
-            playerModel.wSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
+            playerModel.WSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
         }
-        if (playerModel.eSkillCoolTime > 0)
+        if (playerModel.ESkillCoolTime > 0)
         {
-            playerModel.eSkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
+            playerModel.ESkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
         }
-        if (playerModel.rSkillCoolTime > 0)
+        if (playerModel.RSkillCoolTime > 0)
         {
-            playerModel.rSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90);
+            playerModel.RSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90);
         }
     }
     #endregion
@@ -206,10 +206,10 @@ public class Kali : Stat
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance.models.playerModel.playerNowHp = HP;
-        GameManager.Instance.models.playerModel.playerMaxHp = MAX_HP;
-        GameManager.Instance.models.playerModel.playerPD = PD;
-        GameManager.Instance.models.playerModel.playerED = ED;
+        GameManager.Instance.models.playerModel.PlayerNowHp = HP;
+        GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
+        GameManager.Instance.models.playerModel.PlayerPD = PD;
+        GameManager.Instance.models.playerModel.PlayerED = ED;
 
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -539,10 +539,23 @@ public class Kali : Stat
     {
         base.SetModel();
 
-        playerModel.playerNowHp = HP;
-        playerModel.playerMaxHp = MAX_HP;
-        playerModel.playerPD = PD;
-        playerModel.playerED = ED;
+        playerModel.PlayerNowHp = HP;
+        playerModel.PlayerMaxHp = MAX_HP;
+        playerModel.PlayerPD = PD;
+        playerModel.PlayerED = ED;
+        playerModel.PlayerMoveSpeed = MOVE_SPEED;
+        playerModel.PlayerAttackSpeed = ATTACK_SPEED;
+        playerModel.PlayerArmor = ARMOR;
+    }
+    public override void SetStat()
+    {
+        HP = playerModel.PlayerNowHp;
+        MAX_HP = playerModel.PlayerMaxHp;
+        PD = playerModel.PlayerPD;
+        ED = playerModel.PlayerED;
+        MOVE_SPEED = playerModel.PlayerMoveSpeed;
+        ATTACK_SPEED = playerModel.PlayerAttackSpeed;
+        ARMOR = playerModel.PlayerArmor;
     }
     private void MoveToSkillState()
     {
