@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 10
+  alter: {fileID: 1862213974341087658, guid: 7b0d352e3db023d43b4a08eace09f729, type: 3}
 --- !u!1001 &7551983828227844413
 PrefabInstance:
   m_ObjectHideFlags: 0

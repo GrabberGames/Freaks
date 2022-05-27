@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UniRx;
+using UniRx.Triggers;
 
 public class WhiteFreaksController : Stat
 {
@@ -17,6 +20,11 @@ public class WhiteFreaksController : Stat
 
     private Vector3 alterPosition;
 
+    public bool IsBuilding = false;
+
+    private IDisposable arriveStream = default;
+    private Action onArriveCallback = default;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,16 +37,82 @@ public class WhiteFreaksController : Stat
 
         alterPosition = alter.transform.position;
 
+        /*
+        arriveStream = this.UpdateAsObservable()
+            .Select(IsStopped)
+            .DistinctUntilChanged()
+            .ThrottleFrame(3)
+            .Where(stopped => stopped)
+            .Subscribe(stopped => onArriveCallback?.Invoke())
+            .AddTo(this);
+            */
+            
+        arriveStream = this.UpdateAsObservable()
+          .Select(IsStopped)
+          .DistinctUntilChanged()
+          .ThrottleFrame(3)
+          .Where(stopped => stopped)
+          .Subscribe(stopped => Moving())
+          .AddTo(this);
+          
+        
         /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
-      //  BuildingManager.Instance.AlterIsChange -= AlterIsChanged;
-      //  BuildingManager.Instance.AlterIsChange += AlterIsChanged;
+        //  BuildingManager.Instance.AlterIsChange -= AlterIsChanged;
+        //  BuildingManager.Instance.AlterIsChange += AlterIsChanged;
     }
+    /*
+    bool IsArrive = false;
+    private void Update()
+    {
+        if (IsArrive == false)
+        {
+            if (navMeshAgent.velocity.sqrMagnitude >=0.2f && navMeshAgent.remainingDistance <= 0.5f)
+            {
+                Debug.Log("도착했음!");
+                IsArrive = true;
+            }
+              
+        }
+
+    }
+    */
     protected override void Init()
     {
         base.Init();
     }
 
-    
+    private bool IsStopped(Unit unit)
+    {
+        if (!navMeshAgent.pathPending)
+        {
+            if(navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+            {
+                if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    Building buildng;
+    void Moving()
+    {
+        if(IsBuilding == true)
+        {
+            buildng = targetBuilding.GetComponent<Building>();
+            buildng.ChangeBuilding();
+            this.gameObject.SetActive(false);
+            IsBuilding = false;
+            //switch는 이 부분에다가 따로 달자
+            //
+        }
+        else
+        {
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
+        }
+    }
+
+
     /*
     /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.>
     void AlterIsChanged(GameObject go)
@@ -108,7 +182,7 @@ public void OnCollisionEnter(Collision collision)
 */
 
 
-private void ChkNavMesh()
+    private void ChkNavMesh()
 {
  if (navMeshAgent == null)
  {
@@ -116,9 +190,17 @@ private void ChkNavMesh()
  }
 }
 
-    public void SetDestination(Vector3 pos)
+    public void SetDestination(GameObject target, bool isBuilding)
     {
+        if (isBuilding == true)
+            IsBuilding = true;
+        else
+            IsBuilding = false;
+
+        this.targetBuilding = target;
+       
+        
         ChkNavMesh();
-        navMeshAgent.SetDestination(pos);
+        navMeshAgent.SetDestination(new Vector3(target.transform.position.x + 1, target.transform.position.y + 2, target.transform.position.z));
     }
 }

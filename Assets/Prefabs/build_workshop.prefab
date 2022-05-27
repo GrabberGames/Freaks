@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 10
+  alter: {fileID: 1862213974341087658, guid: 7b0d352e3db023d43b4a08eace09f729, type: 3}
 --- !u!54 &9088512040085241664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -75,19 +76,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.0798502, y: 3.559371, z: 3.4112322}
   m_Center: {x: 0.0062499056, y: -0.002667606, z: -0.19170474}
---- !u!114 &9088512040085241670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8278047526354485787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc9a128d99fcb2b4c80226634646e65a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SFXworkshopDestroy: {fileID: 9088512040632933201}
 --- !u!114 &9088512040085241665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +90,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RemainEssence: 0
   connectEssence: {fileID: 0}
+--- !u!114 &9088512040085241670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8278047526354485787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9a128d99fcb2b4c80226634646e65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SFXworkshopDestroy: {fileID: 9088512040632933201}
 --- !u!1 &9088512040632933207
 GameObject:
   m_ObjectHideFlags: 0
