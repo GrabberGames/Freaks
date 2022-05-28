@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
-    static AudioManager a_instance = null;
-    public static AudioManager a_Instance
+    static AudioManager instance = null;
+    public static AudioManager Instance
     {
         get
         {
             Init();
-            return a_instance;
+            return instance;
         }
     }
 
@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     bool SoundIsEnd = false;
     static void Init()
     {
-        if (a_instance == null)
+        if (instance == null)
         {
             GameObject ob_go = GameObject.Find("@AudioManager");
 
@@ -30,7 +30,7 @@ public class AudioManager : MonoBehaviour
                  ob_go.AddComponent<ObjectPooling>();
              }
              DontDestroyOnLoad(ob_go);
-             a_instance = ob_go.GetComponent<AudioManager>();
+             instance = ob_go.GetComponent<AudioManager>();
         }
     }
     public void Stop()
@@ -41,9 +41,9 @@ public class AudioManager : MonoBehaviour
     {
         sfxPlayer.Play();
     }
-    public void Load()
+    public void Load(string hero)
     {
-        object[] tmp = Resources.LoadAll("Audios");
+        object[] tmp = Resources.LoadAll($"Audios/{hero}");
 
         for(int i = 0; i < tmp.Length; i++)
         {
@@ -61,11 +61,10 @@ public class AudioManager : MonoBehaviour
             SoundIsEnd = true;
         return SoundIsEnd;
     }
-    public void Read(string text)
+    public void Read(string hero, string text)
     {
         if (data.Count == 0)
-            Load();
-
+            Load(hero);
 
         var enumData = data.GetEnumerator();
 
@@ -80,8 +79,9 @@ public class AudioManager : MonoBehaviour
         }
         return;
     }
-    private void Start()
+    private void Awake()
     {
-        a_instance = this;
+        instance = this;
+        //Load();
     }
 }
