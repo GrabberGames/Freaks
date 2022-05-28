@@ -86,11 +86,6 @@ namespace WarriorAnims
         //
         private bool isAction = false;
 
-        //skill cooltime variable
-        float t_time = 0.0f;
-        bool press = false;
-        WaitForSeconds seconds = new WaitForSeconds(0.1f);
-
         //skill vfx prefabs 
         public GameObject leftArm;
         GameObject rock = null;
@@ -102,6 +97,16 @@ namespace WarriorAnims
         //Waron Basic Attack Target Object
         GameObject _lockTarget;
 
+        private Vector3 _mouseHitPosition;
+
+        float qTime = .0f;
+        float wTime = .0f;
+        float eTime = .0f;
+        float rTime = .0f;
+
+        int cnt = 0;
+        PlayerModel PlayerModel => PlayerModel;
+
         //Waron Sound Priority Variable & Far Distance Judge
         private int _priority = 0;
         private float _dist = 0f;
@@ -110,114 +115,26 @@ namespace WarriorAnims
             switch (skill)
             {
                 case "Q":
-                    GameManager.Instance.models.playerModel.QSkillCoolTime = 6.0f;
+                    PlayerModel.QSkillCoolTime = 6.0f;
+                    qTime = 6;
                     break;
 
                 case "W":
-                    GameManager.Instance.models.playerModel.WSkillCoolTime = 12.0f;
+                    PlayerModel.WSkillCoolTime = 12.0f;
+                    wTime = 12;
                     break;
 
                 case "E":
-                    GameManager.Instance.models.playerModel.ESkillCoolTime = 14.0f;
+                    PlayerModel.ESkillCoolTime = 14.0f;
+                    eTime = 14;
                     break;
 
                 case "R":
-                    GameManager.Instance.models.playerModel.RSkillCoolTime = 120.0f;
+                    PlayerModel.RSkillCoolTime = 120.0f;
+                    rTime = 120;
                     break;
             }
-            t_time = Mathf.Max(GameManager.Instance.models.playerModel.QSkillCoolTime, GameManager.Instance.models.playerModel.WSkillCoolTime, GameManager.Instance.models.playerModel.ESkillCoolTime, GameManager.Instance.models.playerModel.RSkillCoolTime, t_time);
-            if (press == true)
-            {
-            }
-            else
-            {
-                press = true;
-                StartCoroutine(Skill_CoolTime());
-            }
         }
-        IEnumerator Skill_CoolTime()
-        {
-            int cnt = 0;
-            while (t_time > 0)
-            {
-                if (GameManager.Instance.models.playerModel.QSkillCoolTime >= 0.1f)
-                {
-                    GameManager.Instance.models.playerModel.QSkillCoolTime -= 0.1f;
-                }
-                else
-                {
-                    GameManager.Instance.models.playerModel.QSkillCoolTime = 0f;
-                }
-                if (GameManager.Instance.models.playerModel.WSkillCoolTime >= 0.1f)
-                {
-                    GameManager.Instance.models.playerModel.WSkillCoolTime -= 0.1f;
-                }
-                else
-                {
-                    GameManager.Instance.models.playerModel.WSkillCoolTime = 0f;
-                }
-                if (GameManager.Instance.models.playerModel.ESkillCoolTime >= 0.1f)
-                {
-                    GameManager.Instance.models.playerModel.ESkillCoolTime -= 0.1f;
-                }
-                else
-                {
-                    GameManager.Instance.models.playerModel.ESkillCoolTime = 0f;
-                }
-                if (GameManager.Instance.models.playerModel.RSkillCoolTime >= 0.1f)
-                {
-                    GameManager.Instance.models.playerModel.RSkillCoolTime -= 0.1f;
-                    cnt++;
-                    if(R_particle.activeInHierarchy)
-                    {
-                        if(GameManager.Instance.models.playerModel.RSkillCoolTime < 96.0f && GameManager.Instance.models.playerModel.RSkillCoolTime > 95.9f)
-                        {
-                            StartCoroutine(R_Shader_Value_Change(0.4f));
-                        }
-                        if(GameManager.Instance.models.playerModel.RSkillCoolTime < 95.0f)
-                        {
-                            R_particle.SetActive(false);
-                        }
-                        else
-                        {
-                            if (cnt % 10 == 0)
-                            {
-                                WaronRHitted.Invoke();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    GameManager.Instance.models.playerModel.RSkillCoolTime = 0f;
-                }
-                if (t_time < 0.1f)
-                {
-                    t_time = 0.1f;
-                    press = false;
-                }
-                t_time -= 0.1f;
-                yield return seconds;
-            }
-        }
-
-        public float getTimer(string type)
-        {
-            switch (type)
-            {
-                case "Q":
-                    return GameManager.Instance.models.playerModel.QSkillCoolTime;
-                case "W":
-                    return GameManager.Instance.models.playerModel.WSkillCoolTime;
-                case "E":
-                    return GameManager.Instance.models.playerModel.ESkillCoolTime;
-                case "R":
-                    return GameManager.Instance.models.playerModel.RSkillCoolTime;
-                default:
-                    return 0;
-            }
-        }
-
         protected override void Init()
         {
             base.Init();
@@ -226,8 +143,7 @@ namespace WarriorAnims
 
             if (animator == null)
             {
-                Debug.LogError("ERROR: There is no Animator component for character.");
-                Debug.Break();
+
             }
             else
             {
@@ -251,18 +167,12 @@ namespace WarriorAnims
             agent.updateRotation = false;
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
 
-            GameManager.Instance.models.playerModel.PlayerNowHp = HP;
-            GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
-            GameManager.Instance.models.playerModel.PlayerPD = PD;
-            GameManager.Instance.models.playerModel.PlayerED = ED;
+            PlayerModel.PlayerNowHp = HP;
+            PlayerModel.PlayerMaxHp = MAX_HP;
+            PlayerModel.PlayerPD = PD;
+            PlayerModel.PlayerED = ED;
         }
 
-        //Dead
-        IEnumerator DeadAnimationEnd()
-        {
-            yield return new WaitForSeconds(1f);
-            Destroy(this.gameObject);
-        }
         public override void DeadSignal()
         {
             if (HP <= 0)
@@ -300,6 +210,45 @@ namespace WarriorAnims
                 case PlayerState.Idle:
                     UpdateIdle();
                     break;
+            }
+            CoolTimer();
+        }
+        void CoolTimer()
+        {
+            if (PlayerModel.QSkillCoolTime > 0)
+            {
+                PlayerModel.QSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime), 0, 11);
+            }
+            if (PlayerModel.WSkillCoolTime > 0)
+            {
+                PlayerModel.WSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
+            }
+            if (PlayerModel.ESkillCoolTime > 0)
+            {
+                PlayerModel.ESkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
+            }
+            if (PlayerModel.RSkillCoolTime > 0)
+            {
+                PlayerModel.RSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90); 
+                cnt++;
+                if (R_particle.activeInHierarchy)
+                {
+                    if (PlayerModel.RSkillCoolTime < 96.0f && PlayerModel.RSkillCoolTime > 95.9f)
+                    {
+                        StartCoroutine(R_Shader_Value_Change(0.4f));
+                    }
+                    if (PlayerModel.RSkillCoolTime < 95.0f)
+                    {
+                        R_particle.SetActive(false);
+                    }
+                    else
+                    {
+                        if (cnt % 10 == 0)
+                        {
+                            WaronRHitted.Invoke();
+                        }
+                    }
+                }
             }
         }
         private bool canNormalAttack = true;
@@ -384,7 +333,7 @@ namespace WarriorAnims
 
         private void UpdateMoving()
         {
-            if (_lockTarget != null) //�⺻ ���� �� ����� �ִ�.
+            if (_lockTarget != null) 
             {
                 float distance = (_lockTarget.transform.position - transform.position).magnitude;
 
@@ -438,13 +387,12 @@ namespace WarriorAnims
         void ChangRotate()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask))
             {
-                look_dir = hit.point;
-                look_dir.y = transform.position.y;
-                transform.LookAt(look_dir);
+                _mouseHitPosition = hit.point;
+                Vector3 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z) - transform.position;
+                transform.forward = dir;
             }
         }
         void ChooseAction()
@@ -455,7 +403,7 @@ namespace WarriorAnims
             //Q
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (GameManager.Instance.models.playerModel.QSkillCoolTime > 0.1f)
+                if (PlayerModel.QSkillCoolTime > 0.1f)
                     return;
                 useRootMotion = true; ChangRotate();
                 Activation("Q");
@@ -467,7 +415,7 @@ namespace WarriorAnims
 
             else if (Input.GetKeyDown(KeyCode.W))
             {
-                if (GameManager.Instance.models.playerModel.WSkillCoolTime > 0.1f)
+                if (PlayerModel.WSkillCoolTime > 0.1f)
                     return;
                 useRootMotion = true; ChangRotate();
                 Activation("W");
@@ -478,7 +426,7 @@ namespace WarriorAnims
 
             else if (Input.GetKeyDown(KeyCode.E))
             {
-                if (GameManager.Instance.models.playerModel.ESkillCoolTime > 0.1f)
+                if (PlayerModel.ESkillCoolTime > 0.1f)
                     return;
                 useRootMotion = true; ChangRotate();
                 Activation("E");
@@ -488,7 +436,7 @@ namespace WarriorAnims
             //R
             else if (Input.GetKeyDown(KeyCode.R))
             {
-                if (GameManager.Instance.models.playerModel.RSkillCoolTime > 0.1f)
+                if (PlayerModel.RSkillCoolTime > 0.1f)
                     return;
                 useRootMotion = true; ChangRotate();
                 Activation("R");
@@ -535,7 +483,6 @@ namespace WarriorAnims
         }
         #endregion Q_Skill
 
-
         #region W_Skill
         void LeafOfPride()
         {
@@ -581,7 +528,6 @@ namespace WarriorAnims
         }
 
 #endregion W_Skill
-
 
         #region E_Skill
         void BoldRush()
@@ -723,12 +669,12 @@ namespace WarriorAnims
                     if (_priority == 0 || _priority > 1)
                     {
                         _priority = 1;
-                        _soundname = $"{_name} " + UnityEngine.Random.Range(1, 3);
+                        _soundname = $"{_name} " + UnityEngine.Random.Range(1, 4);
                     }
                     break;
 
             }
-            AudioManager.Instance.Read("Kyle", _soundname);
+            AudioManager.Instance.Read("Warron", _soundname);
         }
 
 

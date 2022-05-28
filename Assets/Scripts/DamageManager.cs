@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DamageManager
 {
+    public Action ChangedHP;
     public void OnAttacked(float value, Stat defender)
     { 
         float damage = Mathf.Max(0, value - defender.ARMOR) * (1 - defender.DECREASE_DAMAGE);
@@ -16,6 +17,7 @@ public class DamageManager
             defender.HP = 0;
             OnDead(defender);
         }
+        ChangedHP.Invoke();
     }
     public void OnDead(Stat defender)
     {

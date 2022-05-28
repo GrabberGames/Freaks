@@ -222,7 +222,6 @@ public class Kali : Stat
         {
             transform.rotation = animator.rootRotation;
             transform.position += animator.deltaPosition;
-            //dir = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         }
     }
     void ChangeRotate()
@@ -231,7 +230,6 @@ public class Kali : Stat
         LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask))
         {
-            Debug.Log(hit.transform.name);
             _mouseHitPosition = hit.point;
             Vector3 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z) - transform.position;
             transform.forward = dir;
