@@ -29,6 +29,9 @@ public class HUDManager : MonoBehaviour
     [Header("Essence")]
     [SerializeField] private EssenceUI essenceUI;
 
+    [Header("WhiteFreaksInfo")]
+    [SerializeField] private WhiteFreaksInfoUI WhiteFreaksInfoUI;
+
     [Header("Skill Slot")]
     [SerializeField] private SkillSlotUI passiveSkillSlot;
     [SerializeField] private SkillSlotUI activeSkillSlotQ;
@@ -106,13 +109,17 @@ public class HUDManager : MonoBehaviour
         essenceUI.Visualization(value);
     }
 
+    public void WhiteFreaksInfoVisualization(int idleCount, int maxCount )
+    {
+        WhiteFreaksInfoUI.Visualization(idleCount, maxCount);
+    }
+
     IEnumerator CoolTimeVisualization()
     {
         while(true)
         {
             yield return null;
             //플레이어에게 받아옴
-
         }        
     }
 

@@ -106,13 +106,13 @@ MonoBehaviour:
     value: -10
   colorFilter:
     overrideState: 0
-    value: {r: 0.8773585, g: 0.47090948, b: 0, a: 1}
+    value: {r: 1, g: 0.8078431, b: 0.8078431, a: 1}
   hueShift:
     overrideState: 0
     value: 0
   saturation:
     overrideState: 0
-    value: 0
+    value: -100
   brightness:
     overrideState: 0
     value: 0
@@ -121,16 +121,16 @@ MonoBehaviour:
     value: 0
   contrast:
     overrideState: 0
-    value: 20
+    value: 83
   mixerRedOutRedIn:
     overrideState: 0
-    value: 181
+    value: -200
   mixerRedOutGreenIn:
     overrideState: 0
-    value: 156
+    value: -200
   mixerRedOutBlueIn:
     overrideState: 0
-    value: 0
+    value: -200
   mixerGreenOutRedIn:
     overrideState: 0
     value: 0
@@ -1423,7 +1423,6 @@ MonoBehaviour:
   - {fileID: -8861971742321946868}
   - {fileID: 2335557978099935761}
   - {fileID: -1289864762411080762}
-  - {fileID: 4538035202563142911}
   - {fileID: -5219308660511563892}
 --- !u!114 &2335557978099935761
 MonoBehaviour:
@@ -1446,19 +1445,19 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 1, g: 0.5, b: 0.5, a: 1}
+    value: {r: 1, g: 0, b: 0, a: 1}
   center:
     overrideState: 1
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.4
+    value: 0.3
   smoothness:
     overrideState: 1
-    value: 1
+    value: 0.6
   roundness:
     overrideState: 1
-    value: 1
+    value: 0.65
   rounded:
     overrideState: 0
     value: 0
@@ -1469,25 +1468,3 @@ MonoBehaviour:
   opacity:
     overrideState: 0
     value: 1
---- !u!114 &4538035202563142911
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
-  m_Name: MotionBlur
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  shutterAngle:
-    overrideState: 1
-    value: 10
-  sampleCount:
-    overrideState: 0
-    value: 32

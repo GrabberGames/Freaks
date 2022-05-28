@@ -16,11 +16,11 @@ public class HeroProfileUI : MonoBehaviour
     {
         switch(hero)
         {
-            case eHeroType.KYLE:
+            case eHeroType.Kyle:
                 kyle.SetActive(true);
                 waron.SetActive(false);
                 break;
-            case eHeroType.WARON:
+            case eHeroType.Waron:
                 waron.SetActive(true);
                 kyle.SetActive(false);
                 break;
@@ -29,7 +29,7 @@ public class HeroProfileUI : MonoBehaviour
                 break;
         }
 
-        nameText.text = hero.ToString();
+        nameText.text = hero.ToString().ToUpper();
     }
 
 }

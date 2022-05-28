@@ -21,6 +21,8 @@ public class HUDController : MonoBehaviour
     void Update()
     {
         HUDManager.Instance.HPVisualization(GameManager.Instance.models.playerModel.PlayerNowHp, GameManager.Instance.models.playerModel.PlayerMaxHp);
+        PostProcessManager.Instance.ActiveWarningMode(GameManager.Instance.models.playerModel.PlayerNowHp <= GameManager.Instance.models.playerModel.PlayerMaxHp * 0.25f);
+        PostProcessManager.Instance.ActiveDeathMode(GameManager.Instance.models.playerModel.PlayerNowHp <= 0.0f);
 
         HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.Q, GameManager.Instance.models.playerModel.QSkillCoolTime, 11.0f);
         HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.W, GameManager.Instance.models.playerModel.WSkillCoolTime, 15.0f);
@@ -28,20 +30,22 @@ public class HUDController : MonoBehaviour
         HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.R, GameManager.Instance.models.playerModel.RSkillCoolTime, 120.0f);
 
         HUDManager.Instance.TimeInfoVisualization(StageManager.Instance.nowPlayTime, StageManager.Instance.beforeSpawnTime, StageManager.Instance.spawnIntervalTime);
+
+        HUDManager.Instance.WhiteFreaksInfoVisualization(WhiteFreaksManager.Instance.idleFreaksCount, WhiteFreaksManager.Instance.allFreaksCount);
     }
 
     public void SetActiveSkillSlot(eHeroType heroType)
     {
         switch(heroType)
         {
-            case eHeroType.WARON:
+            case eHeroType.Waron:
                 for (int i = 0; i < waronSkillIcon.Length; i++)
                 {
                     HUDManager.Instance.SetSkillIcon((HUDManager.eSkillSlotKey)i, waronSkillIcon[i]);
                 }
                 break;
 
-            case eHeroType.KYLE:
+            case eHeroType.Kyle:
                 for (int i = 0; i < waronSkillIcon.Length; i++)
                 {
                     HUDManager.Instance.SetSkillIcon((HUDManager.eSkillSlotKey)i, kyleSkillIcon[i]);
