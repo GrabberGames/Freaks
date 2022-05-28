@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class WhiteFreaksManager : MonoBehaviour
 {
-    private int allFreaksCount = 10;
-    private int idleFreaksCount = 10;
-    private int busyFreaksCount = 0;
+    private int _allFreaksCount = 10;
+    public int allFreaksCount { get => _allFreaksCount; }
+    private int _idleFreaksCount = 10;
+    public int idleFreaksCount { get => _idleFreaksCount; }
+    private int _busyFreaksCount = 0;
+    public int busyFreaksCount { get => _busyFreaksCount; }
 
 
     private static WhiteFreaksManager mInstance;
@@ -24,13 +27,13 @@ public class WhiteFreaksManager : MonoBehaviour
    
     public void increaseIdle()
     {
-        idleFreaksCount++;
-        busyFreaksCount--;
+        _idleFreaksCount++;
+        _busyFreaksCount--;
     }
     public void increaseBusy()
     {
-            busyFreaksCount++;
-            idleFreaksCount--;
+            _busyFreaksCount++;
+            _idleFreaksCount--;
       
     }
     /*
@@ -41,14 +44,14 @@ public class WhiteFreaksManager : MonoBehaviour
     }*/
     public void increaseFreaks(int num)
     {
-        allFreaksCount+=num;
-        idleFreaksCount+=num;
+        _allFreaksCount+=num;
+        _idleFreaksCount+=num;
     }
 
     GameObject whiteFreaks;
     public GameObject GetWhiteFreaks()
     {
-        if (idleFreaksCount == 0)
+        if (_idleFreaksCount == 0)
         {
             SystemMassage.Instance.PrintSystemMassage("명령을 수행할 화이트프릭스가 없습니다.");
             return null;

@@ -29,6 +29,9 @@ public class HUDManager : MonoBehaviour
     [Header("Essence")]
     [SerializeField] private EssenceUI essenceUI;
 
+    [Header("WhiteFreaksInfo")]
+    [SerializeField] private WhiteFreaksInfoUI WhiteFreaksInfoUI;
+
     [Header("Skill Slot")]
     [SerializeField] private SkillSlotUI passiveSkillSlot;
     [SerializeField] private SkillSlotUI activeSkillSlotQ;
@@ -104,6 +107,11 @@ public class HUDManager : MonoBehaviour
     public void EssenceVisualization(int value)
     {
         essenceUI.Visualization(value);
+    }
+
+    public void WhiteFreaksInfoVisualization(int idleCount, int maxCount )
+    {
+        WhiteFreaksInfoUI.Visualization(idleCount, maxCount);
     }
 
     IEnumerator CoolTimeVisualization()
