@@ -112,7 +112,6 @@ public class HUDManager : MonoBehaviour
         {
             yield return null;
             //플레이어에게 받아옴
-
         }        
     }
 

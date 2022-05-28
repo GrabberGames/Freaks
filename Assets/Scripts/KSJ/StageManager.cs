@@ -12,7 +12,7 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] private float _respawnInterval = 1.0f;
 
-    PostProcess _postProcess;
+    PostProcessManager _postProcess;
 
     int _essence;
     bool _isRageMode;
@@ -52,7 +52,7 @@ public class StageManager : MonoBehaviour
     private void Awake()
     {
         _gameController = FindObjectOfType<GameController>();
-        _postProcess = GetComponentInChildren<PostProcess>();
+        _postProcess = GetComponentInChildren<PostProcessManager>();
     }
 
     // Start is called before the first frame update
