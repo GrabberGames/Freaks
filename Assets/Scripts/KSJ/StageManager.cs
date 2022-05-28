@@ -52,7 +52,8 @@ public class StageManager : MonoBehaviour
     private void Awake()
     {
         _gameController = FindObjectOfType<GameController>();
-        _postProcess = GetComponentInChildren<PostProcessManager>();
+        _postProcess = GetComponentInChildren<PostProcessManager>();        
+        AudioManager.Instance.Load(GameManager.Instance.selectHero.ToString());
     }
 
     // Start is called before the first frame update

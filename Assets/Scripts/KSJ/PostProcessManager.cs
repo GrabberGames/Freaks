@@ -162,7 +162,7 @@ public class PostProcessManager : MonoBehaviour
             yield return null;
             tempTime = Time.time - startFadeTime;
 
-            if (tempTime >= fadeInTime)
+            if (tempTime >= warningFadeTime)
             {
                 vignetting.intensity.value = value;
                 break;

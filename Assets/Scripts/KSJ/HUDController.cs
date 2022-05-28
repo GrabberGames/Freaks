@@ -36,14 +36,14 @@ public class HUDController : MonoBehaviour
     {
         switch(heroType)
         {
-            case eHeroType.WARON:
+            case eHeroType.Waron:
                 for (int i = 0; i < waronSkillIcon.Length; i++)
                 {
                     HUDManager.Instance.SetSkillIcon((HUDManager.eSkillSlotKey)i, waronSkillIcon[i]);
                 }
                 break;
 
-            case eHeroType.KYLE:
+            case eHeroType.Kyle:
                 for (int i = 0; i < waronSkillIcon.Length; i++)
                 {
                     HUDManager.Instance.SetSkillIcon((HUDManager.eSkillSlotKey)i, kyleSkillIcon[i]);

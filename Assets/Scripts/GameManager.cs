@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject _player;
 
-    private eHeroType _selectHero = eHeroType.KYLE;
+    private eHeroType _selectHero = eHeroType.Kyle;
     public eHeroType selectHero { get => _selectHero; }
 
 
@@ -57,10 +57,8 @@ public class GameManager : MonoBehaviour
                 _alter = value;
                 AlterIsChange.Invoke(_alter);
        
-                return;
-        
-              
-         }
+                return;                   
+        }
     }
     public Action<GameObject> AlterIsChange = null;
 
@@ -114,5 +112,8 @@ public class GameManager : MonoBehaviour
     }
     */
 
-    public void SetSelectHero(eHeroType value) { _selectHero = value; }
+    public void SetSelectHero(eHeroType value) 
+    {
+        _selectHero = value; 
+    }
 }

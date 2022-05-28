@@ -23,7 +23,7 @@ public struct HeroInfomation
     public Sprite skillIconR;
 }
 
-public enum eHeroType { None, WARON, KYLE }
+public enum eHeroType { None, Waron, Kyle }
 
 public class GameMenuController : MonoBehaviour
 {
@@ -101,14 +101,14 @@ public class GameMenuController : MonoBehaviour
     public void SelectWaron()
     {
         heroAbilitiesUI.SetAbilitiesUI(waronInformation);
-        heroSelectUI.SelectHero(eHeroType.WARON);
-        GameManager.Instance.SetSelectHero(eHeroType.WARON);
+        heroSelectUI.SelectHero(eHeroType.Waron);
+        GameManager.Instance.SetSelectHero(eHeroType.Waron);
     }
     public void SelectKyle()
     {
         heroAbilitiesUI.SetAbilitiesUI(kyleInformation);
-        heroSelectUI.SelectHero(eHeroType.KYLE);
-        GameManager.Instance.SetSelectHero(eHeroType.KYLE);
+        heroSelectUI.SelectHero(eHeroType.Kyle);
+        GameManager.Instance.SetSelectHero(eHeroType.Kyle);
     }
     #endregion
 
