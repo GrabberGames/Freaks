@@ -240,7 +240,7 @@ public class Kali : Stat
     }
     public void SoundPlay(string _name, int idx = 0)
     {
-        if (AudioManager.a_Instance.Check() == true)
+        if (AudioManager.Instance.Check() == true)
             _priority = 0;
         string _soundname = "";
         switch (_name)
@@ -297,7 +297,7 @@ public class Kali : Stat
 
         }
         //실행하기.
-        AudioManager.a_Instance.Read(_soundname);
+        AudioManager.Instance.Read("Kyle", _soundname);
     }
 
     public override void DeadSignal()

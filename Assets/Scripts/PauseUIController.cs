@@ -25,7 +25,7 @@ public class PauseUIController : MonoBehaviour
             {
                 if(canActiveMenu)
                 {
-                    AudioManager.a_Instance.Stop();
+                    AudioManager.Instance.Stop();
                     Time.timeScale = 0; // Game Pause
 
                     isMenuON = true;
@@ -36,7 +36,7 @@ public class PauseUIController : MonoBehaviour
             else
             {
                 MenuWinOFF();
-                AudioManager.a_Instance.Play();
+                AudioManager.Instance.Play();
             }
         }
 
