@@ -31,7 +31,7 @@ public class WorkshopController : MonoBehaviour
     }
     public void StartDigging()
     {
-        StartCoroutine(DiggleTest());
+        StartCoroutine(Diggle());
     }
 
 
@@ -102,7 +102,7 @@ public class WorkshopController : MonoBehaviour
        
     }
 
-    IEnumerator DiggleTest()
+    IEnumerator Diggle()
     {
         float startTime = Time.time;
 

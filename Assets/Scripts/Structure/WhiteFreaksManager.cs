@@ -21,7 +21,7 @@ public class WhiteFreaksManager : MonoBehaviour
             return mInstance;
         }
     }
-
+   
     public void increaseIdle()
     {
         idleFreaksCount++;
@@ -33,10 +33,16 @@ public class WhiteFreaksManager : MonoBehaviour
             idleFreaksCount--;
       
     }
+    /*
     public void increaseFreaks()
     {
         allFreaksCount++;
         idleFreaksCount++;
+    }*/
+    public void increaseFreaks(int num)
+    {
+        allFreaksCount+=num;
+        idleFreaksCount+=num;
     }
 
     GameObject whiteFreaks;
