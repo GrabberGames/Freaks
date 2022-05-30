@@ -14,10 +14,6 @@ public class WhiteFreaksController : Stat
     [SerializeField]
     public GameObject alter;
 
-    private bool isMining = false;
-    private bool isBuilding= false;
-    private bool isFinish = false;
-
     private Vector3 alterPosition;
 
     public bool IsBuilding = false;
@@ -183,24 +179,22 @@ public void OnCollisionEnter(Collision collision)
 
 
     private void ChkNavMesh()
-{
- if (navMeshAgent == null)
- {
+    {
+        if (navMeshAgent == null)
+        {
      navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
- }
-}
+        }
+    }
 
     public void SetDestination(GameObject target, bool isBuilding)
     {
-        if (isBuilding == true)
-            IsBuilding = true;
-        else
-            IsBuilding = false;
-
+        IsBuilding = isBuilding;
         this.targetBuilding = target;
        
         
         ChkNavMesh();
         navMeshAgent.SetDestination(new Vector3(target.transform.position.x + 1, target.transform.position.y + 2, target.transform.position.z));
     }
+
+
 }

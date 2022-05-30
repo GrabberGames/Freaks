@@ -51,7 +51,7 @@ public class Building : MonoBehaviour
                 mr = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
                 mr.material.shader = Shader.Find("UI/Unlit/Transparent");
 
-                c = new Color(1f, 1f, 1f, 0.5f);
+                c = new Color(1f, 1f, 1f, 0.2f);
                 mr.material.color = c;
 
 
@@ -97,12 +97,14 @@ public class Building : MonoBehaviour
 
     public void GoBuild()
     {
-      
+
         whiteFreaks = WhiteFreaksManager.Instance.GetWhiteFreaks();
         whiteFreaks.transform.position = alter.transform.position;
        whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(this.gameObject,true);
 
-   
+        if (objectName.CompareTo("Workshop") ==0)
+            transform.GetChild(1).gameObject.GetComponent<WorkshopController>().SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
+
     }
 
     public void GoAlter()
@@ -111,24 +113,38 @@ public class Building : MonoBehaviour
         whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(alter,false);
     }
 
-
+    AudioSource SFXBuilding;
+    AudioSource SFXBuildingComplete;
     public void ChangeBuilding()
     {
+
+
         switch (objectName)
         {
             case "Alter":
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(1).gameObject.SetActive(true);
                 StartCoroutine(CompleteTimer());
+
+                SFXBuilding = transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.GetComponent<AudioSource>();
+                SFXBuildingComplete = transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.GetComponent<AudioSource>();
+                SFXBuilding.Play();
                 break;
             case "Whitetower":
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(2).gameObject.SetActive(true);
                 StartCoroutine(CompleteTimer());
+
+                SFXBuilding = transform.GetChild(4).gameObject.transform.GetChild(0).gameObject.GetComponent<AudioSource>();
+                SFXBuildingComplete = transform.GetChild(4).gameObject.transform.GetChild(1).gameObject.GetComponent<AudioSource>();
+                SFXBuilding.Play();
+
                 break;
             case "Workshop":
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(1).gameObject.SetActive(true);
+                SFXBuilding = transform.GetChild(2).gameObject.GetComponent<AudioSource>();
+                SFXBuilding.Play();
 
                 transform.GetChild(1).gameObject.GetComponent<WorkshopController>().StartDigging();
                 break;
@@ -156,14 +172,22 @@ public class Building : MonoBehaviour
                 AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
                 alterAttack.bulletSpawnNewSetting();
 
-                BuildingManager.Instance.AlterIsChange.Invoke(this.gameObject);
+                BuildingManager.Instance.AlterIsChange.Invoke(alter);
                 WhiteFreaksManager.Instance.ReturnWhiteFreaks(whiteFreaks);
+
+                SFXBuilding.Stop();
+                SFXBuildingComplete.Play();
+
                 ReturnBuildingPool();
                 break;
             case "Whitetower":
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(2).gameObject.SetActive(false);
                 transform.GetChild(1).gameObject.SetActive(true);
+
+                SFXBuilding.Stop();
+                SFXBuildingComplete.Play();
+
                 break;
             default:
                 break;
