@@ -105,7 +105,7 @@ namespace WarriorAnims
         float rTime = .0f;
 
         int cnt = 0;
-        PlayerModel PlayerModel => PlayerModel;
+        PlayerModel PlayerModel => GameManager.Instance.models.playerModel;
 
         //Waron Sound Priority Variable & Far Distance Judge
         private int _priority = 0;
