@@ -7,6 +7,7 @@ public class WorkshopState : Stat
 
     public AudioSource SFXworkshopDestroy;
 
+
     protected override void Init()
     {
         base.Init();
@@ -20,11 +21,13 @@ public class WorkshopState : Stat
     {
         if (HP <= 0)
         {
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
             Disappear();
             this.gameObject.GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()
                 .SetRemainEssence(this.gameObject.GetComponent<WorkshopController>().GetRemainEssence());
 
             this.gameObject.GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
+       
 
         }
     }
@@ -68,8 +71,7 @@ public class WorkshopState : Stat
             propertyBlock.SetColor("_Color", c);
             renderer.SetPropertyBlock(propertyBlock);
 
-
-            yield return new WaitForSeconds(0.05f);
+            yield return YieldInstructionCache.WaitForSeconds(0.05f);
         }
 
         this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();

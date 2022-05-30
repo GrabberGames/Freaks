@@ -31,7 +31,8 @@ public class TowerAttack : Stat
     {
         if (HP <= 0)
         {
-            StartCoroutine("Dissolve"); //°Ç¹°ºØ±«
+            SFXBlackTowerDestroy.Play();
+            StartCoroutine(Dissolve()); //°Ç¹°ºØ±«
             Destroy(this.gameObject);
         }
     }
@@ -63,6 +64,14 @@ public class TowerAttack : Stat
                 isAttack = true;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            SFXBlackTowerDestroy.Play();
+            StartCoroutine(Dissolve());
+        }
+
+
     }
 
 
@@ -83,7 +92,7 @@ public class TowerAttack : Stat
 
     IEnumerator Dissolve()
     {
-        SFXBlackTowerDestroy.Play();
+     
         MeshRenderer Sr1 = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
         MeshRenderer Sr2 = transform.GetChild(1).gameObject.GetComponent<MeshRenderer>();
         float threshold1;
@@ -99,10 +108,9 @@ public class TowerAttack : Stat
             Sr1.material.SetFloat("_Dissolve", threshold1);
             Sr2.material.SetFloat("_Dissolve", threshold1);
 
-       
-               
 
-            yield return new WaitForSeconds(0.01f);
+
+            yield return YieldInstructionCache.WaitForSeconds(0.03f);
         }
         Destroy(transform.GetChild(0).gameObject.transform.GetChild(0).gameObject); //ÆÄÆ¼Å¬ ½Ã½ºÅÛ Á¦°Å
         Destroy(transform.GetChild(2).gameObject);

@@ -16,8 +16,8 @@ public class WorkshopController : MonoBehaviour
 
     Renderer renderer;
     MaterialPropertyBlock propertyBlock;
- 
 
+    private WhiteFreaksController ConnectingFreaks;
 
 
     public int GetRemainEssence()
@@ -86,6 +86,10 @@ public class WorkshopController : MonoBehaviour
         else
         {
             this.GetComponent<WorkshopState>().Disappear();
+
+            ConnectingFreaks.gameObject.SetActive(true);
+            ConnectingFreaks.SetDestination(GameManager.Instance.Alter, false);
+
             connectEssence.gameObject.SetActive(false);
         }
     }
@@ -112,6 +116,9 @@ public class WorkshopController : MonoBehaviour
             {
                 this.GetComponent<WorkshopState>().Disappear();
                 connectEssence.gameObject.SetActive(false);
+
+              //  ConnectingFreaks.SetDestination(GameManager.Instance.Alter,false);
+
                 break;
             }
 
@@ -122,5 +129,11 @@ public class WorkshopController : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+
+    public void SetConnetingFreaks(WhiteFreaksController whiteFreaksController)
+    {
+        this.ConnectingFreaks = whiteFreaksController;
     }
 }
