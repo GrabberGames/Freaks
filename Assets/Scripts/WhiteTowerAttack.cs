@@ -164,8 +164,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
 
             transform.gameObject.GetComponent<MeshRenderer>().material.color = c;
 
-
-            yield return new WaitForSeconds(0.03f);
+            yield return YieldInstructionCache.WaitForSeconds(0.03f);
         }
         this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();
 
