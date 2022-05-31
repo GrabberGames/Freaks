@@ -88,24 +88,28 @@ public class ConstructionPreviewManager : MonoBehaviour
     #region 버튼 조작용 함수 제작
     public void OnAlterConstructionPreview()
     {
-        if (StageManager.Instance.ChkEssence(600))
-            OnConstructionPreview(eBuilding.Alter);
-        else
-            SystemMassage.Instance.PrintSystemMassage("필요한 정수가 부족합니다.");
+        ConstructionPreview(eBuilding.Alter, 600);
     }
 
     public void OnWhiteTowerConstructionPreview()
     {
-        if (StageManager.Instance.ChkEssence(600))
-            OnConstructionPreview(eBuilding.WhiteTower);
-        else
-            SystemMassage.Instance.PrintSystemMassage("필요한 정수가 부족합니다.");
+        ConstructionPreview(eBuilding.WhiteTower, 600);
     }
 
     public void OnWorkshopConstructionPreview()
     {
-        if (StageManager.Instance.ChkEssence(0))
-            OnConstructionPreview(eBuilding.Workshop);
+        ConstructionPreview(eBuilding.Workshop, 0);
+    }
+
+    private void ConstructionPreview(eBuilding buildingType, int price)
+    {
+        if (StageManager.Instance.ChkEssence(price))
+        {
+            if(!WhiteFreaksManager.Instance.idleFreaksCount.Equals(0))
+                OnConstructionPreview(buildingType);
+            else
+                SystemMassage.Instance.PrintSystemMassage("명령을 수행할 화이트프릭스가 없습니다.");
+        }
         else
             SystemMassage.Instance.PrintSystemMassage("필요한 정수가 부족합니다.");
     }
