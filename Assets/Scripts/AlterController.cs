@@ -31,7 +31,7 @@ public class AlterController : MonoBehaviour, DamageService, HealthService, Inte
 
         BuildRange = this.gameObject.transform.GetChild(2).gameObject;
         BuildRange.SetActive(false); //�Ǽ����ɹ��� ��Ȱ��ȭ
-
+        this.gameObject.transform.GetChild(4).gameObject.SetActive(false);
     }
 
 

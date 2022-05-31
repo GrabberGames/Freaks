@@ -13,7 +13,7 @@ public class Building : MonoBehaviour
     MeshRenderer mr;
     Color c;
 
-     private GameObject alter;
+     private static GameObject alter;
     public void Init()
     {
         alter = GameManager.Instance.Alter;
@@ -36,6 +36,7 @@ public class Building : MonoBehaviour
                 // transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false);
 
                 transform.GetChild(1).gameObject.SetActive(false);
+                transform.GetChild(3).gameObject.SetActive(false);
                 GoBuild();
                 break;
 
@@ -59,7 +60,7 @@ public class Building : MonoBehaviour
                 mr.material.shader = Shader.Find("UI/Unlit/Transparent");
                 mr.material.color = c;
 
-
+   
                 transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
                 transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false);
@@ -69,7 +70,7 @@ public class Building : MonoBehaviour
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetChild(1).gameObject.SetActive(false);
                 transform.GetChild(2).gameObject.SetActive(false);
-
+                transform.GetChild(5).gameObject.SetActive(false);
                 GoBuild();
 
                 //StartCoroutine("Test");
@@ -127,7 +128,7 @@ public class Building : MonoBehaviour
                 StartCoroutine(CompleteTimer());
 
                 SFXBuilding = transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.GetComponent<AudioSource>();
-                SFXBuildingComplete = transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.GetComponent<AudioSource>();
+                SFXBuildingComplete = alter.gameObject.transform.GetChild(3).gameObject.transform.GetChild(2).gameObject.GetComponent<AudioSource>();
                 SFXBuilding.Play();
                 break;
             case "Whitetower":
@@ -154,10 +155,11 @@ public class Building : MonoBehaviour
        
 
     }
-    
 
-
-
+    /// <summary>
+    /// 건물이 모두 완성되었을때 실행되는 코루틴입니다.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CompleteTimer()
     {
 
@@ -166,21 +168,15 @@ public class Building : MonoBehaviour
         switch (objectName)
         {
             case "Alter":
-          
-                alter.transform.position = this.transform.position;
-
-                AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
-                alterAttack.bulletSpawnNewSetting();
-
-                BuildingManager.Instance.AlterIsChange.Invoke(alter);
                 WhiteFreaksManager.Instance.ReturnWhiteFreaks(whiteFreaks);
 
-                SFXBuilding.Stop();
-                SFXBuildingComplete.Play();
+                StartCoroutine(ChangeAlter());
 
-                ReturnBuildingPool();
+
                 break;
             case "Whitetower":
+                transform.GetChild(5).gameObject.SetActive(true);
+
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetChild(2).gameObject.SetActive(false);
                 transform.GetChild(1).gameObject.SetActive(true);
@@ -188,19 +184,51 @@ public class Building : MonoBehaviour
                 SFXBuilding.Stop();
                 SFXBuildingComplete.Play();
 
+                whiteFreaks.SetActive(true);
+                GoAlter();
+
                 break;
             default:
                 break;
 
         }
 
-        whiteFreaks.SetActive(true);
-        GoAlter();
+   
     }
 
     public void ReturnBuildingPool()
     {
         BuildingPooling.ReturnObject(this.gameObject);
+    }
+
+
+ 
+
+    IEnumerator ChangeAlter()
+    {
+        SFXBuilding.Stop();
+        yield return YieldInstructionCache.WaitForSeconds(0.02f);
+        SFXBuildingComplete.Play();
+        alter.transform.GetChild(4).gameObject.SetActive(true);
+        transform.GetChild(3).gameObject.SetActive(true);
+        yield return YieldInstructionCache.WaitForSeconds(0.7f);
+
+
+        alter.transform.position = this.transform.position;
+        alter.transform.GetChild(4).gameObject.SetActive(false);
+
+
+    
+        //yield return YieldInstructionCache.WaitForSeconds(SFXBuildingComplete.time);
+
+
+        AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
+        alterAttack.bulletSpawnNewSetting();
+
+        BuildingManager.Instance.AlterIsChange.Invoke(alter);
+
+
+        ReturnBuildingPool();
     }
 
 

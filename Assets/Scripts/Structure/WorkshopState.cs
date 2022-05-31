@@ -59,14 +59,12 @@ public class WorkshopState : Stat
         mr.material.shader = Shader.Find("UI/Unlit/Transparent");
 
         float  f;
-        Color c;
-
+        Color c = this.gameObject.GetComponent<WorkshopController>().GetColor();
         for (int i = 50; i >= 0; i--)
         {
             f = i / 50.0f;
 
 
-            c = this.gameObject.GetComponent<WorkshopController>().GetColor();
             c.a = f;
             propertyBlock.SetColor("_Color", c);
             renderer.SetPropertyBlock(propertyBlock);
