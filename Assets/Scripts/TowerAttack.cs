@@ -112,9 +112,11 @@ public class TowerAttack : Stat
 
             yield return YieldInstructionCache.WaitForSeconds(0.03f);
         }
-        Destroy(transform.GetChild(0).gameObject.transform.GetChild(0).gameObject); //파티클 시스템 제거
-        Destroy(transform.GetChild(2).gameObject);
-      
+        transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(2).gameObject.SetActive(false);
+       // Destroy(transform.GetChild(0).gameObject.transform.GetChild(0).gameObject); //파티클 시스템 제거
+       // Destroy(transform.GetChild(2).gameObject);
+
     }
 
 
