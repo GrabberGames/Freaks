@@ -6,10 +6,7 @@ public class AlterBullet : MonoBehaviour
 {
     public ParticleSystem[] fx_Alter;
     public GameObject[] fx_AlterPre;
-    /*
-    [HideInInspector]
-    public GameObject enemy;
-    */
+
     private GameObject enemy;
 
     private Vector3 enemyPos;
@@ -81,7 +78,7 @@ public class AlterBullet : MonoBehaviour
 
     IEnumerator StartProjectile(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return YieldInstructionCache.WaitForSeconds(waitTime);
         this.gameObject.SetActive(true);      
         fx_AlterPre[0].SetActive(true);
         fx_Alter[0] = fx_AlterPre[0].GetComponent<ParticleSystem>();
@@ -90,7 +87,7 @@ public class AlterBullet : MonoBehaviour
     }
     IEnumerator DeleteThis()
     {
-        yield return new WaitForSeconds(fx_Alter[1].main.startLifetimeMultiplier);
+        yield return YieldInstructionCache.WaitForSeconds(fx_Alter[1].main.startLifetimeMultiplier);
         fx_AlterPre[1].SetActive(false);
         State = 3;
 

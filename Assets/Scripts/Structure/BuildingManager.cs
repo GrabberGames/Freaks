@@ -103,14 +103,14 @@ public class BuildingManager : MonoBehaviour
         switch (buildingType)
         {
             case eBuilding.Alter:
-                go = BuildingPooling.GetObject("Building_alter");
+                go = BuildingPooling.instance.GetObject("build_alter");
                 go.transform.position = pos;
                 go.SetActive(true);
                 go.GetComponent<Building>().Init();
 
                 break;
             case eBuilding.WhiteTower:
-                go = BuildingPooling.GetObject("Building_whitetower");
+                go = BuildingPooling.instance.GetObject("build_whitetower");
                 go.transform.position = pos;
                 whiteTowerList.Add(go.transform.GetChild(1).gameObject.GetComponent<WhiteTowerAttack>());
                 buildingRangeList.Add(go.transform.GetChild(3).gameObject.GetComponent<BuildingRange>());
@@ -120,7 +120,7 @@ public class BuildingManager : MonoBehaviour
 
                 break;
             case eBuilding.Workshop:
-                go = BuildingPooling.GetObject("Building_workshop");
+                go = BuildingPooling.instance.GetObject("build_workshop");
                 go.transform.position = pos;
                 go.SetActive(true);
                 go.GetComponent<Building>().Init();

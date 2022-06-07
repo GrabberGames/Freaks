@@ -8,9 +8,11 @@ public class WorkshopState : Stat
     public AudioSource SFXworkshopDestroy;
 
 
+    GameObject go;
     protected override void Init()
     {
         base.Init();
+        go = this.gameObject;
 
     }
     void Start()
@@ -21,12 +23,12 @@ public class WorkshopState : Stat
     {
         if (HP <= 0)
         {
-            WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
             Disappear();
-            this.gameObject.GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()
-                .SetRemainEssence(this.gameObject.GetComponent<WorkshopController>().GetRemainEssence());
+            GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()
+                .SetRemainEssence(GetComponent<WorkshopController>().GetRemainEssence());
 
-            this.gameObject.GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
+            GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
        
 
         }
@@ -50,16 +52,13 @@ public class WorkshopState : Stat
     MaterialPropertyBlock propertyBlock;
     IEnumerator FadeOut()
     {
-        renderer = this.gameObject.GetComponent<Renderer>();
+        renderer = GetComponent<Renderer>();
         propertyBlock = new MaterialPropertyBlock();
 
        // SFXworkshopDestroy.Play();
 
-        MeshRenderer mr = this.gameObject.GetComponent<MeshRenderer>();
-        mr.material.shader = Shader.Find("UI/Unlit/Transparent");
-
         float  f;
-        Color c = this.gameObject.GetComponent<WorkshopController>().GetColor();
+        Color c = GetComponent<WorkshopController>().GetColor();
         for (int i = 50; i >= 0; i--)
         {
             f = i / 50.0f;
@@ -72,7 +71,7 @@ public class WorkshopState : Stat
             yield return YieldInstructionCache.WaitForSeconds(0.05f);
         }
 
-        this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();
+       GetComponentInParent<Building>().ReturnBuildingPool();
     }
 
 

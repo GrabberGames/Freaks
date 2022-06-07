@@ -23,7 +23,7 @@ public class EssenceSpot : MonoBehaviour
 
     public void SetRemainEssence(int essence)
     {
-        this.RemainEssence = essence;
+        RemainEssence = essence;
         SetColor();
     }
 

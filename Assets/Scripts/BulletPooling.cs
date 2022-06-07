@@ -68,9 +68,9 @@ public class BulletPooling : MonoBehaviour
 
     }
 
+    GameObject newObj;
     private GameObject CreateNewObject(string Obj)
     {
-        GameObject newObj;
         switch (Obj)
         {
             case "AlterBullet":
@@ -98,44 +98,32 @@ public class BulletPooling : MonoBehaviour
 
 
 
-    public  static GameObject GetObject(string objectName)
+    public GameObject GetObject(string objectName)
     {
         switch (objectName) {
             case ("AlterBullet"):
-                if (Instance.AlterBulletQueue.Count > 0)
-                {
-                    var obj = instance.AlterBulletQueue.Dequeue();
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
-                else
-                {
-                    return null;
-                }
+                if (Instance.AlterBulletQueue.Count <= 0)
+                    instance.AlterBulletQueue.Enqueue(CreateNewObject("AlterBullet"));
+
+                newObj = instance.AlterBulletQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
 
             case ("WhiteTowerBullet"):
-                if (Instance.WhiteBulletQueue.Count > 0)
-                {
-                    var obj = instance.WhiteBulletQueue.Dequeue();
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
-                else
-                 {
-                    return null;
-                 }
+                if (Instance.WhiteBulletQueue.Count <= 0)
+                    instance.WhiteBulletQueue.Enqueue(CreateNewObject("WhiteTowerBullet"));
+
+                newObj = instance.WhiteBulletQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
 
             case ("BlackTowerBullet"):
-                if (Instance.AlterBulletQueue.Count > 0)
-                {
-                    var obj = instance.BlackBulletQueue.Dequeue();
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
-                else
-                {
-                    return null;
-                }
+                if (Instance.AlterBulletQueue.Count <= 0)
+                    instance.BlackBulletQueue.Enqueue(CreateNewObject("BlackTowerBullet"));
+
+                newObj = instance.BlackBulletQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
 
             default:
                 return null;
@@ -156,7 +144,7 @@ public class BulletPooling : MonoBehaviour
                 Instance.WhiteBulletQueue.Enqueue(obj);
                 break;
             
-            case ("BlackTowerBullet"):
+            case ("TowerBullet"):
                 Instance.BlackBulletQueue.Enqueue(obj);
                 break;
             

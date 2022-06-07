@@ -27,7 +27,7 @@ public class WorkshopController : MonoBehaviour
 
     public GameObject GetConnectEssence()
     {
-        return this.connectEssence;
+        return connectEssence;
     }
     public void StartDigging()
     {
@@ -68,8 +68,6 @@ public class WorkshopController : MonoBehaviour
     {
         if (RemainEssence >= 501)
         {
-         
-     
             propertyBlock.SetColor("_Color", large);
             renderer.SetPropertyBlock(propertyBlock);
         }
@@ -85,7 +83,7 @@ public class WorkshopController : MonoBehaviour
         }
         else
         {
-            this.GetComponent<WorkshopState>().Disappear();
+            GetComponent<WorkshopState>().Disappear();
 
             ConnectingFreaks.gameObject.SetActive(true);
             ConnectingFreaks.SetDestination(GameManager.Instance.Alter, false);
@@ -96,10 +94,10 @@ public class WorkshopController : MonoBehaviour
 
     public void SetConnectEssence(GameObject go)
     {
-        renderer = this.gameObject.GetComponent<Renderer>();
+        renderer = GetComponent<Renderer>();
         propertyBlock = new MaterialPropertyBlock();
         connectEssence = go;
-        this.RemainEssence = go.GetComponent<EssenceSpot>().GetRemainEssence();
+        RemainEssence = go.GetComponent<EssenceSpot>().GetRemainEssence();
         go.SetActive(false);
         SetColor();
 
@@ -116,9 +114,6 @@ public class WorkshopController : MonoBehaviour
             {
                 this.GetComponent<WorkshopState>().Disappear();
                 connectEssence.gameObject.SetActive(false);
-
-              //  ConnectingFreaks.SetDestination(GameManager.Instance.Alter,false);
-
                 break;
             }
 
@@ -134,6 +129,6 @@ public class WorkshopController : MonoBehaviour
 
     public void SetConnetingFreaks(WhiteFreaksController whiteFreaksController)
     {
-        this.ConnectingFreaks = whiteFreaksController;
+        ConnectingFreaks = whiteFreaksController;
     }
 }

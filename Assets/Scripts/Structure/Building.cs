@@ -13,11 +13,13 @@ public class Building : MonoBehaviour
     MeshRenderer mr;
     Color c;
 
+    GameObject go;
      private static GameObject alter;
     public void Init()
     {
+        go = this.gameObject;
         alter = GameManager.Instance.Alter;
-        switch (this.gameObject.name)
+        switch (go.name)
         {
             case "build_alter":
                 objectName = "Alter";
@@ -101,7 +103,7 @@ public class Building : MonoBehaviour
 
         whiteFreaks = WhiteFreaksManager.Instance.GetWhiteFreaks();
         whiteFreaks.transform.position = alter.transform.position;
-       whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(this.gameObject,true);
+       whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(go,true);
 
         if (objectName.CompareTo("Workshop") ==0)
             transform.GetChild(1).gameObject.GetComponent<WorkshopController>().SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
@@ -198,7 +200,9 @@ public class Building : MonoBehaviour
 
     public void ReturnBuildingPool()
     {
-        BuildingPooling.ReturnObject(this.gameObject);
+       // Debug.Log("Return BUilding Name = " + go.name);
+        BuildingPooling.instance.ReturnObject(go);
+        Debug.Log("Return BUilding Name = " + go.name);
     }
 
 
@@ -216,11 +220,6 @@ public class Building : MonoBehaviour
 
         alter.transform.position = this.transform.position;
         alter.transform.GetChild(4).gameObject.SetActive(false);
-
-
-    
-        //yield return YieldInstructionCache.WaitForSeconds(SFXBuildingComplete.time);
-
 
         AlterAttack alterAttack = alter.GetComponent<AlterAttack>();
         alterAttack.bulletSpawnNewSetting();

@@ -68,7 +68,7 @@ public class AlterAttack : Stat
     {
 
         FX_Alter_Emit.Play(true);
-        yield return new WaitForSeconds(1f); //¿ø·¡ 1.45f
+        yield return YieldInstructionCache.WaitForSeconds(1f);
         FX_Alter_Emit.Play(false);
         FX_Alter_Smoke.Play(true);
         FX_Alter_Smoke.transform.position = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
@@ -77,13 +77,13 @@ public class AlterAttack : Stat
 
         SFXAlterAttack.Play();
 
-        bullet= BulletPooling.GetObject("AlterBullet");
+        bullet= BulletPooling.instance.GetObject("AlterBullet");
         bullet.GetComponent<AlterBullet>().InitSetting(PD, enemy, bulletSpawnPosition);
         bullet.SetActive(true);
-
-        yield return new WaitForSeconds(FX_Alter_Smoke.main.startDelayMultiplier);
+        yield return YieldInstructionCache.WaitForSeconds(FX_Alter_Smoke.main.startDelayMultiplier);
         FX_Alter_Smoke.Play(false);
-        yield return new WaitForSeconds(AttackPerSeconds - FX_Alter_Emit.main.startDelayMultiplier);
+        yield return YieldInstructionCache.WaitForSeconds(AttackPerSeconds - FX_Alter_Emit.main.startDelayMultiplier);
+
 
         isAttack = false;
 

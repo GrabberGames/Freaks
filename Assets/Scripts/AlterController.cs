@@ -23,38 +23,22 @@ public class AlterController : MonoBehaviour, DamageService, HealthService, Inte
 
     private GameObject BuildRange;
 
-    private void Start() //������Ʈ Ǯ������ ���͸� �������ִ� �Լ��Դϴ�.
+    private void Start() 
     {
-        //if (ObjectPooling.instance.Alter == null)
-         //   ObjectPooling.instance.Alter_Setting(this.gameObject);
-
-
-        BuildRange = this.gameObject.transform.GetChild(2).gameObject;
-        BuildRange.SetActive(false); //�Ǽ����ɹ��� ��Ȱ��ȭ
-        this.gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        BuildRange = transform.GetChild(2).gameObject;
+        BuildRange.SetActive(false); 
+        transform.GetChild(4).gameObject.SetActive(false);
     }
-
-
-
-
-
-
-
-
-
-
-
+    
     public void DamageTaken(float damageTaken)
     {
         healthPoint -= damageTaken;
     }
 
-
     public float GetCurrentHP()
     {
         return healthPoint;
     }
-
 
     public void returnedBusyFreeks()
     {
@@ -65,28 +49,18 @@ public class AlterController : MonoBehaviour, DamageService, HealthService, Inte
     {
         SFXAlterDestroy.Play();
         Instantiate(VFXAlterDestroy);
-        yield return new WaitForSeconds(2.5f);
-        Destroy(transform.GetChild(0).gameObject);
+        yield return YieldInstructionCache.WaitForSeconds(2.5f);
+        Destroy(transform.GetChild(0).gameObject); //사라지게할것인가
     }
 
     public Vector3 getAlterPosition()
     {
-        return this.gameObject.transform.position;
+        return transform.position;
     }
 
     public float getAlterRange()
     {
-        return this.gameObject.GetComponent<SphereCollider>().radius;
-    }
-
-    public void AlterRangeON()
-    {
-        BuildRange.SetActive(true);
-    }
-
-    public void AlterRangeOFF()
-    {
-        BuildRange.SetActive(false);
+        return GetComponent<SphereCollider>().radius;
     }
 
     public void BuildingRangeON(bool check)
