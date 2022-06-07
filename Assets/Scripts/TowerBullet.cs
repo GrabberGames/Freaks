@@ -89,7 +89,7 @@ public class TowerBullet : MonoBehaviour
 
     IEnumerator StartProjectile(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return YieldInstructionCache.WaitForSeconds(waitTime);
         fx_blackTowerPre[0].SetActive(true);
         fx_blackTower[0] = fx_blackTowerPre[0].GetComponent<ParticleSystem>();
         fx_blackTower[0].Play(true);
@@ -99,7 +99,7 @@ public class TowerBullet : MonoBehaviour
 
     IEnumerator DeleteThis()
     {
-        yield return new WaitForSeconds(fx_blackTower[1].main.startLifetimeMultiplier); 
+        yield return YieldInstructionCache.WaitForSeconds(fx_blackTower[1].main.startLifetimeMultiplier);
         fx_blackTowerPre[1].SetActive(false);
         State = 3;
         /*

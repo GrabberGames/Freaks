@@ -15,14 +15,15 @@ public class WhiteTowerBullet : MonoBehaviour
 
     private bool isCrushed = false;
     float _damage;
+    GameObject go;
 
     public void InitSetting(float damage, GameObject blackFreaks, Vector3 bulletSpawnPosition)
     {
         _damage = damage;
-   
+        go = this.gameObject;
         BlackFreaks = blackFreaks;
         StartCoroutine(StartProjectile(0.5f));
-        this.transform.position = bulletSpawnPosition;
+        transform.position = bulletSpawnPosition;
     
 
     }
@@ -77,8 +78,9 @@ public class WhiteTowerBullet : MonoBehaviour
 
     IEnumerator StartProjectile(float waitTime)
     {
-        this.gameObject.SetActive(true);
-        yield return new WaitForSeconds(waitTime);
+        go.SetActive(true);
+        yield return YieldInstructionCache.WaitForSeconds(waitTime);
+
         fx_whiteTowerPre[0].SetActive(true);
         fx_whiteTower[0] = fx_whiteTowerPre[0].GetComponent<ParticleSystem>();
         fx_whiteTower[0].Play(true);
@@ -88,11 +90,10 @@ public class WhiteTowerBullet : MonoBehaviour
 
     IEnumerator DeleteThis()
     {
-
-        yield return new WaitForSeconds(fx_whiteTower[1].main.startLifetimeMultiplier);
+        yield return YieldInstructionCache.WaitForSeconds(fx_whiteTower[1].main.startLifetimeMultiplier);
         fx_whiteTowerPre[1].SetActive(false);
         State = 3;
     
-        BulletPooling.ReturnObject(this.gameObject);
+        BulletPooling.ReturnObject(go);
     }
 }

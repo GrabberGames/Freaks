@@ -33,7 +33,8 @@ public class TowerAttack : Stat
         {
             SFXBlackTowerDestroy.Play();
             StartCoroutine(Dissolve()); //°Ç¹°ºØ±«
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 
@@ -78,15 +79,15 @@ public class TowerAttack : Stat
     GameObject bullet;
     IEnumerator FindInAttackRange()
     {
-        bullet = BulletPooling.GetObject("BlackTowerBullet");
+        bullet = BulletPooling.instance.GetObject("BlackTowerBullet");
         bullet.GetComponent<TowerBullet>().InitSetting(PD, bulletSpawnPosition);
         fx_blackTower.Play(true);
         SFXBlackTowerAttack.Play();
-        yield return new WaitForSeconds(fx_blackTower.main.startDelayMultiplier);
 
+        yield return YieldInstructionCache.WaitForSeconds(fx_blackTower.main.startDelayMultiplier);
         fx_blackTower.Play(false);
 
-        yield return new WaitForSeconds(AttackPerSeconds - fx_blackTower.main.startDelayMultiplier);
+        yield return YieldInstructionCache.WaitForSeconds(AttackPerSeconds - fx_blackTower.main.startDelayMultiplier);
         isAttack = false;
     }
 

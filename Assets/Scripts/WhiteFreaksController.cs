@@ -19,15 +19,15 @@ public class WhiteFreaksController : Stat
     public bool IsBuilding = false;
 
     private IDisposable arriveStream = default;
-    private Action onArriveCallback = default;
 
+    GameObject go;
 
     // Start is called before the first frame update
     void Start()
     {
         Init();
-
-        navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+        go = this.gameObject;
+        navMeshAgent = GetComponent<NavMeshAgent>();
 
         alter = GameManager.Instance.Alter;
 
@@ -97,99 +97,28 @@ public class WhiteFreaksController : Stat
         {
             buildng = targetBuilding.GetComponent<Building>();
             buildng.ChangeBuilding();
-            this.gameObject.SetActive(false);
+            go.SetActive(false);
             IsBuilding = false;
             //switch는 이 부분에다가 따로 달자
             //
         }
         else
         {
-            WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
         }
     }
-
-
-    /*
-    /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.>
-    void AlterIsChanged(GameObject go)
-    {
-        Debug.Log("AlterChanged");
-        this.alter = go;
-    }
-    /// <-알터 위치가 변경 되었을때 사용되는 함수입니다>
-
-  
-public void SetMiningWorkShop()
-{
-  ChkNavMesh();
-
-  navMeshAgent.SetDestination(miningWorkshop.transform.position);
-  isMining = true;
-}
-
-
-public void SetSwitch(Vector3 pos)
-{
- ChkNavMesh();
-
- navMeshAgent.SetDestination(pos);
-}
-
-
-public void OnCollisionEnter(Collision collision)
-{
- // 건물 건설 완료 시
- if (isFinish)
- {
-     string name = collision.transform.name;
-
-     if (name == "Alter")
-     {
-         alterController.returnedBusyFreeks();
-         Destroy(this.gameObject);
-         isMining = false;
-     }
- }
-
- if(isMining)
- {
-     string name = collision.transform.name;
-
-     if (name == "Alter")
-     {
-         navMeshAgent.SetDestination(miningWorkshop.transform.position);
-
-         if (hasEssense)
-         {
-             alterController.essence += 10;
-             hasEssense = false;
-         }
-     }
-     else if(collision.gameObject == miningWorkshop)
-     {
-         if(gameObject.activeSelf)
-         {
-             navMeshAgent.SetDestination(alterPosition);
-             hasEssense = true;
-         }                
-     }
- }
-}
-*/
-
 
     private void ChkNavMesh()
     {
         if (navMeshAgent == null)
-        {
-     navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-        }
+        navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+
     }
 
     public void SetDestination(GameObject target, bool isBuilding)
     {
         IsBuilding = isBuilding;
-        this.targetBuilding = target;
+        targetBuilding = target;
        
         
         ChkNavMesh();

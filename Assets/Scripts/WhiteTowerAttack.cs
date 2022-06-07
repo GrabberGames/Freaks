@@ -41,10 +41,8 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     public override void DeadSignal()
     {
         if (HP <= 0)
-        {
-            StartCoroutine("FadeOut"); //fadeout할때 쓸 코드
-            Destroy(this.gameObject);
-        }
+            StartCoroutine(Dissolve());
+
     }
 
     void Start()
@@ -92,7 +90,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     IEnumerator FindInAttackRange(GameObject blackFreaks)
     {
 
-        bullet = BulletPooling.GetObject("WhiteTowerBullet");
+        bullet = BulletPooling.instance.GetObject("WhiteTowerBullet");
         bullet.GetComponent<WhiteTowerBullet>().InitSetting(PD, blackFreaks, bulletSpawnPosition);
         bullet.SetActive(true);
         fx_whiteTower.Play(true);
@@ -132,7 +130,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         }
 
 
-        this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();
+        GetComponentInParent<Building>().ReturnBuildingPool();
 
     }
 
