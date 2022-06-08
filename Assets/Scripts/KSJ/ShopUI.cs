@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private float Armor;
     [SerializeField] private float MoveSpeed;
     [SerializeField] private float AttackSpeed;
+    [SerializeField] private float createWhiteFreaksTime;
 
     [Header("TextSetting")]
     [SerializeField] private Text textPD;
@@ -29,13 +31,15 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private Text textUnitPrice;
     [SerializeField] private Text textNowEssence;
 
+    [Header("CreateProgress")]
+    [SerializeField] private Image progressBar;
 
+    private StringBuilder stringBuilder = new StringBuilder();
 
     private int statPrice = 200;
     private int unitPrice = 200;
 
     private IEnumerator essenceCHK;
-
     private void Awake()
     {
         go = gameObject;
@@ -48,7 +52,7 @@ public class ShopUI : MonoBehaviour
 
         if (go.activeSelf)
         {
-            if(essenceCHK != null)
+            if (essenceCHK != null)
             {
                 StopCoroutine(essenceCHK);
                 essenceCHK = null;
@@ -81,24 +85,44 @@ public class ShopUI : MonoBehaviour
 
     private void Init()
     {
+        textPD.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerPD, PD);
+        textED.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerED, ED);
+        textHP.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMaxHp, HP);
+        textArmor.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerArmor, Armor);
+        textMoveSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMoveSpeed, MoveSpeed);
+        textAttackSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerAttackSpeed, AttackSpeed);
+
+        /*
         textPD.text = GameManager.Instance.models.playerModel.PlayerPD.ToString() + "(+" + PD.ToString() + ")";
         textED.text = GameManager.Instance.models.playerModel.PlayerED.ToString() + "(+" + ED.ToString() + ")";
         textHP.text = GameManager.Instance.models.playerModel.PlayerMaxHp.ToString() + "(+" + HP.ToString() + ")";
         textArmor.text = GameManager.Instance.models.playerModel.PlayerArmor.ToString() + "(+" + Armor.ToString() + ")";
         textMoveSpeed.text = GameManager.Instance.models.playerModel.PlayerMoveSpeed.ToString() + "(+" + MoveSpeed.ToString() + ")";
         textAttackSpeed.text = GameManager.Instance.models.playerModel.PlayerAttackSpeed.ToString() + "(+" + AttackSpeed.ToString() + ")";
+        */
 
         textFreaksCount.text = WhiteFreaksManager.Instance.allFreaksCount.ToString();
+    }
+
+    private string StringBuilder(float stat, float addValue)
+    {
+        stringBuilder.Clear();
+        stringBuilder.Append(stat.ToString());
+        stringBuilder.Append("(+");
+        stringBuilder.Append(addValue.ToString());
+        stringBuilder.Append(")");
+
+        return stringBuilder.ToString();
     }
 
     #region 구매버튼 구현
     public void BuyPD()
     {
-        if(StageManager.Instance.ChkEssence(statPrice))
+        if (StageManager.Instance.ChkEssence(statPrice))
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.PD, PD);
             StageManager.Instance.UseEssence(statPrice);
-            textPD.text = GameManager.Instance.models.playerModel.PlayerPD.ToString() + "(+" + PD.ToString() + ")";
+            textPD.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerPD, PD);
         }
         else
         {
@@ -112,7 +136,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ED, ED);
             StageManager.Instance.UseEssence(statPrice);
-            textED.text = GameManager.Instance.models.playerModel.PlayerED.ToString() + "(+" + ED.ToString() + ")";
+            textED.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerED, ED);
         }
         else
         {
@@ -126,7 +150,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.HP, HP);
             StageManager.Instance.UseEssence(statPrice);
-            textHP.text = GameManager.Instance.models.playerModel.PlayerMaxHp.ToString() + "(+" + HP.ToString() + ")";
+            textHP.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMaxHp, HP);
         }
         else
         {
@@ -139,7 +163,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ARMOR, Armor);
             StageManager.Instance.UseEssence(statPrice);
-            textArmor.text = GameManager.Instance.models.playerModel.PlayerArmor.ToString() + "(+" + Armor.ToString() + ")";
+            textArmor.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerArmor, Armor);
         }
         else
         {
@@ -152,7 +176,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.MOVESPEED, MoveSpeed);
             StageManager.Instance.UseEssence(statPrice);
-            textMoveSpeed.text = GameManager.Instance.models.playerModel.PlayerMoveSpeed.ToString() + "(+" + MoveSpeed.ToString() + ")";
+            textMoveSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMoveSpeed, MoveSpeed);
         }
         else
         {
@@ -165,7 +189,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ATTACKSPEED, AttackSpeed);
             StageManager.Instance.UseEssence(statPrice);
-            textAttackSpeed.text = GameManager.Instance.models.playerModel.PlayerAttackSpeed.ToString() + "(+" + AttackSpeed.ToString() + ")";
+            textAttackSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerAttackSpeed, AttackSpeed);
         }
         else
         {
@@ -177,9 +201,14 @@ public class ShopUI : MonoBehaviour
     {
         if (StageManager.Instance.ChkEssence(unitPrice))
         {
-            WhiteFreaksManager.Instance.increaseFreaks(1);
-            StageManager.Instance.UseEssence(unitPrice); 
-            textFreaksCount.text = WhiteFreaksManager.Instance.allFreaksCount.ToString();
+            if (StageManager.Instance.CreateWhiteFreaks(createWhiteFreaksTime))
+            {
+                StageManager.Instance.UseEssence(unitPrice);
+            }
+            else
+            {
+                SystemMassage.Instance.PrintSystemMassage("vmflrlaksjdkl.");
+            }
         }
         else
         {
@@ -195,7 +224,10 @@ public class ShopUI : MonoBehaviour
 
         while (true)
         {
-            textNowEssence.text = StageManager.Instance.essence.ToString();
+            textFreaksCount.text = WhiteFreaksManager.Instance.allFreaksCount.ToString();
+            progressBar.fillAmount = StageManager.Instance.GetCreateWhiteFreaksProgress();
+
+            //textNowEssence.text = StageManager.Instance.essence.ToString();
             yield return null;
         }
     }
