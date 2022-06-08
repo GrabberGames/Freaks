@@ -33,7 +33,15 @@ public class StageManager : MonoBehaviour
     private int spawnBlackfreaksCount = 3;
     //private int spawnedBlackfreaksCount;
 
-    private int tempSpawnPointNumber;    
+    private int tempSpawnPointNumber;
+
+    private float createCompleteTime;
+    private float createStartTime;
+    private float createTime;
+    IEnumerator coCreateWhiteFreaks;
+
+    private int switchCount = 0;
+    private int maxSwitchCount = 3;
 
 
     private static StageManager mInstance;
@@ -154,6 +162,57 @@ public class StageManager : MonoBehaviour
             yield return new WaitForSeconds(_respawnInterval);
         }
     }
+
+    #endregion
+
+    #region WhiteFreaksCreate
+    public bool ChkCreateWhiteFreaks()
+    {
+        return coCreateWhiteFreaks == null;
+    }
+
+    public bool CreateWhiteFreaks(float createTime)
+    {
+        if (coCreateWhiteFreaks == null)
+        {
+            coCreateWhiteFreaks = CoWhiteFreaksSpawn();
+
+            this.createTime = createTime;
+            createStartTime = Time.time;
+            createCompleteTime = createStartTime + this.createTime;
+
+            StartCoroutine(coCreateWhiteFreaks);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    IEnumerator CoWhiteFreaksSpawn()
+    {
+        while (true)
+        {
+            yield return null;
+            if (Time.time >= createCompleteTime)
+            {
+                WhiteFreaksManager.Instance.increaseFreaks(1);
+                coCreateWhiteFreaks = null;
+                break;
+            }
+        }
+    }
+
+    public float GetCreateWhiteFreaksProgress()
+    {
+        if (ChkCreateWhiteFreaks())
+            return 0.0f;
+        else
+            return (Time.time - createStartTime) / createTime;
+    }
+
 
     #endregion
 
