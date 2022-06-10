@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WorkshopController : MonoBehaviour
 {
-   
-   
-     Color large = new Color(0, 0.01f, 0.12f, 1f);
-     Color medium = new Color(0, 1f, 0.9f, 1f);
-     Color small = new Color(1f, 1f, 1f, 1f);
-   
+
+
+    Color large = new Color(0, 0.01f, 0.12f, 1f);
+    Color medium = new Color(0, 1f, 0.9f, 1f);
+    Color small = new Color(1f, 1f, 1f, 1f);
+
     [SerializeField] private int RemainEssence;
     private int GetEssencePerOnce = 10;
     public GameObject connectEssence;
@@ -27,12 +27,14 @@ public class WorkshopController : MonoBehaviour
 
     public GameObject GetConnectEssence()
     {
-        return this.connectEssence;
+        return connectEssence;
     }
     public void StartDigging()
     {
         StartCoroutine(Diggle());
     }
+
+
 
 
     public void Digging()
@@ -63,13 +65,11 @@ public class WorkshopController : MonoBehaviour
         }
     }
 
-   
+
     public void SetColor()
     {
         if (RemainEssence >= 501)
         {
-         
-     
             propertyBlock.SetColor("_Color", large);
             renderer.SetPropertyBlock(propertyBlock);
         }
@@ -85,7 +85,7 @@ public class WorkshopController : MonoBehaviour
         }
         else
         {
-            this.GetComponent<WorkshopState>().Disappear();
+            GetComponent<WorkshopState>().Disappear();
 
             ConnectingFreaks.gameObject.SetActive(true);
             ConnectingFreaks.SetDestination(GameManager.Instance.Alter, false);
@@ -96,14 +96,14 @@ public class WorkshopController : MonoBehaviour
 
     public void SetConnectEssence(GameObject go)
     {
-        renderer = this.gameObject.GetComponent<Renderer>();
+        renderer = GetComponent<Renderer>();
         propertyBlock = new MaterialPropertyBlock();
         connectEssence = go;
-        this.RemainEssence = go.GetComponent<EssenceSpot>().GetRemainEssence();
+        RemainEssence = go.GetComponent<EssenceSpot>().GetRemainEssence();
         go.SetActive(false);
         SetColor();
 
-       
+
     }
 
     IEnumerator Diggle()
@@ -116,9 +116,6 @@ public class WorkshopController : MonoBehaviour
             {
                 this.GetComponent<WorkshopState>().Disappear();
                 connectEssence.gameObject.SetActive(false);
-
-              //  ConnectingFreaks.SetDestination(GameManager.Instance.Alter,false);
-
                 break;
             }
 
@@ -131,9 +128,29 @@ public class WorkshopController : MonoBehaviour
         }
     }
 
-
     public void SetConnetingFreaks(WhiteFreaksController whiteFreaksController)
     {
-        this.ConnectingFreaks = whiteFreaksController;
+        ConnectingFreaks = whiteFreaksController;
     }
+
+    public WhiteFreaksController GetConnectingFreaks()
+    {
+        return ConnectingFreaks;
+    }
+
+    //워크샵에서 정화 시작하는 부분
+    public void StartPurify()
+    {
+        StartCoroutine(Purify());
+    }
+    IEnumerator Purify()
+    {
+        yield return YieldInstructionCache.WaitForSeconds(90f);
+        this.GetComponent<WorkshopState>().Disappear();
+        connectEssence.GetComponent<SwitchTimer>();
+    }
+
+
+
+
 }

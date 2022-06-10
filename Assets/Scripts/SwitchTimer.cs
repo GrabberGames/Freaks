@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,45 +23,49 @@ public class SwitchTimer : MonoBehaviour
         }
     }
 
-
+    float startTime;
+    //����  Ÿ�̸� ���ľ���!!!!!
     public IEnumerator Timer()
     {
-        while (true)
+        startTime = Time.time;
+
+
+        while (true) //���Ŀ� HP���� ���� ���� �� �����Ƿ� �ð� ���� ������
         {
-            if (timer > 0)
-            {
-                timer--;
-                yield return new WaitForSeconds(1f);
-            }
-            else
-            {
-                timer = 90;
-                //targetRenderer.material = switchMats[1];
-                switchMaterial = transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material;
 
-                SFXswitchOn.Play();
-                for (int i = 30; i >= 0; i--)
-                {
-
-
-                    f = i / 30.0f;
-
-                    c_r = switchMaterial.color.r;
-                    c_g = switchMaterial.color.g;
-                    c_b = switchMaterial.color.b;
-                    c_a = switchMaterial.color.a;
-                    c = new Color(c_r, c_g, c_b);
-                    c.a = f;
-
-                    switchMaterial.color = c;
-
-
-                    yield return new WaitForSeconds(0.03f);
-                }
-
-
+            if (Time.time - startTime >= timer)
                 break;
-            }
+
         }
+
+
+
+        switchMaterial = transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material;
+
+        SFXswitchOn.Play();
+        for (int i = 30; i >= 0; i--)
+        {
+
+
+            f = i / 30.0f;
+
+            c_r = switchMaterial.color.r;
+            c_g = switchMaterial.color.g;
+            c_b = switchMaterial.color.b;
+            c_a = switchMaterial.color.a;
+            c = new Color(c_r, c_g, c_b);
+            c.a = f;
+
+            switchMaterial.color = c;
+
+            yield return YieldInstructionCache.WaitForSeconds(0.03f);
+
+        }
+
+        yield return null;
+
     }
+
+
+
 }

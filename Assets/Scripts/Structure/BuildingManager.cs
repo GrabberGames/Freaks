@@ -97,35 +97,41 @@ public class BuildingManager : MonoBehaviour
         SetBuildPosition(buildingType, pos);
     }
 
+
+    GameObject go;
     public void SetBuildPosition(eBuilding buildingType, Vector3 pos)
     {
-        GameObject go;
+        
         switch (buildingType)
         {
             case eBuilding.Alter:
-                go = BuildingPooling.GetObject("Building_alter");
+                go = BuildingPooling.instance.GetObject("building");
+                go.GetComponent<Building>().build_num = 0;
                 go.transform.position = pos;
                 go.SetActive(true);
                 go.GetComponent<Building>().Init();
 
                 break;
             case eBuilding.WhiteTower:
-                go = BuildingPooling.GetObject("Building_whitetower");
+                go = BuildingPooling.instance.GetObject("building");
                 go.transform.position = pos;
-                whiteTowerList.Add(go.transform.GetChild(1).gameObject.GetComponent<WhiteTowerAttack>());
-                buildingRangeList.Add(go.transform.GetChild(3).gameObject.GetComponent<BuildingRange>());
+                go.GetComponent<Building>().build_num = 1;
+                //whiteTowerList.Add(go.transform.GetChild(1).gameObject.GetComponent<WhiteTowerAttack>());
+                //buildingRangeList.Add(go.transform.GetChild(3).gameObject.GetComponent<BuildingRange>());
+               // buildingRangeList.Add(go.GetComponent<Building>().NoBuild_range.gameObject.GetComponent<BuildingRange>());
                 go.SetActive(true);
 
                 go.GetComponent<Building>().Init();
 
                 break;
             case eBuilding.Workshop:
-                go = BuildingPooling.GetObject("Building_workshop");
+                go = BuildingPooling.instance.GetObject("building");
+                go.GetComponent<Building>().build_num = 2;
                 go.transform.position = pos;
                 go.SetActive(true);
                 go.GetComponent<Building>().Init();
-               
-      
+
+
                 break;
             default:
                 break;

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +21,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
 
     public AudioSource SFXWhiteTowerDestroy;
     public AudioSource SFXWhiteTowerAttack;
+    public AudioSource SFXWhiteTowerComplete;
 
 
     protected override void Init()
@@ -41,20 +42,17 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     public override void DeadSignal()
     {
         if (HP <= 0)
-        {
-            StartCoroutine("FadeOut"); //fadeoutÇÒ¶§ ¾µ ÄÚµå
-            Destroy(this.gameObject);
-        }
+            StartCoroutine(Dissolve());
+
     }
 
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
         Init();
-
     }
 
-    //¼Ò¸® È®ÀÎÇÏ±âÀ§ÇÑ update¹®
+    //ï¿½Ò¸ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ updateï¿½ï¿½
 
     void Update()
     {
@@ -71,7 +69,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         {
 
 
-            if ((blackFreaks[i].gameObject.transform.position - transform.position).magnitude < 45f)
+            if ((blackFreaks[i].gameObject.transform.position - transform.position).sqrMagnitude < 2025f)
             {
                 if (isAttack)
                     return;
@@ -92,7 +90,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     IEnumerator FindInAttackRange(GameObject blackFreaks)
     {
 
-        bullet = BulletPooling.GetObject("WhiteTowerBullet");
+        bullet = BulletPooling.instance.GetObject("WhiteTowerBullet");
         bullet.GetComponent<WhiteTowerBullet>().InitSetting(PD, blackFreaks, bulletSpawnPosition);
         bullet.SetActive(true);
         fx_whiteTower.Play(true);
@@ -104,7 +102,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         yield return new WaitForSeconds(AttackPerSeconds - fx_whiteTower.main.startDelayMultiplier);
         isAttack = false;
     }
-    
+
 
 
     IEnumerator Dissolve()
@@ -132,7 +130,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         }
 
 
-        this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();
+        GetComponentInParent<Building>().ReturnBuildingPool();
 
     }
 

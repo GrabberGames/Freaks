@@ -1,4 +1,4 @@
-using System.Collections;
+癤퓎sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +6,14 @@ public class WorkshopState : Stat
 {
 
     public AudioSource SFXworkshopDestroy;
+    public AudioSource SFXworkshopComplete;
 
+    GameObject go;
 
     protected override void Init()
     {
         base.Init();
+        go = this.gameObject;
 
     }
     void Start()
@@ -20,46 +23,49 @@ public class WorkshopState : Stat
     public override void DeadSignal()
     {
         if (HP <= 0)
-        {
-            WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
-            Disappear();
-            this.gameObject.GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()
-                .SetRemainEssence(this.gameObject.GetComponent<WorkshopController>().GetRemainEssence());
+        {    
+           Disappear();
 
-            this.gameObject.GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
-       
+
+            GetComponent<WorkshopController>().GetConnectingFreaks().gameObject.SetActive(true);
+            GetComponent<WorkshopController>().GetConnectingFreaks().SetDestination(GameManager.Instance.Alter, false);
+
+
+            GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()
+                .SetRemainEssence(GetComponent<WorkshopController>().GetRemainEssence());
+
+            GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
+
 
         }
     }
     public void Disappear()
     {
-        StartCoroutine(FadeOut()); //fadeout할때 쓸 코드
+        StartCoroutine(FadeOut()); 
     }
 
 
-    //소리 확인하기위한 update문
+    /*
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Disappear();
+            HP = 0;
+            DeadSignal();
         }
     }
-
+    */
     Renderer renderer;
     MaterialPropertyBlock propertyBlock;
     IEnumerator FadeOut()
     {
-        renderer = this.gameObject.GetComponent<Renderer>();
+        renderer = GetComponent<Renderer>();
         propertyBlock = new MaterialPropertyBlock();
 
-       // SFXworkshopDestroy.Play();
+        // SFXworkshopDestroy.Play();
 
-        MeshRenderer mr = this.gameObject.GetComponent<MeshRenderer>();
-        mr.material.shader = Shader.Find("UI/Unlit/Transparent");
-
-        float  f;
-        Color c = this.gameObject.GetComponent<WorkshopController>().GetColor();
+        float f;
+        Color c = GetComponent<WorkshopController>().GetColor();
         for (int i = 50; i >= 0; i--)
         {
             f = i / 50.0f;
@@ -72,7 +78,7 @@ public class WorkshopState : Stat
             yield return YieldInstructionCache.WaitForSeconds(0.05f);
         }
 
-        this.gameObject.GetComponentInParent<Building>().ReturnBuildingPool();
+        GetComponentInParent<Building>().ReturnBuildingPool();
     }
 
 

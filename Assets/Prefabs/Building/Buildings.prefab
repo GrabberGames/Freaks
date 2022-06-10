@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8585005867771529398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8198105354942500520}
+  - component: {fileID: 1170070479265105168}
+  m_Layer: 0
+  m_Name: Buildings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8198105354942500520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585005867771529398}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1170070479265105168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585005867771529398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c11ab0cae95ae40b97beb409aa0ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 10
+  alter_before: {fileID: 1950312336177136581, guid: 8873c9ed463a238499286f4252c4ea54, type: 3}
+  alter_building: {fileID: 4148548987043832038, guid: b6913da11e945484795700999af986b0, type: 3}
+  whitetower_before: {fileID: 5403924242141242193, guid: 561bcd6afbdbf7a47bb4f1ff78ae98c5, type: 3}
+  whitetower_building: {fileID: 7983832959736635199, guid: d8a31358c4d3d0e4284c68adeddb2341, type: 3}
+  noBuild_range: {fileID: 5524543136874210711, guid: f9f3b83f79db1aa4284bd925e75b155d, type: 3}
+  workshop_before: {fileID: 6495333950967393185, guid: 69e6792b673a77a4685fbef3fafe80fb, type: 3}
+  building_after: {fileID: 1495429370717744000, guid: 97c02c583807bb44493f5a34da10bb7c, type: 3}
+  building_sound: {fileID: 2027400891982855167, guid: e6ceefeaefbdcc748a0316fada288ab6, type: 3}
+  complete_sound: {fileID: 179291779024199369, guid: 9c64090e7da0804459f9e9dbd7f996f8, type: 3}

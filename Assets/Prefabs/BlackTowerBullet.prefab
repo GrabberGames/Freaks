@@ -134,7 +134,7 @@ MonoBehaviour:
   fx_blackTowerPre:
   - {fileID: 7181758809996825297}
   - {fileID: 5385703142883666247}
-  SFXBlackTowerBullet: {fileID: 0}
+  SFXBlackTowerBullet: {fileID: 6154473936493838158}
 --- !u!82 &6154473936493838158
 AudioSource:
   m_ObjectHideFlags: 0
@@ -154,7 +154,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -288,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9165700525118799450, guid: 6031199c8b298b34f84154acbcc5bf72, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6031199c8b298b34f84154acbcc5bf72, type: 3}
@@ -320,7 +320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1884593457619100049, guid: 49aac961c4ddfc8469847709910adcbe, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6088049028451936381, guid: 49aac961c4ddfc8469847709910adcbe, type: 3}
       propertyPath: m_RootOrder

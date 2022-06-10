@@ -5,27 +5,61 @@ using UnityEngine;
 public class BuildingPooling : MonoBehaviour
 {
 
+    
+
     public static BuildingPooling instance;
 
+    [SerializeField]
+    private int CountLimit = 15;
+    [Header("Alter Building")]
+    [SerializeField]
+    private GameObject alter_before;
+    [SerializeField]
+    private GameObject alter_building;
+
+    Queue<GameObject> alter_beforeQueue = new Queue<GameObject>();
+    Queue<GameObject> alter_buildingQueue = new Queue<GameObject>();
 
 
+    [Header("WhiteTower Building")]
     [SerializeField]
-    private int alterCountLimit = 50;
+    private GameObject whitetower_before;
     [SerializeField]
-    private int whitetowerCountLimit = 50;
+    private GameObject whitetower_building;
+
+    Queue<GameObject> whitetower_beforeQueue = new Queue<GameObject>();
+    Queue<GameObject> whitetower_buildingQueue = new Queue<GameObject>();
+
+    [Header("Workshop Building")]
     [SerializeField]
-    private int workshopCountLimit = 50;
+    private GameObject workshop_before;
+    Queue<GameObject> workshop_beforeQueue = new Queue<GameObject>();
+
+    [Header("After Building")]
+    [SerializeField]
+    private GameObject building_after;
+    Queue<GameObject> building_afterQueue = new Queue<GameObject>();
 
     [SerializeField]
-    private GameObject Building_alter;
+    private int buildingCountLimit = 20;
     [SerializeField]
-    private GameObject Building_whitetower;
+    private int whitetowerCountLimit = 15;
     [SerializeField]
-    private GameObject Building_workshop;
+    private int workshopCountLimit = 15;
 
-    Queue<GameObject> AlterQueue = new Queue<GameObject>();
+    [Header("Building")]    
+    [SerializeField]
+    private GameObject building;
+    [SerializeField]
+    private GameObject whitetower;
+    [SerializeField]
+    private GameObject workshop;
+
+
+    Queue<GameObject> BuildingQueue = new Queue<GameObject>();
     Queue<GameObject> WhiteTowerQueue = new Queue<GameObject>();
     Queue<GameObject> WorkshopQueue = new Queue<GameObject>();
+
 
 
     static BuildingPooling Instance
@@ -61,37 +95,87 @@ public class BuildingPooling : MonoBehaviour
 
     private void Initialize()
     {
-        for (int i = 0; i < alterCountLimit; i++)
-            AlterQueue.Enqueue(CreateNewObject("Building_alter"));
+        for (int i = 0; i < buildingCountLimit; i++)
+            BuildingQueue.Enqueue(CreateNewObject("building"));
         for (int i = 0; i < whitetowerCountLimit; i++)
-            WhiteTowerQueue.Enqueue(CreateNewObject("Building_whitetower"));
+            WhiteTowerQueue.Enqueue(CreateNewObject("build_whitetower"));
         for (int i = 0; i < workshopCountLimit; i++)
-            WorkshopQueue.Enqueue(CreateNewObject("Building_workshop"));
+            WorkshopQueue.Enqueue(CreateNewObject("build_workshop"));
+        for (int i = 0; i < CountLimit; i++)
+        {
+            alter_beforeQueue.Enqueue(CreateNewObject("alter_before"));
+            alter_buildingQueue.Enqueue(CreateNewObject("alter_building"));
+            building_afterQueue.Enqueue(CreateNewObject("building_after"));
+            whitetower_beforeQueue.Enqueue(CreateNewObject("whitetower_before"));
+            whitetower_buildingQueue.Enqueue(CreateNewObject("whitetower_building"));
+            workshop_beforeQueue.Enqueue(CreateNewObject("workshop_before"));
+
+
+
+        }
+
     }
 
+    GameObject newObj;
 
     private GameObject CreateNewObject(string Obj)
     {
-        GameObject newObj;
         switch (Obj)
         {
-            case "Building_alter":
-                newObj = Instantiate(Building_alter, gameObject.transform);
+            case "building":
+                newObj = Instantiate(building, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
                 return newObj;
 
-            case "Building_whitetower":
-                newObj = Instantiate(Building_whitetower, gameObject.transform);
+            case "build_whitetower":
+                newObj = Instantiate(whitetower, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
                 return newObj;
 
-            case "Building_workshop":
-                newObj = Instantiate(Building_workshop, gameObject.transform);
+            case "build_workshop":
+                newObj = Instantiate(workshop, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
                 return newObj;
+
+            case "alter_before":
+                newObj = Instantiate(alter_before, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj;
+
+            case "alter_building":
+                newObj = Instantiate(alter_building, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj;
+
+            case "building_after":
+                newObj = Instantiate(building_after, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj;
+
+            case "whitetower_before":
+                newObj = Instantiate(whitetower_before, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj;
+
+            case "whitetower_building":
+                newObj = Instantiate(whitetower_building, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj;
+
+            case "workshop_before":
+                newObj = Instantiate(workshop_before, gameObject.transform);
+                newObj.transform.name = newObj.name.Replace("(Clone)", "");
+                newObj.SetActive(false);
+                return newObj;
+
             default:
                 break;
         }
@@ -100,67 +184,125 @@ public class BuildingPooling : MonoBehaviour
 
 
 
-    public static GameObject GetObject(string objectName)
+    public GameObject GetObject(string objectName)
     {
         switch (objectName)
         {
-            case ("Building_alter"):
-                if (Instance.AlterQueue.Count > 0)
-                {
-                    var obj = instance.AlterQueue.Dequeue();
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
-                else
-                {
-                    return null;
-                }
+            case ("building"):
+                if (Instance.BuildingQueue.Count <= 0)
+                    instance.BuildingQueue.Enqueue(CreateNewObject("building"));
 
-            case ("Building_whitetower"):
-                if (Instance.WhiteTowerQueue.Count > 0)
-                {
-                    var obj = instance.WhiteTowerQueue.Dequeue();
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
-                else
-                {
-                    return null;
-                }
+                newObj = instance.BuildingQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
 
-            case ("Building_workshop"):
-                if (Instance.WorkshopQueue.Count > 0)
-                {
-                    var obj = instance.WorkshopQueue.Dequeue();
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
-                else
-                {
-                    return null;
-                }
+            case ("build_whitetower"):
+                if (Instance.WhiteTowerQueue.Count <= 0)
+                    instance.WhiteTowerQueue.Enqueue(CreateNewObject("build_whitetower"));
+
+                newObj = instance.WhiteTowerQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
+
+            case ("build_workshop"):
+                if (Instance.WorkshopQueue.Count <= 0)
+                    instance.WorkshopQueue.Enqueue(CreateNewObject("build_workshop"));
+
+                newObj = instance.WorkshopQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
+
+            case ("alter_before"):
+                if (Instance.alter_beforeQueue.Count <= 0)
+                    instance.alter_beforeQueue.Enqueue(CreateNewObject("alter_before"));
+
+                newObj = instance.alter_beforeQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
+
+            case ("alter_building"):
+                if (Instance.alter_buildingQueue.Count <= 0)
+                    instance.alter_buildingQueue.Enqueue(CreateNewObject("alter_building"));
+
+                newObj = instance.alter_buildingQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
+
+            case ("building_after"):
+                if (Instance.building_afterQueue.Count <= 0)
+                    instance.building_afterQueue.Enqueue(CreateNewObject("building_after"));
+
+                newObj = instance.building_afterQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
+
+            case ("whitetower_before"):
+                if (Instance.whitetower_beforeQueue.Count <= 0)
+                    instance.whitetower_beforeQueue.Enqueue(CreateNewObject("whitetower_before"));
+
+                newObj = instance.whitetower_beforeQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
+
+            case ("whitetower_building"):
+                if (Instance.whitetower_buildingQueue.Count <= 0)
+                    instance.whitetower_buildingQueue.Enqueue(CreateNewObject("whitetower_building"));
+
+                newObj = instance.whitetower_buildingQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
+
+            case ("workshop_before"):
+                if (Instance.workshop_beforeQueue.Count <= 0)
+                    instance.workshop_beforeQueue.Enqueue(CreateNewObject("workshop_before"));
+
+                newObj = instance.workshop_beforeQueue.Dequeue();
+                newObj.SetActive(true);
+                return newObj;
 
             default:
                 return null;
         }
     }
 
-    public static void ReturnObject(GameObject obj)
+    public void ReturnObject(GameObject obj)
     {
         obj.gameObject.SetActive(false);
 
         switch (obj.name)
         {
-            case ("Building_alter"):
-                Instance.AlterQueue.Enqueue(obj);
+            case ("buildings"):
+                Instance.BuildingQueue.Enqueue(obj);
                 break;
 
-            case ("Building_whittower"):
+            case ("whitetower"):
                 Instance.WhiteTowerQueue.Enqueue(obj);
                 break;
 
-            case ("Building_workshop"):
+            case ("workshop"):
                 Instance.WorkshopQueue.Enqueue(obj);
+                break;
+            case ("alter_before"):
+                Instance.alter_beforeQueue.Enqueue(obj);
+                break;
+
+            case ("alter_building"):
+                Instance.alter_buildingQueue.Enqueue(obj);
+                break;
+
+            case ("FX_Construc_End"):
+                Instance.building_afterQueue.Enqueue(obj);
+                break;
+            case ("whitetower_before"):
+                Instance.whitetower_beforeQueue.Enqueue(obj);
+                break;
+
+            case ("whitetower_building"):
+                Instance.whitetower_buildingQueue.Enqueue(obj);
+                break;
+
+            case ("workshop_before"):
+                Instance.workshop_beforeQueue.Enqueue(obj);
                 break;
 
             default:

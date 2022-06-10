@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,18 +17,18 @@ public class WhiteFreaksController : Stat
     private Vector3 alterPosition;
 
     public bool IsBuilding = false;
-
+    public bool IsIdle = true;
     private IDisposable arriveStream = default;
-    private Action onArriveCallback = default;
 
+    GameObject go;
 
     // Start is called before the first frame update
     void Start()
     {
         Init();
-
-        navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-
+        go = this.gameObject;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        IsIdle = true;
         alter = GameManager.Instance.Alter;
 
         alterPosition = alter.transform.position;
@@ -42,7 +42,7 @@ public class WhiteFreaksController : Stat
             .Subscribe(stopped => onArriveCallback?.Invoke())
             .AddTo(this);
             */
-            
+
         arriveStream = this.UpdateAsObservable()
           .Select(IsStopped)
           .DistinctUntilChanged()
@@ -50,9 +50,9 @@ public class WhiteFreaksController : Stat
           .Where(stopped => stopped)
           .Subscribe(stopped => Moving())
           .AddTo(this);
-          
-        
-        /// <-¾ËÅÍ À§Ä¡°¡ º¯°æ µÇ¾úÀ»¶§ »ç¿ëµÇ´Â ÇÔ¼öÀÔ´Ï´Ù.->
+
+
+        /// <-ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½ï¿½Ô´Ï´ï¿½.->
         //  BuildingManager.Instance.AlterIsChange -= AlterIsChanged;
         //  BuildingManager.Instance.AlterIsChange += AlterIsChanged;
     }
@@ -64,7 +64,7 @@ public class WhiteFreaksController : Stat
         {
             if (navMeshAgent.velocity.sqrMagnitude >=0.2f && navMeshAgent.remainingDistance <= 0.5f)
             {
-                Debug.Log("µµÂøÇßÀ½!");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
                 IsArrive = true;
             }
               
@@ -72,6 +72,16 @@ public class WhiteFreaksController : Stat
 
     }
     */
+
+    public override void DeadSignal()
+    {
+        base.DeadSignal();
+        IsIdle = true;
+        WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
+        WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
+    }
+
+
     protected override void Init()
     {
         base.Init();
@@ -81,7 +91,7 @@ public class WhiteFreaksController : Stat
     {
         if (!navMeshAgent.pathPending)
         {
-            if(navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
                 if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
                     return true;
@@ -93,105 +103,38 @@ public class WhiteFreaksController : Stat
     Building buildng;
     void Moving()
     {
-        if(IsBuilding == true)
+        IsIdle = false;
+        if (IsBuilding == true)
         {
             buildng = targetBuilding.GetComponent<Building>();
             buildng.ChangeBuilding();
-            this.gameObject.SetActive(false);
+            go.SetActive(false);
             IsBuilding = false;
-            //switch´Â ÀÌ ºÎºÐ¿¡´Ù°¡ µû·Î ´ÞÀÚ
+            WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
+            //switchï¿½ï¿½ ï¿½ï¿½ ï¿½ÎºÐ¿ï¿½ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             //
         }
         else
         {
-            WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
         }
     }
-
-
-    /*
-    /// <-¾ËÅÍ À§Ä¡°¡ º¯°æ µÇ¾úÀ»¶§ »ç¿ëµÇ´Â ÇÔ¼öÀÔ´Ï´Ù.>
-    void AlterIsChanged(GameObject go)
-    {
-        Debug.Log("AlterChanged");
-        this.alter = go;
-    }
-    /// <-¾ËÅÍ À§Ä¡°¡ º¯°æ µÇ¾úÀ»¶§ »ç¿ëµÇ´Â ÇÔ¼öÀÔ´Ï´Ù>
-
-  
-public void SetMiningWorkShop()
-{
-  ChkNavMesh();
-
-  navMeshAgent.SetDestination(miningWorkshop.transform.position);
-  isMining = true;
-}
-
-
-public void SetSwitch(Vector3 pos)
-{
- ChkNavMesh();
-
- navMeshAgent.SetDestination(pos);
-}
-
-
-public void OnCollisionEnter(Collision collision)
-{
- // °Ç¹° °Ç¼³ ¿Ï·á ½Ã
- if (isFinish)
- {
-     string name = collision.transform.name;
-
-     if (name == "Alter")
-     {
-         alterController.returnedBusyFreeks();
-         Destroy(this.gameObject);
-         isMining = false;
-     }
- }
-
- if(isMining)
- {
-     string name = collision.transform.name;
-
-     if (name == "Alter")
-     {
-         navMeshAgent.SetDestination(miningWorkshop.transform.position);
-
-         if (hasEssense)
-         {
-             alterController.essence += 10;
-             hasEssense = false;
-         }
-     }
-     else if(collision.gameObject == miningWorkshop)
-     {
-         if(gameObject.activeSelf)
-         {
-             navMeshAgent.SetDestination(alterPosition);
-             hasEssense = true;
-         }                
-     }
- }
-}
-*/
-
 
     private void ChkNavMesh()
     {
         if (navMeshAgent == null)
-        {
-     navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-        }
+            navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+
     }
 
     public void SetDestination(GameObject target, bool isBuilding)
     {
+        IsIdle = false;
+        // go.SetActive(true);
         IsBuilding = isBuilding;
-        this.targetBuilding = target;
-       
-        
+        targetBuilding = target;
+
+
         ChkNavMesh();
         navMeshAgent.SetDestination(new Vector3(target.transform.position.x + 1, target.transform.position.y + 2, target.transform.position.z));
     }

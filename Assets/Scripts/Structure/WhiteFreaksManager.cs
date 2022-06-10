@@ -11,6 +11,24 @@ public class WhiteFreaksManager : MonoBehaviour
     private int _busyFreaksCount = 0;
     public int busyFreaksCount { get => _busyFreaksCount; }
 
+    private List<WhiteFreaksController> _whiteFreaksList = new List<WhiteFreaksController>();
+
+
+    public List<WhiteFreaksController> GetWhiteFreaksList()
+    {
+        return _whiteFreaksList;
+    }
+    public void SignOfWhiteFreaksDecrease()
+    {
+        for (int i = 0; i < _whiteFreaksList.Count; i++)
+        {
+            if (_whiteFreaksList[i].IsIdle == true)
+            {
+                _whiteFreaksList.RemoveAt(i);
+            }
+        }
+    }
+
 
     private static WhiteFreaksManager mInstance;
     public static WhiteFreaksManager Instance
@@ -60,6 +78,7 @@ public class WhiteFreaksManager : MonoBehaviour
         {
             increaseBusy();
             whiteFreaks =  ObjectPooling.Instance.GetObject("WhiteFreaks");
+            _whiteFreaksList.Add(whiteFreaks.GetComponent<WhiteFreaksController>());
             return whiteFreaks;
         }  
     }
@@ -67,6 +86,8 @@ public class WhiteFreaksManager : MonoBehaviour
 
     public void ReturnWhiteFreaks(GameObject freaks)
     {
+        SignOfWhiteFreaksDecrease();
+        freaks.GetComponent<WhiteFreaksController>().IsIdle = true;
         ObjectPooling.Instance.ReturnObject(freaks);
         increaseIdle();
     }

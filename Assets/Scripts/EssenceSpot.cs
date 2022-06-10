@@ -6,7 +6,7 @@ public class EssenceSpot : MonoBehaviour
 {
     [SerializeField] private int RemainEssence;
     Renderer renderer;
-    MaterialPropertyBlock propertyBlock ;
+    MaterialPropertyBlock propertyBlock;
 
     void Start()
     {
@@ -23,7 +23,7 @@ public class EssenceSpot : MonoBehaviour
 
     public void SetRemainEssence(int essence)
     {
-        this.RemainEssence = essence;
+        RemainEssence = essence;
         SetColor();
     }
 
@@ -53,7 +53,7 @@ public class EssenceSpot : MonoBehaviour
         }
     }
 
-    
+
 
 
 }
