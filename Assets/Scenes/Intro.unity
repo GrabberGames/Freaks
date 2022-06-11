@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9769,21 +9769,21 @@ PrefabInstance:
         Games\r\n\r\n<b><\uB514\uB809\uD130_Director>\r\r</b>\n\uBC15\uC131\uBBFC
         Sungmin Park\r\n\r\n<b><\uAE30\uD68D_Game Design>\r\r</b>\n\uAC15\uAC74 Gun
         Kang\r\r\n\uBC15\uC131\uBBFC Sungmin Park\r\n\r\n<b><\uD074\uB77C\uC774\uC5B8\uD2B8_Client>\r\r</b>\n\uBC30\uC218\uC6A9
-        Suyong Bae\r\r\n\uAE40\uC131\uC7AC Sungjae Kim\r\r\n\uD604\uBA85\uC740 Myungeun
-        Hyun\r\n\r\n<b><2D \uC544\uD2B8_2D Illustration>\r\r</b>\n\uC11C\uC885\uD604
-        Jonghyun Seo\r\r\nGiacomo Sbarra\r\n\r\n<b><3D \uCE90\uB9AD\uD130_3D Character
-        Modeling>\r\r</b>\n\uAE40\uC131\uC8FC Seongju Kim\r\r\n\uC2E0\uD6A8\uACBD
-        Hyokyeong Shin\r\n\r\n<b><3D \uBC30\uACBD_3D Background>\r</b>\n\uC2E0\uD6A8\uACBD
-        Hyokyeong Shin\r\n\r\uD06C\uB9BC Cream\r\n\r\n<b><3D \uC560\uB2C8\uBA54\uC774\uC158_3D
-        Animation></b>\n\r\uAE40\uC740\uC194 Eunsol Kim\r\n\r\n<b><VFX>\r\r</b>\n\uC774\uC720\uB098
-        Yuna Lee\r\n\r\n<b><UI Design></b>\n\r\uBC15\uC815\uC120 Jeongseon Park\r\r\n\uC774\uC608\uC9C4
-        Yejin Lee\r\n\r\n<b><Sound></b>\n\uBC15\uC131\uBBFC Sungmin Park\r\n\r\n<b><Voice
-        Actor></b>\n[\uCE74\uC77C Kyle] \uC2DC\uC628 Sion\r\r\n[\uC640\uB860 Warron]
-        \uC11D\uD0C4\uAD70 Coalage\r\n\r\n<b><BGM></b>\n[Main BGM] Retro Future_Another
-        Kid\r\r\n[In-Game BGM] Mystery (by Gataboota)\r\r\n[Rage Mode BGM] Cave (by
-        Kingle)\r\r\n                               Wargame (by Kingle)\r\r\n                              
-        \uAE30\uC2B5\uACF5\uACA9 (by XFT)\r\n\r\n<b>\uBAA8\uB450 \uC0AC\uC6A9 \uD5C8\uAC00\uB97C
-        \uAD6C\uB9E4\uD55C BGM\uC785\uB2C8\uB2E4.</b>\n\r\n\nSpecial Thanks to <b>GameMakers</b>"
+        Suyong Bae\r\r\n\uD604\uBA85\uC740 Myungeun Hyun\r\n\r\n<b><2D \uC544\uD2B8_2D
+        Illustration>\r\r</b>\n\uC11C\uC885\uD604 Jonghyun Seo\r\r\nGiacomo Sbarra\r\n\r\n<b><3D
+        \uCE90\uB9AD\uD130_3D Character Modeling>\r\r</b>\n\uAE40\uC131\uC8FC Seongju
+        Kim\r\r\n\uC2E0\uD6A8\uACBD Hyokyeong Shin\r\n\r\n<b><3D \uBC30\uACBD_3D
+        Background>\r</b>\n\uC2E0\uD6A8\uACBD Hyokyeong Shin\r\n\r\uD06C\uB9BC Cream\r\n\r\n<b><3D
+        \uC560\uB2C8\uBA54\uC774\uC158_3D Animation></b>\n\r\uAE40\uC740\uC194 Eunsol
+        Kim\r\n\r\n<b><VFX>\r\r</b>\n\uC774\uC720\uB098 Yuna Lee\r\n\r\n<b><UI Design></b>\n\r\uBC15\uC815\uC120
+        Jeongseon Park\r\r\n\uC774\uC608\uC9C4 Yejin Lee\r\n\r\n<b><Sound></b>\n\uBC15\uC131\uBBFC
+        Sungmin Park\r\n\r\n<b><Voice Actor></b>\n[\uCE74\uC77C Kyle] \uC2DC\uC628
+        Sion\r\r\n[\uC640\uB860 Warron] \uC11D\uD0C4\uAD70 Coalage\r\n\r\n<b><BGM></b>\n[Main
+        BGM] Retro Future_Another Kid\r\r\n[In-Game BGM] Mystery (by Gataboota)\r\r\n[Rage
+        Mode BGM] Cave (by Kingle)\r\r\n                               Wargame (by
+        Kingle)\r\r\n                               \uAE30\uC2B5\uACF5\uACA9 (by
+        XFT)\r\n\r\n<b>\uBAA8\uB450 \uC0AC\uC6A9 \uD5C8\uAC00\uB97C \uAD6C\uB9E4\uD55C
+        BGM\uC785\uB2C8\uB2E4.</b>\n\r\n\nSpecial Thanks to <b>GameMakers</b>"
       objectReference: {fileID: 0}
     - target: {fileID: 436524072563831617, guid: c67fb14f258eeb5478c525f104a61b93, type: 3}
       propertyPath: m_Pivot.x

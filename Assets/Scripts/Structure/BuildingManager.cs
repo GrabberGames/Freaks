@@ -42,7 +42,7 @@ public class BuildingManager : MonoBehaviour
 
 
 
-    private List<WhiteTowerAttack> whiteTowerList = new List<WhiteTowerAttack>();
+
     private List<BuildingRange> buildingRangeList = new List<BuildingRange>();
 
 
@@ -138,26 +138,12 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
+
+    InterfaceRange interfaceRange;
     public void BuildingRangeON(bool check) //건물들 rangeON
     {
-        InterfaceRange interfaceRange;
-
         interfaceRange = altercontroller.GetComponent<InterfaceRange>();
         interfaceRange.BuildingRangeON(check);
-
-        for (int i = 0; i < whiteTowerList.Count; i++)
-        {
-            if (whiteTowerList[i] != null)
-            {
-                interfaceRange = whiteTowerList[i].GetComponent<InterfaceRange>();
-                interfaceRange.BuildingRangeON(check);
-            }
-            else
-            {
-                whiteTowerList.RemoveAt(i); //whitetower 소멸되었을 경우
-            }
-        }
-
 
         for (int i = 0; i < buildingRangeList.Count; i++)
         {
@@ -165,6 +151,8 @@ public class BuildingManager : MonoBehaviour
             {
                 interfaceRange = buildingRangeList[i].GetComponent<InterfaceRange>();
                 interfaceRange.BuildingRangeON(check);
+
+
             }
             else
             {
@@ -202,5 +190,10 @@ public class BuildingManager : MonoBehaviour
         return essenceSpot;
     }
 
+
+    public List<BuildingRange> GetbuildingRangeList()
+    {
+        return buildingRangeList;
+    }
 
 }

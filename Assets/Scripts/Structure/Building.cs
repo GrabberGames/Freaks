@@ -78,10 +78,11 @@ public class Building : MonoBehaviour
                 building_before.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
                 building_before.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false);
 
+
                 building_before.transform.GetChild(1).gameObject.SetActive(false);
 
                 building_before.SetActive(true);
-                
+                BuildingManager.Instance.GetbuildingRangeList().Add(building_before.transform.GetChild(2).GetComponent< BuildingRange>());
                 GoBuild();
 
                 //StartCoroutine("Test");
@@ -163,6 +164,9 @@ public class Building : MonoBehaviour
                 building_building.SetActive(true);
                 StartCoroutine(CompleteTimer());
 
+                BuildingManager.Instance.GetbuildingRangeList().Add(building_building.transform.GetChild(5).GetComponent<BuildingRange>());
+
+
                 building_building.GetComponent<AudioSource>().Play();
                 break;
 
@@ -215,6 +219,7 @@ public class Building : MonoBehaviour
                 whiteFreaks.SetActive(true);
                 GoAlter();
                 BuildingPooling.instance.ReturnObject(building_complete);
+                BuildingManager.Instance.GetbuildingRangeList().Add(whiteTower.transform.GetChild(2).GetComponent<BuildingRange>());
 
                 break;
             default:

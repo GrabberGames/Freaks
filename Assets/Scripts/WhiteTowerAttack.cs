@@ -27,15 +27,12 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     protected override void Init()
     {
         base.Init();
+  
         blackFreaks = gameController.GetAliveBlackFreaksList();
         // Debug.Log("base.HP : " + base.HP);
         bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 18.98f, transform.position.z - 0.29f);
         NoBuildRange = transform.GetChild(2).gameObject;
-
-        if (ConstructionPreviewManager.Instance.isPreviewMode)
-            NoBuildRange.SetActive(true);
-        else
-            NoBuildRange.SetActive(false);
+    
 
 
     }
