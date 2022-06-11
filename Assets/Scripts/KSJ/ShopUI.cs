@@ -24,6 +24,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private Text textArmor;
     [SerializeField] private Text textMoveSpeed;
     [SerializeField] private Text textAttackSpeed;
+    [SerializeField] private Text textCreateCount;
     [SerializeField] private Text textFreaksCount;
 
     [Header("EssenceTextSetting")]
@@ -44,6 +45,11 @@ public class ShopUI : MonoBehaviour
     {
         go = gameObject;
         go.SetActive(false);
+    }
+
+    private void Start()
+    {
+        StageManager.Instance.SetCreateCompleteUIAction(SetTextCreateCount);  
     }
 
     public void ActiveShopUI()
@@ -85,26 +91,18 @@ public class ShopUI : MonoBehaviour
 
     private void Init()
     {
-        textPD.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerPD, PD);
-        textED.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerED, ED);
-        textHP.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMaxHp, HP);
-        textArmor.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerArmor, Armor);
-        textMoveSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMoveSpeed, MoveSpeed);
-        textAttackSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerAttackSpeed, AttackSpeed);
+        textPD.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerPD, PD);
+        textED.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerED, ED);
+        textHP.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerMaxHp, HP);
+        textArmor.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerArmor, Armor);
+        textMoveSpeed.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerMoveSpeed, MoveSpeed);
+        textAttackSpeed.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerAttackSpeed, AttackSpeed);
 
-        /*
-        textPD.text = GameManager.Instance.models.playerModel.PlayerPD.ToString() + "(+" + PD.ToString() + ")";
-        textED.text = GameManager.Instance.models.playerModel.PlayerED.ToString() + "(+" + ED.ToString() + ")";
-        textHP.text = GameManager.Instance.models.playerModel.PlayerMaxHp.ToString() + "(+" + HP.ToString() + ")";
-        textArmor.text = GameManager.Instance.models.playerModel.PlayerArmor.ToString() + "(+" + Armor.ToString() + ")";
-        textMoveSpeed.text = GameManager.Instance.models.playerModel.PlayerMoveSpeed.ToString() + "(+" + MoveSpeed.ToString() + ")";
-        textAttackSpeed.text = GameManager.Instance.models.playerModel.PlayerAttackSpeed.ToString() + "(+" + AttackSpeed.ToString() + ")";
-        */
-
+        textCreateCount.text = CountStringBuilder(StageManager.Instance.createFreaksCount);
         textFreaksCount.text = WhiteFreaksManager.Instance.allFreaksCount.ToString();
     }
 
-    private string StringBuilder(float stat, float addValue)
+    private string StatStringBuilder(float stat, float addValue)
     {
         stringBuilder.Clear();
         stringBuilder.Append(stat.ToString());
@@ -115,6 +113,20 @@ public class ShopUI : MonoBehaviour
         return stringBuilder.ToString();
     }
 
+    private string CountStringBuilder(float value)
+    {
+        stringBuilder.Clear();
+        stringBuilder.Append("x ");
+        stringBuilder.Append(value.ToString());
+
+        return stringBuilder.ToString();
+    }
+
+    private void SetTextCreateCount()
+    {
+        textCreateCount.text = CountStringBuilder(StageManager.Instance.createFreaksCount);
+    }
+
     #region 구매버튼 구현
     public void BuyPD()
     {
@@ -122,7 +134,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.PD, PD);
             StageManager.Instance.UseEssence(statPrice);
-            textPD.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerPD, PD);
+            textPD.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerPD, PD);
         }
         else
         {
@@ -136,7 +148,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ED, ED);
             StageManager.Instance.UseEssence(statPrice);
-            textED.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerED, ED);
+            textED.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerED, ED);
         }
         else
         {
@@ -150,7 +162,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.HP, HP);
             StageManager.Instance.UseEssence(statPrice);
-            textHP.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMaxHp, HP);
+            textHP.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerMaxHp, HP);
         }
         else
         {
@@ -163,7 +175,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ARMOR, Armor);
             StageManager.Instance.UseEssence(statPrice);
-            textArmor.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerArmor, Armor);
+            textArmor.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerArmor, Armor);
         }
         else
         {
@@ -176,7 +188,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.MOVESPEED, MoveSpeed);
             StageManager.Instance.UseEssence(statPrice);
-            textMoveSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerMoveSpeed, MoveSpeed);
+            textMoveSpeed.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerMoveSpeed, MoveSpeed);
         }
         else
         {
@@ -189,7 +201,7 @@ public class ShopUI : MonoBehaviour
         {
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ATTACKSPEED, AttackSpeed);
             StageManager.Instance.UseEssence(statPrice);
-            textAttackSpeed.text = StringBuilder(GameManager.Instance.models.playerModel.PlayerAttackSpeed, AttackSpeed);
+            textAttackSpeed.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerAttackSpeed, AttackSpeed);
         }
         else
         {
@@ -201,14 +213,8 @@ public class ShopUI : MonoBehaviour
     {
         if (StageManager.Instance.ChkEssence(unitPrice))
         {
-            if (StageManager.Instance.CreateWhiteFreaks(createWhiteFreaksTime))
-            {
-                StageManager.Instance.UseEssence(unitPrice);
-            }
-            else
-            {
-                SystemMassage.Instance.PrintSystemMassage("vmflrlaksjdkl.");
-            }
+            StageManager.Instance.CreateWhiteFreaks(createWhiteFreaksTime);
+            StageManager.Instance.UseEssence(unitPrice);
         }
         else
         {
@@ -226,8 +232,14 @@ public class ShopUI : MonoBehaviour
         {
             textFreaksCount.text = WhiteFreaksManager.Instance.allFreaksCount.ToString();
             progressBar.fillAmount = StageManager.Instance.GetCreateWhiteFreaksProgress();
-
+            //textCreateCount.text = CountStringBuilder(StageManager.Instance.createFreaksCount);
             //textNowEssence.text = StageManager.Instance.essence.ToString();
+
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                ActiveShopUI(false);
+            }
+
             yield return null;
         }
     }

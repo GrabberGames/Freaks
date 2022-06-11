@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,12 +39,17 @@ public class StageManager : MonoBehaviour
     private float createCompleteTime;
     private float createStartTime;
     private float createTime;
+
+    private int _createFreaksCount;
+    public int createFreaksCount { get => _createFreaksCount; }
+
     IEnumerator coCreateWhiteFreaks;
 
     private int switchCount = 0;
     private int maxSwitchCount = 3;
 
-
+    public Action createCompleteUIAction;
+    
     private static StageManager mInstance;
     public static StageManager Instance
     {
@@ -136,7 +142,7 @@ public class StageManager : MonoBehaviour
     private void RespawnFreaks()
     {
         _beforeSpawnTime = nowPlayTime;
-        tempSpawnPointNumber = Random.Range(0, GameManager.Instance.SpawnPoint.Length);
+        tempSpawnPointNumber = UnityEngine.Random.Range(0, GameManager.Instance.SpawnPoint.Length);
 
         for (int i = 0; i < GameManager.Instance.SpawnPoint.Length; i++)
         {
@@ -171,8 +177,11 @@ public class StageManager : MonoBehaviour
         return coCreateWhiteFreaks == null;
     }
 
-    public bool CreateWhiteFreaks(float createTime)
+    public void CreateWhiteFreaks(float createTime)
     {
+        _createFreaksCount++;
+        createCompleteUIAction.Invoke();
+
         if (coCreateWhiteFreaks == null)
         {
             coCreateWhiteFreaks = CoWhiteFreaksSpawn();
@@ -182,11 +191,6 @@ public class StageManager : MonoBehaviour
             createCompleteTime = createStartTime + this.createTime;
 
             StartCoroutine(coCreateWhiteFreaks);
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 
@@ -199,8 +203,20 @@ public class StageManager : MonoBehaviour
             if (Time.time >= createCompleteTime)
             {
                 WhiteFreaksManager.Instance.increaseFreaks(1);
-                coCreateWhiteFreaks = null;
-                break;
+                _createFreaksCount--;
+
+                createCompleteUIAction.Invoke();
+
+                if(createFreaksCount <= 0)
+                {
+                    coCreateWhiteFreaks = null;
+                    break;
+                }
+                else
+                {
+                    createStartTime = createCompleteTime;
+                    createCompleteTime = createStartTime + this.createTime;
+                }
             }
         }
     }
@@ -213,6 +229,15 @@ public class StageManager : MonoBehaviour
             return (Time.time - createStartTime) / createTime;
     }
 
+    public void SetCreateCompleteUIAction(Action action)
+    {
+        if(createCompleteUIAction != null)
+        {
+            createCompleteUIAction = null;
+        }
+
+        createCompleteUIAction = action;
+    }
 
     #endregion
 
