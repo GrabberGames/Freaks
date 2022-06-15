@@ -22,7 +22,7 @@ public class WhiteFreaksManager : MonoBehaviour
     {
         for (int i = 0; i < _whiteFreaksList.Count; i++)
         {
-            if (_whiteFreaksList[i].IsIdle == true)
+            if (_whiteFreaksList[i].IsMoving == false)
             {
                 _whiteFreaksList.RemoveAt(i);
             }
@@ -87,7 +87,7 @@ public class WhiteFreaksManager : MonoBehaviour
     public void ReturnWhiteFreaks(GameObject freaks)
     {
         SignOfWhiteFreaksDecrease();
-        freaks.GetComponent<WhiteFreaksController>().IsIdle = true;
+        freaks.GetComponent<WhiteFreaksController>().IsMoving = false;
         ObjectPooling.Instance.ReturnObject(freaks);
         increaseIdle();
     }

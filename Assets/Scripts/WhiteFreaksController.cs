@@ -17,7 +17,7 @@ public class WhiteFreaksController : Stat
     private Vector3 alterPosition;
 
     public bool IsBuilding = false;
-    public bool IsIdle = true;
+    public bool IsMoving = false;
     private IDisposable arriveStream = default;
 
     GameObject go;
@@ -28,7 +28,7 @@ public class WhiteFreaksController : Stat
         Init();
         go = this.gameObject;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        IsIdle = true;
+        IsMoving = false;
         alter = GameManager.Instance.Alter;
 
         alterPosition = alter.transform.position;
@@ -72,15 +72,15 @@ public class WhiteFreaksController : Stat
 
     }
     */
-
+    /* 죽는거
     public override void DeadSignal()
     {
-        base.DeadSignal();
-        IsIdle = true;
+        //base.DeadSignal();
+        IsMoving = false;
         WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
         WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
     }
-
+    */
 
     protected override void Init()
     {
@@ -94,7 +94,10 @@ public class WhiteFreaksController : Stat
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
                 if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
+                {
+                    WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
                     return true;
+                }
             }
         }
         return false;
@@ -103,14 +106,14 @@ public class WhiteFreaksController : Stat
     Building buildng;
     void Moving()
     {
-        IsIdle = false;
+        IsMoving = true;
         if (IsBuilding == true)
         {
             buildng = targetBuilding.GetComponent<Building>();
             buildng.ChangeBuilding();
             go.SetActive(false);
             IsBuilding = false;
-            WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
+            
             //switch�� �� �κп��ٰ� ���� ����
             //
         }
@@ -129,7 +132,7 @@ public class WhiteFreaksController : Stat
 
     public void SetDestination(GameObject target, bool isBuilding)
     {
-        IsIdle = false;
+        IsMoving = false;
         // go.SetActive(true);
         IsBuilding = isBuilding;
         targetBuilding = target;

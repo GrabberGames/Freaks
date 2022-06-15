@@ -24155,6 +24155,7 @@ Transform:
   m_Children:
   - {fileID: 3684443902604386431}
   - {fileID: 3684443902682517836}
+  - {fileID: 2631650313948090136}
   m_Father: {fileID: 4654745507225640956}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38970,6 +38971,142 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &4848416530952003297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631650313948090136}
+  - component: {fileID: 776085207188561681}
+  m_Layer: 0
+  m_Name: Sound_complete
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2631650313948090136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4848416530952003297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3684443902174215179}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &776085207188561681
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4848416530952003297}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d9bab6e9fd301004b99d8e21d863ff48, type: 2}
+  m_audioClip: {fileID: 8300000, guid: c30ba86715d3dad4b8fc8a0fb2c4a787, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 70
+  MaxDistance: 130
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.53846157
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.7649534
+      value: 0.60515654
+      inSlope: -2.166667
+      outSlope: -2.166667
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.1666667
+      outSlope: -2.1666667
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5463757832429487430
 GameObject:
   m_ObjectHideFlags: 0
@@ -39088,7 +39225,7 @@ MonoBehaviour:
   fx_whiteTower: {fileID: 3754320911355380681}
   SFXWhiteTowerDestroy: {fileID: 3684443902682517837}
   SFXWhiteTowerAttack: {fileID: 3684443902604386432}
-  SFXWhiteTowerComplete: {fileID: 1647091379523831450, guid: 9c64090e7da0804459f9e9dbd7f996f8, type: 3}
+  SFXWhiteTowerComplete: {fileID: 776085207188561681}
 --- !u!1 &6857684541233544786
 GameObject:
   m_ObjectHideFlags: 0
@@ -63199,13 +63336,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
---- !u!4 &8455188687365444635 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3018371370849050235, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
-  m_PrefabInstance: {fileID: 6680445274986056288}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &3754320911355380681 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7543445190239029673, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+  m_PrefabInstance: {fileID: 6680445274986056288}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8455188687365444635 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3018371370849050235, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
   m_PrefabInstance: {fileID: 6680445274986056288}
   m_PrefabAsset: {fileID: 0}

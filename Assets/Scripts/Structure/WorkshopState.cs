@@ -78,7 +78,7 @@ public class WorkshopState : Stat
             yield return YieldInstructionCache.WaitForSeconds(0.05f);
         }
 
-        GetComponentInParent<Building>().ReturnBuildingPool();
+       // GetComponentInParent<Building>().ReturnBuildingPool();
     }
 
 

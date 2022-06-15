@@ -48,7 +48,7 @@ public class TowerAttack : Stat
     }
     float sqrATTACK_RANGE ;
 
-    //update 추후에 삭제하겠습니다
+
     private void Update()
     {
         if (player == null)
@@ -69,7 +69,7 @@ public class TowerAttack : Stat
                 isAttack = true;
             }
         }
-
+        
         for (int i = 0; i < whiteFreaks.Count; i++)
         {
            // Debug.Log("whiteFreaks.Count : " + whiteFreaks.Count);

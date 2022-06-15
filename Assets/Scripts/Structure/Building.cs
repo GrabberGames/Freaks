@@ -123,6 +123,7 @@ public class Building : MonoBehaviour
         {
             workshop = BuildingPooling.instance.GetObject("build_workshop");
             workshop.transform.position = transform.position;
+            if(!(go.CompareTag("Switch")))
             workshop.GetComponent<WorkshopController>().SetConnectEssence(BuildingManager.Instance.GetEssenceSpot());
             workshop.GetComponent<WorkshopController>().SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
             workshop.SetActive(false);
@@ -175,8 +176,14 @@ public class Building : MonoBehaviour
                 workshop.SetActive(true);
                 workshop.transform.position = new Vector3(transform.position.x, 2.17f, transform.position.z);
                 workshop.GetComponent<WorkshopState>().SFXworkshopComplete.Play();
-
-                workshop.GetComponent<WorkshopController>().StartDigging();
+                if (BuildingManager.Instance.GetEssenceSpot().CompareTag("Switch"))
+                {
+                    workshop.GetComponent<WorkshopController>().StartPurify();
+                }
+                else
+                {
+                    workshop.GetComponent<WorkshopController>().StartDigging();
+                }
                 break;
             default:
                 break;
@@ -244,7 +251,7 @@ public class Building : MonoBehaviour
      
 
         yield return YieldInstructionCache.WaitForSeconds(0.02f);
-        alter.GetComponent<AlterController>().SFXAlterComplete.Play();
+        building_building.transform.GetChild(7).GetComponent<AudioSource>().Play();
         alter.transform.GetChild(4).gameObject.SetActive(true);
 
         building_complete = BuildingPooling.instance.GetObject("building_after");
@@ -253,7 +260,7 @@ public class Building : MonoBehaviour
         alterComplete.SetActive(true);
 
         building_complete.transform.position = transform.position;
-        yield return YieldInstructionCache.WaitForSeconds(0.7f);
+        yield return YieldInstructionCache.WaitForSeconds(0.8f);
 
         BuildingPooling.instance.ReturnObject(building_building);
 

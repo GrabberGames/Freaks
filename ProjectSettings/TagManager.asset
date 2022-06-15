@@ -19,6 +19,7 @@ TagManager:
   - neutrality
   - Hero
   - BlackTower
+  - Switch
   layers:
   - Default
   - TransparentFX
