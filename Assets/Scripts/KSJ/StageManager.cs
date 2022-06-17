@@ -262,7 +262,7 @@ public class StageManager : MonoBehaviour
             RaycastHit hit;
             Vector3 mPos;
 
-            int layerMask = (1 << LayerMask.NameToLayer("Building")) + (1 << LayerMask.NameToLayer("Walkable"));
+            int layerMask = (1 << LayerMask.NameToLayer("Building")) + (1 << LayerMask.NameToLayer("Walkable")) + (1 << LayerMask.NameToLayer("Ground"));
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, layerMask))
             {

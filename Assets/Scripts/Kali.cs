@@ -61,12 +61,15 @@ public class Kali : Stat
 
     PlayerState _state = PlayerState.Idle;
 
+    string _soundname = "";
     PlayerModel playerModel => GameManager.Instance.models.playerModel;
 
     float qTime = .0f;
     float wTime = .0f;
     float eTime = .0f;
     float rTime = .0f;
+
+    bool canPlayMoveSound = true;
     public PlayerState State
     {
         get { return _state; }
@@ -236,20 +239,31 @@ public class Kali : Stat
         }
 
     }
+    void ResetCanPlayMoveSound()
+    {
+        canPlayMoveSound = true;
+    }
     public void SoundPlay(string _name, int idx = 0)
     {
         if (AudioManager.Instance.Check() == true)
             _priority = 0;
-        string _soundname = "";
+
         switch (_name)
         {
             case "장거리 이동":
             case "단거리 이동":
+
                 //현재 실행중인 사운드가 없으면 실행
-                if (_priority == 0)
+                if (_priority == 0 && PlayerState.Die != State)
                 {
+                    if (canPlayMoveSound == false)
+                        return;
                     _priority = 3;
                     _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
+                    canPlayMoveSound = false;
+
+                    Invoke("ResetCanPlayMoveSound", 5f);
+                    AudioManager.Instance.Read("Kyle", _soundname);
                 }
                 break;
 
@@ -263,6 +277,7 @@ public class Kali : Stat
                     else if (idx == 3)
                         _soundname = "세번째";
                     _soundname += $"{_name} " + UnityEngine.Random.Range(1, 3);
+                    AudioManager.Instance.Read("Kyle", _soundname);
                 }
                 break;
             case "Q":
@@ -270,7 +285,7 @@ public class Kali : Stat
             case "E":
             case "R":
                 //현재 실행중인 사운드가 없거나 우선순위 3순위인게 실행중이면 하이재킹.
-                if (_priority == 0 || _priority > 2)
+                if ((_priority == 0 || _priority > 2) && PlayerState.Die != State)
                 {
                     _priority = 2;
                     if (idx == 3)
@@ -278,6 +293,7 @@ public class Kali : Stat
                     else
                         _soundname = $"{_name}스킬 " + UnityEngine.Random.Range(1, 3);
                     audioSource[idx].Play();
+                    AudioManager.Instance.Read("Kyle", _soundname);
                 }
                 break;
 
@@ -290,12 +306,11 @@ public class Kali : Stat
                 {
                     _priority = 1;
                     _soundname = $"{_name} " + UnityEngine.Random.Range(1, 3);
+                    AudioManager.Instance.Read("Kyle", _soundname);
                 }
                 break;
 
         }
-        //실행하기.
-        AudioManager.Instance.Read("Kyle", _soundname);
     }
 
     public override void DeadSignal()
@@ -408,11 +423,19 @@ public class Kali : Stat
     }
     #endregion
 
+    Vector3 ultPos;
     #region R_Skill
     void HorizonofMemory()
     {
         SoundPlay("R", 3);
         agent.ResetPath();
+        RaycastHit hit;
+        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
+
+        if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
+        {
+            ultPos = hit.point;
+        }
     }
     public void R_Sound()
     {
@@ -420,15 +443,9 @@ public class Kali : Stat
     }
     public void R_Instantiate()
     {
-        RaycastHit hit;
-        LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
-
-        if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
-        {
-            R_Skill = Instantiate(R_Skill_Prefab);
-            R_Skill.transform.position = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
-            R_Skill.GetComponent<Kail_R>().Trigger();
-        }
+        R_Skill = Instantiate(R_Skill_Prefab);
+        R_Skill.transform.position = ultPos;
+        R_Skill.GetComponent<Kail_R>().Trigger();
     }
     public void R_Stop()
     {

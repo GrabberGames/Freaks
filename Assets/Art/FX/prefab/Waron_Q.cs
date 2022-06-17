@@ -15,17 +15,17 @@ public class Waron_Q : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animator.Play("Idle");
-        _lookDir = lookDir;
+        _lookDir = new Vector3(lookDir.x - transform.position.x, 0, lookDir.z - transform.position.z).normalized;
         _damage = damage; 
         this.arm = arm;
         startPos = transform.position;
-        Invoke("P", 2.6f);
+        Invoke("P", 2f);
     }
     private void OnTriggerEnter(Collider other)
     {
-        animator.Play("Broke");
         if (other.transform.CompareTag("BlackFreaks"))
         {
+            animator.Play("Broke");
             GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
         }
     }
@@ -36,12 +36,10 @@ public class Waron_Q : MonoBehaviour
             transform.position = arm.transform.position;
         else
         {
-            if ((startPos - this.transform.position).magnitude > 30)
+            if ((startPos - this.transform.position).sqrMagnitude > 900)
                 return;
             else
-                dir = transform.position + _lookDir.normalized * 50f * Time.deltaTime;
-            //dir.y = 0;
-            transform.position = dir;
+                transform.position += _lookDir * 50f * Time.deltaTime;
         }
     }
     void P()

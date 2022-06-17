@@ -105,6 +105,7 @@ namespace WarriorAnims
         float rTime = .0f;
 
         int cnt = 0;
+        bool canPlayMoveSound = true;
         PlayerModel PlayerModel => GameManager.Instance.models.playerModel;
 
         //Waron Sound Priority Variable & Far Distance Judge
@@ -447,6 +448,7 @@ namespace WarriorAnims
 
 
         #region Q_Skill
+        Vector3 qPos;
         void ThrowingRock()
         {
             SoundPlay("Q", 0);
@@ -459,6 +461,14 @@ namespace WarriorAnims
             animator.SetInteger("Action", 1);
             animator.SetInteger("TriggerNumber", 12);
             animator.SetTrigger("Trigger");
+
+            RaycastHit hit;
+            LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
+
+            if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
+            {
+                qPos = hit.point;
+            }
         }
         public void ThrowingRock_Stop()
         {
@@ -475,7 +485,7 @@ namespace WarriorAnims
         {
             rock = Instantiate(Q_particle);
             rock.transform.position = leftArm.transform.position;
-            rock.GetComponent<Waron_Q>().Init(look_dir, 10, leftArm);
+            rock.GetComponent<Waron_Q>().Init(qPos, 10, leftArm);
         }
         public void ThrowingRockThrow()
         {
@@ -519,7 +529,8 @@ namespace WarriorAnims
 
         IEnumerator LeafOfPrideParticle()
         {
-            go = Instantiate(W_particle, this.gameObject.transform);
+            go = Instantiate(W_particle);
+            go.transform.position = transform.position;
             ParticleSystem w_ps = go.GetComponent<ParticleSystem>();
             w_ps.Play();
             yield return new WaitForSeconds(w_ps.main.startLifetimeMultiplier);
@@ -619,7 +630,10 @@ namespace WarriorAnims
         {
             SetAnimatorRootMotion(false);
         }
-
+        void ResetCanPlayMoveSound()
+        {
+            canPlayMoveSound = true;
+        }
         public void SoundPlay(string _name, int idx = 0)
         {
             if (AudioManager.Instance.Check() == true)
@@ -629,10 +643,16 @@ namespace WarriorAnims
             {
                 case "장거리 이동":
                 case "단거리 이동":
-                    if (_priority == 0)
+                    if (_priority == 0 && PlayerState.Die != PState)
                     {
+                        if (canPlayMoveSound == false)
+                            return;
                         _priority = 3;
                         _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
+                        canPlayMoveSound = false;
+
+                        Invoke("ResetCanPlayMoveSound", 5f);
+                        AudioManager.Instance.Read("Warron", _soundname);
                     }
                     break;
 
@@ -646,19 +666,21 @@ namespace WarriorAnims
                         else if (idx == 3)
                             _soundname = "세번째";
                         _soundname += $"{_name} " + UnityEngine.Random.Range(1, 3);
+                        AudioManager.Instance.Read("Warron", _soundname);
                     }
                     break;
                 case "Q":
                 case "W":
                 case "E":
                 case "R":
-                    if (_priority == 0 || _priority > 2)
+                    if ((_priority == 0 || _priority > 2) && PlayerState.Die != PState)
                     {
                         _priority = 2;
                         if (idx == 3)
                             _soundname = $"{_name}스킬";
                         else
                             _soundname = $"{_name}스킬 " + UnityEngine.Random.Range(1, 3);
+                        AudioManager.Instance.Read("Warron", _soundname);
                     }
                     break;
 
@@ -670,11 +692,11 @@ namespace WarriorAnims
                     {
                         _priority = 1;
                         _soundname = $"{_name} " + UnityEngine.Random.Range(1, 4);
+                        AudioManager.Instance.Read("Warron", _soundname);
                     }
                     break;
 
             }
-            AudioManager.Instance.Read("Warron", _soundname);
         }
 
 

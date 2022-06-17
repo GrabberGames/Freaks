@@ -17,7 +17,7 @@ public class DamageManager
             defender.HP = 0;
             OnDead(defender);
         }
-        ChangedHP.Invoke();
+        ChangedHP?.Invoke();
     }
     public void OnDead(Stat defender)
     {

@@ -6,6 +6,10 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private ListenPositioner audioListener;
 
+    public GameObject player;
+
+    public bool isFixedToHero = false;
+
     public float panSpeed = 100f;
     public float panBorderThickness = 10f;
 
@@ -24,6 +28,21 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         Vector3 pos = transform.position;
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Y))
+        {
+            isFixedToHero = !isFixedToHero;
+        }
+        if (isFixedToHero)
+        {
+            if (player == null) 
+                player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null)
+                return;
+            transform.position = new Vector3(player.transform.position.x, 233.6f, player.transform.position.z - 100);
+            return;
+        }
+
 
         if (Input.GetKey("up") || Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
@@ -45,9 +64,9 @@ public class CameraController : MonoBehaviour
             pos.x -= panSpeed * Time.deltaTime;
         }
 
-        pos.x = Mathf.Clamp(pos.x, -210, 175);
+        pos.x = Mathf.Clamp(pos.x, -250, 215);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        pos.z = Mathf.Clamp(pos.z, -200, 20);
+        pos.z = Mathf.Clamp(pos.z, -240, 20);
 
         transform.position = pos;
 
