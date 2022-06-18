@@ -75,7 +75,7 @@ Shader "Christal_Medium_SH"
 }
 /*ASEBEGIN
 Version=18301
--1920;-8;1920;1019;1560.295;-51.34204;1;True;True
+276;24;1626;987;1413.295;-67.34204;1;True;False
 Node;AmplifyShaderEditor.Vector2Node;7;-1349.014,2.206329;Inherit;False;Constant;_Vector0;Vector 0;2;0;Create;True;0;0;False;0;False;1,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.RangedFloatNode;12;-955.5175,550.5815;Inherit;False;Property;_FresnelPower;FresnelPower;4;0;Create;True;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;10;-956.5175,379.5815;Inherit;False;Property;_FresnelBias;FresnelBias;2;0;Create;True;0;0;False;0;False;0.08;0;0;0;0;1;FLOAT;0
@@ -109,4 +109,4 @@ WireConnection;18;1;13;0
 WireConnection;0;2;18;0
 WireConnection;0;9;3;1
 ASEEND*/
-//CHKSM=811119EBB4080B95FCE511B4285D5F98B865F857
+//CHKSM=2F4BC5FFD0DE5A2F547EE9271C252A272638C26B
