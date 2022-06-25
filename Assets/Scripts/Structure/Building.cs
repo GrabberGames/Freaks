@@ -184,6 +184,7 @@ public class Building : MonoBehaviour
                 {
                     workshop.GetComponent<WorkshopController>().StartDigging();
                 }
+                BuildingPooling.instance.ReturnObject(this.gameObject);
                 break;
             default:
                 break;
@@ -227,7 +228,7 @@ public class Building : MonoBehaviour
                 GoAlter();
                 BuildingPooling.instance.ReturnObject(building_complete);
                 BuildingManager.Instance.GetbuildingRangeList().Add(whiteTower.transform.GetChild(2).GetComponent<BuildingRange>());
-
+                BuildingPooling.instance.ReturnObject(this.gameObject);
                 break;
             default:
                 break;
@@ -277,6 +278,7 @@ public class Building : MonoBehaviour
         ReturnBuildingPool();
         BuildingPooling.instance.ReturnObject(building_complete);
         BuildingPooling.instance.ReturnObject(alterComplete);
+        BuildingPooling.instance.ReturnObject(this.gameObject);
     }
 
 

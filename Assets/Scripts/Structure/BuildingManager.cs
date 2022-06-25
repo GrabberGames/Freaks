@@ -96,8 +96,7 @@ public class BuildingManager : MonoBehaviour
         SetEssenceSpot(essence);
         SetBuildPosition(buildingType, pos);
     }
-
-
+    
     GameObject go;
     public void SetBuildPosition(eBuilding buildingType, Vector3 pos)
     {
@@ -125,6 +124,7 @@ public class BuildingManager : MonoBehaviour
 
                 break;
             case eBuilding.Workshop:
+                
                 go = BuildingPooling.instance.GetObject("building");
                 go.GetComponent<Building>().build_num = 2;
                 go.transform.position = pos;
