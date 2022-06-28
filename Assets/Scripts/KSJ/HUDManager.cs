@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {   
@@ -15,8 +16,6 @@ public class HUDManager : MonoBehaviour
             _activeSkillSlotUI = activeSkillSlotUI;
         }
     }
-
-
 
     public enum eSkillSlotKey { Passive, Q, W, E, R, MaxCount };
 
@@ -44,6 +43,9 @@ public class HUDManager : MonoBehaviour
 
     [Header("Cooldown Skill Icon Color")]
     [SerializeField] private Color coolDownSkillColor;
+
+    [Header("Revive Timer")]
+    [SerializeField] private Text reviveText;
 
 
     private ActiveSkillSlot[] activeSkillSlotArray = new ActiveSkillSlot[5];
@@ -113,7 +115,14 @@ public class HUDManager : MonoBehaviour
     {
         WhiteFreaksInfoUI.Visualization(idleCount, maxCount);
     }
-
+    public void SetReviveTimer(float time)
+    {
+        reviveText.text = time.ToString();
+    }
+    public void ActiveReviveTimer(bool b)
+    {
+        reviveText.gameObject.SetActive(b);
+    }
     IEnumerator CoolTimeVisualization()
     {
         while(true)

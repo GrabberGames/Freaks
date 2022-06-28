@@ -19,6 +19,10 @@ public class PlayerModel
     private float _wSkillCoolTime = 0f;
     private float _eSkillCoolTime = 0f;
     private float _rSkillCoolTime = 0f;
+    private float _qSkillMaxCoolTime= 0f;
+    private float _wSkillMaxCoolTime = 0f;
+    private float _eSkillMaxCoolTime = 0f;
+    private float _rSkillMaxCoolTime = 0f;
     private float _playerNowHp = 0f;
     private float _playerMaxHp = 0f;
     private float _playerPD = 0f;
@@ -46,6 +50,26 @@ public class PlayerModel
     {
         get => _rSkillCoolTime;
         set => _rSkillCoolTime = value;
+    }    
+    public float QSkillMaxCoolTime
+    {
+        get => _qSkillMaxCoolTime;
+        set => _qSkillMaxCoolTime = value;
+    }
+    public float WSkillMaxCoolTime
+    {
+        get => _wSkillMaxCoolTime;
+        set => _wSkillMaxCoolTime = value;
+    }
+    public float ESkillMaxCoolTime
+    {
+        get => _eSkillMaxCoolTime;
+        set => _eSkillMaxCoolTime = value;
+    }
+    public float RSkillMaxCoolTime
+    {
+        get => _rSkillMaxCoolTime;
+        set => _rSkillMaxCoolTime = value;
     }
     public float PlayerNowHp
     {

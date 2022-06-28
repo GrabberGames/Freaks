@@ -46,7 +46,7 @@ public class CreditUI : MonoBehaviour
     private void OnEnable()
     {
         creditTextTransform.position = new Vector3(creditTextTransform.position.x , 0.0f, 0.0f);
-        backGroundImage.color = bgColor;
+        backGroundImage.color = bgColor;    //페이드 아웃으로 변경된 색상을 다시 바꿔줌
         creditText.color = creditTextColor;
         returnButton.SetActive(true);
 
@@ -75,7 +75,7 @@ public class CreditUI : MonoBehaviour
             switch (Input.GetKey(KeyCode.Mouse0))
             {
                 case true:
-                    if(!onFade)
+                    if(!onFade) //사라지고 있으면
                     {
                         creditTextTransform.position = creditTextTransform.position + (fastVelocity * Time.deltaTime);
                     }

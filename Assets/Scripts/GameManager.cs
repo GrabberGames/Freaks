@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject _player;
 
+    [SerializeField]
+    Stat _playerStat;
+
     private eHeroType _selectHero = eHeroType.Kyle;
     public eHeroType selectHero { get => _selectHero; }
 
@@ -31,10 +34,7 @@ public class GameManager : MonoBehaviour
             return _player; 
         }
         set {
-            if (_player == null)
-                _player = value;
-            else
-                return;
+            _player = value;
          }
     }
 
@@ -62,6 +62,9 @@ public class GameManager : MonoBehaviour
     }
     public Action<GameObject> AlterIsChange = null;
 
+    public int _deadCount = 0;
+
+    WaitForSeconds _oneS = new WaitForSeconds(1f);
        
     static GameManager s_instance;
 
@@ -92,28 +95,33 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerDead()
     {
-        //StartCoroutine(PlayerRevive());
+        StartCoroutine(PlayerRevive());
     }
-    //--------------------------------//
-    /*      UI 작업시 구독자 구현 후 주석 해제*/
-    //--------------------------------//
-    /*
     public IEnumerator PlayerRevive()
     {
-        _reviveTime = Mathf.Min(40, (_deadCount++) * 5 + _playTime * 5);
-        while(_reviveTime > 0)
+        float _reviveTime = Mathf.Min(40, (_deadCount++) * 5 + (StageManager.Instance.nowPlayTime % 60) * 5);
+        HUDManager.Instance.ActiveReviveTimer(true);
+
+        while (_reviveTime > 0)
         {
             _reviveTime--;
 
-            TimeChanged(_reviveTime);
+            HUDManager.Instance.SetReviveTimer(_reviveTime);
 
-            yield return new WaitForSeconds(1f);
+            yield return _oneS;
         }
+        HUDManager.Instance.ActiveReviveTimer(false);
+
+        if (_playerStat == null)
+        {
+            _playerStat = Player.GetComponent<Stat>();
+        }
+
+        _playerStat.ReviveSignal();
     }
-    */
 
     public void SetSelectHero(eHeroType value) 
     {
-        _selectHero = value; 
+        _selectHero = value;
     }
 }

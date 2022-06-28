@@ -117,22 +117,22 @@ namespace WarriorAnims
             {
                 case "Q":
                     PlayerModel.QSkillCoolTime = 6.0f;
-                    qTime = 6;
+                    qTime = Time.time;
                     break;
 
                 case "W":
                     PlayerModel.WSkillCoolTime = 12.0f;
-                    wTime = 12;
+                    wTime = Time.time;
                     break;
 
                 case "E":
                     PlayerModel.ESkillCoolTime = 14.0f;
-                    eTime = 14;
+                    eTime = Time.time;
                     break;
 
                 case "R":
                     PlayerModel.RSkillCoolTime = 120.0f;
-                    rTime = 120;
+                    rTime = Time.time;
                     break;
             }
         }
@@ -172,6 +172,11 @@ namespace WarriorAnims
             PlayerModel.PlayerMaxHp = MAX_HP;
             PlayerModel.PlayerPD = PD;
             PlayerModel.PlayerED = ED;
+
+            PlayerModel.QSkillMaxCoolTime = 6;
+            PlayerModel.WSkillMaxCoolTime = 12;
+            PlayerModel.ESkillMaxCoolTime = 14;
+            PlayerModel.RSkillMaxCoolTime = 120;
         }
 
         public override void DeadSignal()
@@ -186,7 +191,28 @@ namespace WarriorAnims
         {
             Init();
         }
+        public override void SetModel()
+        {
+            base.SetModel();
 
+            PlayerModel.PlayerNowHp = HP;
+            PlayerModel.PlayerMaxHp = MAX_HP;
+            PlayerModel.PlayerPD = PD;
+            PlayerModel.PlayerED = ED;
+            PlayerModel.PlayerMoveSpeed = MOVE_SPEED;
+            PlayerModel.PlayerAttackSpeed = ATTACK_SPEED;
+            PlayerModel.PlayerArmor = ARMOR;
+        }
+        public override void SetStat()
+        {
+            HP = PlayerModel.PlayerNowHp;
+            MAX_HP = PlayerModel.PlayerMaxHp;
+            PD = PlayerModel.PlayerPD;
+            ED = PlayerModel.PlayerED;
+            MOVE_SPEED = PlayerModel.PlayerMoveSpeed;
+            ATTACK_SPEED = PlayerModel.PlayerAttackSpeed;
+            ARMOR = PlayerModel.PlayerArmor;
+        }
         private void Update()
         {
             ChooseAction();
@@ -218,19 +244,23 @@ namespace WarriorAnims
         {
             if (PlayerModel.QSkillCoolTime > 0)
             {
-                PlayerModel.QSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime), 0, 11);
+                Debug.Log("WARRON Q");
+                PlayerModel.QSkillCoolTime = Mathf.Clamp(6 - (Time.time - qTime), 0, 6);
             }
             if (PlayerModel.WSkillCoolTime > 0)
             {
-                PlayerModel.WSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
+                Debug.Log("WARRON W");
+                PlayerModel.WSkillCoolTime = Mathf.Clamp(12 - (Time.time - wTime), 0, 12);
             }
             if (PlayerModel.ESkillCoolTime > 0)
             {
-                PlayerModel.ESkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
+                Debug.Log("WARRON E");
+                PlayerModel.ESkillCoolTime = Mathf.Clamp(14 - (Time.time - eTime), 0, 14);
             }
             if (PlayerModel.RSkillCoolTime > 0)
             {
-                PlayerModel.RSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90); 
+                Debug.Log("WARRON R");
+                PlayerModel.RSkillCoolTime = Mathf.Clamp(120 - (Time.time - rTime), 0, 120); 
                 cnt++;
                 if (R_particle.activeInHierarchy)
                 {
@@ -596,8 +626,8 @@ namespace WarriorAnims
             animator.SetInteger("TriggerNumber", 10);
             SetAnimatorRootMotion(true);
 
-            StartCoroutine(BuffMoveSpeed(20));
-            StartCoroutine(BuffHp(20));
+            StartCoroutine(BuffMoveSpeed(1.2F));
+            StartCoroutine(BuffHp(1.2F));
 
         }
         public void ShockOfLand_Stop()

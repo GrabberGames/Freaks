@@ -49,7 +49,7 @@ public class ShopUI : MonoBehaviour
 
     private void Start()
     {
-        StageManager.Instance.SetCreateCompleteUIAction(SetTextCreateCount);  
+        StageManager.Instance.SetCreateCompleteUIAction(SetTextCreateCount);
     }
 
     public void ActiveShopUI()
@@ -223,7 +223,7 @@ public class ShopUI : MonoBehaviour
     }
     #endregion
 
-    IEnumerator EssenceCHK()
+    IEnumerator EssenceCHK() // SpawnBar
     {
         textStatPrice.text = statPrice.ToString();
         textUnitPrice.text = unitPrice.ToString();

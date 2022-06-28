@@ -181,18 +181,22 @@ public class Kali : Stat
     {
         if (playerModel.QSkillCoolTime > 0)
         {
+            Debug.Log("KYLE Q");
             playerModel.QSkillCoolTime = Mathf.Clamp(11 - (Time.time - qTime), 0, 11);
         }
         if (playerModel.WSkillCoolTime > 0)
         {
+            Debug.Log("KYLE W");
             playerModel.WSkillCoolTime = Mathf.Clamp(15 - (Time.time - wTime), 0, 15);
         }
         if (playerModel.ESkillCoolTime > 0)
         {
+            Debug.Log("KYLE E");
             playerModel.ESkillCoolTime = Mathf.Clamp(16 - (Time.time - eTime), 0, 16);
         }
         if (playerModel.RSkillCoolTime > 0)
         {
+            Debug.Log("KYLE R");
             playerModel.RSkillCoolTime = Mathf.Clamp(90 - (Time.time - rTime), 0, 90);
         }
     }
@@ -213,6 +217,11 @@ public class Kali : Stat
         GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
         GameManager.Instance.models.playerModel.PlayerPD = PD;
         GameManager.Instance.models.playerModel.PlayerED = ED;
+
+        playerModel.QSkillMaxCoolTime = 11;
+        playerModel.WSkillMaxCoolTime = 15;
+        playerModel.ESkillMaxCoolTime = 16;
+        playerModel.RSkillMaxCoolTime = 90;
 
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -262,7 +271,7 @@ public class Kali : Stat
                     _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
                     canPlayMoveSound = false;
 
-                    Invoke("ResetCanPlayMoveSound", 5f);
+                    Invoke("ResetCanPlayMoveSound", 8f);
                     AudioManager.Instance.Read("Kyle", _soundname);
                 }
                 break;
@@ -326,7 +335,20 @@ public class Kali : Stat
     public IEnumerator DeadAnimationEnd()
     {
         yield return new WaitForSeconds(1f);
-        Destroy(this.gameObject);
+        agent.ResetPath();
+        agent.isStopped = true;
+        agent.Warp(new Vector3(-9999, -9999, -9999));
+    }
+    public override void ReviveSignal()
+    {
+        State = PlayerState.Idle;
+        agent.isStopped = false;
+        agent.Warp(BuildingManager.Instance.Alter.transform.position);
+
+
+        HP = GameManager.Instance.models.playerModel.PlayerMaxHp;
+        GameManager.Instance.models.playerModel.PlayerNowHp = MAX_HP;
+        GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
     }
 
     #region Q_Skill
@@ -516,8 +538,11 @@ public class Kali : Stat
     }
     void Update()
     {
+        CoolTimer();
         if (State == PlayerState.Die)
+        {
             return;
+        }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -548,7 +573,6 @@ public class Kali : Stat
                 UpdateIdle(); MoveToSkillState();
                 break;
         }
-        CoolTimer();
     }
     public override void SetModel()
     {

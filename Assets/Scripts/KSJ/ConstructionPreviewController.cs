@@ -111,7 +111,6 @@ public class ConstructionPreviewController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            Debug.Log("마우스 우클릭");
             ConstructionPreviewManager.Instance.ConstructionPreview(false);
         }
     }

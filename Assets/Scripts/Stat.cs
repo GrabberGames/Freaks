@@ -52,4 +52,6 @@ public class Stat : MonoBehaviour
     public virtual void DeadSignal() { }
     public virtual void SetModel() { }
     public virtual void SetStat() { }
+
+    public virtual void ReviveSignal() { }
 }

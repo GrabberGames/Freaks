@@ -23,7 +23,7 @@ public struct HeroInfomation
     public Sprite skillIconR;
 }
 
-public enum eHeroType { None, Waron, Kyle }
+public enum eHeroType { None = 0 , Waron= 1, Kyle = 2 }
 
 public class GameMenuController : MonoBehaviour
 {
@@ -38,7 +38,7 @@ public class GameMenuController : MonoBehaviour
     //[SerializeField] private GameObject heroSelect;
 
     [Header("Hero Info")]
-    [SerializeField] private HeroInfomation waronInformation;
+    [SerializeField] private HeroInfomation warronInformation;
     [SerializeField] private HeroInfomation kyleInformation;
 
     [Header("Hero Select UI Setting")]
@@ -63,6 +63,7 @@ public class GameMenuController : MonoBehaviour
     }
 
     #region UI Canvas Controll
+
     public void OnEnablePlayMenu()
     {
         ActiveCanvas(eCanvasList.Play);
@@ -100,7 +101,7 @@ public class GameMenuController : MonoBehaviour
     #region Hero Select Controll
     public void SelectWaron()
     {
-        heroAbilitiesUI.SetAbilitiesUI(waronInformation);
+        heroAbilitiesUI.SetAbilitiesUI(warronInformation);
         heroSelectUI.SelectHero(eHeroType.Waron);
         GameManager.Instance.SetSelectHero(eHeroType.Waron);
     }

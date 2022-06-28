@@ -19,15 +19,16 @@ public class HUDController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         HUDManager.Instance.HPVisualization(GameManager.Instance.models.playerModel.PlayerNowHp, GameManager.Instance.models.playerModel.PlayerMaxHp);
         PostProcessManager.Instance.ActiveWarningMode(GameManager.Instance.models.playerModel.PlayerNowHp <= GameManager.Instance.models.playerModel.PlayerMaxHp * 0.25f);
         PostProcessManager.Instance.ActiveDeathMode(GameManager.Instance.models.playerModel.PlayerNowHp <= 0.0f);
 
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.Q, GameManager.Instance.models.playerModel.QSkillCoolTime, 11.0f);
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.W, GameManager.Instance.models.playerModel.WSkillCoolTime, 15.0f);
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.E, GameManager.Instance.models.playerModel.ESkillCoolTime, 16.0f);
-        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.R, GameManager.Instance.models.playerModel.RSkillCoolTime, 120.0f);
+        //¸ðµ¨ ÃÖ´ë ÄðÅ¸ÀÓµµ ³Ö¾îÁà¾ß ÇÔ 
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.Q, GameManager.Instance.models.playerModel.QSkillCoolTime, GameManager.Instance.models.playerModel.QSkillMaxCoolTime);
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.W, GameManager.Instance.models.playerModel.WSkillCoolTime, GameManager.Instance.models.playerModel.WSkillMaxCoolTime);
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.E, GameManager.Instance.models.playerModel.ESkillCoolTime, GameManager.Instance.models.playerModel.ESkillMaxCoolTime);
+        HUDManager.Instance.CoolTimeVisualization(HUDManager.eSkillSlotKey.R, GameManager.Instance.models.playerModel.RSkillCoolTime, GameManager.Instance.models.playerModel.RSkillMaxCoolTime);
 
         HUDManager.Instance.TimeInfoVisualization(StageManager.Instance.nowPlayTime, StageManager.Instance.beforeSpawnTime, StageManager.Instance.spawnIntervalTime);
 

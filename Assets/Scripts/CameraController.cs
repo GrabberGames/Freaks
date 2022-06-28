@@ -66,7 +66,7 @@ public class CameraController : MonoBehaviour
 
         pos.x = Mathf.Clamp(pos.x, -250, 215);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        pos.z = Mathf.Clamp(pos.z, -240, 20);
+        pos.z = Mathf.Clamp(pos.z, -260, 20);
 
         transform.position = pos;
 
@@ -75,5 +75,13 @@ public class CameraController : MonoBehaviour
             audioListener.ListenerPosition();
             _fixListenerPosition = true;
         }
+    }
+    public void CameraMoveToPlayer()
+    {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+            return;
+        transform.position = new Vector3(player.transform.position.x, 233.6f, player.transform.position.z - 100);
     }
 }
