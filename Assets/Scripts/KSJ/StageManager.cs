@@ -283,16 +283,16 @@ public class StageManager : MonoBehaviour
             fx_Move.Stop();
         }
     }
-    /* switch count up => 레이지 모드
+    // switch count up => 레이지 모드
     public void switchCountUp()
     {
         
         switchCount++;
 
-        if(switchCount ==3)
+        if(switchCount ==maxSwitchCount)
         {
-
+            ActiveRageMode(true);
         }
-    }*/
+    }
 
 }

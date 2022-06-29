@@ -39,6 +39,9 @@ public class SwitchController : MonoBehaviour
 
         }
 
+        StageManager.Instance.switchCountUp();
+
+
         yield return null;
 
     }
