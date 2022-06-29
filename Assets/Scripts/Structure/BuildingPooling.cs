@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildingPooling : MonoBehaviour
 {
-
+     List<GameObject> buildings = new List<GameObject>();
     
 
     public static BuildingPooling instance;
@@ -72,6 +72,7 @@ public class BuildingPooling : MonoBehaviour
     }
     static void Init()
     {
+
         if (instance == null)
         {
             GameObject ob_go = GameObject.Find("@BuildingPooling");
@@ -132,12 +133,14 @@ public class BuildingPooling : MonoBehaviour
                 newObj = Instantiate(whitetower, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
+                buildings.Add(newObj);
                 return newObj;
 
             case "build_workshop":
                 newObj = Instantiate(workshop, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
+                buildings.Add(newObj);
                 return newObj;
 
             case "alter_before":
@@ -150,12 +153,14 @@ public class BuildingPooling : MonoBehaviour
                 newObj = Instantiate(alter_building, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
+                buildings.Add(newObj);
                 return newObj;
 
             case "building_after":
                 newObj = Instantiate(building_after, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
+                buildings.Add(newObj);
                 return newObj;
 
             case "whitetower_before":
@@ -168,6 +173,7 @@ public class BuildingPooling : MonoBehaviour
                 newObj = Instantiate(whitetower_building, gameObject.transform);
                 newObj.transform.name = newObj.name.Replace("(Clone)", "");
                 newObj.SetActive(false);
+                buildings.Add(newObj);
                 return newObj;
 
             case "workshop_before":
@@ -310,5 +316,8 @@ public class BuildingPooling : MonoBehaviour
         }
     }
 
-
+    public List<GameObject> GetBuildings()
+    {
+        return buildings;
+    }
 }

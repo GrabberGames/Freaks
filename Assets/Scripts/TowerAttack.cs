@@ -12,6 +12,9 @@ public class TowerAttack : Stat
     public AudioSource SFXBlackTowerDestroy;
     public AudioSource SFXBlackTowerAttack;
 
+    [SerializeField]
+    bool AttackCheck = false;
+
     Stat _stat;
 
     private float AttackPerSeconds = 4f;
@@ -51,48 +54,89 @@ public class TowerAttack : Stat
 
     private void Update()
     {
-        if (player == null)
-        {
-            if (GameManager.Instance.Player == null)
-                return;
-            else
-                player = GameManager.Instance.Player;
-        }
-        if ((player.transform.position - transform.position).sqrMagnitude<= sqrATTACK_RANGE)
-        {
 
-            if (isAttack)
-                return;
-            else
+        if (AttackCheck == true)
+        {
+            if (player == null)
             {
-                StartCoroutine(FindInAttackRange());
-                isAttack = true;
+                if (GameManager.Instance.Player == null)
+                    return;
+                else
+                    player = GameManager.Instance.Player;
             }
-        }
-        
-        for (int i = 0; i < whiteFreaks.Count; i++)
-        {
-           // Debug.Log("whiteFreaks.Count : " + whiteFreaks.Count);
-
-            if ((whiteFreaks[i].gameObject.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+            if ((player.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
             {
+
                 if (isAttack)
                     return;
                 else
                 {
-                    StartCoroutine(FindInAttackRange(whiteFreaks[i].gameObject));
+                    StartCoroutine(FindInAttackRange());
                     isAttack = true;
                 }
             }
 
-        }
-        /*
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SFXBlackTowerDestroy.Play();
-            StartCoroutine(Dissolve());
-        }*/
+            if ((GameManager.Instance.Alter.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+            {
 
+                if (isAttack)
+                    return;
+                else
+                {
+                    StartCoroutine(FindInAttackRange());
+                    isAttack = true;
+                }
+            }
+
+
+
+            for (int i = 0; i < whiteFreaks.Count; i++)
+            {
+                // Debug.Log("whiteFreaks.Count : " + whiteFreaks.Count);
+                if (whiteFreaks[i].gameObject.activeSelf == true)//setActive true의 경우에
+                {
+                    if ((whiteFreaks[i].gameObject.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+                    {
+                        if (isAttack)
+                            return;
+                        else
+                        {
+                            StartCoroutine(FindInAttackRange(whiteFreaks[i].gameObject));
+                            isAttack = true;
+                        }
+                    }
+                }
+            }
+
+
+            for (int j = 0; j < BuildingPooling.instance.GetBuildings().Count; j++)
+            {
+                if (BuildingPooling.instance.GetBuildings()[j].activeSelf == true) //setActive true의 경우에만
+                {
+                    if ((BuildingPooling.instance.GetBuildings()[j].gameObject.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+                    {
+                        if (isAttack)
+                            return;
+                        else
+                        {
+                            StartCoroutine(FindInAttackRange(BuildingPooling.instance.GetBuildings()[j].gameObject));
+                            isAttack = true;
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+            /*
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                SFXBlackTowerDestroy.Play();
+                StartCoroutine(Dissolve());
+            }*/
+        }
 
     }
 

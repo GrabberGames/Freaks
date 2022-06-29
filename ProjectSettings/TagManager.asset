@@ -20,6 +20,8 @@ TagManager:
   - Hero
   - BlackTower
   - Switch
+  - alter
+  - workshop
   layers:
   - Default
   - TransparentFX

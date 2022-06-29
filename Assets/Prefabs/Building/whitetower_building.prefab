@@ -14598,6 +14598,7 @@ GameObject:
   - component: {fileID: 5524434298430457734}
   - component: {fileID: 2040835131576164209}
   - component: {fileID: 6343521580731753153}
+  - component: {fileID: 6652027572441369928}
   m_Layer: 0
   m_Name: whitetower_building
   m_TagString: Untagged
@@ -19502,6 +19503,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6652027572441369928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983832959736635199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425bac376a6b63b4d8a73ea49172ae80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8348273203507576391
 GameObject:
   m_ObjectHideFlags: 0

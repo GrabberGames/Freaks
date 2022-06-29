@@ -24,6 +24,7 @@ public class Building : MonoBehaviour
     Color c;
 
     GameObject go;
+
     GameObject building_before;
     GameObject building_building;
     GameObject building_complete;
@@ -118,7 +119,7 @@ public class Building : MonoBehaviour
         whiteFreaks = WhiteFreaksManager.Instance.GetWhiteFreaks();
         whiteFreaks.transform.position = alter.transform.position;
         whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(go, true);
-
+        whiteFreaks.GetComponent<WhiteFreaksController>().targetBefore = building_before;
         if (build_num==2)
         {
             workshop = BuildingPooling.instance.GetObject("build_workshop");
@@ -242,7 +243,7 @@ public class Building : MonoBehaviour
     {
         BuildingPooling.instance.ReturnObject(go);
     }
-
+    
 
 
     GameObject alterComplete;
@@ -280,6 +281,8 @@ public class Building : MonoBehaviour
         BuildingPooling.instance.ReturnObject(alterComplete);
         BuildingPooling.instance.ReturnObject(this.gameObject);
     }
+
+
 
 
 }

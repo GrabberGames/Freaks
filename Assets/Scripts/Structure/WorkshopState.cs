@@ -37,6 +37,7 @@ public class WorkshopState : Stat
             GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
 
 
+
         }
     }
     public void Disappear()
@@ -77,8 +78,8 @@ public class WorkshopState : Stat
 
             yield return YieldInstructionCache.WaitForSeconds(0.05f);
         }
-
-       // GetComponentInParent<Building>().ReturnBuildingPool();
+        BuildingPooling.instance.ReturnObject(this.gameObject);
+        // GetComponentInParent<Building>().ReturnBuildingPool();
     }
 
 

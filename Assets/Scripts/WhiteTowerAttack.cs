@@ -41,6 +41,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         if (HP <= 0)
             StartCoroutine(Dissolve());
 
+     
     }
 
     void Start()
@@ -126,8 +127,8 @@ public class WhiteTowerAttack : Stat, InterfaceRange
             yield return YieldInstructionCache.WaitForSeconds(0.03f);
         }
 
-
-        GetComponentInParent<Building>().ReturnBuildingPool();
+        BuildingPooling.instance.ReturnObject(this.gameObject);
+       // GetComponentInParent<Building>().ReturnBuildingPool();
 
     }
 

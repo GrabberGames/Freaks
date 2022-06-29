@@ -28,7 +28,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8829737696912606722}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: face (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 3621469217728703764}
   - component: {fileID: 7193091554652229264}
   - component: {fileID: 2582054018953277980}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: whitefreaks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 7950743611179996797}
   - component: {fileID: 7950743611179996796}
   - component: {fileID: 7950743611179996799}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WhiteFreaks_eye_Dead_Pre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4972,7 +4972,7 @@ GameObject:
   - component: {fileID: 7950743611876378756}
   - component: {fileID: 7950743611876378759}
   - component: {fileID: 7950743611876378758}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WhiteFreaks_eye01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9776,7 +9776,7 @@ GameObject:
   - component: {fileID: 7950743612431740418}
   - component: {fileID: 7950743612431740416}
   - component: {fileID: 7950743612431740419}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WhiteFreaks_eye02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14636,6 +14636,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FreaksLiquid01
       objectReference: {fileID: 0}
+    - target: {fileID: 5713668535597516275, guid: 6ec62041c8057b24faeb4fed17a85415, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ec62041c8057b24faeb4fed17a85415, type: 3}
 --- !u!4 &3880394675141578519 stripped
@@ -14707,8 +14711,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6896115923320363897, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -6896115923320363897, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6763280252483426837, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -6341215713226772190, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14790,6 +14802,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.224
       objectReference: {fileID: 0}
+    - target: {fileID: -5231959137197968437, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -5107054126005254486, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.30048993
@@ -14829,6 +14845,26 @@ PrefabInstance:
     - target: {fileID: -5107054126005254486, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.827
+      objectReference: {fileID: 0}
+    - target: {fileID: -3441741364759053172, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -3385604430752132528, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -2797864980895152918, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -2751146141445796930, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -2240151287705473546, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -1241058847572682039, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14870,9 +14906,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.964
       objectReference: {fileID: 0}
+    - target: {fileID: -892965452126272395, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -412989040442181847, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_Name
       value: White Freaks
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_IsActive
@@ -14941,6 +14989,18 @@ PrefabInstance:
     - target: {fileID: 3170678821532147365, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -2.116
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140668533725440856, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4465739215894424862, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122559995493457695, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9ca57e6e6f4bb54d9073bc8228245b1, type: 3}

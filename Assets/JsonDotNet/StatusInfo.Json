@@ -2,9 +2,9 @@
   "Json": {
     "alter": {
       "PD": 50,
-      "ED" : 0,
+      "ED": 0,
       "HP": 2000,
-      "MAX_HP" :  2000,
+      "MAX_HP": 2000,
       "ATTACK_SPEED": 0.6,
       "MOVE_SPEED": 0,
       "ATTACK_RANGE": 30,
@@ -158,6 +158,26 @@
       "ATTACK_SPEED": 0.5,
       "MOVE_SPEED": 7,
       "ATTACK_RANGE": 20,
+      "ARMOR": 0
+    },
+    "alter_building": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 0,
+      "MAX_HP": 200,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "whitetower_building": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 0,
+      "MAX_HP": 200,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
       "ARMOR": 0
     }
   }
