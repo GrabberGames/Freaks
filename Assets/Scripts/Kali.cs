@@ -449,6 +449,7 @@ public class Kali : Stat
     #region R_Skill
     void HorizonofMemory()
     {
+        StartCoroutine(HUDManager.Instance.PlayUltEffect());
         SoundPlay("R", 3);
         agent.ResetPath();
         RaycastHit hit;

@@ -615,6 +615,7 @@ namespace WarriorAnims
         #region R_Skill
         void ShockOfLand()
         {
+            StartCoroutine(HUDManager.Instance.PlayUltEffect());
             SoundPlay("R", 3);
 
             agent.ResetPath();

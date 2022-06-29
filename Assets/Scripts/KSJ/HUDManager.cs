@@ -47,6 +47,8 @@ public class HUDManager : MonoBehaviour
     [Header("Revive Timer")]
     [SerializeField] private Text reviveText;
 
+    [Header("Ultimate Skill Effect")]
+    [SerializeField] private ParticleSystem[] UltParticle;
 
     private ActiveSkillSlot[] activeSkillSlotArray = new ActiveSkillSlot[5];
 
@@ -132,5 +134,12 @@ public class HUDManager : MonoBehaviour
         }        
     }
 
+    public IEnumerator PlayUltEffect()
+    {
+        var ult = UltParticle[(int)GameManager.Instance.selectHero - 1];
+        ult.gameObject.SetActive(true);
 
+        yield return new WaitForSeconds(ult.main.duration);
+        ult.gameObject.SetActive(false);
+    }
 }
