@@ -51,7 +51,9 @@ public class StageManager : MonoBehaviour
     private int maxSwitchCount = 3;
 
     public Action createCompleteUIAction;
-    
+
+    [SerializeField] private Transform[] SpawnPoint;
+
     private static StageManager mInstance;
     public static StageManager Instance
     {
@@ -73,7 +75,6 @@ public class StageManager : MonoBehaviour
         var Player = PlayerObject[(int)GameManager.Instance.selectHero-1];
         GameManager.Instance.Player = Player;
         Player.SetActive(true);
-
     }
 
     // Start is called before the first frame update
@@ -148,9 +149,9 @@ public class StageManager : MonoBehaviour
     private void RespawnFreaks()
     {
         _beforeSpawnTime = nowPlayTime;
-        tempSpawnPointNumber = UnityEngine.Random.Range(0, GameManager.Instance.SpawnPoint.Length);
+        tempSpawnPointNumber = UnityEngine.Random.Range(0, SpawnPoint.Length);
 
-        for (int i = 0; i < GameManager.Instance.SpawnPoint.Length; i++)
+        for (int i = 0; i < SpawnPoint.Length; i++)
         {
             if (_isRageMode.Equals(i.Equals(tempSpawnPointNumber)))
                 continue;
@@ -165,7 +166,7 @@ public class StageManager : MonoBehaviour
         {
             Debug.Log($"½ºÆùÁß {i} max {spawnBlackfreaksCount}");
             GameObject obj = ObjectPooling.Instance.GetObject("BlackFreaks");
-            obj.gameObject.GetComponent<NavMeshAgent>().Warp(GameManager.Instance.SpawnPoint[point].position);
+            obj.gameObject.GetComponent<NavMeshAgent>().Warp(SpawnPoint[point].position);
 
             var script = obj.GetComponent<FreaksController>();
             script.Spawned();
