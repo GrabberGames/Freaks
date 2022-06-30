@@ -28,7 +28,7 @@ public class WorkshopState : Stat
 
 
             GetComponent<WorkshopController>().GetConnectingFreaks().gameObject.SetActive(true);
-            GetComponent<WorkshopController>().GetConnectingFreaks().SetDestination(GameManager.Instance.Alter, false);
+            GetComponent<WorkshopController>().GetConnectingFreaks().SetDestination(BuildingManager.Instance.Alter, false);
 
 
             GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()

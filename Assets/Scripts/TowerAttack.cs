@@ -12,6 +12,7 @@ public class TowerAttack : Stat
     public AudioSource SFXBlackTowerDestroy;
     public AudioSource SFXBlackTowerAttack;
 
+    [Header("여기 아래에 check하면 블랙타워가 공격합니다.")]
     [SerializeField]
     bool AttackCheck = false;
 
@@ -71,19 +72,22 @@ public class TowerAttack : Stat
                     return;
                 else
                 {
-                    StartCoroutine(FindInAttackRange());
+                    StartCoroutine(FindInAttackRange(player));
                     isAttack = true;
                 }
             }
 
-            if ((GameManager.Instance.Alter.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+            if ((BuildingManager.Instance.Alter.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
             {
 
                 if (isAttack)
                     return;
                 else
                 {
-                    StartCoroutine(FindInAttackRange());
+                    if (BuildingManager.Instance.Alter.GetComponent<AlterController>().HP <= 0)
+                        return;
+
+                    StartCoroutine(FindInAttackRange(BuildingManager.Instance.Alter));
                     isAttack = true;
                 }
             }

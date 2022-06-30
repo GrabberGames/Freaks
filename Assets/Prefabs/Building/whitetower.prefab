@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 431928819961901735}
   - component: {fileID: 3625784094284725506}
   - component: {fileID: 1564341324697225672}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Christal_Orign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4446721944704036538}
   - component: {fileID: 4941080686008779727}
   - component: {fileID: 646383091017957533}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 951375698344061470}
   - component: {fileID: 1724593001150425430}
   - component: {fileID: 1089296676703954320}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9703,7 +9703,7 @@ GameObject:
   - component: {fileID: 3436679231731031708}
   - component: {fileID: 2125641665389568044}
   - component: {fileID: 6969697397870951767}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Mood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14516,7 +14516,7 @@ GameObject:
   - component: {fileID: 8171708959092691484}
   - component: {fileID: 7027817610568850934}
   - component: {fileID: 7952234338936197795}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: FX_Core_Loop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19324,7 +19324,7 @@ GameObject:
   - component: {fileID: 694261977685048688}
   - component: {fileID: 1750714736357748789}
   - component: {fileID: 1491050314223407038}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Core (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24552,7 +24552,7 @@ GameObject:
   - component: {fileID: 1327270076207349220}
   - component: {fileID: 251567004122562455}
   - component: {fileID: 6211101846471529406}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Mood (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29365,7 +29365,7 @@ GameObject:
   - component: {fileID: 5893254661585966710}
   - component: {fileID: 1993946881652098503}
   - component: {fileID: 2803293965268632759}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Mood (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34178,7 +34178,7 @@ GameObject:
   - component: {fileID: 2947785911175835432}
   - component: {fileID: 4734350932110172533}
   - component: {fileID: 5602256105130055979}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39120,7 +39120,7 @@ GameObject:
   - component: {fileID: 5824234849587192979}
   - component: {fileID: 3684443901973955353}
   - component: {fileID: 3684443901973955351}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: whitetower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39237,7 +39237,7 @@ GameObject:
   - component: {fileID: 4003544305053886952}
   - component: {fileID: 1711605197957453798}
   - component: {fileID: 5012897424907107436}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Core (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44050,7 +44050,7 @@ GameObject:
   - component: {fileID: 3551439713284887105}
   - component: {fileID: 3472486221693515174}
   - component: {fileID: 684620869265416799}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Mood (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48863,7 +48863,7 @@ GameObject:
   - component: {fileID: 6398939467471441903}
   - component: {fileID: 651294868531499457}
   - component: {fileID: 2619117409178508802}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle_Mood (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53676,7 +53676,7 @@ GameObject:
   - component: {fileID: 3820019801678703542}
   - component: {fileID: 4923409420216405962}
   - component: {fileID: 804828218396207025}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: FX_Loop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58486,7 +58486,7 @@ GameObject:
   - component: {fileID: 3765749516301297611}
   - component: {fileID: 8318056035268506615}
   - component: {fileID: 6963967430514048418}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63286,6 +63286,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4654745507225640956}
     m_Modifications:
+    - target: {fileID: 1143208740421237451, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2126422549990726944, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3018371370849050235, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -63330,9 +63338,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4840477282566310475, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868069216899331636, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6660764819898026677, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271428469502552516, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9129704703815157091, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
       propertyPath: m_Name
       value: Fx_White_Emit
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129704703815157091, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}

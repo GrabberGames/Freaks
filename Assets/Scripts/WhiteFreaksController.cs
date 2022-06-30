@@ -30,7 +30,7 @@ public class WhiteFreaksController : Stat
         go = this.gameObject;
         navMeshAgent = GetComponent<NavMeshAgent>();
         IsMoving = false;
-        alter = GameManager.Instance.Alter;
+        alter = BuildingManager.Instance.Alter;
 
         alterPosition = alter.transform.position;
 

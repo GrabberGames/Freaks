@@ -1,68 +1,60 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
-using TMPro;
 
-public class AlterController : MonoBehaviour, DamageService, HealthService, InterfaceRange
+
+public class AlterController : Stat, InterfaceRange
 {
-    public GameObject whiteFreaksPref;
-    public TextMeshProUGUI wFreaksCount;
-    public TextMeshProUGUI mineCount;
-    public GameObject VFXAlterDestroy;
-    public AudioSource SFXAlterDestroy;
-    public AudioSource SFXAlterComplete;
-    public float healthPoint = 2000.0f;
-    public int essence = 1000;
 
+    [SerializeField] private GameObject VFXAlterDestroy;
+    [SerializeField] private AudioSource SFXAlterDestroy;
+    [SerializeField] private AudioSource SFXAlterComplete;
 
-
-
-    private int busyWhiteF = 0;
+ 
 
     private GameObject BuildRange;
 
+    GameObject go;
+
+    protected override void Init()
+    {
+        base.Init();
+        go = this.gameObject;
+
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+            StartCoroutine(AlterDestroy());
+    }
+
     private void Start()
     {
+        Init();
         BuildRange = transform.GetChild(2).gameObject;
         BuildRange.SetActive(false);
         transform.GetChild(4).gameObject.SetActive(false);
     }
-
-    public void DamageTaken(float damageTaken)
+    public override void DeadSignal()
     {
-        healthPoint -= damageTaken;
-    }
+        if (HP <= 0)
+        {
+            StartCoroutine(AlterDestroy());
 
-    public float GetCurrentHP()
-    {
-        return healthPoint;
-    }
-
-    public void returnedBusyFreeks()
-    {
-        busyWhiteF--;
+        }
     }
 
     IEnumerator AlterDestroy()
     {
         SFXAlterDestroy.Play();
-        Instantiate(VFXAlterDestroy);
-        yield return YieldInstructionCache.WaitForSeconds(2.5f);
-        Destroy(transform.GetChild(0).gameObject); //사라지게할것인가
+        VFXAlterDestroy.SetActive(true);
+        yield return YieldInstructionCache.WaitForSeconds(2.0f);
+        go.transform.GetChild(0).gameObject.SetActive(false);
+        yield return YieldInstructionCache.WaitForSeconds(1.8f);
+        go.SetActive(false);
+        GameManager.Instance.DefeatShow();
+ 
     }
-
-    public Vector3 getAlterPosition()
-    {
-        return transform.position;
-    }
-
-    public float getAlterRange()
-    {
-        return GetComponent<SphereCollider>().radius;
-    }
-
+  
     public void BuildingRangeON(bool check)
     {
         if (check)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2427312563151498766}
   - component: {fileID: 5011714247307789122}
   - component: {fileID: 8300060931944706742}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Black_Chri
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4873,7 +4873,7 @@ GameObject:
   - component: {fileID: 428237980845524436}
   - component: {fileID: 6049197790917352486}
   - component: {fileID: 2090645113595022724}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9735,7 +9735,7 @@ GameObject:
   - component: {fileID: 7953403814913292331}
   - component: {fileID: 7273573709588633019}
   - component: {fileID: 3780096371395320296}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Chri
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14599,7 +14599,7 @@ GameObject:
   - component: {fileID: 2040835131576164209}
   - component: {fileID: 6343521580731753153}
   - component: {fileID: 6652027572441369928}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: whitetower_building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19526,7 +19526,7 @@ GameObject:
   - component: {fileID: 8839755857362981791}
   - component: {fileID: 325546032816115335}
   - component: {fileID: 7116930565276933690}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: WT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24388,7 +24388,7 @@ GameObject:
   - component: {fileID: 6800006970024441543}
   - component: {fileID: 127732726843926097}
   - component: {fileID: 5063768934509057}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29301,6 +29301,10 @@ PrefabInstance:
     - target: {fileID: 5524543136874210711, guid: f9f3b83f79db1aa4284bd925e75b155d, type: 3}
       propertyPath: m_Name
       value: Nobuild_range
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524543136874210711, guid: f9f3b83f79db1aa4284bd925e75b155d, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f3b83f79db1aa4284bd925e75b155d, type: 3}

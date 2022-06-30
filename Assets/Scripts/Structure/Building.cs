@@ -142,6 +142,7 @@ public class Building : MonoBehaviour
     AudioSource SFXBuilding;
     AudioSource SFXBuildingComplete;
 
+    OnBuilding onBuilding;
 
     public void ChangeBuilding()
     {
@@ -154,6 +155,12 @@ public class Building : MonoBehaviour
                 building_building = BuildingPooling.instance.GetObject("alter_building");
                 building_building.transform.position = transform.position;
                 building_building.SetActive(true);
+
+                onBuilding = building_building.GetComponent<OnBuilding>();
+                onBuilding.SetBuilding(this);
+                onBuilding.SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
+
+
                 StartCoroutine(CompleteTimer());
 
                 building_building.GetComponent<AudioSource>().Play();
@@ -164,6 +171,11 @@ public class Building : MonoBehaviour
                 building_building = BuildingPooling.instance.GetObject("whitetower_building");
                 building_building.transform.position = transform.position;
                 building_building.SetActive(true);
+
+                onBuilding = building_building.GetComponent<OnBuilding>();
+                onBuilding.SetBuilding(this);
+                onBuilding.SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
+
                 StartCoroutine(CompleteTimer());
 
                 BuildingManager.Instance.GetbuildingRangeList().Add(building_building.transform.GetChild(5).GetComponent<BuildingRange>());
@@ -282,7 +294,11 @@ public class Building : MonoBehaviour
         BuildingPooling.instance.ReturnObject(this.gameObject);
     }
 
-
+    public void StopBuilding() //건설도중에 멈췄을경우
+    {
+        StopCoroutine(CompleteTimer());
+        BuildingPooling.instance.ReturnObject(this.gameObject);
+    }
 
 
 }

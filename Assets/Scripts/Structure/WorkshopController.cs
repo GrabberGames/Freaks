@@ -94,7 +94,7 @@ public class WorkshopController : MonoBehaviour
             GetComponent<WorkshopState>().Disappear();
 
             ConnectingFreaks.gameObject.SetActive(true);
-            ConnectingFreaks.SetDestination(GameManager.Instance.Alter, false);
+            ConnectingFreaks.SetDestination(BuildingManager.Instance.Alter, false);
 
             connectEssence.gameObject.SetActive(false);
         }
@@ -172,7 +172,7 @@ public class WorkshopController : MonoBehaviour
 
 
         ConnectingFreaks.gameObject.SetActive(true);
-        ConnectingFreaks.SetDestination(GameManager.Instance.Alter, false);
+        ConnectingFreaks.SetDestination(BuildingManager.Instance.Alter, false);
 
 
     }
