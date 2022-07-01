@@ -70,6 +70,7 @@ public class BuildingPooling : MonoBehaviour
             return instance;
         }
     }
+    
     static void Init()
     {
 
@@ -82,7 +83,7 @@ public class BuildingPooling : MonoBehaviour
                 ob_go = new GameObject { name = "@BuildingPooling" };
                 ob_go.AddComponent<BuildingPooling>();
             }
-            DontDestroyOnLoad(ob_go);
+          //  DontDestroyOnLoad(ob_go);
             instance = ob_go.GetComponent<BuildingPooling>();
         }
     }

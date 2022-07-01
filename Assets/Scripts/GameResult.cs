@@ -53,7 +53,6 @@ public class GameResult : MonoBehaviour
     public void GameToHome()
     {
         SceneManager.LoadScene("Intro");
-
     }
 
 }
