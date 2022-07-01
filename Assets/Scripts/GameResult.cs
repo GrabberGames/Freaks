@@ -52,9 +52,8 @@ public class GameResult : MonoBehaviour
 
     public void GameToHome()
     {
-        Debug.Log("버튼 눌림");
         SceneManager.LoadScene("Intro");
-        // .LoadScene("Intro");
+
     }
 
 }
