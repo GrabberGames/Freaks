@@ -54,6 +54,7 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] private Transform[] SpawnPoint;
 
+    [SerializeField] private ShopUI shopUI;
     private static StageManager mInstance;
     public static StageManager Instance
     {
@@ -91,6 +92,9 @@ public class StageManager : MonoBehaviour
     void Update()
     {
         FXmovePlayer();
+
+        if (Input.GetKeyDown(KeyCode.Z))
+            shopUI.ActiveShopUI(true);
 
         if (Input.GetKeyDown(KeyCode.N))
             RespawnFreaks();

@@ -25,17 +25,17 @@ public class ConstructionPreviewController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             ConstructionPreviewManager.Instance.OnAlterConstructionPreview();
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             ConstructionPreviewManager.Instance.OnWhiteTowerConstructionPreview();
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             ConstructionPreviewManager.Instance.OnWorkshopConstructionPreview();
         }
