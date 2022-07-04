@@ -9,9 +9,14 @@ public class PauseUIController : MonoBehaviour
     public GameObject DcheckWin;
     public GameObject[] menuWins;
 
+    [SerializeField] GameObject MainText;
+    [SerializeField] GameObject ExitText;
+
     private bool isMain;
-    private bool isHome;
+    private bool isExit;
     public bool isMenuON;
+
+    private bool isFirst = true; //게임 최초시작
 
     private bool canActiveMenu;
 
@@ -40,7 +45,12 @@ public class PauseUIController : MonoBehaviour
             }
         }
 
+        if(isFirst == false)
         canActiveMenu = !ConstructionPreviewManager.Instance.isPreviewMode;
+        else
+        {
+            canActiveMenu = true;
+        }
     }
 
 
@@ -54,6 +64,8 @@ public class PauseUIController : MonoBehaviour
             }
         }
         menuWins[target].SetActive(true);
+        MainText.SetActive(false);
+        ExitText.SetActive(false);
     }
 
 
@@ -97,18 +109,24 @@ public class PauseUIController : MonoBehaviour
     public void DchkWinOff()
     {
         DcheckWin.SetActive(false);
+        isMain = false;
+        isExit = false;
+        MainText.SetActive(false);
+        ExitText.SetActive(false);
     }
 
 
     public void MainOn()
     {
         isMain = true;
+        MainText.SetActive(true);
     }
 
 
-    public void HomeOn()
+    public void ExitOn()
     {
-        isHome = true;
+        isExit = true;
+        ExitText.SetActive(true);
     }
 
     
@@ -126,15 +144,16 @@ public class PauseUIController : MonoBehaviour
 
     public void DchkClick()
     {
+
         if (isMain)
         {
             isMain = false;
-            GameToExit();
-        }
-        else if (isHome)
-        {
-            isHome = false;
             GameToHome();
+        }
+        else if (isExit)
+        {
+            isExit = false;
+            GameToExit();
         }
     }
 
@@ -148,5 +167,17 @@ public class PauseUIController : MonoBehaviour
     private void GameToExit()
     {
         Application.Quit();
+    }
+
+    public void NotFirst()
+    {
+        isFirst = false;
+    }
+
+    public void SettingWindowON()
+    {
+        isMenuON = true;
+        inGameWin.SetActive(true);   // Pause Window ON
+        menuWins[0].SetActive(true);
     }
 }
