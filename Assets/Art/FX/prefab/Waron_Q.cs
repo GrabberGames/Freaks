@@ -6,11 +6,13 @@ public class Waron_Q : MonoBehaviour
 {
     Animator animator;
     public bool b = true;
+    bool c = false;
     GameObject arm;
     Vector3 _lookDir;
     Vector3 dir;
     float _damage = 0f;
     Vector3 startPos;
+    bool abc = false;
     public void Init(Vector3 lookDir, float damage, GameObject arm)
     {
         animator = GetComponent<Animator>();
@@ -19,27 +21,40 @@ public class Waron_Q : MonoBehaviour
         _damage = damage; 
         this.arm = arm;
         startPos = transform.position;
-        Invoke("P", 2f);
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.CompareTag("BlackFreaks"))
-        {
-            animator.Play("Broke");
-            GameManager.Damage.OnAttacked(_damage, other.GetComponent<Stat>());
-        }
     }
 
     void Update()
     {
+        if(c)
+        {
+            return;
+        }
+
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5000f, LayerMask.GetMask("blackfreaks")))
+        {
+            if (abc)
+            {
+                c = true;
+                animator.Play("Broke");
+                GameManager.Damage.OnAttacked(_damage, hit.transform.gameObject.GetComponent<Stat>());
+            }
+        }
+
         if (b)
+        {
             transform.position = arm.transform.position;
+            abc = false;
+        }
         else
         {
+            abc = true;
             if ((startPos - this.transform.position).sqrMagnitude > 900)
-                return;
+            {
+                c = true;
+                P();
+            }
             else
-                transform.position += _lookDir * 50f * Time.deltaTime;
+                transform.position += _lookDir * 125f * Time.deltaTime;
         }
     }
     void P()
