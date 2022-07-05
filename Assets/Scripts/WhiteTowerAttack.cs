@@ -54,15 +54,8 @@ public class WhiteTowerAttack : Stat, InterfaceRange
 
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartCoroutine(Dissolve());
-            
-        }*/
-
-
-
+        
+   
         for (int i = 0; i < blackFreaks.Count; i++)
         {
 

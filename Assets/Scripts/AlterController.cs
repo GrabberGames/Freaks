@@ -21,11 +21,6 @@ public class AlterController : Stat, InterfaceRange
         go = this.gameObject;
 
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-            StartCoroutine(AlterDestroy());
-    }
 
     private void Start()
     {
