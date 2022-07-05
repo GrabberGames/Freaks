@@ -92,7 +92,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         bullet.GetComponent<WhiteTowerBullet>().InitSetting(PD, blackFreaks, bulletSpawnPosition);
         bullet.SetActive(true);
         fx_whiteTower.Play(true);
-
+        SFXWhiteTowerAttack.Play();
         yield return new WaitForSeconds(fx_whiteTower.main.startDelayMultiplier);
 
         fx_whiteTower.Play(false);
