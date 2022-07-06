@@ -29,9 +29,11 @@ public class HeroSelectUI : MonoBehaviour
                 waronButtonFrame.sprite = normalFrame;
                 break;
 
-            default:
+            default:/*
                 kyleButtonFrame.sprite = normalFrame;
-                waronButtonFrame.sprite = normalFrame;
+                waronButtonFrame.sprite = normalFrame;*/
+                waronButtonFrame.sprite = selectFrame;
+                kyleButtonFrame.sprite = normalFrame;
                 break;
         }
     }

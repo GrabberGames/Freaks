@@ -74,8 +74,9 @@ public class GameMenuController : MonoBehaviour
     }
     public void OnEnableHeroSelectMenu()
     {
-        GameManager.Instance.SetSelectHero(eHeroType.None);
+        GameManager.Instance.SetSelectHero(eHeroType.Waron);
         ActiveCanvas(eCanvasList.HeroSelect);
+        SelectWaron();
     }
 
     public void OnEnableCreditMenu()

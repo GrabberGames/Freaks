@@ -13,22 +13,27 @@ public class CameraController : MonoBehaviour
     public float panSpeed = 100f;
     public float panBorderThickness = 10f;
 
-    public float minY = 100f;
-    public float maxY = 300f;
-
     public float scrollSpeed = 50f;
 
     public bool _fixListenerPosition;
 
+    private float wheelscroll;
+    private float wheelspeed = 25.0f;
+
+    [SerializeField] private Transform targetGround;
+    Vector3 targetDist;
+ 
+    Vector3 pos;
     private void Awake()
     {
         audioListener = GetComponentInChildren<ListenPositioner>();
+
     }
 
     private void Update()
     {
-        Vector3 pos = transform.position;
-
+         pos = transform.position;
+ 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Y))
         {
             isFixedToHero = !isFixedToHero;
@@ -64,9 +69,49 @@ public class CameraController : MonoBehaviour
             pos.x -= panSpeed * Time.deltaTime;
         }
 
-        pos.x = Mathf.Clamp(pos.x, -250, 215);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        pos.z = Mathf.Clamp(pos.z, -260, 20);
+      
+       // pos.y = Mathf.Clamp(pos.y, minY, maxY);
+       
+
+        //∏∂øÏΩ∫»Ÿ∑Œ ¡‹¿Œ,¡‹æ∆øÙ
+        targetDist = pos - targetGround.position;
+        targetDist = Vector3.Normalize(targetDist);
+        wheelscroll = Input.GetAxis("Mouse ScrollWheel") * wheelspeed;
+
+        if (transform.position.y <= 125.0f && wheelscroll < 0)
+        {
+            pos.y = 125.0f;
+        } 
+        else if (transform.position.y >= 230.0f && wheelscroll > 0)
+        {
+            pos.y = 230.0f;
+        }
+        else
+        {
+            if (transform.position.y <= 150f)
+            {
+                pos.x = Mathf.Clamp(pos.x, -280, 250);
+                pos.z = Mathf.Clamp(pos.z, -220, 90);
+            }
+            else if (transform.position.y <= 180f)
+            {
+                pos.x = Mathf.Clamp(pos.x, -270, 235);
+                pos.z = Mathf.Clamp(pos.z, -240, 70);
+            }
+            else if (transform.position.y <= 200)
+            {
+                pos.x = Mathf.Clamp(pos.x, -260, 225);           
+                pos.z = Mathf.Clamp(pos.z, -250, 50);
+            }
+            else
+            {
+                pos.x = Mathf.Clamp(pos.x, -250, 215);
+                pos.z = Mathf.Clamp(pos.z, -260, 20);
+            }
+            pos += targetDist * wheelscroll;
+        }
+
+       
 
         transform.position = pos;
 
@@ -75,6 +120,11 @@ public class CameraController : MonoBehaviour
             audioListener.ListenerPosition();
             _fixListenerPosition = true;
         }
+
+
+       
+
+
     }
     public void CameraMoveToPlayer()
     {
