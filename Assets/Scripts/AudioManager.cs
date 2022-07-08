@@ -8,7 +8,6 @@ public class AudioManager : MonoBehaviour
     {
         get
         {
-            Init();
             return instance;
         }
     }
@@ -18,7 +17,7 @@ public class AudioManager : MonoBehaviour
     Dictionary<string, AudioClip> data = new Dictionary<string, AudioClip>();
 
     bool SoundIsEnd = false;
-    static void Init()
+    void Init()
     {
         if (instance == null)
         {
@@ -27,12 +26,13 @@ public class AudioManager : MonoBehaviour
             if (ob_go == null)
             {
                  ob_go = new GameObject { name = "@AudioManager" };
-                 ob_go.AddComponent<ObjectPooling>();
+                 ob_go.AddComponent<AudioManager>();
              }
              DontDestroyOnLoad(ob_go);
              instance = ob_go.GetComponent<AudioManager>();
         }
     }
+
     public void Stop()
     {
         sfxPlayer.Pause();
@@ -50,6 +50,9 @@ public class AudioManager : MonoBehaviour
             AudioClip audioClip = tmp[i] as AudioClip;
             string audioName = tmp[i].ToString();
             audioName = audioName.Replace(" (UnityEngine.AudioClip)", "");
+            if (data.ContainsKey(audioName))
+                return;
+
             data.Add(audioName, audioClip);
         }
     }
@@ -79,9 +82,13 @@ public class AudioManager : MonoBehaviour
         }
         return;
     }
-    private void Awake()
+    private void Start()
     {
-        instance = this;
-        //Load();
+        if (instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+        Init();
     }
 }

@@ -72,7 +72,6 @@ public class StageManager : MonoBehaviour
     {
         _gameController = FindObjectOfType<GameController>();
         _postProcess = GetComponentInChildren<PostProcessManager>();        
-        AudioManager.Instance.Load(GameManager.Instance.selectHero.ToString());
         var Player = PlayerObject[(int)GameManager.Instance.selectHero-1];
         GameManager.Instance.Player = Player;
         Player.SetActive(true);

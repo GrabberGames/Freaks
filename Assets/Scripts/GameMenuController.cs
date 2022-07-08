@@ -47,6 +47,10 @@ public class GameMenuController : MonoBehaviour
     [SerializeField] private CreditUI creditUI;
 
 
+    [Header("Scene Loader")]
+    [SerializeField] private GameObject sceneLoaderUI;
+    
+
     GameObject[] uiCanvasArray = new GameObject[(int)eCanvasList.MaxCount];
 
     eHeroType nowSelectHero;
@@ -59,7 +63,9 @@ public class GameMenuController : MonoBehaviour
         uiCanvasArray[(int)eCanvasList.Creadit] = creadit;
         uiCanvasArray[(int)eCanvasList.Setting] = setting;
 
-        OnEnableMainMenu();        
+        OnEnableMainMenu();
+
+        sceneLoaderUI.SetActive(false);
     }
 
     #region UI Canvas Controll
@@ -120,16 +126,19 @@ public class GameMenuController : MonoBehaviour
     }
 
 
-    public void LoadPlayScene() 
+    public void LoadPlayScene()
     {
-        if(!GameManager.Instance.selectHero.Equals(eHeroType.None))
+        sceneLoaderUI.SetActive(true);
+        SceneLoader.Instance.LoadScene("Map");
+        /*
+        if (!GameManager.Instance.selectHero.Equals(eHeroType.None))
         {
             SceneManager.LoadScene("Map");
         }
         else
         {
             Debug.Log("error : Hero selection is required.");
-        }
+        }*/
     }
 
     
