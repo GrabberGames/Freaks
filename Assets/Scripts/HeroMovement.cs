@@ -168,10 +168,15 @@ namespace WarriorAnims
             agent.updateRotation = false;
             waronSkillManage = GetComponentInChildren<WaronSkillManage>();
 
-            PlayerModel.PlayerNowHp = HP;
-            PlayerModel.PlayerMaxHp = MAX_HP;
-            PlayerModel.PlayerPD = PD;
-            PlayerModel.PlayerED = ED;
+            GameManager.Instance.models.playerModel.PlayerNowHp = HP;
+            GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
+            GameManager.Instance.models.playerModel.PlayerPD = PD;
+            GameManager.Instance.models.playerModel.PlayerED = ED;
+            GameManager.Instance.models.playerModel.PlayerMoveSpeed = MOVE_SPEED;
+            GameManager.Instance.models.playerModel.PlayerAttackSpeed = ATTACK_SPEED;
+            GameManager.Instance.models.playerModel.PlayerArmor = ARMOR;
+
+            agent.speed = MOVE_SPEED;
 
             PlayerModel.QSkillMaxCoolTime = 6;
             PlayerModel.WSkillMaxCoolTime = 12;
@@ -183,11 +188,45 @@ namespace WarriorAnims
         {
             if (HP <= 0)
             {
+                animator.SetBool("Moving", false);
+                animator.SetBool("Damaged", true);
+                animator.SetInteger("TriggerNumber", 6);
+                animator.SetTrigger("Trigger");
+
+                CameraController.Instance.ReleaseFixCamera();
                 ObjectPooling.Instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+                GameManager.Instance.PlayerDead();
                 PState = PlayerState.Die;
             }
         }
-        private void Start()
+        public IEnumerator DeadAnimationEnd()
+        {
+            yield return new WaitForSeconds(1f);
+            agent.ResetPath();
+            agent.isStopped = true;
+            agent.Warp(new Vector3(-9999, -9999, -9999));
+        }
+        void ResetCanPlayMoveSound()
+        {
+            canPlayMoveSound = true;
+        }
+        public override void ReviveSignal()
+        {
+            animator.SetBool("Damaged", false);
+            animator.SetBool("Moving", true);
+            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+
+            PState = PlayerState.Idle;
+            agent.isStopped = false;
+            agent.Warp(BuildingManager.Instance.Alter.transform.position);
+
+
+            HP = GameManager.Instance.models.playerModel.PlayerMaxHp;
+            GameManager.Instance.models.playerModel.PlayerNowHp = MAX_HP;
+            GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
+        }
+        
+        private void Awake()
         {
             Init();
         }
@@ -661,10 +700,6 @@ namespace WarriorAnims
         {
             SetAnimatorRootMotion(false);
         }
-        void ResetCanPlayMoveSound()
-        {
-            canPlayMoveSound = true;
-        }
         public void SoundPlay(string _name, int idx = 0)
         {
             if (AudioManager.Instance.Check() == true)
@@ -682,7 +717,7 @@ namespace WarriorAnims
                         _soundname = $"{_name} " + UnityEngine.Random.Range(1, 11);
                         canPlayMoveSound = false;
 
-                        Invoke("ResetCanPlayMoveSound", 5f);
+                        Invoke("ResetCanPlayMoveSound", 8f);
                         AudioManager.Instance.Read("Warron", _soundname);
                     }
                     break;

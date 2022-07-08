@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public enum StatusType
 
 public class PlayerModel 
 {
+    public Action<StatusType> StatChanged; 
     #region Region Variable
     private float _qSkillCoolTime= 0f;
     private float _wSkillCoolTime = 0f;
@@ -74,37 +76,49 @@ public class PlayerModel
     public float PlayerNowHp
     {
         get => _playerNowHp;
-        set => _playerNowHp = value;
+        set
+        {
+            _playerNowHp = value;
+        }
     }
     public float PlayerMaxHp
     {
         get => _playerMaxHp;
-        set => _playerMaxHp = value;
+        set
+        {
+            _playerMaxHp = value;
+        }
     }
     public float PlayerED
     {
-        get => _playerED;   
-        set => _playerED = value;
+    get => _playerED;
+        set
+        {
+            _playerED = value; }
     }
     public float PlayerPD
     {
-        get => _playerPD;
-        set => _playerPD = value;
+    get => _playerPD;
+        set
+        { _playerPD = value; }
     }
     public float PlayerMoveSpeed
     {
-        get => _moveSpeed;
-        set => _moveSpeed = value;
+    get => _moveSpeed;
+        set
+        { _moveSpeed = value; }
     }
     public float PlayerAttackSpeed
     {
-        get => _attackSpeed;
-        set => _attackSpeed = value;
+    get => _attackSpeed;
+        set
+        { _attackSpeed = value; }
     }
     public float PlayerArmor
     {
-        get => _armor;
-        set => _armor = value;
+    get => _armor;
+        set
+        {; _armor = value; }
     }
     public void IncreaseStatus(StatusType type, float value)
     {
@@ -112,8 +126,10 @@ public class PlayerModel
         {
             case StatusType.PD:
                 PlayerPD += value;
+                StatChanged?.Invoke(StatusType.PD);
                 break;
             case StatusType.ED:
+                StatChanged?.Invoke(StatusType.ED);
                 PlayerED += value;
                 break;
             case StatusType.HP:
@@ -121,13 +137,16 @@ public class PlayerModel
                 PlayerMaxHp += value;
                 break;
             case StatusType.ARMOR:
+                StatChanged?.Invoke(StatusType.ARMOR);
                 PlayerArmor += value;
                 break;
             case StatusType.MOVESPEED:
                 PlayerMoveSpeed += value;
+                StatChanged?.Invoke(StatusType.MOVESPEED);
                 break;
             case StatusType.ATTACKSPEED:
                 PlayerAttackSpeed += value;
+                StatChanged?.Invoke(StatusType.ATTACKSPEED);
                 break;
         }
     }

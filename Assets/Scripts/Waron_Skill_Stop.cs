@@ -83,4 +83,12 @@ public class Waron_Skill_Stop : MonoBehaviour
         }
         hero.ShockOfLand_Stop();
     }
+    public void DeadAnimationEnd()
+    {
+        if (hero == null)
+        {
+            hero = GetComponentInParent<WarriorAnims.HeroMovement>();
+        }
+        StartCoroutine(hero.DeadAnimationEnd());
+    }
 }

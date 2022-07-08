@@ -44,8 +44,12 @@ public class Kyle_Bullet : MonoBehaviour
                 _bullet = Bullet.Basic;
                 ps_tile = ObjectPooling.Instance.GetObject("KyleNormalBulletEffect");
                 ps_tile.transform.position = transform.position;
+                //ps_tile.transform.localEulerAngles = Vector3.zero;
 
                 ps_tile.transform.SetParent(gameObject.transform);
+                ps_tile.transform.rotation = Quaternion.identity;
+                ps_tile.transform.localEulerAngles = Vector3.zero;
+
                 var particleSystem = ps_tile.GetComponent<ParticleSystem>();
 
                 particleSystem.Play();
@@ -144,7 +148,7 @@ public class Kyle_Bullet : MonoBehaviour
                     return;
                 Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.transform.position.z);
                 transform.position += (enemyPos - transform.position).normalized * _bullet_speed * Time.deltaTime;
-                transform.LookAt(enemyPos);
+                //transform.LookAt(enemyPos);
                 break;
             case Bullet.Q:
                 transform.position += dir * _bullet_speed * Time.deltaTime;

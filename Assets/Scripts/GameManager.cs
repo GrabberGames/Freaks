@@ -125,7 +125,6 @@ public class GameManager : MonoBehaviour
         _selectHero = value;
     }
 
-
     public void DefeatShow()
     {
         GameResult.Instance.ActiveDeUI();

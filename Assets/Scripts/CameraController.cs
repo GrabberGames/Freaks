@@ -6,6 +6,19 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private ListenPositioner audioListener;
 
+    private static CameraController cInstance;
+    public static CameraController Instance
+    {
+        get
+        {
+            if (cInstance == null)
+            {
+                cInstance = FindObjectOfType<CameraController>();
+            }
+            return cInstance;
+        }
+    }
+
     public GameObject player;
 
     public bool isFixedToHero = false;
@@ -36,8 +49,12 @@ public class CameraController : MonoBehaviour
  
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Y))
         {
+            if (GameManager.Instance.models.playerModel.PlayerNowHp <= 0)
+                return;
+
             isFixedToHero = !isFixedToHero;
         }
+
         if (isFixedToHero)
         {
             if (player == null) 
@@ -125,6 +142,10 @@ public class CameraController : MonoBehaviour
        
 
 
+    }
+    public void ReleaseFixCamera()
+    {
+        isFixedToHero = false;
     }
     public void CameraMoveToPlayer()
     {

@@ -92,6 +92,7 @@ public class Kali : Stat
                 break;
 
             case PlayerState.Attack:
+                ChangeRotate();
                 Basic_Attack();
                 break;
 
@@ -205,9 +206,6 @@ public class Kali : Stat
     {
         animator = GetComponent<Animator>();
         gameController = FindObjectOfType<GameController>();
-    }
-    void Start()
-    {
         Init();
     }
     protected override void Init()
@@ -217,6 +215,10 @@ public class Kali : Stat
         GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
         GameManager.Instance.models.playerModel.PlayerPD = PD;
         GameManager.Instance.models.playerModel.PlayerED = ED;
+        GameManager.Instance.models.playerModel.PlayerMoveSpeed = MOVE_SPEED;
+        GameManager.Instance.models.playerModel.PlayerAttackSpeed = ATTACK_SPEED;
+        GameManager.Instance.models.playerModel.PlayerArmor = ARMOR;
+
 
         playerModel.QSkillMaxCoolTime = 11;
         playerModel.WSkillMaxCoolTime = 15;
@@ -225,6 +227,8 @@ public class Kali : Stat
 
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+        agent.speed = MOVE_SPEED;
 
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
@@ -240,13 +244,13 @@ public class Kali : Stat
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
+        
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask))
         {
             _mouseHitPosition = hit.point;
             Vector3 dir = new Vector3(hit.point.x, transform.position.y, hit.point.z) - transform.position;
             transform.forward = dir;
         }
-
     }
     void ResetCanPlayMoveSound()
     {
@@ -327,6 +331,8 @@ public class Kali : Stat
         if (HP <= 0)
         {
             ObjectPooling.Instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
+
+            CameraController.Instance.ReleaseFixCamera();
 
             GameManager.Instance.PlayerDead();
             State = PlayerState.Die;
@@ -485,23 +491,23 @@ public class Kali : Stat
             go = ObjectPooling.Instance.GetObject("KyleBullet");
             go.transform.position = transform.position;
 
-            if (_lockTarget != null)
-                go.transform.LookAt(_lockTarget.transform);
-
             GameObject _q = ObjectPooling.Instance.GetObject("KyleNormalEmit");
             _q.transform.position = transform.position;
             _q.transform.LookAt(transform.forward);
+
             var particleSystem = _q.GetComponent<ParticleSystem>();
             particleSystem.Play();
             StartCoroutine(Q_ParticleOff(particleSystem));
 
             go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, Bullet.Basic, transform.rotation, _mouseHitPosition, PD);
         }
+
         if (shape.Equals(Bullet.E))
         {
             GameObject _q = ObjectPooling.Instance.GetObject("KyleESkillEmit");
             _q.transform.position = transform.position;
             _q.transform.rotation = transform.rotation;
+
             var particleSystem = _q.GetComponent<ParticleSystem>();
             particleSystem.Play();
             StartCoroutine(Q_ParticleOff(particleSystem));
@@ -514,7 +520,7 @@ public class Kali : Stat
     }
     void Basic_Attack()
     {
-        transform.LookAt(transform.forward);
+        ChangeRotate();
         agent.SetDestination(transform.position);
 
         Bullet_Spawn_NormalAndESkill(Bullet.Basic);
@@ -522,12 +528,12 @@ public class Kali : Stat
 
         if (AttackNum == 0)
         {
-            animator.CrossFade("Normal Attack 1", 0.1f);
+            animator.Play("Normal Attack 1");
             AttackNum = 1;
         }
         else
         {
-            animator.CrossFade("Normal Attack 2", 0.1f);
+            animator.Play("Normal Attack 2");
             AttackNum = 0;
         }
         audioSource[5].Play();
