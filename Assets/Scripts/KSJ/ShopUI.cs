@@ -35,6 +35,9 @@ public class ShopUI : MonoBehaviour
     [Header("CreateProgress")]
     [SerializeField] private Image progressBar;
 
+    [Header("Buy Sounds")]
+    [SerializeField] private AudioSource audioSource;
+
     private StringBuilder stringBuilder = new StringBuilder();
 
     private int statPrice = 200;
@@ -135,6 +138,7 @@ public class ShopUI : MonoBehaviour
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.PD, PD);
             StageManager.Instance.UseEssence(statPrice);
             textPD.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerPD, PD);
+            audioSource.Play();
         }
         else
         {
@@ -149,6 +153,7 @@ public class ShopUI : MonoBehaviour
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ED, ED);
             StageManager.Instance.UseEssence(statPrice);
             textED.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerED, ED);
+            audioSource.Play();
         }
         else
         {
@@ -163,6 +168,7 @@ public class ShopUI : MonoBehaviour
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.HP, HP);
             StageManager.Instance.UseEssence(statPrice);
             textHP.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerMaxHp, HP);
+            audioSource.Play();
         }
         else
         {
@@ -176,6 +182,7 @@ public class ShopUI : MonoBehaviour
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ARMOR, Armor);
             StageManager.Instance.UseEssence(statPrice);
             textArmor.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerArmor, Armor);
+            audioSource.Play();
         }
         else
         {
@@ -189,6 +196,7 @@ public class ShopUI : MonoBehaviour
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.MOVESPEED, MoveSpeed);
             StageManager.Instance.UseEssence(statPrice);
             textMoveSpeed.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerMoveSpeed, MoveSpeed);
+            audioSource.Play();
         }
         else
         {
@@ -202,6 +210,7 @@ public class ShopUI : MonoBehaviour
             GameManager.Instance.models.playerModel.IncreaseStatus(StatusType.ATTACKSPEED, AttackSpeed);
             StageManager.Instance.UseEssence(statPrice);
             textAttackSpeed.text = StatStringBuilder(GameManager.Instance.models.playerModel.PlayerAttackSpeed, AttackSpeed);
+            audioSource.Play();
         }
         else
         {
@@ -215,6 +224,7 @@ public class ShopUI : MonoBehaviour
         {
             StageManager.Instance.CreateWhiteFreaks(createWhiteFreaksTime);
             StageManager.Instance.UseEssence(unitPrice);
+            audioSource.Play();
         }
         else
         {
