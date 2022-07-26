@@ -9,6 +9,7 @@ public class BuildingManager : MonoBehaviour
     [Header("Alter")]
     [SerializeField] private AlterController altercontroller;
     [SerializeField] private GameObject alter;
+    [SerializeField] private AudioSource SFXBuildingSelect;
 
 
     private GameObject essenceSpot;
@@ -34,9 +35,12 @@ public class BuildingManager : MonoBehaviour
 
         }
     }
-
-
-
+    private void Awake()
+    {
+        SFXBuildingSelect = Instantiate(SFXBuildingSelect);
+    }
+    
+    
 
     public Action<GameObject> AlterIsChange = null;
 
@@ -100,7 +104,10 @@ public class BuildingManager : MonoBehaviour
     GameObject go;
     public void SetBuildPosition(eBuilding buildingType, Vector3 pos)
     {
-        
+        // SFXBuildingSelect.SetScheduledStartTime(0.06);
+        SFXBuildingSelect.time = 0.5f;
+        SFXBuildingSelect.Play();
+
         switch (buildingType)
         {
             case eBuilding.Alter:
