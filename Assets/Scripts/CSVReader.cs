@@ -17,6 +17,10 @@ public class CSVReader : MonoBehaviour
         public string name_en;
         public int coolTime;
         public string info;
+        public string info2;
+        public int cal1;
+        public float cal2;
+        public string cal3;
 
     };
 
@@ -27,7 +31,7 @@ public class CSVReader : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {       
         test();
     }
     
@@ -57,6 +61,10 @@ public class CSVReader : MonoBehaviour
                 skillInfos[j - 1].name_en = data_values[3].ToString();
                 skillInfos[j - 1].coolTime = int.Parse(data_values[4]);
                 skillInfos[j - 1].info = data_values[5].ToString();
+                skillInfos[j - 1].info2 = data_values[6].ToString();
+                skillInfos[j - 1].cal1 = int.Parse(data_values[7]);
+                skillInfos[j - 1].cal2 = float.Parse(data_values[8]);
+                skillInfos[j - 1].cal3 = data_values[9].ToString();
             }
             j++;
         }
