@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: b5d3c61c5bf2e064db14801d8f1c0b4e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 94bb04b72fd334a45bbc2541896760bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 1.47, y: 0}
     - _TextureSample0:

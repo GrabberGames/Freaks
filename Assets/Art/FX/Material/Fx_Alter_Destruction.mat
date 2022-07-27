@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DistortTex:
-        m_Texture: {fileID: 2800000, guid: 72494ae7842788a45ad8eee4549a37b9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 94bb04b72fd334a45bbc2541896760bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 512afba3cd8098349a58414b8d186bb0, type: 3}
+        m_Texture: {fileID: 2800000, guid: bc56391abbf9dcf469b4de5f08830dd6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: 5a8213a4d74bbd24d808a5cec974f189, type: 3}
+        m_Texture: {fileID: 2800000, guid: 94bb04b72fd334a45bbc2541896760bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _tex4coord:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _DistortAmount: 0.04304536
+    - _DistortAmount: 0.013
     - __dirty: 0
     m_Colors:
     - _DistortPannerXY: {r: 0.25, g: 0.5, b: 0, a: 0}

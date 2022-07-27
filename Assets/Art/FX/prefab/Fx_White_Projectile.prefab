@@ -9895,7 +9895,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.02
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -14410,7 +14410,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 4114178543578484564, guid: d1bdab279d81df542b11332a5c74fb67, type: 3}
+  m_Mesh: {fileID: -5266310950094681209, guid: 3d9da8378e540fd4392ca34829ebd239, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -14432,7 +14432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &387899292050690214
 Transform:
   m_ObjectHideFlags: 0
@@ -14440,14 +14440,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5420200692372330826}
-  m_LocalRotation: {x: -0.11243407, y: 0.87118375, z: -0.23555788, w: -0.41582447}
+  m_LocalRotation: {x: 0.11243509, y: -0.87118363, z: 0.23556098, w: 0.4158227}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.9867132, y: 1.9867132, z: 1.9867132}
   m_Children:
   - {fileID: 5278268753188346946}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 26.28, y: 38.748, z: 2.065}
+  m_LocalEulerAnglesHint: {x: 30.261, y: -128.969, z: 0}
 --- !u!198 &5616775011314449130
 ParticleSystem:
   m_ObjectHideFlags: 0
