@@ -7,7 +7,7 @@ public class AlterAttack : Stat
 {
 
     public ParticleSystem FX_Alter_Emit;
-    public ParticleSystem FX_Alter_Smoke;
+    //public ParticleSystem FX_Alter_Smoke;
 
     public AudioSource SFXAlterAttack;
     //
@@ -70,9 +70,9 @@ public class AlterAttack : Stat
         FX_Alter_Emit.Play(true);
         yield return YieldInstructionCache.WaitForSeconds(1f);
         FX_Alter_Emit.Play(false);
-        FX_Alter_Smoke.Play(true);
-        FX_Alter_Smoke.transform.position = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
-        FX_Alter_Smoke.transform.rotation = Quaternion.Euler(FX_Alter_Smoke.transform.position - enemy.transform.position);
+       // FX_Alter_Smoke.Play(true);
+       // FX_Alter_Smoke.transform.position = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
+       // FX_Alter_Smoke.transform.rotation = Quaternion.Euler(FX_Alter_Smoke.transform.position - enemy.transform.position);
 
 
         SFXAlterAttack.Play();
@@ -80,8 +80,8 @@ public class AlterAttack : Stat
         bullet = BulletPooling.instance.GetObject("AlterBullet");
         bullet.GetComponent<AlterBullet>().InitSetting(PD, enemy, bulletSpawnPosition);
         bullet.SetActive(true);
-        yield return YieldInstructionCache.WaitForSeconds(FX_Alter_Smoke.main.startDelayMultiplier);
-        FX_Alter_Smoke.Play(false);
+      //  yield return YieldInstructionCache.WaitForSeconds(FX_Alter_Smoke.main.startDelayMultiplier);
+//FX_Alter_Smoke.Play(false);
         yield return YieldInstructionCache.WaitForSeconds(AttackPerSeconds - FX_Alter_Emit.main.startDelayMultiplier);
 
 

@@ -41,7 +41,7 @@ public class Building : MonoBehaviour
                 building_before = BuildingPooling.instance.GetObject("alter_before");
                 building_before.SetActive(true);
                 building_before.transform.position = transform.position;
-                timer = 10;
+                timer = 60;
                 
                 mr = building_before.GetComponent<MeshRenderer>();
                 mr.material.shader = Shader.Find("UI/Lit/Transparent");
@@ -57,7 +57,7 @@ public class Building : MonoBehaviour
 
             case 1:
                 objectName = "Whitetower";
-                timer = 10;
+                timer = 30;
                 building_before = BuildingPooling.instance.GetObject("whitetower_before");
 
                 building_before.SetActive(true);
@@ -120,11 +120,13 @@ public class Building : MonoBehaviour
         whiteFreaks.transform.position = alter.transform.position;
         whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(go, true);
         whiteFreaks.GetComponent<WhiteFreaksController>().targetBefore = building_before;
+        whiteFreaks.GetComponent<WhiteFreaksController>().buildingGO = go;
         if (build_num==2)
         {
             workshop = BuildingPooling.instance.GetObject("build_workshop");
             workshop.transform.position = transform.position;
-            if(!(go.CompareTag("Switch")))
+            whiteFreaks.GetComponent<WhiteFreaksController>().connectEssence = BuildingManager.Instance.GetEssenceSpot();
+            if (!(go.CompareTag("Switch")))
             workshop.GetComponent<WorkshopController>().SetConnectEssence(BuildingManager.Instance.GetEssenceSpot());
             workshop.GetComponent<WorkshopController>().SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
             workshop.SetActive(false);
@@ -150,7 +152,7 @@ public class Building : MonoBehaviour
 
         switch (build_num)
         {
-            case 0:
+            case 0:              
                 BuildingPooling.instance.ReturnObject(building_before);
                 building_building = BuildingPooling.instance.GetObject("alter_building");
                 building_building.transform.position = transform.position;
@@ -159,7 +161,7 @@ public class Building : MonoBehaviour
                 onBuilding = building_building.GetComponent<OnBuilding>();
                 onBuilding.SetBuilding(this);
                 onBuilding.SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
-
+                whiteFreaks.GetComponent<WhiteFreaksController>().targetBuilding = building_building;
 
                 StartCoroutine(CompleteTimer());
 
@@ -175,6 +177,7 @@ public class Building : MonoBehaviour
                 onBuilding = building_building.GetComponent<OnBuilding>();
                 onBuilding.SetBuilding(this);
                 onBuilding.SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
+                whiteFreaks.GetComponent<WhiteFreaksController>().targetBuilding = building_building;
 
                 StartCoroutine(CompleteTimer());
 
@@ -189,7 +192,7 @@ public class Building : MonoBehaviour
                 workshop.SetActive(true);
                 workshop.transform.position = new Vector3(transform.position.x, 2.17f, transform.position.z);
                 workshop.GetComponent<WorkshopState>().SFXworkshopComplete.Play();
-                if (BuildingManager.Instance.GetEssenceSpot().CompareTag("Switch"))
+                if (whiteFreaks.GetComponent<WhiteFreaksController>().connectEssence.CompareTag("Switch"))
                 {
                     workshop.GetComponent<WorkshopController>().StartPurify();
                 }
