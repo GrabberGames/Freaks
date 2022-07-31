@@ -29,12 +29,17 @@ public class AlterController : Stat, InterfaceRange
         BuildRange.SetActive(false);
         transform.GetChild(4).gameObject.SetActive(false);
     }
+    bool isFirst = true;
     public override void DeadSignal()
     {
-        if (HP <= 0)
+        if (isFirst == true)
         {
-            StartCoroutine(AlterDestroy());
+            if (HP <= 0)
+            {
+                StartCoroutine(AlterDestroy());
 
+            }
+            isFirst = false;
         }
     }
 

@@ -11,7 +11,10 @@ public class WhiteFreaksController : Stat
     public GameObject targetBuilding;
     public GameObject targetBefore;
     public NavMeshAgent navMeshAgent;
+    public GameObject buildingGO;
 
+
+    public GameObject connectEssence;
     [SerializeField]
     public GameObject alter;
 
@@ -73,25 +76,31 @@ public class WhiteFreaksController : Stat
 
     }
     */
+    bool isFirst = true;
     // 죽는거
     public override void DeadSignal()
     {
         //base.DeadSignal();
-        IsMoving = false;
- 
-        if(!(targetBefore.CompareTag("alter"))) //알터로 돌아가는게 아니라면(지으러 가는도중에 쥬금)
+
+        if (isFirst == true)
         {
-            BuildingPooling.instance.ReturnObject(targetBuilding);
-            BuildingPooling.instance.ReturnObject(targetBefore);
-            if (targetBefore.CompareTag("workshop")) //심지어 워크샵 지으러 가는중이었다면
+            IsMoving = false;
+
+            if (!(targetBefore.CompareTag("alter"))) //알터로 돌아가는게 아니라면(지으러 가는도중에 쥬금)
             {
-                BuildingManager.Instance.GetEssenceSpot().SetActive(true); //자원지 다시 보이도록
-
+                BuildingPooling.instance.ReturnObject(targetBuilding);
+                BuildingPooling.instance.ReturnObject(targetBefore);
+                BuildingPooling.instance.ReturnObject(buildingGO);
+                buildingGO.GetComponent<Building>().StopAllCoroutines();
+                if (targetBefore.CompareTag("workshop")) //심지어 워크샵 지으러 가는중이었다면
+                {
+                    //BuildingManager.Instance.GetEssenceSpot().SetActive(true); //자원지 다시 보이도록
+                    connectEssence.SetActive(true);
+                }
             }
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
+            isFirst = false;
         }
-        WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
-        WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
-
 
     }
 

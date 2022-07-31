@@ -164,25 +164,25 @@ public class InfoUI : MonoBehaviour
 
         if (key == 0)
         {
-            mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>상점</size></b>  (Shop)";
+            mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>[Z] 상점</size></b>  (Shop)";
             mediumWindow.transform.GetChild(1).GetComponent<Text>().text = "상점창으로 이동";
             mediumWindow.transform.GetChild(2).GetComponent<Text>().text = "<color=white>영웅의 능력치 향상 및 화이트프릭스 생산을 위한 상점창으로 이동합니다. </color>";
         }
         else if (key == 1)
         {
-            mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>알터</size></b>  (Alter)";
+            mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>[X] 알터</size></b>  (Alter)";
             mediumWindow.transform.GetChild(1).GetComponent<Text>().text = "알터 위치 변경을 위한 건설 진행";
             mediumWindow.transform.GetChild(2).GetComponent<Text>().text = "[필요 정수 600]  <color=white>알터를 기존 위치에서 새로운 위치로 이동시킵니다. </color>";
         }
         else if (key == 2)
         {
-            mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>화이트타워</size></b>  (White Tower)";
+            mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>[C] 화이트타워</size></b>  (White Tower)";
             mediumWindow.transform.GetChild(1).GetComponent<Text>().text = "화이트타워 건설 진행";
             mediumWindow.transform.GetChild(2).GetComponent<Text>().text = "[필요 정수 500]  <color=white>접근하는 적을 공격하는 수비 건물인 화이트타워를 건설합니다. </color>";
         }
         else if (key == 3)
         {
-           mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>워크샵</size></b>  (Workshop)";
+           mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>[V] 워크샵</size></b>  (Workshop)";
             mediumWindow.transform.GetChild(1).GetComponent<Text>().text = "워크샵 건설 진행";
             mediumWindow.transform.GetChild(2).GetComponent<Text>().text = "[필요 정수 0]  <color=white>정수 채취 및 스위치 정화를 위한 워크샵을 설치합니다. </color>";          
         }

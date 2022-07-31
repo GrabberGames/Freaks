@@ -164,7 +164,7 @@ public class WorkshopController : MonoBehaviour
     }
     IEnumerator Purify()
     {
-        yield return YieldInstructionCache.WaitForSeconds(10f); //90f로 고치기
+        yield return YieldInstructionCache.WaitForSeconds(120f); //90f로 고치기
 
         StartCoroutine(connectEssence.GetComponent<SwitchController>().SwitchPurify());
         connectEssence.gameObject.SetActive(true);

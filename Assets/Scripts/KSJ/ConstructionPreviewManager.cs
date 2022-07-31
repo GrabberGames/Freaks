@@ -93,7 +93,7 @@ public class ConstructionPreviewManager : MonoBehaviour
 
     public void OnWhiteTowerConstructionPreview()
     {
-        ConstructionPreview(eBuilding.WhiteTower, 600);
+        ConstructionPreview(eBuilding.WhiteTower, 500);
     }
 
     public void OnWorkshopConstructionPreview()
