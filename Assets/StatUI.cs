@@ -32,23 +32,23 @@ public class StatUI : MonoBehaviour
         switch(type)
         {
             case StatusType.PD:
-                PDText.text = GameManager.Instance.models.playerModel.PlayerPD.ToString();
+                PDText.text = GameManager.Instance.models.playerModel.PlayerPD.ToString("N1");
                 PDText.color = new Color32(255, 246, 154,255);
-                    break;
+                break;
             case StatusType.ED:
-                EDText.text = GameManager.Instance.models.playerModel.PlayerED.ToString();
+                EDText.text = GameManager.Instance.models.playerModel.PlayerED.ToString("N1");
                 EDText.color = new Color32(255, 246, 154, 255);
                 break;
-            case StatusType.ARMOR:
-                ARMORText.text = GameManager.Instance.models.playerModel.PlayerArmor.ToString();
+            case StatusType.ARMOR: 
+                ARMORText.text = GameManager.Instance.models.playerModel.PlayerArmor.ToString("N1");
                 ARMORText.color = new Color32(255, 246, 154, 255);
                 break;
             case StatusType.MOVESPEED:
-                MOVESPEEDText.text = GameManager.Instance.models.playerModel.PlayerMoveSpeed.ToString();
+                MOVESPEEDText.text = GameManager.Instance.models.playerModel.PlayerMoveSpeed.ToString("N1");
                 MOVESPEEDText.color = new Color32(255, 246, 154, 255);
                 break;
             case StatusType.ATTACKSPEED:
-                ATTACKSPEEDText.text = GameManager.Instance.models.playerModel.PlayerAttackSpeed.ToString();
+                ATTACKSPEEDText.text = GameManager.Instance.models.playerModel.PlayerAttackSpeed.ToString("N1");
                 ATTACKSPEEDText.color = new Color32(255, 246, 154, 255);
                 break;
         }

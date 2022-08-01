@@ -6,6 +6,16 @@ using UnityEngine.UI;
 public class HpUI : MonoBehaviour
 {
     [SerializeField] private Image hpBar;
+    [SerializeField] private Text hpText;
+
+    void Start()
+    {
+        SetHpText(StatusType.HP);
+
+        GameManager.Instance.models.playerModel.StatChanged -= SetHpText;
+        GameManager.Instance.models.playerModel.StatChanged += SetHpText;
+    }
+
 
     public void Visualization(float nowHP, float _fill)
     {
@@ -16,5 +26,9 @@ public class HpUI : MonoBehaviour
         }
 
         hpBar.fillAmount = _fill;
+    }
+    public void SetHpText(StatusType type)
+    {
+        hpText.text = (int)GameManager.Instance.models.playerModel.PlayerNowHp + " / " + (int)GameManager.Instance.models.playerModel.PlayerMaxHp;
     }
 }

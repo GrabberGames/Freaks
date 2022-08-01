@@ -79,6 +79,7 @@ public class PlayerModel
         set
         {
             _playerNowHp = value;
+            StatChanged?.Invoke(StatusType.HP);
         }
     }
     public float PlayerMaxHp
@@ -87,6 +88,7 @@ public class PlayerModel
         set
         {
             _playerMaxHp = value;
+            StatChanged?.Invoke(StatusType.HP);
         }
     }
     public float PlayerED
@@ -129,16 +131,17 @@ public class PlayerModel
                 StatChanged?.Invoke(StatusType.PD);
                 break;
             case StatusType.ED:
-                StatChanged?.Invoke(StatusType.ED);
                 PlayerED += value;
+                StatChanged?.Invoke(StatusType.ED);
                 break;
             case StatusType.HP:
                 PlayerNowHp += value;
                 PlayerMaxHp += value;
+                StatChanged?.Invoke(StatusType.HP);
                 break;
             case StatusType.ARMOR:
-                StatChanged?.Invoke(StatusType.ARMOR);
                 PlayerArmor += value;
+                StatChanged?.Invoke(StatusType.ARMOR);
                 break;
             case StatusType.MOVESPEED:
                 PlayerMoveSpeed += value;

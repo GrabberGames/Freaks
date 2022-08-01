@@ -178,6 +178,16 @@ public class Kali : Stat
 
         return false;
     }
+    public void HpUp(StatusType statusType)
+    {
+        HP = GameManager.Instance.models.playerModel.PlayerNowHp;
+        MAX_HP = GameManager.Instance.models.playerModel.PlayerMaxHp;
+    }
+    public void HpToModel()
+    {
+        GameManager.Instance.models.playerModel.PlayerNowHp = HP;
+        GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
+    }
     void CoolTimer()
     {
         if (playerModel.QSkillCoolTime > 0)
@@ -231,6 +241,11 @@ public class Kali : Stat
         agent.speed = MOVE_SPEED;
 
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+        GameManager.Damage.ChangedHP -= HpToModel;
+        GameManager.Damage.ChangedHP += HpToModel;
+        GameManager.Instance.models.playerModel.StatChanged -= HpUp;
+        GameManager.Instance.models.playerModel.StatChanged += HpUp;
     }
     void OnAnimatorMove()
     {

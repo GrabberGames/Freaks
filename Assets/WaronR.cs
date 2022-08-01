@@ -9,7 +9,7 @@ public class WaronR : MonoBehaviour
     WarriorAnims.HeroMovement hero;
     GameController gameController;
     float _damage = 0;
-    private void Start()
+    private void OnEnable()
     {
         gameController = FindObjectOfType<GameController>();
         hero = GetComponentInParent<WarriorAnims.HeroMovement>();

@@ -51,13 +51,13 @@
       "ARMOR": 15
     },
     "blacktower": {
-      "PD": 1000,
+      "PD": 100,
       "ED": 0,
       "HP": 1500,
       "MAX_HP": 1500,
       "ATTACK_SPEED": 0.3,
       "MOVE_SPEED": 0,
-      "ATTACK_RANGE": 40,
+      "ATTACK_RANGE": 35,
       "ARMOR": 100
     },
     "switchoff": {

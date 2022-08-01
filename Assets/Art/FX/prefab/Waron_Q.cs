@@ -48,7 +48,7 @@ public class Waron_Q : MonoBehaviour
         else
         {
             abc = true;
-            if ((startPos - this.transform.position).sqrMagnitude > 900)
+            if ((startPos - this.transform.position).sqrMagnitude > 3600)
             {
                 c = true;
                 P();

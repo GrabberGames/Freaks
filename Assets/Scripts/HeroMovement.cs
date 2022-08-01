@@ -25,7 +25,7 @@ namespace WarriorAnims
 
         enum Layers
         {
-            blackfreaks= 6,
+            blackfreaks = 6,
             Enemy = 7,
         }
 
@@ -106,6 +106,8 @@ namespace WarriorAnims
 
         int cnt = 0;
         bool canPlayMoveSound = true;
+
+        IEnumerator RRR;
         PlayerModel PlayerModel => GameManager.Instance.models.playerModel;
 
         //Waron Sound Priority Variable & Far Distance Judge
@@ -182,8 +184,22 @@ namespace WarriorAnims
             PlayerModel.WSkillMaxCoolTime = 12;
             PlayerModel.ESkillMaxCoolTime = 14;
             PlayerModel.RSkillMaxCoolTime = 120;
-        }
 
+            GameManager.Damage.ChangedHP -= HpToModel;
+            GameManager.Damage.ChangedHP += HpToModel;
+            GameManager.Instance.models.playerModel.StatChanged -= HpUp;
+            GameManager.Instance.models.playerModel.StatChanged += HpUp;
+        }
+        public void HpUp(StatusType statusType)
+        {
+            HP = PlayerModel.PlayerNowHp;
+            MAX_HP = PlayerModel.PlayerMaxHp;
+        }
+        public void HpToModel()
+        {
+            PlayerModel.PlayerNowHp = HP;
+            PlayerModel.PlayerMaxHp = MAX_HP;
+        }
         public override void DeadSignal()
         {
             if (HP <= 0)
@@ -225,7 +241,7 @@ namespace WarriorAnims
             GameManager.Instance.models.playerModel.PlayerNowHp = MAX_HP;
             GameManager.Instance.models.playerModel.PlayerMaxHp = MAX_HP;
         }
-        
+
         private void Awake()
         {
             Init();
@@ -299,8 +315,7 @@ namespace WarriorAnims
             if (PlayerModel.RSkillCoolTime > 0)
             {
                 Debug.Log("WARRON R");
-                PlayerModel.RSkillCoolTime = Mathf.Clamp(120 - (Time.time - rTime), 0, 120); 
-                cnt++;
+                PlayerModel.RSkillCoolTime = Mathf.Clamp(120 - (Time.time - rTime), 0, 120);
                 if (R_particle.activeInHierarchy)
                 {
                     if (PlayerModel.RSkillCoolTime < 96.0f && PlayerModel.RSkillCoolTime > 95.9f)
@@ -310,15 +325,18 @@ namespace WarriorAnims
                     if (PlayerModel.RSkillCoolTime < 95.0f)
                     {
                         R_particle.SetActive(false);
-                    }
-                    else
-                    {
-                        if (cnt % 10 == 0)
-                        {
-                            WaronRHitted.Invoke();
-                        }
+                        StopCoroutine(RRR);
                     }
                 }
+            }
+        }
+        IEnumerator RR()
+        {
+            while (true)
+            {
+                Debug.Log("R Hit!");
+                WaronRHitted?.Invoke();
+                yield return new WaitForSeconds(1f);
             }
         }
         private bool canNormalAttack = true;
@@ -512,6 +530,8 @@ namespace WarriorAnims
                 Activation("R");
                 ShockOfLand();
                 PState = PlayerState.R;
+                RRR = RR();
+                StartCoroutine(RRR);
             }
         }
 

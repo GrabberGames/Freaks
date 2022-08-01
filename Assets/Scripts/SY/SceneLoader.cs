@@ -99,7 +99,6 @@ public class SceneLoader : MonoBehaviour
             {
                 loadText.text += ".";
             }
-            Debug.Log(loadText.text);
             yield return new WaitForSeconds(0.5f);
         }
     }

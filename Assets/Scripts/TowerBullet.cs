@@ -30,7 +30,6 @@ public class TowerBullet : MonoBehaviour
         this.whitefreaks = enemy;
         StartCoroutine(StartProjectile(0.5f));
         this.transform.position = bulletSpawnPosition;
-
     }
 
     public void InitSetting(float damage, Vector3 bulletSpawnPosition)
