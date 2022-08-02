@@ -565,14 +565,14 @@ public class Kali : Stat
         {
             return;
         }
-
+        /*
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameManager.Instance.PlayerDead();
 
             ObjectPooling.Instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
             State = PlayerState.Die;
-        }
+        }*/
 
         switch (State)
         {

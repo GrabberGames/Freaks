@@ -158,7 +158,7 @@ public class PauseUIController : MonoBehaviour
     }
 
 
-    private void GameToHome()
+    public void GameToHome()
     {
         SceneManager.LoadScene("Intro");
     }
