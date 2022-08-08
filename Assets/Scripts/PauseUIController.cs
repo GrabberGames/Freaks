@@ -14,12 +14,16 @@ public class PauseUIController : MonoBehaviour
 
     private bool isMain;
     private bool isExit;
-    public bool isMenuON;
+    public bool isMenuON = false;
 
     private bool isFirst = true; //게임 최초시작
 
-    private bool canActiveMenu;
-
+    private bool canActiveMenu = false;
+    /*
+    private void Start()
+    {
+        MenuWinOFF();
+    }*/
 
     private void Update()
     {               
@@ -49,7 +53,9 @@ public class PauseUIController : MonoBehaviour
         canActiveMenu = !ConstructionPreviewManager.Instance.isPreviewMode;
         else
         {
-            canActiveMenu = true;
+            MenuWinOFF();
+            isFirst = false;
+            // canActiveMenu = true;
         }
     }
 
