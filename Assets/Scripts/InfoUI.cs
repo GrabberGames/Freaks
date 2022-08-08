@@ -6,11 +6,11 @@ using System.Text;
 public class InfoUI : MonoBehaviour
 {
     [SerializeField] CSVReader csvReader;
-    
+
     [SerializeField] List<Image> skillImages;
 
     [SerializeField] GameObject largeWindow;
-    [SerializeField] Image  skillImage;
+    [SerializeField] Image skillImage;
     [SerializeField] GameObject mediumWindow;
     [SerializeField] GameObject smallWindow;
 
@@ -24,13 +24,13 @@ public class InfoUI : MonoBehaviour
 
 
     Stat playerStat;
-   
+
 
     private void Start()
     {
         playerStat = GameManager.Instance.Player.GetComponent<Stat>();
         largePos = new Vector2[5];
-        
+
         largePos[0] = new Vector2(-445, 302);
         largePos[1] = new Vector2(-350, 302);
         largePos[2] = new Vector2(-251, 302);
@@ -71,12 +71,12 @@ public class InfoUI : MonoBehaviour
 
     public void InActiveInfoUI()
     {
-    
-            largeWindow.SetActive(false);
-     
-            mediumWindow.SetActive(false);
-       
-            smallWindow.SetActive(false);
+
+        largeWindow.SetActive(false);
+
+        mediumWindow.SetActive(false);
+
+        smallWindow.SetActive(false);
     }
 
     int num = 0;
@@ -109,7 +109,7 @@ public class InfoUI : MonoBehaviour
         }
         else if (key == 4)
         {
-            skillImage.sprite = skillImages[4].sprite;          
+            skillImage.sprite = skillImages[4].sprite;
         }
         largeWindow.GetComponent<RectTransform>().anchoredPosition = largePos[key];
 
@@ -118,26 +118,30 @@ public class InfoUI : MonoBehaviour
         stringBuilder.Append(csvReader.skillInfos[num + key].name_kr);
         stringBuilder.Append(backAppend);
         stringBuilder.Append(csvReader.skillInfos[num + key].name_en);
-            
+
         largeWindow.transform.GetChild(0).GetComponent<Text>().text = stringBuilder.ToString();
 
         stringBuilder.Clear();
-        stringBuilder.Append("쿨타임: ");
-        stringBuilder.Append(csvReader.skillInfos[num + key].coolTime.ToString());
-        stringBuilder.Append("초");
-        largeWindow.transform.GetChild(1).GetComponent<Text>().text = stringBuilder.ToString();
-
+        if ((csvReader.skillInfos[num + key].coolTime != 0))
+        {
+            stringBuilder.Append("쿨타임: ");
+            stringBuilder.Append(csvReader.skillInfos[num + key].coolTime.ToString());
+            stringBuilder.Append("초");
+            largeWindow.transform.GetChild(1).GetComponent<Text>().text = stringBuilder.ToString();
+        }
+        else
+            largeWindow.transform.GetChild(1).GetComponent<Text>().text = "";
 
         if (csvReader.skillInfos[num + key].key == 'p')
             largeWindow.transform.GetChild(2).GetComponent<Text>().text = "패시브";
         else
             largeWindow.transform.GetChild(2).GetComponent<Text>().text = csvReader.skillInfos[num + key].key.ToString();
 
-        if(csvReader.skillInfos[num + key].info2 =="0")
+        if (csvReader.skillInfos[num + key].info2 == "0")
             largeWindow.transform.GetChild(3).GetComponent<Text>().text = csvReader.skillInfos[num + key].info;
         else
         {
-            if(csvReader.skillInfos[num + key].cal3 == "PD")
+            if (csvReader.skillInfos[num + key].cal3 == "PD")
             {
                 calRes = csvReader.skillInfos[num + key].cal1 + (int)(csvReader.skillInfos[num + key].cal2 * playerStat.PD);
             }
@@ -157,7 +161,7 @@ public class InfoUI : MonoBehaviour
 
         largeWindow.SetActive(true);
     }
-  
+
 
     public void MediumInfoOn(int key)
     {
@@ -182,9 +186,9 @@ public class InfoUI : MonoBehaviour
         }
         else if (key == 3)
         {
-           mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>[V] 워크샵</size></b>  (Workshop)";
+            mediumWindow.transform.GetChild(0).GetComponent<Text>().text = "<b><size=21>[V] 워크샵</size></b>  (Workshop)";
             mediumWindow.transform.GetChild(1).GetComponent<Text>().text = "워크샵 건설 진행";
-            mediumWindow.transform.GetChild(2).GetComponent<Text>().text = "[필요 정수 0]  <color=white>정수 채취 및 스위치 정화를 위한 워크샵을 설치합니다. </color>";          
+            mediumWindow.transform.GetChild(2).GetComponent<Text>().text = "[필요 정수 0]  <color=white>정수 채취 및 스위치 정화를 위한 워크샵을 설치합니다. </color>";
         }
         mediumWindow.GetComponent<RectTransform>().anchoredPosition = mediumPos[key];
         mediumWindow.SetActive(true);
@@ -199,14 +203,14 @@ public class InfoUI : MonoBehaviour
             smallWindow.transform.GetChild(0).GetComponent<Text>().text = "런타임";
             smallWindow.transform.GetChild(1).GetComponent<Text>().text = "(Run Time)";
             smallWindow.transform.GetChild(2).GetComponent<Text>().text = "게임 경과 시간";
-            smallWindow.transform.GetChild(3).GetComponent<Text>().text = "게임 플레이 경과 시간을 보여줍니다. 이는 게임 종료 시, 점수에 영향을 줍니다.";          
+            smallWindow.transform.GetChild(3).GetComponent<Text>().text = "게임 플레이 경과 시간을 보여줍니다. 이는 게임 종료 시, 점수에 영향을 줍니다.";
         }
         else if (key == 1)
         {
             smallWindow.transform.GetChild(0).GetComponent<Text>().text = "웨이브 타임";
             smallWindow.transform.GetChild(1).GetComponent<Text>().text = "(Wave Time)";
             smallWindow.transform.GetChild(2).GetComponent<Text>().text = "다음 블랙프릭스 웨이브를 표기하는 바";
-            smallWindow.transform.GetChild(3).GetComponent<Text>().text = "다음 블랙프릭스 웨이브까지의 남은 시간을 보여줍니다.";        
+            smallWindow.transform.GetChild(3).GetComponent<Text>().text = "다음 블랙프릭스 웨이브까지의 남은 시간을 보여줍니다.";
         }
         else if (key == 2)
         {
@@ -231,7 +235,7 @@ public class InfoUI : MonoBehaviour
             stringBuilder.Append("<color=red>");
             stringBuilder.Append(playerStat.PD);
             stringBuilder.Append("</color>");
-            
+
             smallWindow.transform.GetChild(0).GetComponent<Text>().text = "물리공격력";
             smallWindow.transform.GetChild(1).GetComponent<Text>().text = "(Physical Damage)";
             smallWindow.transform.GetChild(2).GetComponent<Text>().text = stringBuilder.ToString();
