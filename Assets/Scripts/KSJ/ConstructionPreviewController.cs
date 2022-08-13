@@ -81,7 +81,7 @@ public class ConstructionPreviewController : MonoBehaviour
                                 break;
 
                             case eBuilding.WhiteTower:
-                                if (StageManager.Instance.UseEssence(600))
+                                if (StageManager.Instance.UseEssence(500))
                                 {
                                     BuildingManager.Instance.SetBuildPosition(ConstructionPreviewManager.Instance.nowPreviewBuilding, ConstructionPreviewManager.Instance.PreviewPosition());
                                 }
