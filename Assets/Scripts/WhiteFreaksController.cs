@@ -36,46 +36,57 @@ public class WhiteFreaksController : Stat
         alter = BuildingManager.Instance.Alter;
 
         alterPosition = alter.transform.position;
-
-        /*
-        arriveStream = this.UpdateAsObservable()
-            .Select(IsStopped)
-            .DistinctUntilChanged()
-            .ThrottleFrame(3)
-            .Where(stopped => stopped)
-            .Subscribe(stopped => onArriveCallback?.Invoke())
-            .AddTo(this);
-            */
-
+    }
+      /*
         arriveStream = this.UpdateAsObservable()
           .Select(IsStopped)
           .DistinctUntilChanged()
-          .ThrottleFrame(3)
+          .ThrottleFrame(2)
           .Where(stopped => stopped)
-          .Subscribe(stopped => Moving())
+          .Subscribe(stopped => Arrive())
           .AddTo(this);
 
 
-        /// <-���� ��ġ�� ���� �Ǿ����� ���Ǵ� �Լ��Դϴ�.->
-        //  BuildingManager.Instance.AlterIsChange -= AlterIsChanged;
-        //  BuildingManager.Instance.AlterIsChange += AlterIsChanged;
-    }
-    /*
+    
+    }*/
+    
     bool IsArrive = false;
     private void Update()
     {
         if (IsArrive == false)
         {
-            if (navMeshAgent.velocity.sqrMagnitude >=0.2f && navMeshAgent.remainingDistance <= 0.5f)
+
+            if (!navMeshAgent.pathPending)
             {
-                Debug.Log("��������!");
-                IsArrive = true;
+                if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+                {
+                    if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
+                    {
+                        IsMoving = false;
+                        WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
+                        //this.gameObject.SetActive(false);
+
+
+                        IsArrive = true;
+                        Arrive();
+
+                    }
+                }
+
+
             }
+/*
+                if (navMeshAgent.velocity.sqrMagnitude >=0.2f && navMeshAgent.remainingDistance <= 0.5f)
+            {
+               
+                IsArrive = true;
+                Arrive();
+            }*/
               
         }
 
     }
-    */
+    
     bool isFirst = true;
     // 죽는거
     public override void DeadSignal()
@@ -98,7 +109,7 @@ public class WhiteFreaksController : Stat
                     connectEssence.SetActive(true);
                 }
             }
-            WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks();
             isFirst = false;
         }
 
@@ -118,7 +129,9 @@ public class WhiteFreaksController : Stat
             {
                 if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
                 {
+                    IsMoving = false;
                     WhiteFreaksManager.Instance.SignOfWhiteFreaksDecrease();
+                    //this.gameObject.SetActive(false);
                     return true;
                 }
             }
@@ -127,22 +140,28 @@ public class WhiteFreaksController : Stat
     }
 
     Building buildng;
-    void Moving()
+    void Arrive()
     {
-        IsMoving = true;
+        Debug.Log("도착했다");
+        IsMoving = false;
         if (IsBuilding == true)
         {
+            Debug.Log("지으러왔다");
             buildng = targetBuilding.GetComponent<Building>();
             buildng.ChangeBuilding();
             go.SetActive(false);
             IsBuilding = false;
-            
+
+            IsArrive = false;
             //switch�� �� �κп��ٰ� ���� ����
             //
         }
         else
         {
-            WhiteFreaksManager.Instance.ReturnWhiteFreaks(go);
+            IsArrive = false;
+            Debug.Log("지으러 온거아니다");
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks();
+            ObjectPooling.Instance.ReturnObject(this.gameObject);
         }
     }
 
@@ -155,7 +174,7 @@ public class WhiteFreaksController : Stat
 
     public void SetDestination(GameObject target, bool isBuilding)
     {
-        IsMoving = false;
+        IsMoving = true;
         // go.SetActive(true);
         IsBuilding = isBuilding;
         targetBuilding = target;

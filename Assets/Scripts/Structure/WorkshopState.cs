@@ -20,24 +20,31 @@ public class WorkshopState : Stat
     {
         Init();
     }
+
+    bool isFirst = true;
+    // 죽는거
+
     public override void DeadSignal()
     {
-        if (HP <= 0)
-        {    
-           Disappear();
+        if (isFirst == true)
+        {
+            if (HP <= 0)
+            {
+                Disappear();
 
 
-            GetComponent<WorkshopController>().GetConnectingFreaks().gameObject.SetActive(true);
-            GetComponent<WorkshopController>().GetConnectingFreaks().SetDestination(BuildingManager.Instance.Alter, false);
+                GetComponent<WorkshopController>().GetConnectingFreaks().gameObject.SetActive(true);
+                GetComponent<WorkshopController>().GetConnectingFreaks().SetDestination(BuildingManager.Instance.Alter, false);
 
 
-            GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()
-                .SetRemainEssence(GetComponent<WorkshopController>().GetRemainEssence());
+                GetComponent<WorkshopController>().GetConnectEssence().GetComponent<EssenceSpot>()
+                    .SetRemainEssence(GetComponent<WorkshopController>().GetRemainEssence());
 
-            GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
+                GetComponent<WorkshopController>().GetConnectEssence().SetActive(true);
+                isFirst = false;
 
 
-
+            }
         }
     }
     public void Disappear()
@@ -79,6 +86,7 @@ public class WorkshopState : Stat
             yield return YieldInstructionCache.WaitForSeconds(0.05f);
         }
         BuildingPooling.instance.ReturnObject(this.gameObject);
+        this.gameObject.SetActive(false);
         // GetComponentInParent<Building>().ReturnBuildingPool();
     }
 
