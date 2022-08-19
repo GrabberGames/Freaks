@@ -189,6 +189,8 @@ namespace WarriorAnims
             GameManager.Damage.ChangedHP += HpToModel;
             GameManager.Instance.models.playerModel.StatChanged -= HpUp;
             GameManager.Instance.models.playerModel.StatChanged += HpUp;
+            GameManager.Instance.models.playerModel.StatChanged -= HpUp;
+            GameManager.Instance.models.playerModel.StatChanged += HpUp;
         }
         public void HpUp(StatusType statusType)
         {
@@ -219,7 +221,6 @@ namespace WarriorAnims
         {
             yield return new WaitForSeconds(1f);
             agent.ResetPath();
-            agent.isStopped = true;
             agent.Warp(new Vector3(-9999, -9999, -9999));
         }
         void ResetCanPlayMoveSound()
@@ -228,12 +229,13 @@ namespace WarriorAnims
         }
         public override void ReviveSignal()
         {
+            useRootMotion = false;
+
             animator.SetBool("Damaged", false);
             animator.SetBool("Moving", true);
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
 
             PState = PlayerState.Idle;
-            agent.isStopped = false;
             agent.Warp(BuildingManager.Instance.Alter.transform.position);
 
 
@@ -796,9 +798,12 @@ namespace WarriorAnims
         IEnumerator BuffHp(float amount)
         {
             float hp = HP;
+            float max_hp = MAX_HP;
             HP *= amount;
+            MAX_HP *= amount;
             yield return new WaitForSeconds(25f);
-            HP = hp;
+            HP = Mathf.Min(HP, MAX_HP);
+            MAX_HP = max_hp;
         }
     }
 }

@@ -130,6 +130,12 @@ public class FreaksController : Stat
         canNormalAttack = true;
         if (target != null) //기본 공격 할 대상이 있다.
         {
+            if(target.GetComponent<Stat>().HP <= 0)
+            {
+                target = null;
+                State = FreaksState.Moving;
+                return;
+            }
             float distance = (target.transform.position - transform.position).magnitude;
             agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1<< 5;
             //시야 밖으로 나가면 target을 초기화해줌.
@@ -180,10 +186,13 @@ public class FreaksController : Stat
             return;
         foreach (Collider collider in Physics.OverlapSphere(transform.position, 25f, mask))
         {
-            target = collider.gameObject;
-            Vector3 dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-            agent.SetDestination(dir);
-            return;
+            if (collider.GetComponent<Stat>().HP > 0)
+            {
+                target = collider.gameObject;
+                Vector3 dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                agent.SetDestination(dir);
+                return;
+            }
         }
     }
     void GoToAlter()
