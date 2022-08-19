@@ -86,9 +86,18 @@ public class WhiteFreaksManager : MonoBehaviour
 
     public void ReturnWhiteFreaks(GameObject freaks)
     {
-        SignOfWhiteFreaksDecrease();
         freaks.GetComponent<WhiteFreaksController>().IsMoving = false;
+        SignOfWhiteFreaksDecrease();
+      
         ObjectPooling.Instance.ReturnObject(freaks);
+        increaseIdle();
+    }
+
+    public void ReturnWhiteFreaks()
+    {
+        SignOfWhiteFreaksDecrease();
+
+
         increaseIdle();
     }
 
