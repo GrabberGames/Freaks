@@ -97,7 +97,7 @@ public class WhiteFreaksController : Stat
         {
             IsMoving = false;
 
-            if (!(targetBefore.CompareTag("alter"))) //알터로 돌아가는게 아니라면(지으러 가는도중에 쥬금)
+            if (targetBefore.CompareTag("Friendly")) //알터로 돌아가는게 아니라면(지으러 가는도중에 쥬금)
             {
                 BuildingPooling.instance.ReturnObject(targetBuilding);
                 BuildingPooling.instance.ReturnObject(targetBefore);
@@ -109,6 +109,7 @@ public class WhiteFreaksController : Stat
                     connectEssence.SetActive(true);
                 }
             }
+           
             WhiteFreaksManager.Instance.ReturnWhiteFreaks();
             isFirst = false;
         }
