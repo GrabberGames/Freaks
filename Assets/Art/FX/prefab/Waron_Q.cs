@@ -13,7 +13,9 @@ public class Waron_Q : MonoBehaviour
     float _damage = 0f;
     Vector3 startPos;
     bool abc = false;
-    public void Init(Vector3 lookDir, float damage, GameObject arm)
+
+    WarriorAnims.HeroMovement _warron;
+    public void Init(Vector3 lookDir, float damage, GameObject arm, WarriorAnims.HeroMovement waron)
     {
         animator = GetComponent<Animator>();
         animator.Play("Idle");
@@ -21,6 +23,7 @@ public class Waron_Q : MonoBehaviour
         _damage = damage; 
         this.arm = arm;
         startPos = transform.position;
+        _warron = waron;
     }
 
     void Update()
@@ -37,6 +40,7 @@ public class Waron_Q : MonoBehaviour
                 c = true;
                 animator.Play("Broke");
                 GameManager.Damage.OnAttacked(_damage, hit.transform.gameObject.GetComponent<Stat>());
+                _warron.PlaySFX(1);
             }
         }
 

@@ -113,6 +113,29 @@ namespace WarriorAnims
         //Waron Sound Priority Variable & Far Distance Judge
         private int _priority = 0;
         private float _dist = 0f;
+
+        public AudioSource N_SFX;
+        public AudioSource Q_SFX;
+        public AudioSource W_SFX;
+        public AudioSource E_SFX;
+        public void PlaySFX(int i)
+        {
+            switch(i)
+            {
+                case 0:
+                    N_SFX.Play();
+                    break;
+                case 1:
+                    Q_SFX.Play();
+                    break;
+                case 2:
+                    W_SFX.Play();
+                    break;
+                case 3:
+                    E_SFX.Play();
+                    break;
+            }
+        }
         void Activation(string skill)
         {
             switch (skill)
@@ -189,13 +212,17 @@ namespace WarriorAnims
             GameManager.Damage.ChangedHP += HpToModel;
             GameManager.Instance.models.playerModel.StatChanged -= HpUp;
             GameManager.Instance.models.playerModel.StatChanged += HpUp;
-            GameManager.Instance.models.playerModel.StatChanged -= HpUp;
-            GameManager.Instance.models.playerModel.StatChanged += HpUp;
         }
         public void HpUp(StatusType statusType)
         {
             HP = PlayerModel.PlayerNowHp;
             MAX_HP = PlayerModel.PlayerMaxHp;
+            PD = PlayerModel.PlayerPD;
+            ED = PlayerModel.PlayerED;
+            MOVE_SPEED = PlayerModel.PlayerMoveSpeed;
+            ATTACK_SPEED = PlayerModel.PlayerAttackSpeed;
+            ARMOR = PlayerModel.PlayerArmor;
+            animator.SetFloat("AttackSpeed", ATTACK_SPEED);
         }
         public void HpToModel()
         {
@@ -357,6 +384,8 @@ namespace WarriorAnims
             animator.SetTrigger("Trigger");
 
             canNormalAttack = false;
+
+            PlaySFX(0);
         }
         public void Normal_Attack_Fun()
         {
@@ -576,7 +605,7 @@ namespace WarriorAnims
         {
             rock = Instantiate(Q_particle);
             rock.transform.position = leftArm.transform.position;
-            rock.GetComponent<Waron_Q>().Init(qPos, 10, leftArm);
+            rock.GetComponent<Waron_Q>().Init(qPos, 10, leftArm, this);
         }
         public void ThrowingRockThrow()
         {

@@ -38,11 +38,13 @@ public class WaronSkill : MonoBehaviour
                 case 2:
                     freaksController = other.transform.GetComponent<FreaksController>();
                     freaksController.StartCoroutine(freaksController.MoveSpeedSlow(0.8f));
+                    heroMovement.PlaySFX(2);
                     break;
                 case 3:
                     heroMovement.Break();
                     freaksController = other.transform.GetComponent<FreaksController>();
                     freaksController.StartCoroutine(freaksController.Stuern(2f));
+                    heroMovement.PlaySFX(3);
                     break;
                 default:
                     break;

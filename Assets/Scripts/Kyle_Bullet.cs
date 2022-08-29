@@ -27,13 +27,15 @@ public class Kyle_Bullet : MonoBehaviour
     private bool _isAttack = false;
 
     Bullet _bullet = Bullet.Basic;
-    public void InitSetting(GameObject enemy, Bullet _state, Quaternion p_ldir, Vector3 p_hdir, float damage)
+    Kali _kail;
+    public void InitSetting(GameObject enemy, Bullet _state, Quaternion p_ldir, Vector3 p_hdir, float damage, Kali kail)
     {
         this.enemy = enemy;
         transform.LookAt(p_hdir);
         dir = new Vector3(p_hdir.x - transform.position.x, 0, p_hdir.z - transform.position.z).normalized;
         _damage = damage;
         StartProjectile(_state);
+        _kail = kail;
     }
 
     void StartProjectile(Bullet _state)
@@ -107,8 +109,11 @@ public class Kyle_Bullet : MonoBehaviour
                     var particle = ps_hit.GetComponent<ParticleSystem>();
                     particle.Play();
                     StartCoroutine(Destroy_Hit());
+                    _kail.PlaySFX(0);
                     break;
-                case Bullet.Q :
+                case Bullet.Q:
+                    _kail.PlaySFX(1);
+                    break;
                 case Bullet.E:
                     ps_hit = ObjectPooling.Instance.GetObject("KyleHitEffect");
                     ps_hit.transform.position = transform.position;
@@ -118,6 +123,7 @@ public class Kyle_Bullet : MonoBehaviour
                     particleSystem.Play();
 
                     StartCoroutine(Destroy_Hit());
+                    _kail.PlaySFX(2);
                     break;
                 default:
                     break;

@@ -70,6 +70,25 @@ public class Kali : Stat
     float rTime = .0f;
 
     bool canPlayMoveSound = true;
+
+    public AudioSource Q_SFX;
+    public AudioSource WE_SFX;
+    public AudioSource N_SFX;
+    public void PlaySFX(int index)
+    { 
+        if (index == 0)
+        {
+            N_SFX.Play();
+        }
+        if( index == 1)
+        {
+            Q_SFX.Play();
+        }
+        if ( index == 2 || index == 3)
+        {
+            WE_SFX.Play();
+        }
+    }
     public PlayerState State
     {
         get { return _state; }
@@ -180,8 +199,14 @@ public class Kali : Stat
     }
     public void HpUp(StatusType statusType)
     {
-        HP = GameManager.Instance.models.playerModel.PlayerNowHp;
-        MAX_HP = GameManager.Instance.models.playerModel.PlayerMaxHp;
+        HP = playerModel.PlayerNowHp;
+        MAX_HP = playerModel.PlayerMaxHp;
+        PD = playerModel.PlayerPD;
+        ED = playerModel.PlayerED;
+        MOVE_SPEED = playerModel.PlayerMoveSpeed;
+        ATTACK_SPEED = playerModel.PlayerAttackSpeed;
+        ARMOR = playerModel.PlayerArmor;
+        animator.SetFloat("AttackSpeed", playerModel.PlayerAttackSpeed);
     }
     public void HpToModel()
     {
@@ -390,7 +415,7 @@ public class Kali : Stat
 
         GameObject go = ObjectPooling.Instance.GetObject("KyleBullet");
         go.transform.position = transform.position;
-        go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.Q, transform.rotation, _mouseHitPosition, 140 + PD);
+        go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.Q, transform.rotation, _mouseHitPosition, 140 + PD, this);
     }
     public void Q_Stop()
     {
@@ -417,7 +442,7 @@ public class Kali : Stat
         StartCoroutine(W_ParticleOff(_w));
         agent.ResetPath();
 
-
+        bool t = false;
         List<FreaksController> _freaks = new List<FreaksController>();
         _freaks = gameController.GetAliveBlackFreaksList();
         for (int i = 0; i < _freaks.Count; i++)
@@ -425,7 +450,13 @@ public class Kali : Stat
             if ((_freaks[i].gameObject.transform.position - transform.position).magnitude < 15f)
             {
                 GameManager.Damage.OnAttacked(150 + 0.5f * PD, _freaks[i].GetComponent<Stat>());
+                t = true;
             }
+        }
+        if (t)
+        {
+            PlaySFX(2);
+            t = false;
         }
     }
     public void W_Stop()
@@ -514,7 +545,7 @@ public class Kali : Stat
             particleSystem.Play();
             StartCoroutine(Q_ParticleOff(particleSystem));
 
-            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, Bullet.Basic, transform.rotation, _mouseHitPosition, PD);
+            go.GetComponent<Kyle_Bullet>().InitSetting(_lockTarget, Bullet.Basic, transform.rotation, _mouseHitPosition, PD, this);
         }
 
         if (shape.Equals(Bullet.E))
@@ -530,7 +561,7 @@ public class Kali : Stat
             go = ObjectPooling.Instance.GetObject("KyleBullet");
             go.transform.position = transform.position;
             go.transform.rotation = Quaternion.identity;
-            go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.E, transform.rotation, _mouseHitPosition, 40 + 0.2f * ED);
+            go.GetComponent<Kyle_Bullet>().InitSetting(null, Bullet.E, transform.rotation, _mouseHitPosition, 40 + 0.2f * ED, this);
         }
     }
     void Basic_Attack()
