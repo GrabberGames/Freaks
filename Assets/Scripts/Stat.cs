@@ -54,4 +54,5 @@ public class Stat : MonoBehaviour
     public virtual void SetStat() { }
 
     public virtual void ReviveSignal() { }
+    public virtual void OnAttackSignal() { }
 }

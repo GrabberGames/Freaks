@@ -39120,6 +39120,7 @@ GameObject:
   - component: {fileID: 5824234849587192979}
   - component: {fileID: 3684443901973955353}
   - component: {fileID: 3684443901973955351}
+  - component: {fileID: 8820591107281130962}
   m_Layer: 16
   m_Name: whitetower
   m_TagString: Untagged
@@ -39226,6 +39227,19 @@ MonoBehaviour:
   SFXWhiteTowerDestroy: {fileID: 3684443902682517837}
   SFXWhiteTowerAttack: {fileID: 3684443902604386432}
   SFXWhiteTowerComplete: {fileID: 776085207188561681}
+--- !u!65 &8820591107281130962
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463757832429487430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17.859686, y: 31.0926, z: 17.588358}
+  m_Center: {x: 0.0000004768372, y: 11.219152, z: 0.0019602778}
 --- !u!1 &6857684541233544786
 GameObject:
   m_ObjectHideFlags: 0
@@ -63364,13 +63378,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
---- !u!198 &3754320911355380681 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7543445190239029673, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
-  m_PrefabInstance: {fileID: 6680445274986056288}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8455188687365444635 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3018371370849050235, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
+  m_PrefabInstance: {fileID: 6680445274986056288}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3754320911355380681 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7543445190239029673, guid: 5722e82739eddc14d8cc91130e5d5120, type: 3}
   m_PrefabInstance: {fileID: 6680445274986056288}
   m_PrefabAsset: {fileID: 0}

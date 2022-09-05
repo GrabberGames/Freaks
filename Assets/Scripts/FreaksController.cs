@@ -56,6 +56,9 @@ public class FreaksController : Stat
 
     const int GetEssenceByKilling = 10;
 
+
+    float d = .0f;
+
     GameController _gameController;
     protected override void Init()
     {
@@ -94,6 +97,7 @@ public class FreaksController : Stat
     }
     private void Update()
     {
+        Debug.Log(state);
         switch (state)
         {
             case FreaksState.Attack:
@@ -107,6 +111,11 @@ public class FreaksController : Stat
             case FreaksState.Stuern :
                 break;
         }
+    }
+    public bool a = false;
+    public override void OnAttackSignal()
+    {
+        a = true;
     }
     void UpdateAttack()
     {
@@ -136,22 +145,22 @@ public class FreaksController : Stat
                 State = FreaksState.Moving;
                 return;
             }
-            float distance = (target.transform.position - transform.position).magnitude;
+            float distance = (target.transform.position - transform.position).sqrMagnitude;
             agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1<< 5;
             //시야 밖으로 나가면 target을 초기화해줌.
             //alterPosition으로 destination 설정도 해줌.
-            if (distance > 25)
+            if (distance > 625)
             {
                 GoToAlter();
                 target = null;
             }
-            else if (distance <= 25 && distance > ATTACK_RANGE)
+            else if (distance <= 625 && distance > ATTACK_RANGE * ATTACK_RANGE)
             {
                 Vector3 dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                 agent.SetDestination(dir);
             }
             //target이 공격 범위 안에 들어오면 Attack으로 변경
-            if (distance <= ATTACK_RANGE)
+            if (distance <= ATTACK_RANGE * ATTACK_RANGE)
             {
                 State = FreaksState.Attack;
                 return; 
@@ -175,17 +184,24 @@ public class FreaksController : Stat
                 }
             }
         }
+
         //기본 공격할 대상이 없다.
         if (agent.isStopped)
             GoToAlter();
+
         Vector3 look_dir = new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z);
         transform.LookAt(look_dir);
         //일정 범위 내에 적이 들어올 경우 target으로 설정해준다.
         LayerMask mask = LayerMask.GetMask("player") | LayerMask.GetMask("whitefreaks") | LayerMask.GetMask("Alter") | LayerMask.GetMask("Friendly");
         if (target != null)
             return;
-        foreach (Collider collider in Physics.OverlapSphere(transform.position, 25f, mask))
+
+        if (a)
+            d = 2200;
+
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, d, mask))
         {
+            Debug.Log(collider.gameObject.name);
             if (collider.GetComponent<Stat>().HP > 0)
             {
                 target = collider.gameObject;
@@ -194,11 +210,15 @@ public class FreaksController : Stat
                 return;
             }
         }
+        if (a)
+            d = 625f;
     }
+
     void GoToAlter()
     {
         agent.SetDestination(alter.transform.position);
     }
+
     public IEnumerator MoveSpeedSlow(float value)
     {
         State = FreaksState.Slow;
@@ -217,6 +237,7 @@ public class FreaksController : Stat
         stuernEffect.SetActive(false);
         State = FreaksState.Moving;
     }
+
     public override void DeadSignal()
     {
         base.DeadSignal();

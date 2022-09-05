@@ -11,8 +11,9 @@ public class DamageManager
         float damage = Mathf.Max(0, value - defender.ARMOR) * (1 - defender.DECREASE_DAMAGE);
         defender.HP -= damage;
         defender.SetModel();
+        defender.OnAttackSignal();
 
-        if(defender.HP <= 0)
+        if (defender.HP <= 0)
         {
             defender.HP = 0;
             OnDead(defender);
