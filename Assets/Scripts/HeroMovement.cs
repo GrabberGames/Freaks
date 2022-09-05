@@ -173,13 +173,14 @@ namespace WarriorAnims
             }
             else
             {
+                /*
                 animator.gameObject.AddComponent<WarriorCharacterAnimatorEvents>();
                 animator.gameObject.AddComponent<AnimatorParentMove>();
 
                 animator.GetComponent<WarriorCharacterAnimatorEvents>().heroMovement = this;
                 animator.GetComponent<AnimatorParentMove>().animator = animator;
                 animator.GetComponent<AnimatorParentMove>().heroMovement = this;
-
+                */
                 animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
                 animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
             }
@@ -258,9 +259,11 @@ namespace WarriorAnims
         {
             useRootMotion = false;
 
+            /*
             animator.SetBool("Damaged", false);
             animator.SetBool("Moving", true);
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+            */
 
             PState = PlayerState.Idle;
             agent.Warp(BuildingManager.Instance.Alter.transform.position);
@@ -299,6 +302,7 @@ namespace WarriorAnims
         }
         private void Update()
         {
+            Debug.Log(PState);
             ChooseAction();
             switch (PState)
             {
@@ -377,11 +381,14 @@ namespace WarriorAnims
             transform.LookAt(_lockTarget.transform);
             agent.SetDestination(transform.position);
 
+            /*
             animator.SetBool("Moving", false);
             animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetInteger("TriggerNumber", 4);
             animator.SetTrigger("Trigger");
+            */
+            animator.Play("rig|Warron_attack");
 
             canNormalAttack = false;
 
@@ -389,13 +396,16 @@ namespace WarriorAnims
         }
         public void Normal_Attack_Fun()
         {
+            /*
             animator.SetBool("Attack", false);
             animator.SetBool("Moving", false);
             animator.SetInteger("Action", -1);
             animator.SetInteger("TriggerNumber", 0);
+            */
             _lockTarget = null;
             canNormalAttack = true;
             PState = PlayerState.Idle;
+            animator.Play("rig|Warron_idle");
         }
 
         private void UpdateDie()
@@ -405,8 +415,11 @@ namespace WarriorAnims
         private void UpdateIdle()
         {
             agent.velocity = Vector3.zero;
+            /*
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             animator.SetBool("Moving", true);
+            */
+            animator.Play("rig|Warron_idle");
             if (Input.GetMouseButtonDown(1))
             {
                 if (EventSystem.current.IsPointerOverGameObject())
@@ -442,10 +455,12 @@ namespace WarriorAnims
 
                     dir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                     agent.SetDestination(dir);
-                    animator.SetBool("Moving", true); 
+                    //animator.SetBool("Moving", true); 
                     velocity = Vector3.MoveTowards(transform.position, dir, agent.speed * Time.deltaTime);
-                    animator.SetFloat("Velocity Z", velocity.magnitude);
+                    //animator.SetFloat("Velocity Z", velocity.magnitude);
                     PState = PlayerState.Moving;
+
+                    animator.Play("rig|Warron_Run");
                 }
             }
         }
@@ -468,8 +483,10 @@ namespace WarriorAnims
 
             if ((dir-transform.position).magnitude < 0.1f)
             {
+                /*
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-                animator.SetBool("Moving", false);
+                animator.SetBool("Moving", false);*/
+                animator.Play("rig|Warron_idle");
                 _state = PlayerState.Idle;
             }
 
@@ -576,12 +593,14 @@ namespace WarriorAnims
 
             agent.ResetPath();
             isAction = true;
+            /*
             animator.SetBool("Moving", false);
             animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetInteger("TriggerNumber", 12);
             animator.SetTrigger("Trigger");
-
+            */
+            animator.Play("rig|Warron_Q");
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
 
@@ -597,9 +616,10 @@ namespace WarriorAnims
             isAction = false;
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
+            /*
             animator.SetBool("Moving", true);
             animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-            _state = PlayerState.Idle;
+            */
         }
         public void ThrowingRockSpawn()
         {
@@ -620,12 +640,15 @@ namespace WarriorAnims
 
             agent.ResetPath();
             isAction = true;
-            animator.SetBool("Moving", false); 
             SetAnimatorRootMotion(true);
+            /*
+            animator.SetBool("Moving", false); 
             animator.SetBool("Dash", true);
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
-            animator.SetInteger("TriggerNumber", 3);
+            animator.SetInteger("TriggerNumber", 3);*/
+
+            animator.Play("rig|Warron_W");
         }
         public void LeafOfPride_Stop_1()
         {
@@ -667,12 +690,16 @@ namespace WarriorAnims
 
             agent.ResetPath();
             isAction = true;
-            animator.SetBool("Moving", false); 
             SetAnimatorRootMotion(true);
+            /*
+            animator.SetBool("Moving", false); 
             animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 11); 
+            */
+
+            animator.Play("rig|Warron_E");
         }
 
         public void BoldRush_Stop()
@@ -686,7 +713,7 @@ namespace WarriorAnims
             SetAnimatorRootMotion(false);
             waronSkillManage.UseSkillNumber = 0;
             waronSkillManage.AllColliderOff();
-            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+            //animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
             _state = PlayerState.Idle;
         }
         public void BoldRushParticleStart()
@@ -710,11 +737,15 @@ namespace WarriorAnims
 
             agent.ResetPath();
             isAction = true;
+            /*
             animator.SetBool("Moving", false);
             animator.SetBool("Attack", true);
             animator.SetInteger("Action", 1);
             animator.SetTrigger("Trigger");
             animator.SetInteger("TriggerNumber", 10);
+            */
+
+            animator.Play("rig|Warron_R");
             SetAnimatorRootMotion(true);
 
             StartCoroutine(BuffMoveSpeed(1.2F));
@@ -724,10 +755,12 @@ namespace WarriorAnims
         public void ShockOfLand_Stop()
         {
             rigid.velocity = Vector3.zero;
-            animator.SetBool("Attack", false);
             isAction = false;
             waronSkillManage.UseSkillNumber = 0;
-            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+
+            //animator.SetBool("Attack", false);
+            //animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
+
             R_particle.SetActive(true);
             R_particle.GetOrAddComponent<WaronR>().Init(30 + 0.25f * ED);
             StartCoroutine(R_Shader_Value_Change(0.1f));
