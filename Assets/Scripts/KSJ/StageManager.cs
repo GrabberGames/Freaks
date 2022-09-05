@@ -27,6 +27,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] private ParticleSystem fx_Move;
     
     private int _nowPlayTime;
+    private int _startPlayTime;
     private int _beforeSpawnTime;
     private int _spawnIntervalTime = 120;
     public int nowPlayTime { get => _nowPlayTime; }
@@ -77,13 +78,14 @@ public class StageManager : MonoBehaviour
         Player.SetActive(true);
     }
 
+
     // Start is called before the first frame update
     void Start()
     {
         _beforeSpawnTime = 0;
         _essence = 0;
         AddEssence(200);
-
+        _startPlayTime = (int)Time.time;
         StartCoroutine(PlayTimer());
     }
 
@@ -136,7 +138,7 @@ public class StageManager : MonoBehaviour
     {
         while (true)
         {
-            _nowPlayTime = (int)Time.time;
+            _nowPlayTime = (int)Time.time - _startPlayTime;
 
             if (nowPlayTime >= beforeSpawnTime + spawnIntervalTime)
             {
