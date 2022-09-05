@@ -1,0 +1,184 @@
+{
+  "Json": {
+    "alter": {
+      "PD": 50,
+      "ED": 0,
+      "HP": 2000,
+      "MAX_HP": 2000,
+      "ATTACK_SPEED": 0.6,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 30,
+      "ARMOR": 0
+    },
+    "whitefreaks": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 50,
+      "MAX_HP": 50,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 10,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "whitetower": {
+      "PD": 70,
+      "ED": 0,
+      "HP": 400,
+      "MAX_HP": 400,
+      "ATTACK_SPEED": 0.3,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 40,
+      "ARMOR": 25
+    },
+    "workshop": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 10,
+      "MAX_HP": 10,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "blackfreaks": {
+      "PD": 20,
+      "ED": 0,
+      "HP": 200,
+      "MAX_HP": 200,
+      "ATTACK_SPEED": 0.7,
+      "MOVE_SPEED": 17,
+      "ATTACK_RANGE": 12.5,
+      "ARMOR": 15
+    },
+    "blacktower": {
+      "PD": 100,
+      "ED": 0,
+      "HP": 1500,
+      "MAX_HP": 1500,
+      "ATTACK_SPEED": 0.3,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 35,
+      "ARMOR": 100
+    },
+    "switchoff": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "MAX_HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "switchon": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "MAX_HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "essenceS": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "MAX_HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "essenceM": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "MAX_HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "essenceL": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 987654321,
+      "MAX_HP": 987654321,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "warron": {
+      "PD": 40,
+      "ED": 10,
+      "HP": 375,
+      "MAX_HP": 375,
+      "ATTACK_SPEED": 0.6,
+      "MOVE_SPEED": 15,
+      "ATTACK_RANGE": 13,
+      "ARMOR": 20
+    },
+    "kyle": {
+      "PD": 30,
+      "ED": 15,
+      "HP": 350,
+      "MAX_HP": 350,
+      "ATTACK_SPEED": 0.5,
+      "MOVE_SPEED": 16,
+      "ATTACK_RANGE": 25,
+      "ARMOR": 10
+    },
+    "rowenn": {
+      "PD": 20,
+      "ED": 30,
+      "HP": 335,
+      "MAX_HP": 335,
+      "ATTACK_SPEED": 0.5,
+      "MOVE_SPEED": 7,
+      "ATTACK_RANGE": 20,
+      "ARMOR": 0
+    },
+    "arcanna": {
+      "PD": 35,
+      "ED": 15,
+      "HP": 350,
+      "MAX_HP": 350,
+      "ATTACK_SPEED": 0.6,
+      "MOVE_SPEED": 8,
+      "ATTACK_RANGE": 13,
+      "ARMOR": 10
+    },
+    "louis": {
+      "PD": 20,
+      "ED": 35,
+      "HP": 325,
+      "MAX_HP": 325,
+      "ATTACK_SPEED": 0.5,
+      "MOVE_SPEED": 7,
+      "ATTACK_RANGE": 20,
+      "ARMOR": 0
+    },
+    "alter_building": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 0,
+      "MAX_HP": 200,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    },
+    "whitetower_building": {
+      "PD": 0,
+      "ED": 0,
+      "HP": 0,
+      "MAX_HP": 200,
+      "ATTACK_SPEED": 0,
+      "MOVE_SPEED": 0,
+      "ATTACK_RANGE": 0,
+      "ARMOR": 0
+    }
+  }
+}

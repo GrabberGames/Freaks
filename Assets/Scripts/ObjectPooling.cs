@@ -34,7 +34,8 @@ public class ObjectPooling : MonoBehaviour
     Dictionary<string, Stat> data = new Dictionary<string, Stat>();
     public void Load()
     {
-        string jdata = File.ReadAllText(Application.dataPath + "/JsonDotNet/StatusInfo.Json");
+        // string jdata = File.ReadAllText(Application.dataPath + "/JsonDotNet/StatusInfo.Json");
+        string jdata = File.ReadAllText(Application.dataPath + "/Resources/StatusInfo.Json");
         data = JsonConvert.DeserializeObject<Stat>(jdata).Json;
     }
     public Stat Get_Stat(string _objName)
