@@ -302,7 +302,6 @@ namespace WarriorAnims
         }
         private void Update()
         {
-            Debug.Log(PState);
             ChooseAction();
             switch (PState)
             {
@@ -332,22 +331,18 @@ namespace WarriorAnims
         {
             if (PlayerModel.QSkillCoolTime > 0)
             {
-                Debug.Log("WARRON Q");
                 PlayerModel.QSkillCoolTime = Mathf.Clamp(6 - (Time.time - qTime), 0, 6);
             }
             if (PlayerModel.WSkillCoolTime > 0)
             {
-                Debug.Log("WARRON W");
                 PlayerModel.WSkillCoolTime = Mathf.Clamp(12 - (Time.time - wTime), 0, 12);
             }
             if (PlayerModel.ESkillCoolTime > 0)
             {
-                Debug.Log("WARRON E");
                 PlayerModel.ESkillCoolTime = Mathf.Clamp(14 - (Time.time - eTime), 0, 14);
             }
             if (PlayerModel.RSkillCoolTime > 0)
             {
-                Debug.Log("WARRON R");
                 PlayerModel.RSkillCoolTime = Mathf.Clamp(120 - (Time.time - rTime), 0, 120);
                 if (R_particle.activeInHierarchy)
                 {
@@ -367,7 +362,6 @@ namespace WarriorAnims
         {
             while (true)
             {
-                Debug.Log("R Hit!");
                 WaronRHitted?.Invoke();
                 yield return new WaitForSeconds(1f);
             }
@@ -499,7 +493,8 @@ namespace WarriorAnims
             {
                 /*
                 animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-                animator.SetBool("Moving", false);*/
+                animator.SetBool("Moving", false);
+                */
                 animator.Play("rig|Warron_idle");
                 _state = PlayerState.Idle;
             }
@@ -520,6 +515,18 @@ namespace WarriorAnims
                         _lockTarget = hit.collider.gameObject;
                     else
                         _lockTarget = null;
+                    
+                    if ((hit.point-transform.position).magnitude < 0.1f)
+                    {
+                        animator.Play("rig|Warron_idle");
+                        _state = PlayerState.Idle;
+                        return;
+                    }
+                    else
+                    {
+                        animator.Play("rig|Warron_Run");
+                        _state = PlayerState.Moving;
+                    }
 
 
                     _dist = Vector3.Distance(transform.position, hit.point);
