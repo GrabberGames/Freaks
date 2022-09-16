@@ -57,7 +57,7 @@ public class FreaksController : Stat
     const int GetEssenceByKilling = 10;
 
 
-    float d = .0f;
+    float d = 625f;
 
     GameController _gameController;
     protected override void Init()
@@ -145,6 +145,7 @@ public class FreaksController : Stat
                 State = FreaksState.Moving;
                 return;
             }
+            
             float distance = (target.transform.position - transform.position).sqrMagnitude;
             agent.areaMask = 1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1<< 5;
             //시야 밖으로 나가면 target을 초기화해줌.
@@ -201,7 +202,6 @@ public class FreaksController : Stat
 
         foreach (Collider collider in Physics.OverlapSphere(transform.position, d, mask))
         {
-            Debug.Log(collider.gameObject.name);
             if (collider.GetComponent<Stat>().HP > 0)
             {
                 target = collider.gameObject;
@@ -210,6 +210,7 @@ public class FreaksController : Stat
                 return;
             }
         }
+        
         if (a)
             d = 625f;
     }

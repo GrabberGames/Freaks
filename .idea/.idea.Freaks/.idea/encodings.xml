@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/FreaksController.cs" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/InfoUI.cs" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/KSJ/HUDController.cs" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/KSJ/HUDManager.cs" charset="x-windows-949" />
