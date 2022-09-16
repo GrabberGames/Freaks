@@ -22,7 +22,7 @@ TagManager:
   - Switch
   - alter
   - workshop
-  - friendly
+  - Friendly
   layers:
   - Default
   - TransparentFX

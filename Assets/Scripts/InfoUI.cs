@@ -244,7 +244,7 @@ public class InfoUI : MonoBehaviour
         else if (key == 5)
         {
             stringBuilder.Clear();
-            stringBuilder.Append("<color=blue>");
+            stringBuilder.Append("<color=#78EAFF>");
             stringBuilder.Append(playerStat.ED);
             stringBuilder.Append("</color>");
 
