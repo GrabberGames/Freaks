@@ -1988,8 +1988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textSet: {fileID: 592060455}
-  _Warrontext: 
-  _Kyletext: 
+  idx: 2
 --- !u!1 &730082921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,8 +2079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textSet: {fileID: 592060455}
-  _Warrontext: 
-  _Kyletext: 
+  idx: 3
 --- !u!1 &775776090
 GameObject:
   m_ObjectHideFlags: 0
@@ -5505,8 +5503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textSet: {fileID: 592060455}
-  _Warrontext: 
-  _Kyletext: 
+  idx: 0
 --- !u!1001 &1746743763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5947,8 +5944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textSet: {fileID: 592060455}
-  _Warrontext: 
-  _Kyletext: 
+  idx: 1
 --- !u!1 &1936464964
 GameObject:
   m_ObjectHideFlags: 0
@@ -6666,18 +6662,20 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: e0f4e8cf9ca3fb34086e9ebcbdfecb7d, type: 3}
-    m_FontSize: 14
+    m_FontSize: 12
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 125
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\uBD88\uBA78\uC758 \uAE30\uC0AC\uB2E8\uC7A5\uC778 \uC640\uB860\uC740 \uC801\uC744
+    \uB450\uB824\uC6CC\uD558\uC9C0 \uC54A\uACE0 \n\uCE58\uC5F4\uD55C \uC804\uD22C\uB97C
+    \uC990\uAE30\uB294 \uAC15\uB825\uD55C \uBB34\uD22C\uD30C\uC785\uB2C8\uB2E4."
 --- !u!222 &2038916113
 CanvasRenderer:
   m_ObjectHideFlags: 0
