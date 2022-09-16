@@ -415,10 +415,24 @@ namespace WarriorAnims
         private void UpdateIdle()
         {
             agent.velocity = Vector3.zero;
-            /*
-            animator.SetFloat("Velocity Z", Vector3.zero.magnitude);
-            animator.SetBool("Moving", true);
-            */
+
+            if (_lockTarget != null) 
+            {            
+                if (_lockTarget.GetComponent<Stat>().HP <= 0)
+                {
+                    _lockTarget = null;
+                    return;
+                }
+                
+                float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+                if (distance <= ATTACK_RANGE)
+                {
+                    PState = PlayerState.Attack;
+                    return;
+                }
+            }
+            
             animator.Play("rig|Warron_idle");
             if (Input.GetMouseButtonDown(1))
             {

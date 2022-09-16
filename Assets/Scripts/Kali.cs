@@ -586,7 +586,6 @@ public class Kali : Stat
     }
     public void Normal_Attack_Fun()
     {
-        _lockTarget = null;
         State = PlayerState.Idle;
     }
     void Update()
@@ -608,6 +607,7 @@ public class Kali : Stat
         switch (State)
         {
             case PlayerState.Attack:
+                UpdateAttack();
                 break;
             case PlayerState.Q:
             case PlayerState.W:
@@ -627,6 +627,16 @@ public class Kali : Stat
                 break;
         }
     }
+
+    private void UpdateAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            State = PlayerState.Idle;
+            return;
+        }
+    }
+    
     public override void SetModel()
     {
         base.SetModel();
@@ -674,6 +684,23 @@ public class Kali : Stat
     }
     private void UpdateIdle()
     {
+        if (_lockTarget != null) 
+        {
+            if (_lockTarget.GetComponent<Stat>().HP <= 0)
+            {
+                _lockTarget = null;
+                return;
+            }
+            
+            float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+            if (distance <= ATTACK_RANGE)
+            {
+                State = PlayerState.Attack;
+                return;
+            }
+        }
+        
         if (Input.GetMouseButtonDown(1))
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -711,6 +738,12 @@ public class Kali : Stat
     }
     private void UpdateMoving()
     {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            State = PlayerState.Idle;
+            return;
+        }
+        
         if (_lockTarget != null) //기본 공격 할 대상이 있다.
         {
             float distance = (_lockTarget.transform.position - transform.position).magnitude;

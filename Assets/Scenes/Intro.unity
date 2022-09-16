@@ -1591,6 +1591,7 @@ GameObject:
   - component: {fileID: 592060452}
   - component: {fileID: 592060454}
   - component: {fileID: 592060453}
+  - component: {fileID: 592060455}
   m_Layer: 5
   m_Name: Skill Text Frame
   m_TagString: Untagged
@@ -1608,7 +1609,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2038916111}
   m_Father: {fileID: 1563493014}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1655,6 +1657,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592060451}
   m_CullTransparentMesh: 1
+--- !u!114 &592060455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592060451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67ffcee2cc4f98a4b8aecf432c9f3ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idx: 0
+  _text: {fileID: 2038916112}
 --- !u!1 &607078306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1909,7 @@ GameObject:
   - component: {fileID: 687055433}
   - component: {fileID: 687055435}
   - component: {fileID: 687055434}
+  - component: {fileID: 687055436}
   m_Layer: 5
   m_Name: Skill Icons (2)
   m_TagString: Untagged
@@ -1958,6 +1975,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687055432}
   m_CullTransparentMesh: 1
+--- !u!114 &687055436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687055432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da453eb024191ae488cc4d5d63f553f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textSet: {fileID: 592060455}
+  _Warrontext: 
+  _Kyletext: 
 --- !u!1 &730082921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,6 +2001,7 @@ GameObject:
   - component: {fileID: 730082922}
   - component: {fileID: 730082924}
   - component: {fileID: 730082923}
+  - component: {fileID: 730082925}
   m_Layer: 5
   m_Name: Skill Icons (3)
   m_TagString: Untagged
@@ -2034,6 +2067,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 730082921}
   m_CullTransparentMesh: 1
+--- !u!114 &730082925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730082921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da453eb024191ae488cc4d5d63f553f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textSet: {fileID: 592060455}
+  _Warrontext: 
+  _Kyletext: 
 --- !u!1 &775776090
 GameObject:
   m_ObjectHideFlags: 0
@@ -5317,6 +5365,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 592060455}
+        m_TargetAssemblyTypeName: TextSet, Assembly-CSharp
+        m_MethodName: SetText
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1709840095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5366,6 +5426,7 @@ GameObject:
   - component: {fileID: 1717549659}
   - component: {fileID: 1717549661}
   - component: {fileID: 1717549660}
+  - component: {fileID: 1717549662}
   m_Layer: 5
   m_Name: Skill Icons
   m_TagString: Untagged
@@ -5431,6 +5492,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717549658}
   m_CullTransparentMesh: 1
+--- !u!114 &1717549662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717549658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da453eb024191ae488cc4d5d63f553f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textSet: {fileID: 592060455}
+  _Warrontext: 
+  _Kyletext: 
 --- !u!1001 &1746743763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5528,7 +5604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996420117019320021, guid: 60d07ecf172ab8c45a69762ab0a929f0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3996420117019320022, guid: 60d07ecf172ab8c45a69762ab0a929f0, type: 3}
       propertyPath: image
@@ -5792,6 +5868,7 @@ GameObject:
   - component: {fileID: 1928260686}
   - component: {fileID: 1928260688}
   - component: {fileID: 1928260687}
+  - component: {fileID: 1928260689}
   m_Layer: 5
   m_Name: Skill Icons (1)
   m_TagString: Untagged
@@ -5857,6 +5934,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928260685}
   m_CullTransparentMesh: 1
+--- !u!114 &1928260689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928260685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da453eb024191ae488cc4d5d63f553f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textSet: {fileID: 592060455}
+  _Warrontext: 
+  _Kyletext: 
 --- !u!1 &1936464964
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,6 +6265,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: GameMenuController, Assembly-CSharp
         m_MethodName: SelectKyle
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 592060455}
+        m_TargetAssemblyTypeName: TextSet, Assembly-CSharp
+        m_MethodName: SetText
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6502,6 +6606,85 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025912639}
+  m_CullTransparentMesh: 1
+--- !u!1 &2038916110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2038916111}
+  - component: {fileID: 2038916113}
+  - component: {fileID: 2038916112}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2038916111
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038916110}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 592060452}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2038916112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038916110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: e0f4e8cf9ca3fb34086e9ebcbdfecb7d, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &2038916113
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038916110}
   m_CullTransparentMesh: 1
 --- !u!1 &2083828129
 GameObject:
