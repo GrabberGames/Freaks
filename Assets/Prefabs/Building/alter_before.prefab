@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2879187218664642266}
   - component: {fileID: 4533066194821648}
   m_Layer: 3
-  m_Name: Alter_Foundation
-  m_TagString: Untagged
+  m_Name: alter_before
+  m_TagString: Friendly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

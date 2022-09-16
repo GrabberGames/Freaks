@@ -119,7 +119,7 @@ public class Building : MonoBehaviour
         whiteFreaks = WhiteFreaksManager.Instance.GetWhiteFreaks();
         whiteFreaks.transform.position = alter.transform.position;
         whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(go, true);
-        whiteFreaks.GetComponent<WhiteFreaksController>().targetBefore = building_before;
+        whiteFreaks.GetComponent<WhiteFreaksController>().targetBuilding = building_before;
         whiteFreaks.GetComponent<WhiteFreaksController>().buildingGO = go;
         if (build_num==2)
         {

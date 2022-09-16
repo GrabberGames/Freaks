@@ -97,20 +97,20 @@ public class WhiteFreaksController : Stat
         {
             IsMoving = false;
 
-            if (targetBefore.CompareTag("Friendly")) //알터로 돌아가는게 아니라면(지으러 가는도중에 쥬금)
+            if (targetBuilding.CompareTag("Friendly") || targetBuilding.CompareTag("workshop")) //알터로 돌아가는게 아니라면(지으러 가는도중에 쥬금)
             {
                 BuildingPooling.instance.ReturnObject(targetBuilding);
-                BuildingPooling.instance.ReturnObject(targetBefore);
+               // BuildingPooling.instance.ReturnObject(targetBefore);
                 BuildingPooling.instance.ReturnObject(buildingGO);
                 buildingGO.GetComponent<Building>().StopAllCoroutines();
-                if (targetBefore.CompareTag("workshop")) //심지어 워크샵 지으러 가는중이었다면
+                if (targetBuilding.CompareTag("workshop")) //심지어 워크샵 지으러 가는중이었다면
                 {
                     //BuildingManager.Instance.GetEssenceSpot().SetActive(true); //자원지 다시 보이도록
                     connectEssence.SetActive(true);
                 }
             }
-           
-            WhiteFreaksManager.Instance.ReturnWhiteFreaks();
+            Debug.Log("여기까지왔니 그러면 없어져야할텐데..");
+            WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
             isFirst = false;
         }
 
@@ -140,7 +140,7 @@ public class WhiteFreaksController : Stat
         return false;
     }
 
-    Building buildng;
+   // Building buildng;
     void Arrive()
     {
         Debug.Log("도착했다");
@@ -148,8 +148,8 @@ public class WhiteFreaksController : Stat
         if (IsBuilding == true)
         {
             Debug.Log("지으러왔다");
-            buildng = targetBuilding.GetComponent<Building>();
-            buildng.ChangeBuilding();
+           // buildng = targetBuilding.GetComponent<Building>();
+            buildingGO.GetComponent<Building>().ChangeBuilding();
             go.SetActive(false);
             IsBuilding = false;
 
