@@ -70,7 +70,7 @@ public class WorkshopState : Stat
         renderer = GetComponent<Renderer>();
         propertyBlock = new MaterialPropertyBlock();
 
-        // SFXworkshopDestroy.Play();
+         SFXworkshopDestroy.Play();
 
         float f;
         Color c = GetComponent<WorkshopController>().GetColor();

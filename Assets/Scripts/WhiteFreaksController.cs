@@ -13,6 +13,8 @@ public class WhiteFreaksController : Stat
     public NavMeshAgent navMeshAgent;
     public GameObject buildingGO;
 
+    [SerializeField]
+    private  AudioSource deadSound;
 
     public GameObject connectEssence;
     [SerializeField]
@@ -92,11 +94,21 @@ public class WhiteFreaksController : Stat
     public override void DeadSignal()
     {
         //base.DeadSignal();
+        StartCoroutine(Dead());
 
+    }
+
+    IEnumerator Dead()
+    {
+        navMeshAgent.Stop();
+        deadSound.Play();
+        yield return YieldInstructionCache.WaitForSeconds(1.3f); ;
+
+        
         if (isFirst == true)
         {
             IsMoving = false;
-
+          
             if (targetBuilding.CompareTag("Friendly") || targetBuilding.CompareTag("workshop")) //알터로 돌아가는게 아니라면(지으러 가는도중에 쥬금)
             {
                 BuildingPooling.instance.ReturnObject(targetBuilding);
@@ -114,8 +126,8 @@ public class WhiteFreaksController : Stat
             isFirst = false;
         }
 
+        yield return null;
     }
-
 
     protected override void Init()
     {
