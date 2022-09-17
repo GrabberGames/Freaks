@@ -8,8 +8,9 @@ public enum eLayerMask
     Building = 1 << 9,
     Ground = 1 << 13,
     Essence = 1 << 14,
+    Friendly = 1 <<16,
 
-    ConstructionChk = Building | Essence
+    ConstructionChk = Building | Essence | Friendly
 }
 
 public enum eConditionConstructionPreview
