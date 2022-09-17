@@ -121,7 +121,6 @@ public class WhiteFreaksController : Stat
                     connectEssence.SetActive(true);
                 }
             }
-            Debug.Log("여기까지왔니 그러면 없어져야할텐데..");
             WhiteFreaksManager.Instance.ReturnWhiteFreaks(this.gameObject);
             isFirst = false;
         }
@@ -155,11 +154,9 @@ public class WhiteFreaksController : Stat
    // Building buildng;
     void Arrive()
     {
-        Debug.Log("도착했다");
         IsMoving = false;
         if (IsBuilding == true)
         {
-            Debug.Log("지으러왔다");
            // buildng = targetBuilding.GetComponent<Building>();
             buildingGO.GetComponent<Building>().ChangeBuilding();
             go.SetActive(false);
@@ -172,7 +169,6 @@ public class WhiteFreaksController : Stat
         else
         {
             IsArrive = false;
-            Debug.Log("지으러 온거아니다");
             WhiteFreaksManager.Instance.ReturnWhiteFreaks();
             ObjectPooling.Instance.ReturnObject(this.gameObject);
         }

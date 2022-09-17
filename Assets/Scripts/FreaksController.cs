@@ -97,7 +97,6 @@ public class FreaksController : Stat
     }
     private void Update()
     {
-        Debug.Log(state);
         switch (state)
         {
             case FreaksState.Attack:
@@ -217,7 +216,8 @@ public class FreaksController : Stat
 
     void GoToAlter()
     {
-        agent.SetDestination(alter.transform.position);
+        if(gameObject.activeInHierarchy)
+            agent.SetDestination(alter.transform.position);
     }
 
     public IEnumerator MoveSpeedSlow(float value)
