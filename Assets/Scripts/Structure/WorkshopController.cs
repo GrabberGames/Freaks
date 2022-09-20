@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WorkshopController : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class WorkshopController : MonoBehaviour
     MaterialPropertyBlock propertyBlock;
 
     private WhiteFreaksController ConnectingFreaks;
-
+    public bool isPurify= false;
 
     public int GetRemainEssence()
     {
@@ -36,7 +37,10 @@ public class WorkshopController : MonoBehaviour
     }
 
 
-
+    private void Start()
+    {
+        isPurify = false;
+    }
 
     public void Digging()
     {
@@ -49,7 +53,8 @@ public class WorkshopController : MonoBehaviour
     {
         if (connectEssence.CompareTag("Switch"))
         {
-
+            isPurify = true;
+            //SetPurifyBar();
             return yellow;
         }
 
@@ -162,20 +167,53 @@ public class WorkshopController : MonoBehaviour
 
         StartCoroutine(Purify());
     }
+
     IEnumerator Purify()
     {
-        yield return YieldInstructionCache.WaitForSeconds(120f); //90f로 고치기
+
+
+        float startTime = Time.time;
+
+        while (Time.time - startTime <= 120f)
+        {
+
+            purifyBarImage.fillAmount = (Time.time - startTime) / 120;
+            yield return null;
+        }
+
 
         StartCoroutine(connectEssence.GetComponent<SwitchController>().SwitchPurify());
         connectEssence.gameObject.SetActive(true);
         this.GetComponent<WorkshopState>().Disappear();
-
+        BarPooling.instance.ReturnObject(purifyBar);
 
         ConnectingFreaks.gameObject.SetActive(true);
-        ConnectingFreaks.SetDestination(BuildingManager.Instance.Alter, false);
+        ConnectingFreaks.gameObject.GetComponent<WhiteFreaksController>().hpBar.SetActive(true);
+       ConnectingFreaks.SetDestination(BuildingManager.Instance.Alter, false);
 
 
     }
+
+
+    public GameObject purifyBar;
+    public Vector3 purifyBarOffset = new Vector3(0, 5, 0);
+    private RectTransform rect;
+    private Image purifyBarImage;
+    public void SetPurifyBar()
+    {
+        purifyBar = BarPooling.instance.GetObject(BarPooling.bar_name.switch_bar);
+        rect = (RectTransform)purifyBar.transform;
+        rect.sizeDelta = new Vector2(89, 21);
+        purifyBarImage = purifyBar.GetComponentsInChildren<Image>()[1];
+        purifyBarImage.rectTransform.sizeDelta = rect.sizeDelta;
+
+        var _hpbar = purifyBar.GetComponent<HpBar>();
+        _hpbar.target = this.gameObject;
+        _hpbar.offset = purifyBarOffset;
+        _hpbar.what = HpBar.targets.Workshop;
+    }
+
+  
 
 
 

@@ -21,6 +21,7 @@ public class CameraController : MonoBehaviour
 
     public GameObject player;
 
+
     public bool isFixedToHero = false;
 
     public float panSpeed = 100f;
@@ -42,6 +43,8 @@ public class CameraController : MonoBehaviour
         audioListener = GetComponentInChildren<ListenPositioner>();
 
     }
+
+ 
 
     private void Update()
     {

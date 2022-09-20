@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using UniRx;
 using UniRx.Triggers;
@@ -38,6 +39,7 @@ public class WhiteFreaksController : Stat
         alter = BuildingManager.Instance.Alter;
 
         alterPosition = alter.transform.position;
+        SetHpBar();
     }
       /*
         arriveStream = this.UpdateAsObservable()
@@ -97,6 +99,7 @@ public class WhiteFreaksController : Stat
         StartCoroutine(Dead());
 
     }
+ 
 
     IEnumerator Dead()
     {
@@ -104,6 +107,8 @@ public class WhiteFreaksController : Stat
         deadSound.Play();
         yield return YieldInstructionCache.WaitForSeconds(1.3f); ;
 
+        BarPooling.instance.ReturnObject(hpBar);
+        
         
         if (isFirst == true)
         {
@@ -160,6 +165,7 @@ public class WhiteFreaksController : Stat
            // buildng = targetBuilding.GetComponent<Building>();
             buildingGO.GetComponent<Building>().ChangeBuilding();
             go.SetActive(false);
+            hpBar.SetActive(false);
             IsBuilding = false;
 
             IsArrive = false;
@@ -171,6 +177,7 @@ public class WhiteFreaksController : Stat
             IsArrive = false;
             WhiteFreaksManager.Instance.ReturnWhiteFreaks();
             ObjectPooling.Instance.ReturnObject(this.gameObject);
+            BarPooling.instance.ReturnObject(hpBar);
         }
     }
 
@@ -192,6 +199,33 @@ public class WhiteFreaksController : Stat
         ChkNavMesh();
         navMeshAgent.SetDestination(new Vector3(target.transform.position.x + 1, target.transform.position.y + 2, target.transform.position.z));
     }
+    public GameObject hpBar;
+    public Vector3 hpBarOffset = new Vector3(0, 5, 0);
+    private RectTransform rect;
+    private Image hpBarImage;
+    private Text hpBarText;
+    void SetHpBar()
+    {
+        hpBar = BarPooling.instance.GetObject(BarPooling.bar_name.ally_bar);
+        rect = (RectTransform)hpBar.transform;
+        rect.sizeDelta = new Vector2(89, 21);
+        hpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
+        hpBarImage.rectTransform.sizeDelta = rect.sizeDelta;
+        hpBarText = hpBar.GetComponentsInChildren<Text>()[0];
+        hpBarText.text = HP.ToString();
+        var _hpbar = hpBar.GetComponent<HpBar>();
+        _hpbar.target = this.gameObject;
+        _hpbar.offset = hpBarOffset;
+        _hpbar.what = HpBar.targets.Freaks;
+    }
+
+    public override void OnAttackSignal()
+    {
+        hpBarImage.fillAmount = HP / MAX_HP;
+        if(HP>=0)
+        hpBarText.text = HP.ToString();
+    }
+
 
 
 }

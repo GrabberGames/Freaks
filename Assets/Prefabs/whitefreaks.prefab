@@ -162,6 +162,8 @@ MonoBehaviour:
   alter: {fileID: 1862213974341087658, guid: 7b0d352e3db023d43b4a08eace09f729, type: 3}
   IsBuilding: 0
   IsMoving: 0
+  hpBar: {fileID: 0}
+  hpBarOffset: {x: 0, y: 5, z: 0}
 --- !u!82 &1899816041978040498
 AudioSource:
   m_ObjectHideFlags: 0

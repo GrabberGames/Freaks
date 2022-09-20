@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using System.Collections.Generic;
 public class FreaksController : Stat
@@ -74,12 +75,12 @@ public class FreaksController : Stat
         animator = GetComponent<Animator>();
 
         State = FreaksState.Moving;
+       
     }
 
     private void Awake()
     {
         _gameController = FindObjectOfType<GameController>();
-
         Init();
 
         /// <-알터 위치가 변경 되었을때 사용되는 함수입니다.->
@@ -88,7 +89,8 @@ public class FreaksController : Stat
     }
     public void Spawned() 
     {
-        Init(); 
+        Init();
+        SetHpBar();
     }
     void AlterIsChanged(GameObject go)
     {
@@ -111,11 +113,7 @@ public class FreaksController : Stat
                 break;
         }
     }
-    public bool a = false;
-    public override void OnAttackSignal()
-    {
-        a = true;
-    }
+   
     void UpdateAttack()
     {
         if (canNormalAttack == false || target == null)
@@ -245,5 +243,38 @@ public class FreaksController : Stat
         StageManager.Instance.AddEssence(GetEssenceByKilling);
         _gameController.SignOfFreaksDead();
         ObjectPooling.Instance.ReturnObject(gameObject);
+        BarPooling.instance.ReturnObject(hpBar);
     }
+
+
+
+    public GameObject hpBar;
+    public Vector3 hpBarOffset = new Vector3(0, 5, 0);
+    private RectTransform rect;
+    private Image hpBarImage;
+    private Text hpBarText;
+    void SetHpBar()
+    {
+        hpBar = BarPooling.instance.GetObject(BarPooling.bar_name.enemy_bar);
+        rect = (RectTransform)hpBar.transform;
+        rect.sizeDelta = new Vector2(89, 21);
+        hpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
+        hpBarImage.rectTransform.sizeDelta = rect.sizeDelta;
+        hpBarText = hpBar.GetComponentsInChildren<Text>()[0];
+        hpBarText.text = HP.ToString();
+        var _hpbar = hpBar.GetComponent<HpBar>();
+        _hpbar.target = this.gameObject;
+        _hpbar.offset = hpBarOffset;
+        _hpbar.what = HpBar.targets.Freaks;
+    }
+    public bool a = false;
+    public override void OnAttackSignal()
+    {
+        a = true;
+        hpBarImage.fillAmount = HP / MAX_HP;
+        if (HP >= 0)
+            hpBarText.text = HP.ToString();
+    }
+   
+
 }

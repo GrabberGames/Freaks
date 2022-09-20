@@ -39227,6 +39227,8 @@ MonoBehaviour:
   SFXWhiteTowerDestroy: {fileID: 3684443902682517837}
   SFXWhiteTowerAttack: {fileID: 3684443902604386432}
   SFXWhiteTowerComplete: {fileID: 776085207188561681}
+  hpBar: {fileID: 0}
+  hpBarOffset: {x: 0, y: 5, z: 0}
 --- !u!65 &8820591107281130962
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39235,7 +39237,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5463757832429487430}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 17.859686, y: 31.0926, z: 17.588358}
