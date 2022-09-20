@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WhiteTowerAttack : Stat, InterfaceRange
 {
@@ -48,6 +49,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     {
         gameController = FindObjectOfType<GameController>();
         Init();
+        SetHpBar();
     }
 
     //�Ҹ� Ȯ���ϱ����� update��
@@ -121,6 +123,7 @@ public class WhiteTowerAttack : Stat, InterfaceRange
         }
 
         BuildingPooling.instance.ReturnObject(this.gameObject);
+        BarPooling.instance.ReturnObject(hpBar);
        // GetComponentInParent<Building>().ReturnBuildingPool();
 
     }
@@ -138,4 +141,34 @@ public class WhiteTowerAttack : Stat, InterfaceRange
                 NoBuildRange.SetActive(false);
         }
     }
+
+
+    public GameObject hpBar;
+    public Vector3 hpBarOffset = new Vector3(0, 5, 0);
+    private RectTransform rect;
+    private Image hpBarImage;
+    private Text hpBarText;
+    void SetHpBar()
+    {
+        hpBar = BarPooling.instance.GetObject(BarPooling.bar_name.ally_bar);
+        rect = (RectTransform)hpBar.transform;
+        rect.sizeDelta = new Vector2(100, 21);
+        hpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
+        hpBarImage.rectTransform.sizeDelta = rect.sizeDelta;
+        hpBarText = hpBar.GetComponentsInChildren<Text>()[0];
+        hpBarText.text = HP.ToString();
+        var _hpbar = hpBar.GetComponent<HpBar>();
+        _hpbar.target = this.gameObject;
+        _hpbar.offset = hpBarOffset;
+        _hpbar.what = HpBar.targets.WhiteTower;
+    }
+
+    public override void OnAttackSignal()
+    {
+        hpBarImage.fillAmount = HP / MAX_HP;
+        if (HP >= 0)
+            hpBarText.text = HP.ToString();
+    }
+
+
 }

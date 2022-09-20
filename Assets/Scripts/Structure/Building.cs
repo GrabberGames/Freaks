@@ -113,19 +113,21 @@ public class Building : MonoBehaviour
 
     }
     GameObject workshop;
+    WhiteFreaksController wfc;
     public void GoBuild()
     {
 
         whiteFreaks = WhiteFreaksManager.Instance.GetWhiteFreaks();
+        wfc = whiteFreaks.GetComponent<WhiteFreaksController>();
         whiteFreaks.transform.position = alter.transform.position;
-        whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(go, true);
-        whiteFreaks.GetComponent<WhiteFreaksController>().targetBuilding = building_before;
-        whiteFreaks.GetComponent<WhiteFreaksController>().buildingGO = go;
+        wfc.SetDestination(go, true);
+        wfc.targetBuilding = building_before;
+        wfc.buildingGO = go;
         if (build_num==2)
         {
             workshop = BuildingPooling.instance.GetObject("build_workshop");
             workshop.transform.position = transform.position;
-            whiteFreaks.GetComponent<WhiteFreaksController>().connectEssence = BuildingManager.Instance.GetEssenceSpot();
+            wfc.connectEssence = BuildingManager.Instance.GetEssenceSpot();
             if (!(go.CompareTag("Switch")))
             workshop.GetComponent<WorkshopController>().SetConnectEssence(BuildingManager.Instance.GetEssenceSpot());
             workshop.GetComponent<WorkshopController>().SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
@@ -138,7 +140,7 @@ public class Building : MonoBehaviour
     public void GoAlter()
     {
 
-        whiteFreaks.GetComponent<WhiteFreaksController>().SetDestination(alter, false);
+        wfc.SetDestination(alter, false);
     }
 
     AudioSource SFXBuilding;
@@ -159,9 +161,10 @@ public class Building : MonoBehaviour
                 building_building.SetActive(true);
 
                 onBuilding = building_building.GetComponent<OnBuilding>();
+                onBuilding.what = build_num;
                 onBuilding.SetBuilding(this);
                 onBuilding.SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
-                whiteFreaks.GetComponent<WhiteFreaksController>().targetBuilding = building_building;
+                wfc.targetBuilding = building_building;
 
                 StartCoroutine(CompleteTimer());
 
@@ -175,9 +178,10 @@ public class Building : MonoBehaviour
                 building_building.SetActive(true);
 
                 onBuilding = building_building.GetComponent<OnBuilding>();
+                onBuilding.what = build_num;
                 onBuilding.SetBuilding(this);
                 onBuilding.SetConnetingFreaks(whiteFreaks.GetComponent<WhiteFreaksController>());
-                whiteFreaks.GetComponent<WhiteFreaksController>().targetBuilding = building_building;
+                wfc.targetBuilding = building_building;
 
                 StartCoroutine(CompleteTimer());
 
@@ -192,9 +196,11 @@ public class Building : MonoBehaviour
                 workshop.SetActive(true);
                 workshop.transform.position = new Vector3(transform.position.x, 2.17f, transform.position.z);
                 workshop.GetComponent<WorkshopState>().SFXworkshopComplete.Play();
-                if (whiteFreaks.GetComponent<WhiteFreaksController>().connectEssence.CompareTag("Switch"))
+                if (wfc.connectEssence.CompareTag("Switch"))
                 {
+                    workshop.GetComponent<WorkshopController>().SetPurifyBar();
                     workshop.GetComponent<WorkshopController>().StartPurify();
+             
                 }
                 else
                 {
@@ -222,7 +228,6 @@ public class Building : MonoBehaviour
         {
             case 0:
                 WhiteFreaksManager.Instance.ReturnWhiteFreaks(whiteFreaks);
-
                 StartCoroutine(ChangeAlter());
 
 
@@ -234,6 +239,7 @@ public class Building : MonoBehaviour
                 whiteTower.SetActive(true);
 
                 BuildingPooling.instance.ReturnObject(building_building);
+                BarPooling.instance.ReturnObject(onBuilding.hpBar);
                 building_complete = BuildingPooling.instance.GetObject("building_after");
                 building_complete.transform.position = transform.position;
                 building_complete.SetActive(true);
@@ -241,6 +247,8 @@ public class Building : MonoBehaviour
                 whiteTower.GetComponent<WhiteTowerAttack>().SFXWhiteTowerComplete.Play();
                 yield return YieldInstructionCache.WaitForSeconds(0.7f);
                 whiteFreaks.SetActive(true);
+                wfc.hpBar.SetActive(true);
+
                 GoAlter();
                 BuildingPooling.instance.ReturnObject(building_complete);
                 BuildingManager.Instance.GetbuildingRangeList().Add(whiteTower.transform.GetChild(2).GetComponent<BuildingRange>());
@@ -280,7 +288,7 @@ public class Building : MonoBehaviour
         yield return YieldInstructionCache.WaitForSeconds(0.8f);
 
         BuildingPooling.instance.ReturnObject(building_building);
-
+        BarPooling.instance.ReturnObject(onBuilding.hpBar);
 
         alter.transform.position = transform.position;
         alter.transform.GetChild(4).gameObject.SetActive(false);

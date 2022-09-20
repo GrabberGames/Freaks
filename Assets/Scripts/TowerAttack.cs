@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class TowerAttack : Stat
 {
+
 
     public GameObject player;
     public ParticleSystem fx_blackTower;
@@ -37,109 +38,18 @@ public class TowerAttack : Stat
             StartCoroutine(Dissolve()); //�ǹ��ر�
             //Destroy(this.gameObject);
             this.gameObject.SetActive(false);
+            BarPooling.instance.ReturnObject(hpBar);
         }
     }
 
     void Start()
     {
         Init();
-
+        SetHpBar();
 
     }
     float sqrATTACK_RANGE ;
-
-
-    private void Update()
-    {
-
-       
-            if (player == null)
-            {
-                if (GameManager.Instance.Player == null)
-                    return;
-                else
-                    player = GameManager.Instance.Player;
-            }
-            if ((player.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
-            {
-
-                if (isAttack)
-                    return;
-                else
-                {
-                    if (player.GetComponent<Stat>().HP <= 0)
-                        return;
-                    StartCoroutine(FindInAttackRange(player));
-                    isAttack = true;
-                }
-            }
-
-            if ((BuildingManager.Instance.Alter.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
-            {
-
-                if (isAttack)
-                    return;
-                else
-                {
-                    if (BuildingManager.Instance.Alter.GetComponent<AlterController>().HP <= 0)
-                        return;
-
-                    StartCoroutine(FindInAttackRange(BuildingManager.Instance.Alter));
-                    isAttack = true;
-                }
-            }
-
-
-
-            for (int i = 0; i < whiteFreaks.Count; i++)
-            {
-                // Debug.Log("whiteFreaks.Count : " + whiteFreaks.Count);
-                if (whiteFreaks[i].gameObject.activeSelf == true)//setActive true의 경우에
-                {
-                    if ((whiteFreaks[i].gameObject.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
-                    {
-                        if (isAttack)
-                            return;
-                        else
-                        {
-                            StartCoroutine(FindInAttackRange(whiteFreaks[i].gameObject));
-                            isAttack = true;
-                        }
-                    }
-                }
-            }
-
-
-            for (int j = 0; j < BuildingPooling.instance.GetBuildings().Count; j++)
-            {
-                if (BuildingPooling.instance.GetBuildings()[j].activeSelf == true) //setActive true의 경우에만
-                {
-                    if ((BuildingPooling.instance.GetBuildings()[j].gameObject.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
-                    {
-                        if (isAttack)
-                            return;
-                        else
-                        {
-                            StartCoroutine(FindInAttackRange(BuildingPooling.instance.GetBuildings()[j].gameObject));
-                            isAttack = true;
-                        }
-                    }
-                }
-            }
-
-
-
-
-
-            /*
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                SFXBlackTowerDestroy.Play();
-                StartCoroutine(Dissolve());
-            }*/
-        
-
-    }
+    
 
 
     GameObject bullet;
@@ -204,6 +114,32 @@ public class TowerAttack : Stat
 
     }
 
+
+    public GameObject hpBar;
+    public Vector3 hpBarOffset = new Vector3(0, 10f, 0);
+    private RectTransform rect;
+    private Image hpBarImage;
+    private Text hpBarText;
+    void SetHpBar()
+    {
+        hpBar = BarPooling.instance.GetObject(BarPooling.bar_name.enemy_bar);
+        rect = (RectTransform)hpBar.transform;
+        rect.sizeDelta = new Vector2(100, 21);
+        hpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
+        hpBarImage.rectTransform.sizeDelta = rect.sizeDelta;
+        hpBarText = hpBar.GetComponentsInChildren<Text>()[0];
+        hpBarText.text = HP.ToString();
+        var _hpbar = hpBar.GetComponent<HpBar>();
+        _hpbar.target = this.gameObject;
+        _hpbar.offset = hpBarOffset;
+        _hpbar.what = HpBar.targets.balckTower;
+    }
+    public override void OnAttackSignal()
+    {
+        hpBarImage.fillAmount = HP / MAX_HP;
+        if (HP >= 0)
+            hpBarText.text = HP.ToString();
+    }
 
 
 
