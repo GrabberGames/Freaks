@@ -49,8 +49,90 @@ public class TowerAttack : Stat
 
     }
     float sqrATTACK_RANGE ;
-    
 
+
+    private void Update()
+    {
+
+
+        if (player == null)
+        {
+            if (GameManager.Instance.Player == null)
+                return;
+            else
+                player = GameManager.Instance.Player;
+        }
+        if ((player.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+        {
+
+            if (isAttack)
+                return;
+            else
+            {
+                if (player.GetComponent<Stat>().HP <= 0)
+                    return;
+                StartCoroutine(FindInAttackRange(player));
+                isAttack = true;
+            }
+        }
+
+        if ((BuildingManager.Instance.Alter.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+        {
+
+            if (isAttack)
+                return;
+            else
+            {
+                if (BuildingManager.Instance.Alter.GetComponent<AlterController>().HP <= 0)
+                    return;
+
+                StartCoroutine(FindInAttackRange(BuildingManager.Instance.Alter));
+                isAttack = true;
+            }
+        }
+
+
+
+        for (int i = 0; i < whiteFreaks.Count; i++)
+        {
+            // Debug.Log("whiteFreaks.Count : " + whiteFreaks.Count);
+            if (whiteFreaks[i].gameObject.activeSelf == true)//setActive true의 경우에
+            {
+                if ((whiteFreaks[i].gameObject.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+                {
+                    if (isAttack)
+                        return;
+                    else
+                    {
+                        StartCoroutine(FindInAttackRange(whiteFreaks[i].gameObject));
+                        isAttack = true;
+                    }
+                }
+            }
+        }
+
+
+        for (int j = 0; j < BuildingPooling.instance.GetBuildings().Count; j++)
+        {
+            if (BuildingPooling.instance.GetBuildings()[j].activeSelf == true) //setActive true의 경우에만
+            {
+                if ((BuildingPooling.instance.GetBuildings()[j].gameObject.transform.position - transform.position).sqrMagnitude <= sqrATTACK_RANGE)
+                {
+                    if (isAttack)
+                        return;
+                    else
+                    {
+                        StartCoroutine(FindInAttackRange(BuildingPooling.instance.GetBuildings()[j].gameObject));
+                        isAttack = true;
+                    }
+                }
+            }
+        }
+
+
+
+
+    }
 
     GameObject bullet;
     IEnumerator FindInAttackRange()
