@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class Kali : Stat
+public class Kali : Stat, ITarget
 {
     #region variables
     enum Layers
@@ -237,6 +237,19 @@ public class Kali : Stat
         }
     }
     #endregion
+
+    [SerializeField]
+    private GameObject _circle;
+
+    public void OpenCircle()
+    {
+        _circle.SetActive(true);
+    }
+    public void CloseCircle()
+    {
+        _circle.SetActive(true);
+    }
+    
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -590,19 +603,13 @@ public class Kali : Stat
     }
     void Update()
     {
+        Debug.Log(State);
         CoolTimer();
+        
         if (State == PlayerState.Die)
         {
             return;
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            GameManager.Instance.PlayerDead();
-
-            ObjectPooling.Instance.Set_Stat(gameObject.name, PD, ED, HP, MAX_HP, ATTACK_SPEED, MOVE_SPEED, ATTACK_RANGE, ARMOR);
-            State = PlayerState.Die;
-        }*/
 
         switch (State)
         {
@@ -615,7 +622,8 @@ public class Kali : Stat
             case PlayerState.R:
                 break;
             case PlayerState.Moving:
-                UpdateMoving(); MoveToSkillState();
+                UpdateMoving(); 
+                MoveToSkillState();
                 break;
 
             case PlayerState.Die:
@@ -623,13 +631,20 @@ public class Kali : Stat
                 break;
 
             case PlayerState.Idle:
-                UpdateIdle(); MoveToSkillState();
+                UpdateIdle(); 
+                MoveToSkillState();
                 break;
         }
     }
 
+    private bool ChangeTargetNull = false;
     private void UpdateAttack()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            ChangeTargetNull = true;
+        }
+        
         if (Input.GetKeyDown(KeyCode.S))
         {
             State = PlayerState.Idle;
@@ -684,23 +699,16 @@ public class Kali : Stat
     }
     private void UpdateIdle()
     {
-        if (_lockTarget != null) 
+        if (ChangeTargetNull)
         {
-            if (_lockTarget.GetComponent<Stat>().HP <= 0)
-            {
-                _lockTarget = null;
-                return;
-            }
-            
-            float distance = (_lockTarget.transform.position - transform.position).magnitude;
-
-            if (distance <= ATTACK_RANGE)
-            {
-                State = PlayerState.Attack;
-                return;
-            }
+            _lockTarget = null;
+            ChangeTargetNull = false;
         }
-        
+
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            animator.Play("Idle");
+        }
         if (Input.GetMouseButtonDown(1))
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -711,10 +719,16 @@ public class Kali : Stat
             LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Walkable") | LayerMask.GetMask("Ground");
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
-                if (hit.collider.gameObject.layer == (int)Layers.blackfreaks || hit.collider.gameObject.layer == (int)Layers.Enemy)
+                if (hit.collider.gameObject.layer == (int)Layers.blackfreaks ||
+                    hit.collider.gameObject.layer == (int)Layers.Enemy)
+                {
                     _lockTarget = hit.collider.gameObject;
+                }
                 else
+                {
                     _lockTarget = null;
+                }
+
                 if (_lockTarget != null) //기본 공격 할 대상이 있다.
                 {
                     float distance = (_lockTarget.transform.position - transform.position).magnitude;
@@ -734,10 +748,31 @@ public class Kali : Stat
                 agent.SetDestination(dir);
                 State = PlayerState.Moving;
             }
+        }        
+        if (_lockTarget != null) 
+        {
+            if (_lockTarget.GetComponent<Stat>().HP <= 0)
+            {
+                _lockTarget = null;
+                return;
+            }
+            
+            float distance = (_lockTarget.transform.position - transform.position).magnitude;
+
+            if (distance <= ATTACK_RANGE)
+            {
+                State = PlayerState.Attack;
+                return;
+            }
         }
     }
     private void UpdateMoving()
     {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Moving"))
+        {
+            animator.Play("Moving");
+        }
+        
         if (Input.GetKeyDown(KeyCode.S))
         {
             State = PlayerState.Idle;
@@ -773,10 +808,15 @@ public class Kali : Stat
 
             if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
             {
-                if (hit.collider.gameObject.layer == (int)Layers.blackfreaks || hit.collider.gameObject.layer == (int)Layers.Enemy)
+                if (hit.collider.gameObject.layer == (int)Layers.blackfreaks ||
+                    hit.collider.gameObject.layer == (int)Layers.Enemy)
+                {
                     _lockTarget = hit.collider.gameObject;
+                }
                 else
+                {
                     _lockTarget = null;
+                }
 
                 if (_lockTarget != null) //기본 공격 할 대상이 있다.
                 {

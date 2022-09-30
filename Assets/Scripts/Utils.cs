@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface ITarget
+{
+    public void OpenCircle();
+    public void CloseCircle();
+}
+
 public class Utils
 {
     public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component

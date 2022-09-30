@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WhiteTowerAttack : Stat, InterfaceRange
+public class WhiteTowerAttack : Stat, InterfaceRange, ITarget
 {
 
     public ParticleSystem fx_whiteTower;
@@ -24,6 +24,16 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     public AudioSource SFXWhiteTowerAttack;
     public AudioSource SFXWhiteTowerComplete;
 
+    [SerializeField] private GameObject circle;
+    public void OpenCircle()
+    {
+        circle.SetActive(true);
+    }
+
+    public void CloseCircle()
+    {
+        circle.SetActive(false);
+    }
 
     protected override void Init()
     {
@@ -55,7 +65,24 @@ public class WhiteTowerAttack : Stat, InterfaceRange
     //�Ҹ� Ȯ���ϱ����� update��
 
     void Update()
-    {
+    {        
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    OpenCircle();
+                }
+                else
+                {
+                    CloseCircle();
+                }
+            }
+        }
         
    
         for (int i = 0; i < blackFreaks.Count; i++)

@@ -1,15 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AlterController : Stat, InterfaceRange
+public class AlterController : Stat, InterfaceRange, ITarget
 {
 
     [SerializeField] private GameObject VFXAlterDestroy;
     [SerializeField] private AudioSource SFXAlterDestroy;
     [SerializeField] private AudioSource SFXAlterComplete;
+    
+    [SerializeField] private GameObject circle;
+    public void OpenCircle()
+    {
+        circle.SetActive(true);
+    }
 
- 
+    public void CloseCircle()
+    {
+        circle.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    OpenCircle();
+                }
+                else
+                {
+                    CloseCircle();
+                }
+            }
+        }
+    }
+
 
     private GameObject BuildRange;
 

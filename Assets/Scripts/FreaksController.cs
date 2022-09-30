@@ -3,8 +3,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 using System.Collections.Generic;
-public class FreaksController : Stat
-{
+public class FreaksController : Stat, ITarget
+{    
+    [SerializeField] private GameObject circle;
+    public void OpenCircle()
+    {
+        circle.SetActive(true);
+    }
+
+    public void CloseCircle()
+    {
+        circle.SetActive(false);
+    }
+
+    
+    
     public enum FreaksState
     {
         Attack,
@@ -99,6 +112,26 @@ public class FreaksController : Stat
     }
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    Debug.Log("OpenCircle");
+                    OpenCircle();
+                }
+                else
+                {
+                    Debug.Log("CloseCircle");
+                    CloseCircle();
+                }
+            }
+        }
+        
         switch (state)
         {
             case FreaksState.Attack:

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class TowerAttack : Stat
+public class TowerAttack : Stat, ITarget
 {
 
 
@@ -21,6 +21,19 @@ public class TowerAttack : Stat
     private List<WhiteFreaksController> whiteFreaks = new List<WhiteFreaksController>();
 
     bool isAttack = false;
+    
+    [SerializeField] private GameObject circle;
+    public void OpenCircle()
+    {
+        circle.SetActive(true);
+    }
+
+    public void CloseCircle()
+    {
+        circle.SetActive(false);
+    }
+
+    
     protected override void Init()
     {
         base.Init();
@@ -52,7 +65,24 @@ public class TowerAttack : Stat
 
 
     private void Update()
-    {
+    {        
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    OpenCircle();
+                }
+                else
+                {
+                    CloseCircle();
+                }
+            }
+        }
 
 
         if (player == null)
@@ -128,10 +158,6 @@ public class TowerAttack : Stat
                 }
             }
         }
-
-
-
-
     }
 
     GameObject bullet;

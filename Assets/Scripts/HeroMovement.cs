@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace WarriorAnims
 {
-    public class HeroMovement : SuperStateMachine
+    public class HeroMovement : SuperStateMachine, ITarget
     {
         public Action WaronRHitted = null;
 
@@ -118,6 +118,19 @@ namespace WarriorAnims
         public AudioSource Q_SFX;
         public AudioSource W_SFX;
         public AudioSource E_SFX;
+        
+        [SerializeField]
+        private GameObject _circle;
+
+        public void OpenCircle()
+        {
+            _circle.SetActive(true);
+        }
+        public void CloseCircle()
+        {
+            _circle.SetActive(true);
+        }
+        
         public void PlaySFX(int i)
         {
             switch(i)
@@ -369,6 +382,11 @@ namespace WarriorAnims
         private bool canNormalAttack = true;
         void Basic_Attack()
         {
+            if (Input.GetMouseButtonDown(1))
+            {
+                ChangeTargetNull = true;
+            }
+            
             if (!canNormalAttack || _lockTarget == null)
                 return;
 
@@ -396,7 +414,6 @@ namespace WarriorAnims
             animator.SetInteger("Action", -1);
             animator.SetInteger("TriggerNumber", 0);
             */
-            _lockTarget = null;
             canNormalAttack = true;
             PState = PlayerState.Idle;
             animator.Play("rig|Warron_idle");
@@ -406,8 +423,14 @@ namespace WarriorAnims
         {
 
         }
+        private bool ChangeTargetNull = false;
         private void UpdateIdle()
         {
+            if (ChangeTargetNull)
+            {
+                _lockTarget = null;
+                ChangeTargetNull = false;
+            }
             agent.velocity = Vector3.zero;
 
             if (_lockTarget != null) 
@@ -438,10 +461,15 @@ namespace WarriorAnims
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
-                    if (hit.collider.gameObject.layer == (int)Layers.Enemy || hit.collider.gameObject.layer == (int)Layers.blackfreaks)
+                    if (hit.collider.gameObject.layer == (int)Layers.Enemy ||
+                        hit.collider.gameObject.layer == (int)Layers.blackfreaks)
+                    {
                         _lockTarget = hit.collider.gameObject;
+                    }
                     else
+                    {
                         _lockTarget = null;
+                    }
 
                     if (_lockTarget != null)
                     {
@@ -511,11 +539,16 @@ namespace WarriorAnims
                 LayerMask mask = LayerMask.GetMask("Walkable") | LayerMask.GetMask("Building") | LayerMask.GetMask("blackfreaks") | LayerMask.GetMask("Ground");
                 if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask))
                 {
-                    if (hit.collider.gameObject.layer == (int)Layers.Enemy || hit.collider.gameObject.layer == (int)Layers.blackfreaks)
+                    if (hit.collider.gameObject.layer == (int)Layers.Enemy ||
+                        hit.collider.gameObject.layer == (int)Layers.blackfreaks)
+                    {
                         _lockTarget = hit.collider.gameObject;
+                    }
                     else
+                    {
                         _lockTarget = null;
-                    
+                    }
+
                     if ((hit.point-transform.position).magnitude < 0.1f)
                     {
                         animator.Play("rig|Warron_idle");

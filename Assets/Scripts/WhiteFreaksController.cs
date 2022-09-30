@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using UniRx;
 using UniRx.Triggers;
 
-public class WhiteFreaksController : Stat
+public class WhiteFreaksController : Stat, ITarget
 {
     public GameObject targetBuilding;
     public GameObject targetBefore;
@@ -28,6 +28,17 @@ public class WhiteFreaksController : Stat
     private IDisposable arriveStream = default;
 
     GameObject go;
+
+    [SerializeField] private GameObject circle;
+    public void OpenCircle()
+    {
+        circle.SetActive(true);
+    }
+
+    public void CloseCircle()
+    {
+        circle.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +68,27 @@ public class WhiteFreaksController : Stat
     bool IsArrive = false;
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    OpenCircle();
+                }
+                else
+                {
+                    CloseCircle();
+                }
+            }
+        }
+        
+        
+        
+        
         if (IsArrive == false)
         {
 
@@ -90,7 +122,7 @@ public class WhiteFreaksController : Stat
         }
 
     }
-    
+
     bool isFirst = true;
     // 죽는거
     public override void DeadSignal()
